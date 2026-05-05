@@ -1,0 +1,2 @@
+<?php
+$MESS["REST_V3_EXCEPTION_CLASSREQUIREATTIBUTEEXCEPTION"] = "Klasse \"#CLASS#\" erfordert Attribut \"#ATTRIBUTE#\".";

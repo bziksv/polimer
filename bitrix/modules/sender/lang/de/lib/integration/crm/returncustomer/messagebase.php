@@ -1,0 +1,22 @@
+<?php
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_ALWAYS_ADD_DEAL"] = "Einen neuen Auftrag immer erstellen, auch wenn es einen aktiven Lead oder Auftrag gibt";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_ALWAYS_ADD_HINT"] = "Ist die Option nicht aktiviert, wird das System überprüfen, ob ein Kontakt oder Unternehmen <br>einen aktiven Lead oder Auftrag hat.";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_ALWAYS_ADD_LEAD"] = "Einen neuen Lead immer erstellen, auch wenn es einen aktiven Lead oder Auftrag gibt";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_ASSIGNED_BY"] = "Zuweisen";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_ASSIGNED_BY_HINT"] = "Mitarbeiter auswählen, <br>die erstellte Leads bearbeiten werden.";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_CHECK_WORK_TIME"] = "Nur die Mitarbeiter einsetzen, die den Arbeitstag gestartet haben und nicht gerade eine Pause machen";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_CHECK_WORK_TIME_HINT"] = "Sind nur die Mitarbeiter verfügbar, die den Arbeitstag nicht gestartet haben oder Pause machen, ist der Nächste in der Warteschleife dran.";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_COMMENT"] = "Beschreibung";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_COMMENT_HINT"] = "Geben Sie eine Beschreibung der Aufgabe ein, <br>die eine verantwortliche Person erledigen soll, <br>wenn wiederkehrende Leads und Aufträge bearbeitet werden.";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_CREATE_FROM_PREVIOUS"] = "Bestellung aus vorherigem Auftrag erstellen";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_DEAL_CATEGORY_ID"] = "Auftragspipeline";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_DEAL_CATEGORY_ID_LAST"] = "Die zuletzt genutzte Pipeline nehmen";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_DEAL_DAYS_AGO"] = "Wie alt ist die Bestellung (in Tagen)";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_LINK_DEAL_WITH_RESPONSIBLE"] = "Verantwortliche Person ist dieselbe, die vorher für den Kunden verantwortlich war";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_LINK_LEAD_WITH_RESPONSIBLE"] = "Verantwortliche Person ist dieselbe, die vorher für den Kunden verantwortlich war";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_TITLE_DEAL"] = "Name des neuen Auftrags";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_TITLE_DEAL_DEF"] = "Auftrag vom %date%";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_TITLE_LEAD"] = "Name des neuen Leads";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_CONFIG_TITLE_LEAD_DEF"] = "Wiederkehrender Lead vom %date%";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_NAME_DEAL"] = "Wiederkehrende Aufträge";
+$MESS["SENDER_INTEGRATION_CRM_RC_MESSAGE_NAME_LEAD"] = "Wiederkehrende Leads";

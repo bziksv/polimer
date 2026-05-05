@@ -1,0 +1,3 @@
+<?php
+$MESS["REST_V3_CONTROLLER_GETORMACTIONTRAIT_ACTION_DESCRIPTION"] = "Ruft einen Eintrag nach der angegebenen ID ab.";
+$MESS["REST_V3_CONTROLLER_GETORMACTIONTRAIT_ACTION_TITLE"] = "Eintrag abrufen";

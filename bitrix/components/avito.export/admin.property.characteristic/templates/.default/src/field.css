@@ -1,0 +1,71 @@
+.bx-avito-export-characteristic {}
+
+.bx-avito-export-characteristic__label {
+	min-width: 100px;
+	padding-bottom: 5px !important;
+}
+
+.bx-avito-export-characteristic__value,
+.bx-avito-export-characteristic__actions {
+	padding-left: 5px !important;
+	padding-bottom: 5px !important;
+}
+
+.bx-avito-export-characteristic__value-control {
+	width: 250px;
+	box-sizing: border-box;
+	min-height: 27px;
+}
+
+.bx-avito-export-characteristic__delete {
+	width: 20px;
+	height: 20px;
+	overflow: hidden;
+	padding: 0;
+	border: 0;
+
+	margin: 0;
+
+	background: url('../i/delete.svg') no-repeat 50% 50%;
+	background-size: 15px 15px;
+
+	text-indent: 110%;
+	white-space: nowrap;
+
+	opacity: 0.75;
+	transition: opacity .15s ease-in;
+}
+
+.bx-avito-export-characteristic__delete:hover,
+.bx-avito-export-characteristic__delete:focus {
+	opacity: 1;
+	transition-timing-function: ease-out;
+}
+
+.bx-avito-export-characteristic__delete:disabled {
+	opacity: 0;
+	transition: none;
+}
+.bx-avito-export-characteristic__add {
+	width: 100px;
+}
+
+.bx-avito-export-characteristic__state {
+	opacity: 0.75;
+	transition: opacity 0.5s ease-out;
+	padding-left: 5px;
+}
+
+.bx-avito-export-characteristic__state.error {
+	opacity: 1;
+	transition-timing-function: ease-in;
+	font-weight: bold;
+	color: #ff1414;
+}
+
+.bx-avito-export-characteristic__state.loading {
+	opacity: 0.75;
+	transition-timing-function: ease-in;
+	font-weight: bold;
+	color: #000;
+}

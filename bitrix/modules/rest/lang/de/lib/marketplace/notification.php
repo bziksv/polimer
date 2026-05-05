@@ -1,0 +1,21 @@
+<?php
+$MESS["REST_MARKETPLACE_NOTIFICATION_HOLD_REST_OVERLOAD_BTN"] = "Anschauen";
+$MESS["REST_MARKETPLACE_NOTIFICATION_HOLD_REST_OVERLOAD_MESS"] = "REST API wurde teilweise blockiert. Wenden Sie sich bitte an den Helpdesk, um das Problem zu lösen. #BTN#";
+$MESS["REST_MARKETPLACE_NOTIFICATION_HOLD_REST_OVERLOAD_MESS_MSGVER_1"] = "REST API wurde teilweise blockiert. Wenden Sie sich bitte an den Helpdesk, um das Problem zu lösen.";
+$MESS["REST_MARKETPLACE_NOTIFICATION_REST_BUY_BTN"] = "Mehr";
+$MESS["REST_MARKETPLACE_NOTIFICATION_REST_BUY_MESS_MSGVER_1"] = "Ab dem 1. Januar werden Market und REST Anwendungen nur in kostenpflichtigen Tarifen verfügbar sein. Wählen Sie einen für Sie passenden Tarif aus und bekommen Sie 40% Rabatt.";
+$MESS["REST_MARKETPLACE_NOTIFICATION_REST_BUY_MESS_MSGVER_2"] = "Ab dem 1. Januar sind die Bitrix24 Market und REST Apps nur in den kostenpflichtigen Tarife verfügbar. Upgraden Sie jetzt auf einen kostenpflichtigen Tarif und erhalten Sie einen 40 % Rabatt. #BTN#";
+$MESS["REST_MARKETPLACE_NOTIFICATION_REST_BUY_URL"] = "https://www.bitrix24.de/promo/sales/holiday-sale/";
+$MESS["REST_MARKETPLACE_NOTIFICATION_SUBSCRIPTION_MARKET_DEMO_END_BTN"] = "Tarif auswählen";
+$MESS["REST_MARKETPLACE_NOTIFICATION_SUBSCRIPTION_MARKET_DEMO_END_BTN_MSGVER_1"] = "Jetzt abonnieren";
+$MESS["REST_MARKETPLACE_NOTIFICATION_SUBSCRIPTION_MARKET_DEMO_END_MESS_MSGVER_1"] = "Die Testzeit für Market ist abgelaufen. Sie können bis zu 2 kostenlose Anwendungen in einem beliebigen kostenplichtigen Tarif installieren.";
+$MESS["REST_MARKETPLACE_NOTIFICATION_SUBSCRIPTION_MARKET_DEMO_END_MESS_MSGVER_2"] = "Ihre Testversion für Market ist abgelaufen. Sie sollten abonnieren, um Anwendungen weiterhin nutzen zu können.";
+$MESS["REST_MARKETPLACE_NOTIFICATION_SUBSCRIPTION_MARKET_DEMO_END_URL"] = "/settings/license_all.php";
+$MESS["REST_MARKETPLACE_NOTIFICATION_SUBSCRIPTION_MARKET_TARIFF_MARKET_BTN"] = "Tarif auswählen";
+$MESS["REST_MARKETPLACE_NOTIFICATION_SUBSCRIPTION_MARKET_TARIFF_MARKET_MESS_MSGVER_1"] = "Die Testzeit für Market ist abgelaufen. Sie sollten auf einen kostenplichtigen Tarif upgraden, um installierte Anwendungen weiterhin nutzen zu können.";
+$MESS["REST_MARKETPLACE_NOTIFICATION_SUBSCRIPTION_MARKET_TARIFF_MARKET_MESS_MSGVER_2"] = "Ihre Abonnement-Testversion ist abgelaufen. Um die Apps weiterhin nutzen zu können, sollten Sie ein erweitertes Abonnement kaufen.";
+$MESS["REST_MARKETPLACE_NOTIFICATION_SUBSCRIPTION_MARKET_TARIFF_MARKET_URL"] = "/settings/license_all.php";
+$MESS["REST_MARKETPLACE_NOTIFICATION_SUBSCRIPTION_MARKET_TRIAL_END_BTN"] = "Abonnement kaufen";
+$MESS["REST_MARKETPLACE_NOTIFICATION_SUBSCRIPTION_MARKET_TRIAL_END_MESS_MSGVER_1"] = "Die Testzeit für Market ist abgelaufen. Sie sollten ein Abonnement kaufen, um Anwendungen weiterhin nutzen zu können.";
+$MESS["REST_MARKETPLACE_NOTIFICATION_SUBSCRIPTION_MARKET_TRIAL_END_MESS_MSGVER_2"] = "Ihre Abonnement-Testversion ist abgelaufen. Um die Apps weiterhin nutzen zu können, sollten Sie ein Abonnement kaufen.";
+$MESS["REST_MARKETPLACE_NOTIFICATION_SUBSCRIPTION_MARKET_TRIAL_END_URL"] = "/settings/license_all.php?subscr=o";

@@ -1,0 +1,33 @@
+<?php
+
+$MESS["FLOW_PAGE_TITLE"] = "Änderungshistory";
+$MESS["FLOW_F_DOCUMENT"] = "Seiten-ID";
+$MESS["FLOW_F_FILENAME"] = "Dateiname";
+$MESS["FLOW_F_TITLE"] = "Überschrift";
+$MESS["FLOW_F_STATUS"] = "Seitenstatus";
+$MESS["FLOW_F_DATE_MODIFY"] = "Geändert";
+$MESS["FLOW_F_MODIFIED_BY"] = "Geändert von";
+$MESS["FLOW_F_BODY"] = "Inhalt";
+$MESS["FLOW_PAGES"] = "Seite";
+$MESS["FLOW_DATE_MODIFY"] = "Geändert";
+$MESS["FLOW_MODIFIED_BY"] = "Geändert von";
+$MESS["FLOW_TITLE"] = "Überschrift";
+$MESS["FLOW_FILENAME"] = "Dateiname";
+$MESS["FLOW_STATUS"] = "Status";
+$MESS["FLOW_F_LOGIC"] = "Logik zwischen den Feldern";
+$MESS["FLOW_VIEW"] = "Anzeigen";
+$MESS["FLOW_DOCUMENT"] = "Seiten-ID";
+$MESS["FLOW_DELETE_CONFIRM"] = "Wollen Sie den Eintrag aus der Seitenhistory wirklich löschen?";
+$MESS["FLOW_USER_ALT"] = "Userinformation anzeigen";
+$MESS["FLOW_STATUS_ALT"] = "Statusinformation anzeigen";
+$MESS["FLOW_COMPARE"] = "Vergleichen";
+$MESS["FLOW_COMPARE_ALERT"] = "Zum Vergleich müssen Sie zwei Seiten auswählen.";
+$MESS["FLOW_DELETE"] = "Löschen";
+$MESS["FLOW_RECORDS_LIST"] = "Seiten";
+$MESS["MAIN_ADMIN_LIST_SELECTED"] = "Gesamt:";
+$MESS["MAIN_FIND"] = "Suchen";
+$MESS["MAIN_ADMIN_LIST_CHECKED"] = "Ausgewählt:";
+$MESS["MAIN_FIND_TITLE"] = "Geben Sie den Suchbegriff ein";
+$MESS["MAIN_ADMIN_LIST_DELETE"] = "löschen";
+$MESS["MAIN_ALL"] = "(alle)";
+$MESS["FLOW_SITE_ID"] = "Website";

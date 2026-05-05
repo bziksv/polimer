@@ -1,0 +1,3 @@
+<?php
+
+$MESS['AVITO_EXPORT_ADMIN_PROPERTY_CONDITION_PROPERTY_DESCRIPTION'] = 'Авито: Состояние вещи';

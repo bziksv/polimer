@@ -1,0 +1,10 @@
+<?php
+$MESS["LANDING_TABLE_FIELD_ACTIVE"] = "Aktiv";
+$MESS["LANDING_TABLE_FIELD_COOKIE_CODE"] = "Symbolischer Code der Cookies";
+$MESS["LANDING_TABLE_FIELD_COOKIE_CONTENT"] = "Benutzerdefinierter Text";
+$MESS["LANDING_TABLE_FIELD_COOKIE_TITLE"] = "Benutzerdefinierte Überschrift";
+$MESS["LANDING_TABLE_FIELD_CREATED_BY_ID"] = "Erstellt von Nutzer-ID";
+$MESS["LANDING_TABLE_FIELD_DATE_CREATE"] = "Erstellt am";
+$MESS["LANDING_TABLE_FIELD_DATE_MODIFY"] = "Geändert am";
+$MESS["LANDING_TABLE_FIELD_MODIFIED_BY_ID"] = "Geändert von Nutzer-ID";
+$MESS["LANDING_TABLE_FIELD_SITE_ID"] = "Website-ID";

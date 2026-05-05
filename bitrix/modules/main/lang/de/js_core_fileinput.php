@@ -1,0 +1,36 @@
+<?
+$MESS["JS_CORE_FILE_UPLOAD"] = "Vom Computer hochladen";
+$MESS["JS_CORE_FILE_INSERT_PATH"] = "Pfad zur Datei einfügen";
+$MESS["JS_CORE_FILE_MEDIALIB"] = "Aus der Media-Bibliothek auswählen";
+$MESS["JS_CORE_FILE_SITE"] = "Aus der Seitenstruktur auswählen";
+$MESS["JS_CORE_FILE_CLOUD"] = "Vom Cloud-Speicher hochladen";
+$MESS["JS_CORE_FI_UPLOAD_DENIED"] = "Upload verweigert";
+$MESS["JS_CORE_FI_TOO_MANY_FILES"] = "Die Anzahl der Dateien überschreitet das erlaubte Limit von #amount#.";
+$MESS["JS_CORE_FI_TOO_MANY_FILES2"] = "Das Limit der Dateianzahl ist erreicht.";
+$MESS["JS_CORE_FI_TOO_MANY_FILES3"] = "Das Limit der Dateianzahl ist überschritten.";
+$MESS["JS_CORE_FI_FRAME_Y"] = "Cropping benutzen";
+$MESS["JS_CORE_FI_PIN_DESCRIPTION"] = "Beschreibungsfeld anheften";
+$MESS["JS_CORE_FI_CLEAR"] = "Leeren";
+$MESS["JS_CORE_FI_FRAME_IS_LOADING"] = "Bitte warten, Bilder werden hochgeladen. Cropping abbrechen?";
+$MESS["JS_CORE_FI_FRAME_IS_LOADING_CANCEL"] = "Ja";
+$MESS["JS_CORE_FI_LINK"] = "Link:";
+$MESS["JS_CORE_FI_ADD_LINK"] = "Link hinzufügen";
+$MESS["JS_CORE_FI_ADD"] = "Hinzufügen";
+$MESS["JS_CORE_FI_CANCEL"] = "Abbrechen";
+$MESS["JS_CORE_FI_TITLE"] = "Name";
+$MESS["JS_CORE_FI_WIDTH"] = "Breite";
+$MESS["JS_CORE_FI_HEIGHT"] = "Höhe";
+$MESS["JS_CORE_FI_ADD_PRESET"] = "Preset hinzufügen";
+$MESS["JS_CORE_FI_SAVE_PRESET"] = "Preset speichern";
+$MESS["JS_CORE_FI_CANCEL_PRESET"] = "Aktion<br> abbrechen";
+$MESS["JS_CORE_FI_FRAMING"] = "Cropping: ";
+$MESS["JS_CORE_FI_USE_PRESET"] = "Preset benutzen";
+$MESS["JS_CORE_FI_EDIT_PRESET"] = "Preset bearbeiten";
+$MESS["JS_CORE_FI_PRESET_IS_TOO_BIG"] = "Das Bild ist kleiner als das ausgewählte Preset. Soll das Bild vergrößert werden?";
+$MESS["JS_CORE_FI_SCALE"] = "Vergrößern";
+$MESS["JS_CORE_FILE_INFO_SIZE"] = "Größe";
+$MESS["JS_CORE_FILE_INFO_DIM"] = "Dimensionen";
+$MESS["JS_CORE_FILE_INFO_LINK"] = "Link";
+$MESS["JS_CORE_FILE_DESCRIPTION"] = "Beschreibung";
+$MESS["JS_CORE_FILE_APPLY"] = "Anwenden";
+?>

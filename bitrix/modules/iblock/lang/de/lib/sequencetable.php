@@ -1,0 +1,4 @@
+<?php
+$MESS["IBLOCK_SEQUENCE_ENTITY_IBLOCK_ID_FIELD"] = "Informationsblock-ID";
+$MESS["IBLOCK_SEQUENCE_ENTITY_CODE_FIELD"] = "ID der Reihenfolge";
+$MESS["IBLOCK_SEQUENCE_ENTITY_SEQ_VALUE_FIELD"] = "Wert der Reihenfolge";

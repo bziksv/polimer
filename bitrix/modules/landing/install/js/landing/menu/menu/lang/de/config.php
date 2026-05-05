@@ -1,0 +1,6 @@
+<?
+$MESS["LANDING_MENU_APPLY_BUTTON_LABEL"] = "Anwenden";
+$MESS["LANDING_MENU_CLOSE_BUTTON_LABEL"] = "Feld ausblenden";
+$MESS["LANDING_MENU_CREATE_NEW_PAGE"] = "Neue Seite";
+$MESS["LANDING_MENU_TITLE"] = "Menü";
+?>

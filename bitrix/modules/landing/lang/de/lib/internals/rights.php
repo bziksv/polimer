@@ -1,0 +1,7 @@
+<?
+$MESS["LANDING_TABLE_FIELD_BY_ROLE_ID"] = "Gehört zur Rolle";
+$MESS["LANDING_TABLE_FIELD_RIGHT_ACCESS_CODE"] = "Symbolischer Code des Zugriffsrechtes";
+$MESS["LANDING_TABLE_FIELD_RIGHT_ENTITY_ID"] = "Element-ID";
+$MESS["LANDING_TABLE_FIELD_RIGHT_ENTITY_TYPE"] = "Elementtyp";
+$MESS["LANDING_TABLE_FIELD_RIGHT_TASK_ID"] = "ID des Zugriffsrechtes";
+?>

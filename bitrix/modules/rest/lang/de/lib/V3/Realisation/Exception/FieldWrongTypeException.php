@@ -1,0 +1,3 @@
+<?php
+
+$MESS['REST_V3_REALISATION_EXCEPTION_FIELDWRONGTYPEEXCEPTION'] = 'Falscher Feldtyp: #FIELD_NAME#, erforderlich: #REQUESTED_TYPE#, erhalten: #ACTUAL_TYPE#.';

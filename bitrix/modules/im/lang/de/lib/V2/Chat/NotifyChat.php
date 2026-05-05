@@ -1,0 +1,3 @@
+<?php
+$MESS["IM_NOTIFY_CONFIRM_BUTTON_ACCEPT"] = "Akzeptieren";
+$MESS["IM_NOTIFY_CONFIRM_BUTTON_CANCEL"] = "Abbrechen";

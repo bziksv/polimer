@@ -1,0 +1,18 @@
+.avito-export-editor-wrapper .ui-entity-editor-section[data-cid="ATTENTION_SECTION"] {
+	padding: 0;
+	margin-bottom: 0;
+	background: none;
+	box-shadow: none;
+}
+
+.avito-export-editor-wrapper .ui-entity-editor-section[data-cid="ATTENTION_SECTION"] > .ui-entity-editor-section-content {
+	padding: 0;
+}
+
+.avito-export-editor-wrapper .ui-entity-editor-section[data-cid="ATTENTION_SECTION"] .ui-entity-editor-content-block:empty {
+	margin-bottom: 0;
+}
+
+.ui-entity-editor-content-block[data-cid="ATTENTION"] .ui-alert {
+	flex-direction: column;
+}

@@ -1,0 +1,6 @@
+<?php
+$MESS["MENU_MARKETPLACE_ALL"] = "Marketplace";
+$MESS["MENU_MARKETPLACE_HOOK"] = "WebHooks";
+$MESS["MENU_MARKETPLACE_INSTALLED"] = "Installiert";
+$MESS["MENU_MARKETPLACE_LOCAL"] = "Meine Anwendungen";
+$MESS["REST_MENU_MARKETPLACE_DEVOPS"] = "Für Entwickler";

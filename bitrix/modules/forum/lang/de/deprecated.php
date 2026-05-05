@@ -1,0 +1,20 @@
+<?php
+$MESS['FDATE_LAST_MESSAGE'] = "Datum des letzen Beitrags";
+$MESS['FMESSAGE_TOPIC'] = "Thema";
+$MESS['FNUM_ANSWERS'] = "Anzahl der Antworten";
+$MESS['FNUM_VIEWS'] = "Angezeigt";
+$MESS['FSTART_DATE'] = "Startdatum des Themas";
+$MESS['FAUTHOR_TOPIC'] = "Themenautor";
+$MESS['FASC'] = "aufsteigend";
+$MESS['FDESC'] = "absteigend";
+$MESS['FNO_ACCESS'] = "Kein Zugriff";
+$MESS['FREAD_ACCESS'] = "Lesen";
+$MESS['FANSWER_ACCESS'] = "Antwort";
+$MESS['FNEW_MESSAGE_ACCESS'] = "neues Thema";
+$MESS['FMODERATE_ACCESS'] = "Moderation";
+$MESS['FEDIT_ACCESS'] = "Bearbeiten";
+$MESS['FFULL_ACCESS'] = "voller Zugriff";
+$MESS['FSUBSC_NO_SPERMS'] = "Sie haben nicht genügend Rechte, um dieses Abonnement zu löschen";
+$MESS['FORUM_NO_MODULE'] = "Das Modul \"Forum\" wurde nicht installiert";
+$MESS['FR_VIDEO'] = "Video einfügen";
+$MESS['FR_VIDEO_P'] = "Pfad zum Video";

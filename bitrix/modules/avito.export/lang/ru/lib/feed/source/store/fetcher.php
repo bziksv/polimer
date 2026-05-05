@@ -1,0 +1,3 @@
+<?php
+
+$MESS['AVITO_EXPORT_FEED_SOURCE_STORE_FETCHER_TITLE'] = 'Склады';

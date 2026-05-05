@@ -1,0 +1,1 @@
+<?define("B_PROLOG_INCLUDED", true);define("WIZARD_DEFAULT_SITE_ID", "lt");define("WIZARD_DEFAULT_TONLY", true);define("PRE_LANGUAGE_ID","ru");include_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/install/wizard/wizard.php");?>

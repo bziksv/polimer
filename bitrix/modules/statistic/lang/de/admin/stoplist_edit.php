@@ -1,0 +1,34 @@
+<?
+$MESS ['STAT_DEFAULT_MESSAGE'] = "Der Zugriff wurde vom Seitenadministrator blockiert";
+$MESS ['STAT_ACTIONS'] = "Aktionen";
+$MESS ['STAT_GREEN_LAMP'] = "aktiv";
+$MESS ['STAT_ACTIVE'] = "Aktiv:";
+$MESS ['STAT_COMMENT'] = "Kommentar des Adminstrators";
+$MESS ['STAT_DELETE_STOPLIST_CONFIRM'] = "Wollen Sie die Einträge der Sperrliste wirklich löschen?";
+$MESS ['STAT_COMMENT_S'] = "Kommentar";
+$MESS ['STAT_DELETE_STOPLIST'] = "Einträge der Sperrliste löschen";
+$MESS ['STAT_EMPTY'] = "leer";
+$MESS ['STAT_MESSAGE_LID'] = "In der Sprachcodierung:";
+$MESS ['STAT_END_DATE'] = "Enddatum";
+$MESS ['STAT_ERROR'] = "Es ist ein Fehler beim Speichern des Eintrags aufgetreten";
+$MESS ['STAT_CONDITIONS'] = "Nach welchen Merkmalen sollen die Besucher gefiltert werden (Logik - \"und\")";
+$MESS ['STAT_URL_FROM'] = "Eintrittspunkt:";
+$MESS ['STAT_TIMESTAMP'] = "Geändert:";
+$MESS ['STAT_IP'] = "IP Bereich:";
+$MESS ['STAT_MASK'] = "Netzmaske:";
+$MESS ['STAT_NEW_RECORD'] = "Neuer Eintrag der Sperrliste";
+$MESS ['STAT_NEW_STOPLIST'] = "Neuer Eintrag der Sperrliste";
+$MESS ['STAT_RED_LAMP'] = "inaktiv";
+$MESS ['STAT_ACTIVITY'] = "Aktiv";
+$MESS ['STAT_PARAMS_S'] = "Eintrags-Parameter";
+$MESS ['STAT_REDIRECT'] = "Über die Adresse umleiten (URL):";
+$MESS ['STAT_SAVE_STATISTIC'] = "Statistik speichern:";
+$MESS ['STAT_PARAMS'] = "Parameter";
+$MESS ['STAT_EDIT_RECORD'] = "Eintrags-Parameter der Sperrliste Nr. #ID#";
+$MESS ['STAT_MESSAGE'] = "Nachricht anzeigen:";
+$MESS ['STAT_START_DATE'] = "Startdatum";
+$MESS ['STAT_RECORDS_LIST'] = "Sperrliste";
+$MESS ['STAT_URL_TO'] = "Ziel:";
+$MESS ['STAT_USER_AGENT'] = "UserAgent:";
+$MESS ['STAT_WHAT_TO_DO'] = "Was muss getan werden";
+?>

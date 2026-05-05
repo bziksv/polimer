@@ -1,0 +1,30 @@
+<?
+$MESS ['STAT_AH_1'] = "1 Hit";
+$MESS ['STAT_AH_10_13'] = "10 bis 13 Hits";
+$MESS ['STAT_AM_12_15'] = "12 bis 15 Minuten.";
+$MESS ['STAT_AH_14_17'] = "14 bis 17 Hits";
+$MESS ['STAT_AM_15_18'] = "15 bis 18 Minuten.";
+$MESS ['STAT_AH_18_21'] = "18 bis 21 Hits";
+$MESS ['STAT_AM_18_21'] = "18 bis 21 Minuten.";
+$MESS ['STAT_AM_1_3'] = "2 bis 3 Minuten.";
+$MESS ['STAT_AH_2_5'] = "2 bis 5 Hits";
+$MESS ['STAT_AM_21_24'] = "21 bis 24 Minuten.";
+$MESS ['STAT_AH_22_25'] = "22 bis 25 Hits";
+$MESS ['STAT_AH_26_29'] = "26 bis 29 Hits";
+$MESS ['STAT_AM_3_6'] = "3 bis 6 Minuten.";
+$MESS ['STAT_AH_30_33'] = "30 bis 33 Hits";
+$MESS ['STAT_AH_6_9'] = "6 bis 9 Hits";
+$MESS ['STAT_AM_6_9'] = "6 bis 8 Minuten.";
+$MESS ['STAT_AM_9_12'] = "9 bis 12 Minuten.";
+$MESS ['STAT_HITS_DIAGRAM'] = "Diagramm: Hits der Session";
+$MESS ['STAT_TIME_DIAGRAM'] = "Diagramm: Sessiondauer";
+$MESS ['STAT_HITS_GRAPH'] = "Grafik der durchschnittlichen Hits der Sessions";
+$MESS ['STAT_TIME_GRAPH'] = "Grafik der durchschnittlichen Länge der Sessions (Min.)";
+$MESS ['STAT_AM_1'] = "weniger als 1 Minute";
+$MESS ['STAT_AM_24'] = "mehr als 24 Minuten";
+$MESS ['STAT_NOT_ENOUGH_DATA'] = "Nicht genügend Daten zur Grafikerstellung vorhanden.";
+$MESS ['STAT_AH_34'] = "über 34 Hits";
+$MESS ['STAT_F_PERIOD'] = "Zeitraum";
+$MESS ['STAT_F_SITE'] = "Seite";
+$MESS ['STAT_PAGE_TITLE'] = "Besucheraufmerksamkeit";
+?>

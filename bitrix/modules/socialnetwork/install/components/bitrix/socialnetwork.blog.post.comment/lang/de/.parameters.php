@@ -1,0 +1,33 @@
+<?
+$MESS["BPC_PATH_TO_BLOG"] = "Vorlage des Pfads zur Seite der Nachrichten";
+$MESS["BPC_PATH_TO_USER"] = "Vorlage des Pfads zum Nutzerprofil";
+$MESS["BPC_PATH_TO_SMILE"] = "Pfad zum Smiley-Verzeichnis, relativ zum Root-Verzeichnis";
+$MESS["BPC_USER_VAR"] = "Variable für die Nutzer-ID";
+$MESS["BPC_POST_VAR"] = "Variable für die Nachricht-ID";
+$MESS["BPC_PAGE_VAR"] = "Variable für die Seite";
+$MESS["BPC_ID"] = "Nachricht-ID";
+$MESS["B_VARIABLE_ALIASES"] = "Variablen";
+$MESS["BC_DATE_TIME_FORMAT"] = "Datum- und Zeitformat";
+$MESS["BPC_COMMENT_ID_VAR"] = "Variable der Kommentar-ID";
+$MESS["SHOW_RATING"] = "Ranking aktivieren";
+$MESS["SHOW_RATING_CONFIG"] = "Standardmäßig";
+$MESS["RATING_TYPE"] = "Design der Ranking-Schaltflächen";
+$MESS["RATING_TYPE_CONFIG"] = "Standardmäßig";
+$MESS["RATING_TYPE_STANDART_TEXT"] = "Gefällt mir / Gefällt mir nicht (Text)";
+$MESS["RATING_TYPE_STANDART_GRAPHIC"] = "Gefällt mir / Gefällt mir nicht (Bild)";
+$MESS["RATING_TYPE_LIKE_TEXT"] = "Gefällt mir (Text)";
+$MESS["RATING_TYPE_LIKE_GRAPHIC"] = "Gefällt mir (Bild)";
+$MESS["BPC_IMAGE_MAX_WIDTH"] = "Maximal zulässige Bildbreite";
+$MESS["BPC_IMAGE_MAX_HEIGHT"] = "Maximal zulässige Bildhöhe";
+$MESS["BPC_ALLOW_VIDEO"] = "Videos in Kommentaren erlauben";
+$MESS["BPC_SHOW_SPAM"] = "Den Link zu allen Nutzerkommentaren den Administratoren anzeigen";
+$MESS["BPC_NO_URL_IN_COMMENTS"] = "Links in Kommentaren deaktivieren";
+$MESS["BPC_NO_URL_IN_COMMENTS_N"] = "Niemandem";
+$MESS["BPC_NO_URL_IN_COMMENTS_A"] = "Anonymen Nutzern";
+$MESS["BPC_NO_URL_IN_COMMENTS_L"] = "Allen";
+$MESS["BPC_NO_URL_IN_COMMENTS_AUTHORITY"] = "Minimale Autorität, mit der Nutzer Links in die Kommentare einfügen können";
+$MESS["BPC_ALLOW_IMAGE_UPLOAD"] = "Bilder in Kommentaren erlauben für";
+$MESS["BPC_ALLOW_IMAGE_UPLOAD_A"] = "alle";
+$MESS["BPC_ALLOW_IMAGE_UPLOAD_R"] = "Registrierte Nutzer";
+$MESS["BPC_ALLOW_IMAGE_UPLOAD_N"] = "Niemanden";
+?>

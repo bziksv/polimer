@@ -1,0 +1,3 @@
+<?php
+
+$MESS['AVITO_EXPORT_FEED_SOURCE_OFFER_PROPERTY_FETCHER_TITLE'] = 'Свойство предложения';

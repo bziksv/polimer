@@ -1,0 +1,1 @@
+INSERT INTO `abr_avitoautoload` (`category`,`goodstype`) VALUES ('Красота и здоровье','Медицинские изделия')

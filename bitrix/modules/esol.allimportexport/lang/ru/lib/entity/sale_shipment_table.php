@@ -1,0 +1,4 @@
+<?
+$MESS['ESOL_AIE_SHIPMENT_FIELD_COMPANY_BY_NAME'] = "Офис отгрузки";
+$MESS['ESOL_AIE_SHIPMENT_FIELD_CALCULATE_DELIVERY_PRICE'] = "Расчетная стоимость доставки";
+?>

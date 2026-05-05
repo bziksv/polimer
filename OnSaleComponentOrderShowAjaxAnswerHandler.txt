@@ -1,0 +1,912 @@
+Host: polimer-vrn.ru
+Date: 2025-04-30 10:50:12
+Module: OnSaleComponentOrderJsDataHandler
+array (
+  'order' => 
+  array (
+    'IS_AUTHORIZED' => false,
+    'LAST_ORDER_DATA' => 
+    array (
+      'FAIL' => false,
+    ),
+    'ZIP_PROPERTY_CHANGED' => 'N',
+    'ORDER_DESCRIPTION' => false,
+    'SHOW_AUTH' => false,
+    'SHOW_EMPTY_BASKET' => false,
+    'AUTH' => 
+    array (
+      'new_user_registration' => 'Y',
+      'new_user_registration_email_confirmation' => 'N',
+      'new_user_email_required' => 'Y',
+      'new_user_phone_auth' => 'N',
+      'new_user_phone_required' => 'N',
+    ),
+    'SMS_AUTH' => 
+    array (
+    ),
+    'OK_MESSAGE' => 
+    array (
+    ),
+    'GRID' => 
+    array (
+      'DEFAULT_COLUMNS' => false,
+      'HEADERS' => 
+      array (
+        0 => 
+        array (
+          'id' => 'NAME',
+          'name' => 'Название',
+        ),
+        1 => 
+        array (
+          'id' => 'PREVIEW_PICTURE',
+          'name' => 'Изображение',
+        ),
+        2 => 
+        array (
+          'id' => 'PROPS',
+          'name' => 'Свойства',
+        ),
+        3 => 
+        array (
+          'id' => 'QUANTITY',
+          'name' => 'Количество',
+        ),
+        4 => 
+        array (
+          'id' => 'SUM',
+          'name' => 'Сумма',
+        ),
+      ),
+      'HEADERS_HIDDEN' => 
+      array (
+      ),
+      'ROWS' => 
+      array (
+        160907 => 
+        array (
+          'id' => '160907',
+          'data' => 
+          array (
+            'ID' => '160907',
+            'LID' => 's1',
+            'MODULE' => 'catalog',
+            'PRODUCT_ID' => '16984',
+            'QUANTITY' => 1.0,
+            'WEIGHT' => '0.00',
+            'DELAY' => 'N',
+            'CAN_BUY' => 'Y',
+            'PRICE' => 9200.0,
+            'CUSTOM_PRICE' => 'N',
+            'BASE_PRICE' => 9200.0,
+            'PRODUCT_PRICE_ID' => '9244',
+            'PRICE_TYPE_ID' => '3',
+            'CURRENCY' => 'RUB',
+            'BARCODE_MULTI' => 'N',
+            'RESERVED' => 'N',
+            'RESERVE_QUANTITY' => NULL,
+            'NAME' => 'Радиатор биметаллический RADENA BIMETALL CS 500 10 секций',
+            'CATALOG_XML_ID' => '1c_catalog-f87e6b5e-f319-432e-9552-47ff4bc70cfc',
+            'VAT_RATE' => 0.2,
+            'NOTES' => 'Цена',
+            'DISCOUNT_PRICE' => 0.0,
+            'PRODUCT_PROVIDER_CLASS' => '\\Bitrix\\Catalog\\Product\\CatalogProvider',
+            'CALLBACK_FUNC' => NULL,
+            'ORDER_CALLBACK_FUNC' => NULL,
+            'PAY_CALLBACK_FUNC' => NULL,
+            'CANCEL_CALLBACK_FUNC' => NULL,
+            'DIMENSIONS' => 'a:3:{s:5:"WIDTH";s:1:"0";s:6:"HEIGHT";s:1:"0";s:6:"LENGTH";s:1:"0";}',
+            'TYPE' => NULL,
+            'SET_PARENT_ID' => NULL,
+            'DETAIL_PAGE_URL' => '/catalog/radiator_bimetallicheskiy_radena/radiator_bimetallicheskiy_radena_bimetall_cs_500_10_sektsiy/',
+            'FUSER_ID' => '32908158',
+            'MEASURE_CODE' => '796',
+            'MEASURE_NAME' => 'шт',
+            'ORDER_ID' => NULL,
+            'DATE_INSERT' => 
+            \Bitrix\Main\Type\DateTime::__set_state(array(
+               'value' => 
+              \DateTime::__set_state(array(
+                 'date' => '2025-04-30 10:39:08.000000',
+                 'timezone_type' => 3,
+                 'timezone' => 'Europe/Moscow',
+              )),
+               'userTimeEnabled' => true,
+            )),
+            'DATE_UPDATE' => 
+            \Bitrix\Main\Type\DateTime::__set_state(array(
+               'value' => 
+              \DateTime::__set_state(array(
+                 'date' => '2025-04-30 10:50:11.843972',
+                 'timezone_type' => 3,
+                 'timezone' => 'Europe/Moscow',
+              )),
+               'userTimeEnabled' => true,
+            )),
+            'PRODUCT_XML_ID' => '698541aa-4a8e-11de-a454-0008a159375d',
+            'SUBSCRIBE' => 'N',
+            'RECOMMENDATION' => NULL,
+            'VAT_INCLUDED' => 'Y',
+            'SORT' => '100',
+            'DATE_REFRESH' => NULL,
+            'DISCOUNT_NAME' => NULL,
+            'DISCOUNT_VALUE' => NULL,
+            'DISCOUNT_COUPON' => NULL,
+            'XML_ID' => 'bx_6811d39c99469',
+            'MARKING_CODE_GROUP' => NULL,
+            'VAT_VALUE' => 1533.3333,
+            'PRICE_FORMATED' => '9 200 &#8381;',
+            'WEIGHT_FORMATED' => '0 кг',
+            'DISCOUNT_PRICE_PERCENT' => 0.0,
+            'DISCOUNT_PRICE_PERCENT_FORMATED' => '0%',
+            'BASE_PRICE_FORMATED' => '9 200 &#8381;',
+            'PROPS' => 
+            array (
+            ),
+            'SUM_NUM' => 9200.0,
+            'SUM' => '9 200 &#8381;',
+            'SUM_BASE' => 9200.0,
+            'SUM_BASE_FORMATED' => '9 200 &#8381;',
+            'SUM_DISCOUNT_DIFF' => 0.0,
+            'SUM_DISCOUNT_DIFF_FORMATED' => '0 &#8381;',
+            'PREVIEW_PICTURE' => '36721948',
+            'DETAIL_PICTURE' => '36721949',
+            'PREVIEW_TEXT' => 'Радиатор биметаллический RADENA BIMETALL CS 500 10 секций',
+            'PREVIEW_TEXT_TYPE' => 'text',
+            'PREVIEW_PICTURE_SRC' => '/upload/resize_cache/iblock/542/160_160_1/r1lv8ml7csyuxphtbxrrbbb0ds7c3hyc.jpeg',
+            'PREVIEW_PICTURE_SRC_2X' => '/upload/iblock/542/r1lv8ml7csyuxphtbxrrbbb0ds7c3hyc.jpeg',
+            'PREVIEW_PICTURE_SRC_ORIGINAL' => '/upload/iblock/542/r1lv8ml7csyuxphtbxrrbbb0ds7c3hyc.jpeg',
+            'DETAIL_PICTURE_SRC' => '/upload/resize_cache/iblock/375/160_160_1/qecd1lgbfvqmd7eski4a2820cz7aumnn.jpeg',
+            'DETAIL_PICTURE_SRC_2X' => '/upload/resize_cache/iblock/375/320_320_1/qecd1lgbfvqmd7eski4a2820cz7aumnn.jpeg',
+            'DETAIL_PICTURE_SRC_ORIGINAL' => '/upload/iblock/375/qecd1lgbfvqmd7eski4a2820cz7aumnn.jpeg',
+            'MEASURE_TEXT' => 'шт',
+            'MEASURE' => 796,
+          ),
+          'actions' => 
+          array (
+          ),
+          'columns' => 
+          array (
+            'PROPS' => '',
+            'PREVIEW_PICTURE' => '<a href="/upload/iblock/542/r1lv8ml7csyuxphtbxrrbbb0ds7c3hyc.jpeg" title="Увеличить" target="_blank"><img src="/upload/iblock/542/r1lv8ml7csyuxphtbxrrbbb0ds7c3hyc.jpeg" border=0 alt="0" width="88" height="110" title="Увеличить" /></a>',
+            'DETAIL_PICTURE' => '<a href="/upload/iblock/375/qecd1lgbfvqmd7eski4a2820cz7aumnn.jpeg" title="Увеличить" target="_blank"><img src="/upload/iblock/375/qecd1lgbfvqmd7eski4a2820cz7aumnn.jpeg" border=0 alt="0" width="88" height="110" title="Увеличить" /></a>',
+            'QUANTITY' => '1&nbsp;шт',
+          ),
+          'editable' => true,
+        ),
+      ),
+    ),
+    'PERSON_TYPE' => 
+    array (
+      1 => 
+      array (
+        'ID' => '1',
+        'LID' => 's1',
+        'NAME' => 'Физическое лицо',
+        'CODE' => NULL,
+        'SORT' => '100',
+        'ACTIVE' => 'Y',
+        'XML_ID' => 'bx_02d990b7b4768de1dfcb50dc4401e8dd',
+        'ENTITY_REGISTRY_TYPE' => 'ORDER',
+        'CHECKED' => 'Y',
+      ),
+      2 => 
+      array (
+        'ID' => '2',
+        'LID' => 's1',
+        'NAME' => 'Юридическое лицо',
+        'CODE' => NULL,
+        'SORT' => '150',
+        'ACTIVE' => 'Y',
+        'XML_ID' => 'bx_5ce88b673aaa42e2155026be40876aa6',
+        'ENTITY_REGISTRY_TYPE' => 'ORDER',
+      ),
+    ),
+    'PAY_SYSTEM' => 
+    array (
+      0 => 
+      array (
+        'ID' => '2',
+        'PAY_SYSTEM_ID' => '2',
+        'NAME' => 'Безналичная оплата',
+        'PSA_NAME' => 'Безналичная оплата',
+        'CODE' => '',
+        'SORT' => '110',
+        'DESCRIPTION' => 'Оплата производится по счету, который вышлют на электронный ящик после подтверждения заказа.',
+        'PS_MODE' => '',
+        'PS_CLIENT_TYPE' => 'b2c',
+        'HAVE_PRICE' => 'Y',
+        'ACTIVE' => 'Y',
+        'ALLOW_EDIT_PAYMENT' => 'Y',
+        'IS_CASH' => 'N',
+        'AUTO_CHANGE_1C' => 'N',
+        'CAN_PRINT_CHECK' => 'N',
+        'ENTITY_REGISTRY_TYPE' => 'ORDER',
+        'XML_ID' => 'bx_a5c1653e0c2f8f06b4088b33c29ea56c',
+        'PSA_ID' => '2',
+        'PSA_ACTION_FILE' => 'cashondelivery',
+        'PSA_RESULT_FILE' => '',
+        'PSA_NEW_WINDOW' => 'N',
+        'PSA_PERSON_TYPE_ID' => NULL,
+        'PSA_PARAMS' => 'a:1:{s:16:"BX_PAY_SYSTEM_ID";i:2;}',
+        'PSA_TARIF' => 'a:4:{i:0;a:12:{i:0;s:2:"40";i:1;s:1:"5";i:2;s:1:"0";i:3;s:2:"50";i:4;s:1:"4";i:5;s:1:"0";i:6;s:3:"150";i:7;s:1:"2";i:8;s:1:"0";i:9;s:3:"250";i:10;s:3:"1.5";i:11;s:1:"0";}i:2963;a:12:{i:0;s:1:"0";i:1;s:1:"1";i:2;s:1:"0";i:3;s:2:"10";i:4;s:1:"0";i:5;s:1:"0";i:6;s:2:"10";i:7;s:1:"0";i:8;s:1:"0";i:9;s:2:"10";i:10;s:3:"0.5";i:11;s:5:"20000";}i:3036;a:12:{i:0;s:1:"2";i:1;s:1:"2";i:2;s:1:"0";i:3;s:2:"22";i:4;s:1:"1";i:5;s:4:"1000";i:6;s:2:"62";i:7;s:1:"0";i:8;s:1:"0";i:9;s:2:"62";i:10;s:1:"0";i:11;s:1:"0";}i:2908;a:12:{i:0;s:1:"0";i:1;s:1:"3";i:2;s:1:"0";i:3;s:2:"30";i:4;s:1:"1";i:5;s:4:"1000";i:6;s:2:"70";i:7;s:1:"0";i:8;s:1:"0";i:9;s:2:"70";i:10;s:1:"0";i:11;s:1:"0";}}',
+        'PSA_HAVE_PAYMENT' => 'Y',
+        'PSA_HAVE_ACTION' => 'N',
+        'PSA_HAVE_RESULT' => 'N',
+        'PSA_HAVE_PREPAY' => 'N',
+        'PSA_HAVE_RESULT_RECEIVE' => 'N',
+        'PSA_ENCODING' => '',
+        'PSA_LOGOTIP' => 
+        array (
+          'ID' => '17928288',
+          'TIMESTAMP_X' => '09.08.2023 17:42:59',
+          'MODULE_ID' => 'sale',
+          'HEIGHT' => '249',
+          'WIDTH' => '512',
+          'FILE_SIZE' => '8455',
+          'CONTENT_TYPE' => 'image/png',
+          'SUBDIR' => 'sale/paysystem/logotip/a00',
+          'FILE_NAME' => 'f95un7jzodo106zxvdwdiewy22rkvgr7.png',
+          'ORIGINAL_NAME' => '4478972db65f87741.png',
+          'DESCRIPTION' => '',
+          'HANDLER_ID' => NULL,
+          'EXTERNAL_ID' => '6d9e24f66702c7774c6fa72e4beaf0fd',
+          'VERSION_ORIGINAL_ID' => NULL,
+          'META' => '',
+          'SRC' => '/upload/sale/paysystem/logotip/a00/f95un7jzodo106zxvdwdiewy22rkvgr7.png',
+        ),
+        'CHECKED' => 'Y',
+        'PRICE' => 0,
+        'PRICE_FORMATTED' => '0 &#8381;',
+        'PSA_LOGOTIP_SRC' => '/upload/resize_cache/sale/paysystem/logotip/a00/300_300_1/f95un7jzodo106zxvdwdiewy22rkvgr7.png',
+        'PSA_LOGOTIP_SRC_2X' => '/upload/sale/paysystem/logotip/a00/f95un7jzodo106zxvdwdiewy22rkvgr7.png',
+        'PSA_LOGOTIP_SRC_ORIGINAL' => '/upload/sale/paysystem/logotip/a00/f95un7jzodo106zxvdwdiewy22rkvgr7.png',
+      ),
+      1 => 
+      array (
+        'ID' => '13',
+        'PAY_SYSTEM_ID' => '13',
+        'NAME' => 'Оплата картой',
+        'PSA_NAME' => 'Оплата банковской картой',
+        'CODE' => '',
+        'SORT' => '500',
+        'DESCRIPTION' => 'Оплатите покупку банковской картой.',
+        'PS_MODE' => '',
+        'PS_CLIENT_TYPE' => 'b2c',
+        'HAVE_PRICE' => 'N',
+        'ACTIVE' => 'Y',
+        'ALLOW_EDIT_PAYMENT' => 'Y',
+        'IS_CASH' => 'A',
+        'AUTO_CHANGE_1C' => 'N',
+        'CAN_PRINT_CHECK' => 'Y',
+        'ENTITY_REGISTRY_TYPE' => 'ORDER',
+        'XML_ID' => 'bx_982fe606978762efed231e3029c67eda',
+        'PSA_ID' => '13',
+        'PSA_ACTION_FILE' => '/bitrix/php_interface/include/sale_payment/step2use.uniteller',
+        'PSA_RESULT_FILE' => NULL,
+        'PSA_NEW_WINDOW' => 'N',
+        'PSA_PERSON_TYPE_ID' => NULL,
+        'PSA_PARAMS' => 'a:1:{s:16:"BX_PAY_SYSTEM_ID";i:13;}',
+        'PSA_TARIF' => NULL,
+        'PSA_HAVE_PAYMENT' => 'Y',
+        'PSA_HAVE_ACTION' => 'N',
+        'PSA_HAVE_RESULT' => 'Y',
+        'PSA_HAVE_PREPAY' => 'N',
+        'PSA_HAVE_RESULT_RECEIVE' => 'Y',
+        'PSA_ENCODING' => 'utf-8',
+        'PSA_LOGOTIP' => 
+        array (
+          'ID' => '17493251',
+          'TIMESTAMP_X' => '28.07.2023 18:37:15',
+          'MODULE_ID' => 'sale',
+          'HEIGHT' => '249',
+          'WIDTH' => '512',
+          'FILE_SIZE' => '30848',
+          'CONTENT_TYPE' => 'image/jpeg',
+          'SUBDIR' => 'sale/paysystem/logotip/f20',
+          'FILE_NAME' => 'wpn4q98b2yt0fymidoltwkw9085hv5un.jpg',
+          'ORIGINAL_NAME' => 'card-pay.jpg',
+          'DESCRIPTION' => '',
+          'HANDLER_ID' => NULL,
+          'EXTERNAL_ID' => '5976834ed2e96244ee26044010e621f0',
+          'VERSION_ORIGINAL_ID' => NULL,
+          'META' => '',
+          'SRC' => '/upload/sale/paysystem/logotip/f20/wpn4q98b2yt0fymidoltwkw9085hv5un.jpg',
+        ),
+        'PRICE' => 0,
+        'PSA_LOGOTIP_SRC' => '/upload/resize_cache/sale/paysystem/logotip/f20/300_300_1/wpn4q98b2yt0fymidoltwkw9085hv5un.jpg',
+        'PSA_LOGOTIP_SRC_2X' => '/upload/sale/paysystem/logotip/f20/wpn4q98b2yt0fymidoltwkw9085hv5un.jpg',
+        'PSA_LOGOTIP_SRC_ORIGINAL' => '/upload/sale/paysystem/logotip/f20/wpn4q98b2yt0fymidoltwkw9085hv5un.jpg',
+      ),
+    ),
+    'INNER_PAY_SYSTEM' => NULL,
+    'DELIVERY' => 
+    array (
+      3 => 
+      array (
+        'PRICE' => 0.0,
+        'PRICE_FORMATED' => '0 &#8381;',
+        'CALCULATE_DESCRIPTION' => '',
+        'ID' => '3',
+        'NAME' => 'Самовывоз',
+        'OWN_NAME' => 'Самовывоз',
+        'DESCRIPTION' => '',
+        'FIELD_NAME' => 'DELIVERY_ID',
+        'CURRENCY' => 'RUB',
+        'SORT' => '100',
+        'EXTRA_SERVICES' => 
+        array (
+        ),
+        'STORE' => 
+        array (
+          0 => '8',
+          1 => '6',
+          2 => '5',
+          3 => '3',
+          4 => '17',
+          5 => '19',
+          6 => '4',
+          7 => '7',
+        ),
+        'LOGOTIP' => 
+        array (
+          'ID' => '18066365',
+          'TIMESTAMP_X' => '14.08.2023 17:02:24',
+          'MODULE_ID' => 'sale',
+          'HEIGHT' => '249',
+          'WIDTH' => '512',
+          'FILE_SIZE' => '9543',
+          'CONTENT_TYPE' => 'image/png',
+          'SUBDIR' => 'sale/delivery/logotip/ba3',
+          'FILE_NAME' => '2ok5e5d0q51niemg7nams3ked2xfp8q7.png',
+          'ORIGINAL_NAME' => 'd7330674a21e58274f54d77c883fb960.png',
+          'DESCRIPTION' => '',
+          'HANDLER_ID' => NULL,
+          'EXTERNAL_ID' => '1d724b92631aceb5e3eae2fd08457a77',
+          'VERSION_ORIGINAL_ID' => NULL,
+          'META' => '',
+          'SRC' => '/upload/sale/delivery/logotip/ba3/2ok5e5d0q51niemg7nams3ked2xfp8q7.png',
+        ),
+        'LOGOTIP_SRC' => '/upload/resize_cache/sale/delivery/logotip/ba3/300_300_1/2ok5e5d0q51niemg7nams3ked2xfp8q7.png',
+        'LOGOTIP_SRC_2X' => '/upload/sale/delivery/logotip/ba3/2ok5e5d0q51niemg7nams3ked2xfp8q7.png',
+        'LOGOTIP_SRC_ORIGINAL' => '/upload/sale/delivery/logotip/ba3/2ok5e5d0q51niemg7nams3ked2xfp8q7.png',
+      ),
+      10 => 
+      array (
+        'CHECKED' => 'Y',
+        'CALCULATE_ERRORS' => 'Для расчёта стоимости доставки <a href=\'javascript:void(0);\' onclick=\'showYaDeliveryModal()\'>выберите адрес на карте</a>',
+        'CALCULATE_DESCRIPTION' => '<input id=\'corsik_yaDelivery__data__10\' type=\'hidden\' value=\'{"personType":1,"deliveryID":10,"address":""}\' /><div class=\'corsik_yaDelivery__additionalFields\'><div class=\'form-group bx-custom-customer-field\'>
+                            <label for=\'custom-property-44\' class=\'bx-custom-custom-label\'>Адрес</label>
+                            <input name=\'ORDER_PROP_44\' type=\'text\' id=\'custom-property-44\'
+                                  class=\'form-control bx-custom-customer-input bx-ios-fix\' value=\'\' data-id=\'44\'>
+                          </div><style>[data-property-id-row=\'44\'] {
+                          display: none;
+                     }</style></div><div class=\'corsik_yaDelivery__actionsButtons\'><button class=\'btn btn-primary corsik_yaDelivery__showDeliveryButton\' onclick=\'window.showYaDeliveryModal()\' type=\'button\'>Показать карту</button></div>',
+        'ID' => '10',
+        'NAME' => 'Расчет стоимости доставки по зонам (Доставка 1-4 дня)',
+        'OWN_NAME' => 'Доставка 1-4 дня',
+        'DESCRIPTION' => 'Расчет стоимости доставки за пределами зоны',
+        'FIELD_NAME' => 'DELIVERY_ID',
+        'CURRENCY' => 'RUB',
+        'SORT' => '100',
+        'EXTRA_SERVICES' => 
+        array (
+        ),
+        'STORE' => 
+        array (
+        ),
+        'LOGOTIP' => 
+        array (
+          'ID' => '18089267',
+          'TIMESTAMP_X' => '15.08.2023 09:55:09',
+          'MODULE_ID' => 'sale',
+          'HEIGHT' => '249',
+          'WIDTH' => '512',
+          'FILE_SIZE' => '7553',
+          'CONTENT_TYPE' => 'image/png',
+          'SUBDIR' => 'sale/delivery/logotip/912',
+          'FILE_NAME' => 'dtgjrsniuof2qh09bset9o282z03gdrq.png',
+          'ORIGINAL_NAME' => 'fshjyk4rtpz02eflxixibgp0y7gacsry.png',
+          'DESCRIPTION' => '',
+          'HANDLER_ID' => NULL,
+          'EXTERNAL_ID' => '52793e09ab52526d1520180ada13382b',
+          'VERSION_ORIGINAL_ID' => NULL,
+          'META' => '',
+          'SRC' => '/upload/sale/delivery/logotip/912/dtgjrsniuof2qh09bset9o282z03gdrq.png',
+        ),
+        'LOGOTIP_SRC' => '/upload/resize_cache/sale/delivery/logotip/912/300_300_1/dtgjrsniuof2qh09bset9o282z03gdrq.png',
+        'LOGOTIP_SRC_2X' => '/upload/sale/delivery/logotip/912/dtgjrsniuof2qh09bset9o282z03gdrq.png',
+        'LOGOTIP_SRC_ORIGINAL' => '/upload/sale/delivery/logotip/912/dtgjrsniuof2qh09bset9o282z03gdrq.png',
+      ),
+    ),
+    'USER_PROFILES' => 
+    array (
+    ),
+    'ORDER_PROP' => 
+    array (
+      'groups' => 
+      array (
+        0 => 
+        array (
+          'ID' => '2',
+          'PERSON_TYPE_ID' => '1',
+          'NAME' => 'Данные для доставки',
+          'CODE' => NULL,
+          'SORT' => '200',
+        ),
+        1 => 
+        array (
+          'ID' => '1',
+          'PERSON_TYPE_ID' => '1',
+          'NAME' => 'Личные данные',
+          'CODE' => NULL,
+          'SORT' => '100',
+        ),
+      ),
+      'properties' => 
+      array (
+        0 => 
+        array (
+          'ID' => '42',
+          'PERSON_TYPE_ID' => '1',
+          'NAME' => 'Город',
+          'TYPE' => 'LOCATION',
+          'REQUIRED' => 'Y',
+          'DEFAULT_VALUE' => '0000293598',
+          'SORT' => '0',
+          'USER_PROPS' => 'Y',
+          'IS_LOCATION' => 'Y',
+          'PROPS_GROUP_ID' => '2',
+          'DESCRIPTION' => '',
+          'IS_EMAIL' => 'N',
+          'IS_PROFILE_NAME' => 'N',
+          'IS_PAYER' => 'N',
+          'IS_LOCATION4TAX' => 'N',
+          'IS_FILTERED' => 'N',
+          'CODE' => 'LOCATION',
+          'IS_ZIP' => 'N',
+          'IS_PHONE' => 'N',
+          'IS_ADDRESS' => 'N',
+          'IS_ADDRESS_FROM' => 'N',
+          'IS_ADDRESS_TO' => 'N',
+          'ACTIVE' => 'Y',
+          'UTIL' => 'N',
+          'INPUT_FIELD_LOCATION' => '0',
+          'MULTIPLE' => 'N',
+          'ENTITY_TYPE' => 'ORDER',
+          'RELATION' => 
+          array (
+          ),
+          'VALUE' => 
+          array (
+            0 => '0000293598',
+          ),
+        ),
+        1 => 
+        array (
+          'ID' => '46',
+          'PERSON_TYPE_ID' => '1',
+          'NAME' => 'ФИО',
+          'TYPE' => 'STRING',
+          'REQUIRED' => 'Y',
+          'DEFAULT_VALUE' => '',
+          'SORT' => '100',
+          'USER_PROPS' => 'Y',
+          'IS_LOCATION' => 'N',
+          'PROPS_GROUP_ID' => '1',
+          'DESCRIPTION' => '',
+          'IS_EMAIL' => 'N',
+          'IS_PROFILE_NAME' => 'N',
+          'IS_PAYER' => 'Y',
+          'IS_LOCATION4TAX' => 'N',
+          'IS_FILTERED' => 'N',
+          'CODE' => 'FIO',
+          'IS_ZIP' => 'N',
+          'IS_PHONE' => 'N',
+          'IS_ADDRESS' => 'N',
+          'IS_ADDRESS_FROM' => 'N',
+          'IS_ADDRESS_TO' => 'N',
+          'ACTIVE' => 'Y',
+          'UTIL' => 'N',
+          'INPUT_FIELD_LOCATION' => '0',
+          'MULTIPLE' => 'N',
+          'ENTITY_TYPE' => 'ORDER',
+          'MINLENGTH' => '',
+          'MAXLENGTH' => '',
+          'PATTERN' => '',
+          'MULTILINE' => 'N',
+          'SIZE' => '',
+          'RELATION' => 
+          array (
+          ),
+          'VALUE' => 
+          array (
+            0 => '',
+          ),
+        ),
+        2 => 
+        array (
+          'ID' => '45',
+          'PERSON_TYPE_ID' => '1',
+          'NAME' => 'E-Mail',
+          'TYPE' => 'STRING',
+          'REQUIRED' => 'Y',
+          'DEFAULT_VALUE' => '',
+          'SORT' => '200',
+          'USER_PROPS' => 'Y',
+          'IS_LOCATION' => 'N',
+          'PROPS_GROUP_ID' => '1',
+          'DESCRIPTION' => '',
+          'IS_EMAIL' => 'Y',
+          'IS_PROFILE_NAME' => 'N',
+          'IS_PAYER' => 'N',
+          'IS_LOCATION4TAX' => 'N',
+          'IS_FILTERED' => 'N',
+          'CODE' => 'EMAIL',
+          'IS_ZIP' => 'N',
+          'IS_PHONE' => 'N',
+          'IS_ADDRESS' => 'N',
+          'IS_ADDRESS_FROM' => 'N',
+          'IS_ADDRESS_TO' => 'N',
+          'ACTIVE' => 'Y',
+          'UTIL' => 'N',
+          'INPUT_FIELD_LOCATION' => '0',
+          'MULTIPLE' => 'N',
+          'ENTITY_TYPE' => 'ORDER',
+          'MINLENGTH' => '',
+          'MAXLENGTH' => '',
+          'PATTERN' => '',
+          'MULTILINE' => 'N',
+          'SIZE' => '',
+          'RELATION' => 
+          array (
+          ),
+          'VALUE' => 
+          array (
+            0 => '',
+          ),
+        ),
+        3 => 
+        array (
+          'ID' => '3',
+          'PERSON_TYPE_ID' => '1',
+          'NAME' => 'Телефон',
+          'TYPE' => 'STRING',
+          'REQUIRED' => 'Y',
+          'DEFAULT_VALUE' => '',
+          'SORT' => '300',
+          'USER_PROPS' => 'Y',
+          'IS_LOCATION' => 'N',
+          'PROPS_GROUP_ID' => '1',
+          'DESCRIPTION' => '',
+          'IS_EMAIL' => 'N',
+          'IS_PROFILE_NAME' => 'N',
+          'IS_PAYER' => 'N',
+          'IS_LOCATION4TAX' => 'N',
+          'IS_FILTERED' => 'N',
+          'CODE' => 'PHONE',
+          'IS_ZIP' => 'N',
+          'IS_PHONE' => 'Y',
+          'IS_ADDRESS' => 'N',
+          'IS_ADDRESS_FROM' => 'N',
+          'IS_ADDRESS_TO' => 'N',
+          'ACTIVE' => 'Y',
+          'UTIL' => 'N',
+          'INPUT_FIELD_LOCATION' => '0',
+          'MULTIPLE' => 'N',
+          'ENTITY_TYPE' => 'ORDER',
+          'MINLENGTH' => '',
+          'MAXLENGTH' => '',
+          'PATTERN' => '',
+          'MULTILINE' => 'N',
+          'SIZE' => '',
+          'RELATION' => 
+          array (
+          ),
+          'VALUE' => 
+          array (
+            0 => '',
+          ),
+        ),
+        4 => 
+        array (
+          'ID' => '44',
+          'PERSON_TYPE_ID' => '1',
+          'NAME' => 'Адрес',
+          'TYPE' => 'STRING',
+          'REQUIRED' => 'N',
+          'DEFAULT_VALUE' => '',
+          'SORT' => '500',
+          'USER_PROPS' => 'Y',
+          'IS_LOCATION' => 'N',
+          'PROPS_GROUP_ID' => '1',
+          'DESCRIPTION' => '',
+          'IS_EMAIL' => 'N',
+          'IS_PROFILE_NAME' => 'N',
+          'IS_PAYER' => 'N',
+          'IS_LOCATION4TAX' => 'N',
+          'IS_FILTERED' => 'N',
+          'CODE' => 'ADDRESS',
+          'IS_ZIP' => 'N',
+          'IS_PHONE' => 'N',
+          'IS_ADDRESS' => 'Y',
+          'IS_ADDRESS_FROM' => 'N',
+          'IS_ADDRESS_TO' => 'N',
+          'ACTIVE' => 'Y',
+          'UTIL' => 'N',
+          'INPUT_FIELD_LOCATION' => '0',
+          'MULTIPLE' => 'N',
+          'ENTITY_TYPE' => 'ORDER',
+          'MINLENGTH' => '',
+          'MAXLENGTH' => '',
+          'PATTERN' => '',
+          'MULTILINE' => 'Y',
+          'COLS' => '',
+          'ROWS' => '5',
+          'RELATION' => 
+          array (
+          ),
+          'VALUE' => 
+          array (
+            0 => '',
+          ),
+        ),
+      ),
+    ),
+    'STORE_LIST' => 
+    array (
+      7 => 
+      array (
+        'ID' => '7',
+        'TITLE' => 'Лиски магазин',
+        'ADDRESS' => 'г. Лиски, Проспект Ленина, 3',
+        'DESCRIPTION' => '',
+        'IMAGE_ID' => NULL,
+        'PHONE' => '+7 (47391) 220-82',
+        'SCHEDULE' => 'с 8:00 до 17:00 (пн-пт); с 8:00 до 15:00 (сб); вс - выходной ',
+        'GPS_N' => '0',
+        'GPS_S' => '0',
+        'ISSUING_CENTER' => 'Y',
+        'SITE_ID' => 's1',
+      ),
+      4 => 
+      array (
+        'ID' => '4',
+        'TITLE' => 'Лиски',
+        'ADDRESS' => 'г. Лиски, ул. Воронежская 27А',
+        'DESCRIPTION' => '',
+        'IMAGE_ID' => NULL,
+        'PHONE' => '+7 (47391) 200-22',
+        'SCHEDULE' => 'с 8:00 до 18:00 (пн-пт); с 8:00 до 13-00 (сб); вс - выходной',
+        'GPS_N' => '0',
+        'GPS_S' => '0',
+        'ISSUING_CENTER' => 'Y',
+        'SITE_ID' => 's1',
+      ),
+      19 => 
+      array (
+        'ID' => '19',
+        'TITLE' => 'Склад Старый Оскол',
+        'ADDRESS' => 'г. Старый Оскол, Проспект Алексея Угарова 18ж',
+        'DESCRIPTION' => '',
+        'IMAGE_ID' => NULL,
+        'PHONE' => '+ 7 (472) 539-09-11',
+        'SCHEDULE' => 'с 8:00 до 18:00 (пн-пт); с 9:00 до 16:00 (сб); вс - выходной',
+        'GPS_N' => '0',
+        'GPS_S' => '0',
+        'ISSUING_CENTER' => 'Y',
+        'SITE_ID' => 's1',
+      ),
+      17 => 
+      array (
+        'ID' => '17',
+        'TITLE' => 'Склад Аэропорт',
+        'ADDRESS' => 'Рам.р-н, ул.Промышленная, зона 2 уч.14',
+        'DESCRIPTION' => 'Аэропорт( Рам.р-н, Айдаровское сел.поселение, ул.Промышленная, зона 2 уч.14)',
+        'IMAGE_ID' => NULL,
+        'PHONE' => '+7 (473) 207-55-70',
+        'SCHEDULE' => 'с 8:00 до 17:00 (пн-пт); с 8:30 до 16:30 (сб); воскресенье - выходной',
+        'GPS_N' => '0',
+        'GPS_S' => '0',
+        'ISSUING_CENTER' => 'Y',
+        'SITE_ID' => 's1',
+      ),
+      3 => 
+      array (
+        'ID' => '3',
+        'TITLE' => 'Склад на Шишкова',
+        'ADDRESS' => 'Шишкова 107Б',
+        'DESCRIPTION' => '',
+        'IMAGE_ID' => NULL,
+        'PHONE' => '+7 (473) 250-94-04 ',
+        'SCHEDULE' => 'с 8:00 до 18:00 (пн-пт); с 8:30 до 16:30 (сб); воскресенье - выходной',
+        'GPS_N' => '0',
+        'GPS_S' => '0',
+        'ISSUING_CENTER' => 'Y',
+        'SITE_ID' => 's1',
+      ),
+      5 => 
+      array (
+        'ID' => '5',
+        'TITLE' => 'Склад на Пирогова ',
+        'ADDRESS' => 'Пирогова 10',
+        'DESCRIPTION' => 'только инженерная сантехника',
+        'IMAGE_ID' => NULL,
+        'PHONE' => '+7 (473) 202-24-05',
+        'SCHEDULE' => 'с 8:00 до 18:00 (пн-пт); с 8:00 до 16:00 (сб); вс - выходной',
+        'GPS_N' => '0',
+        'GPS_S' => '0',
+        'ISSUING_CENTER' => 'Y',
+        'SITE_ID' => 's1',
+      ),
+      6 => 
+      array (
+        'ID' => '6',
+        'TITLE' => 'Стройка',
+        'ADDRESS' => 'Ильюшина 10А',
+        'DESCRIPTION' => '',
+        'IMAGE_ID' => NULL,
+        'PHONE' => '+7 (473) 200-89-80',
+        'SCHEDULE' => 'с 8:00 до 18:00 (пн-пт); с 8:30 до 16:30 (сб); воскресенье - выходной',
+        'GPS_N' => '0',
+        'GPS_S' => '0',
+        'ISSUING_CENTER' => 'Y',
+        'SITE_ID' => 's1',
+      ),
+      8 => 
+      array (
+        'ID' => '8',
+        'TITLE' => 'Главный склад',
+        'ADDRESS' => 'г. Воронеж, Ильюшина 10Б',
+        'DESCRIPTION' => '',
+        'IMAGE_ID' => NULL,
+        'PHONE' => '+7 (473) 207-55-05',
+        'SCHEDULE' => 'с 8:00 до 18:00 (пн-пт); с 8:30 до 16:30 (сб); воскресенье - выходной',
+        'GPS_N' => '51.643458',
+        'GPS_S' => '39.294952',
+        'ISSUING_CENTER' => 'Y',
+        'SITE_ID' => 's1',
+      ),
+    ),
+    'BUYER_STORE' => 0,
+    'COUPON_LIST' => 
+    array (
+    ),
+    'PAY_CURRENT_ACCOUNT' => 'N',
+    'PAY_FROM_ACCOUNT' => 'N',
+    'CURRENT_BUDGET_FORMATED' => NULL,
+    'TOTAL' => 
+    array (
+      'BASKET_POSITIONS' => 1,
+      'PRICE_WITHOUT_DISCOUNT_VALUE' => 9200.0,
+      'PRICE_WITHOUT_DISCOUNT' => '9 200 &#8381;',
+      'BASKET_PRICE_DISCOUNT_DIFF_VALUE' => 0.0,
+      'BASKET_PRICE_DISCOUNT_DIFF' => '0 &#8381;',
+      'PAYED_FROM_ACCOUNT_FORMATED' => false,
+      'ORDER_TOTAL_PRICE' => 9200.0,
+      'ORDER_TOTAL_PRICE_FORMATED' => '9 200 &#8381;',
+      'ORDER_TOTAL_LEFT_TO_PAY' => NULL,
+      'ORDER_TOTAL_LEFT_TO_PAY_FORMATED' => NULL,
+      'ORDER_WEIGHT' => 0.0,
+      'ORDER_WEIGHT_FORMATED' => '0 кг',
+      'ORDER_PRICE' => 9200.0,
+      'ORDER_PRICE_FORMATED' => '9 200 &#8381;',
+      'USE_VAT' => true,
+      'VAT_RATE' => 0.2,
+      'VAT_SUM' => 1533.3333,
+      'VAT_SUM_FORMATED' => '1 533.33 &#8381;',
+      'TAX_PRICE' => 0.0,
+      'TAX_LIST' => 
+      array (
+        0 => 
+        array (
+          'NAME' => 'НДС',
+          'IS_PERCENT' => 'Y',
+          'VALUE' => 20.0,
+          'VALUE_FORMATED' => '(20%, включен в цену)',
+          'VALUE_MONEY' => 1533.3333,
+          'VALUE_MONEY_FORMATED' => '1 533.33 &#8381;',
+          'APPLY_ORDER' => 100,
+          'IS_IN_PRICE' => 'Y',
+          'CODE' => 'VAT',
+        ),
+      ),
+      'DISCOUNT_PRICE' => 0.0,
+      'DISCOUNT_PRICE_FORMATED' => '0 &#8381;',
+      'DELIVERY_PRICE' => 0.0,
+      'DELIVERY_PRICE_FORMATED' => '0 &#8381;',
+      'PAY_SYSTEM_PRICE' => 0.0,
+      'PAY_SYSTEM_PRICE_FORMATTED' => '0 &#8381;',
+    ),
+    'ERROR' => 
+    array (
+    ),
+    'WARNING' => 
+    array (
+      'PAY_SYSTEM' => 
+      array (
+        0 => 'Выбрана первая доступная платежная система',
+      ),
+    ),
+  ),
+  'locations' => 
+  array (
+    42 => 
+    array (
+      'template' => 'search',
+      'output' => 
+      array (
+        0 => '	<div id="sls-73374" class="bx-sls ">
+
+				<div class="dropdown-block bx-ui-sls-input-block">
+
+			<span class="dropdown-icon"></span>
+			<input type="text" autocomplete="off" name="ORDER_PROP_42" value="0000293598" class="dropdown-field" placeholder="Введите название ..." />
+
+			<div class="dropdown-fade2white"></div>
+			<div class="bx-ui-sls-loader"></div>
+			<div class="bx-ui-sls-clear" title="Отменить выбор"></div>
+			<div class="bx-ui-sls-pane"></div>
+
+		</div>
+
+		<script type="text/html" data-template-id="bx-ui-sls-error">
+			<div class="bx-ui-sls-error">
+				<div></div>
+				{{message}}
+			</div>
+		</script>
+
+		<script type="text/html" data-template-id="bx-ui-sls-dropdown-item">
+			<div class="dropdown-item bx-ui-sls-variant">
+				<span class="dropdown-item-text">{{display_wrapped}}</span>
+							</div>
+		</script>
+
+		<div class="bx-ui-sls-error-message">
+					</div>
+
+	</div>
+
+	<script>
+
+		if (!window.BX && top.BX)
+			window.BX = top.BX;
+
+				if (typeof window.BX.locationsDeferred == \'undefined\') window.BX.locationsDeferred = {};
+		window.BX.locationsDeferred[\'42\'] = function () {
+					if (typeof window.BX.locationSelectors == \'undefined\') window.BX.locationSelectors = {};
+			window.BX.locationSelectors[\'42\'] =
+			
+			new BX.Sale.component.location.selector.search({\'scope\':\'sls-73374\',\'source\':\'/bitrix/components/bitrix/sale.location.selector.search/get.php\',\'query\':{\'FILTER\':{\'EXCLUDE_ID\':0,\'SITE_ID\':\'s1\'},\'BEHAVIOUR\':{\'SEARCH_BY_PRIMARY\':\'0\',\'LANGUAGE_ID\':\'ru\'}},\'selectedItem\':679,\'knownItems\':{\'679\':{\'CODE\':\'0000293598\',\'TYPE_ID\':\'5\',\'PATH\':[678,2,1],\'VALUE\':679,\'DISPLAY\':\'Воронеж\'},\'1\':{\'CODE\':\'0000028023\',\'TYPE_ID\':\'1\',\'PATH\':[2,1],\'VALUE\':1,\'DISPLAY\':\'Россия\'},\'2\':{\'CODE\':\'0000028024\',\'TYPE_ID\':\'2\',\'PATH\':[1],\'VALUE\':2,\'DISPLAY\':\'Центр\'},\'678\':{\'CODE\':\'0000028040\',\'TYPE_ID\':\'3\',\'PATH\':[],\'VALUE\':678,\'DISPLAY\':\'Воронежская область\'}},\'provideLinkBy\':\'code\',\'messages\':{\'nothingFound\':\'К сожалению, ничего не найдено\',\'error\':\'К сожалению, произошла внутренняя ошибка\'},\'callback\':\'submitFormProxy\',\'useSpawn\':false,\'usePopup\':false,\'initializeByGlobalEvent\':\'\',\'globalEventScope\':\'\',\'pathNames\':{\'1\':\'Россия\',\'2\':\'Центр\',\'678\':\'Воронежская область\',\'679\':\'Воронеж\'},\'types\':{\'1\':{\'CODE\':\'COUNTRY\'},\'2\':{\'CODE\':\'COUNTRY_DISTRICT\'},\'3\':{\'CODE\':\'REGION\'},\'4\':{\'CODE\':\'SUBREGION\'},\'5\':{\'CODE\':\'CITY\'},\'6\':{\'CODE\':\'VILLAGE\'},\'7\':{\'CODE\':\'STREET\'}}});
+
+				};
+		
+	</script>
+
+',
+      ),
+      'showAlt' => false,
+      'lastValue' => '0000293598',
+      'coordinates' => 
+      array (
+        'LONGITUDE' => '0.000000',
+        'LATITUDE' => '0.000000',
+      ),
+    ),
+  ),
+  'error' => false,
+)
+#0: AddMessage2Log
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/php_interface/init.php:432
+#1: OnSaleComponentOrderShowAjaxAnswerHandler
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/modules/main/tools.php:5246
+#2: ExecuteModuleEventEx
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/components/bitrix/sale.order.ajax/class.php:4907
+#3: SaleOrderAjax->showAjaxAnswer
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/components/bitrix/sale.order.ajax/class.php:4767
+#4: SaleOrderAjax->refreshOrderAjaxAction
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/components/bitrix/sale.order.ajax/class.php:6239
+#5: SaleOrderAjax->doAction
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/components/bitrix/sale.order.ajax/class.php:6506
+----------

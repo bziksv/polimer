@@ -1,0 +1,33 @@
+<?
+$MESS["SUP_NO_LIMITS"] = "< keine Begrenzung >";
+$MESS["SUP_DELETE_CONFIRMATION"] = "Wollen Sie diesen SLA wirklich löschen?";
+$MESS["SUP_DAY_3"] = "T.";
+$MESS["SUP_DAY_1"] = "Tag";
+$MESS["SUP_DAY_5"] = "Tage";
+$MESS["SUP_DESCRIPTION"] = "Beschreibung";
+$MESS["SUP_HOUR_1"] = "Stunde";
+$MESS["SUP_HOUR_3"] = "Stunden";
+$MESS["SUP_HOUR_5"] = "Stunden";
+$MESS["SUP_PAGES"] = "Levels";
+$MESS["SUP_MINUTE_1"] = "Minute";
+$MESS["SUP_MINUTE_5"] = "Minuten";
+$MESS["SUP_MINUTE_3"] = "Minuten";
+$MESS["SUP_NAME"] = "Überschrift";
+$MESS["SUP_FORGOT_NAME"] = "Geben Sie die Überschrift für den Datensatz Nr. #ID# ein";
+$MESS["SUP_PRIORITY"] = "Priorität";
+$MESS["SUP_RESPONSE_TIME"] = "Reaktionszeit";
+$MESS["SUP_RESPONSIBLE"] = "Verantwortlicher";
+$MESS["SUP_SITE"] = "Seite";
+$MESS["SUP_PAGE_TITLE"] = "Support Levels (SLA)";
+$MESS["SUP_USER_GROUPS"] = "Usergruppen";
+$MESS["SUP_SHEDULE_S"] = "Zeitplan";
+$MESS["MAIN_ADMIN_MENU_EDIT"] = "Bearbeiten";
+$MESS["SUP_EDIT"] = "Ändern";
+$MESS["MAIN_ADMIN_LIST_SELECTED"] = "Gesamt:";
+$MESS["SUP_DELETE"] = "Löschen";
+$MESS["MAIN_ADMIN_LIST_CHECKED"] = "Ausgewählt:";
+$MESS["MAIN_ADMIN_LIST_DELETE"] = "löschen";
+$MESS["SUP_ADD"] = "Hinzufügen";
+$MESS["SUP_EXACT_MATCH"] = "Nur genaue Treffer";
+$MESS["SUP_ALL"] = "(alle)";
+?>

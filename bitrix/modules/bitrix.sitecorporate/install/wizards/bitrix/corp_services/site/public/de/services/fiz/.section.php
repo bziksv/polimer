@@ -1,0 +1,6 @@
+<?
+$sSectionName = "Privatkunden";
+$arDirProperties = Array(
+
+);
+?>

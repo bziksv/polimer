@@ -1,0 +1,4 @@
+<?php
+$MESS["LANDING_TABLE_BLOCK_FAVOURITE_FIELD_CODE"] = "Symbolischer Code des Blocks";
+$MESS["LANDING_TABLE_BLOCK_FAVOURITE_FIELD_DATE_CREATE"] = "Datum, wann der Block erstellt wurde";
+$MESS["LANDING_TABLE_BLOCK_FAVOURITE_FIELD_USER_ID"] = "Nutzer-ID";

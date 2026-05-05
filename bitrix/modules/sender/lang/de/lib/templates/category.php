@@ -1,0 +1,7 @@
+<?
+$MESS["SENDER_TEMPLATES_CATEGORY_CASES"] = "Lange erprobte Vorlagen für Marketing-Kampagnen";
+$MESS["SENDER_TEMPLATES_CATEGORY_RECENT"] = "Neulich genutzt";
+$MESS["SENDER_TEMPLATES_CATEGORY_BASE"] = "Standard";
+$MESS["SENDER_TEMPLATES_CATEGORY_USER"] = "Meine Vorlagen";
+$MESS["SENDER_TEMPLATES_CATEGORY_ADDITIONAL"] = "Mehr";
+?>

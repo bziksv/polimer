@@ -1,0 +1,33 @@
+<?
+$MESS["SUP_M_MARK"] = "Antwortbewertung";
+$MESS["SUP_M_CATEGORY"] = "Kategorien";
+$MESS["SUP_M_COUPONS_LOG"] = "Gutschein-Protokoll";
+$MESS["SUP_M_COUPONS_LOG_TITLE"] = "Gutschein-Protokoll";
+$MESS["SUP_M_COUPONS_TITLE"] = "VIP Gutschein erstellen und bearbeiten";
+$MESS["SUP_M_CRITICALITY"] = "Dringlichkeit";
+$MESS["SUP_M_REPORT_GRAPH"] = "Diagramme";
+$MESS["SUP_M_DIFFICULTY"] = "Schwierigkeitsgrad";
+$MESS["SUP_M_DIFFICULTY_TITLE"] = "Schwierigkeitsgrad";
+$MESS["SUP_M_GROUPS_TITLE"] = "Gruppe bearbeiten";
+$MESS["SUP_M_FUA"] = "Häufige Antworten";
+$MESS["SUP_M_REPORT_GRAPH_ALT"] = "Grafischer Bericht über die Arbeit des technischen Supports";
+$MESS["SUP_M_GROUPS"] = "Gruppen";
+$MESS["SUP_M_SUPPORT"] = "Technischer Support";
+$MESS["SUP_M_DICT"] = "Verzeichnis";
+$MESS["SUP_M_DICT_TITLE"] = "Verzeichnis konfigurieren";
+$MESS["SUP_M_SOURCE"] = "Quelle";
+$MESS["SUP_M_STATUS"] = "Status";
+$MESS["SUP_M_SLA"] = "Support Levels";
+$MESS["SUP_M_REPORT_TABLE_ALT"] = "Tabelle zur Verteilung der offenen oder geschlossenen Anfragen anhand verschiedener Parameter";
+$MESS["SUP_M_SUPPORT_TITLE"] = "Technischen Support verwalten";
+$MESS["SUP_M_TICKETS"] = "Anfragen";
+$MESS["SUP_M_USER_IN_GROUPS"] = "User in den Gruppen";
+$MESS["SUP_M_USER_IN_GROUPS_TITLE"] = "User in Gruppen";
+$MESS["SUP_M_COUPONS"] = "Gutscheine für VIP-Anfragen";
+$MESS["SUP_M_TICKETS_ALT"] = "Useranfragen an die Administratoren";
+$MESS["SUP_M_REPORT_TABLE"] = "Support-Desktop";
+$MESS["SUP_M_TIMETABLE"] = "Zeitpläne";
+$MESS["SUP_M_HOLIDAYS"] = "Ausnahmen";
+$MESS["SUP_M_SHEDULE"] = "Zeitpläne";
+$MESS["SUP_M_SHEDULE_TITLE"] = "Zeitpläne";
+?>

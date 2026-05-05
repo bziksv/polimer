@@ -1,0 +1,68 @@
+	.products_roll.sale {
+		margin-bottom: 15px;
+	}
+	
+	.products_roll .pr_box .item:nth-child(4n+1) {
+		margin-left: 10px!important;
+	}
+
+	.products_roll.sale .pr_box .item .hover {
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center center;
+		cursor:pointer;
+	}
+	
+	.products_roll.sale .pr_box .item .hover .inner {
+		padding: 20px 20px 0;
+	}
+	
+	.products_roll.sale .pr_box .item .hover .discount {
+		top: unset;
+		bottom: unset;
+		left: 20px;
+	}
+	
+	.products_roll.sale .pr_box .item .hover .information {
+		position: absolute;
+		bottom: 10px;
+		left: 15px;
+		right: 15px;
+		color: #FFF;
+	}
+	
+	.products_roll.sale .pr_box .item .hover .information .duration {
+		font-size: 12px;
+		margin-bottom: 10px;
+	}
+	
+	.products_roll.sale .pr_box .item .hover .information .name {
+		font-size: 15px;
+		font-weight: 500;
+		line-height: 1.34;
+	}
+	
+	.products_roll.sale .pr_box .item .hover::before {
+		background: linear-gradient(180deg, rgba(0, 0, 0, 0) 35%, black 100%);
+		opacity: 0.8;
+	}
+	
+	.products_roll.sale .pr_box .item .hover::before {
+		content: "";
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		-webkit-transition-duration: 0.35s;
+		-moz-transition-duration: 0.35s;
+		-ms-transition-duration: 0.35s;
+		-o-transition-duration: 0.35s;
+		transition-duration: 0.35s;
+		-webkit-transition-property: opacity;
+		-moz-transition-property: opacity;
+		-ms-transition-property: opacity;
+		-o-transition-property: opacity;
+		transition-property: opacity;
+	}

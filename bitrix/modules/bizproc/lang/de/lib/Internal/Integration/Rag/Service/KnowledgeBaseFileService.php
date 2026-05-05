@@ -1,0 +1,6 @@
+<?php
+$MESS["BIZPROC_INTERNAL_INTEGRATION_RAG_KNOWLEDGE_BASE_FILE_SERVICE_ADD_ERROR"] = "Datei konnte zur Wissensbasis nicht hinzugefügt werden.";
+$MESS["BIZPROC_INTERNAL_INTEGRATION_RAG_KNOWLEDGE_BASE_FILE_SERVICE_DELETE_ERROR"] = "Datei konnte aus der Wissensbasis nicht entfernt werden.";
+$MESS["BIZPROC_INTERNAL_INTEGRATION_RAG_KNOWLEDGE_BASE_FILE_SERVICE_GET_ERROR"] = "Wissensbasis wurde nicht gefunden.";
+$MESS["BIZPROC_INTERNAL_INTEGRATION_RAG_KNOWLEDGE_BASE_FILE_SERVICE_NO_FILES_ERROR"] = "Dateien in die Wissensbasis hochladen.";
+$MESS["BIZPROC_INTERNAL_INTEGRATION_RAG_KNOWLEDGE_BASE_FILE_SERVICE_TOO_MANY_FILES_ERROR"] = "Maximale Zahl der Dateien in der Wissensbasis überschritten.";

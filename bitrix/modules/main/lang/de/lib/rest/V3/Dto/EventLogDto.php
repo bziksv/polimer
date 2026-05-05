@@ -1,0 +1,27 @@
+<?php
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_AUDIT_TYPE_ID_DESCRIPTION"] = "ID des Auditereignistyps.";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_AUDIT_TYPE_ID_TITLE"] = "Ereignistyp";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_DESCRIPTION_DESCRIPTION"] = "Detaillierte Ereignisbeschreibung.";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_DESCRIPTION_TITLE"] = "Ereignisbeschreibung";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_GUEST_ID_DESCRIPTION"] = "Die ID eines Gastes (d.h. eines Nutzers, der sich nicht eingeloggt hat).";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_GUEST_ID_TITLE"] = "Gast-ID";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_ID_DESCRIPTION"] = "Eindeutige ID des Ereignisprotokolleintrags.";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_ID_TITLE"] = "Eintrags-ID";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_ITEM_ID_DESCRIPTION"] = "Die ID eines Elements, das mit dem Ereignis verknüpft ist.";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_ITEM_ID_TITLE"] = "Element-ID";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_MODULE_ID_DESCRIPTION"] = "Das Modul, welches das Ereignis produziert.";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_MODULE_ID_TITLE"] = "Modul";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_REMOTE_ADDR_DESCRIPTION"] = "Die IP-Adresse eines Nutzers, der mit dem Ereignis verknüpft ist.";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_REMOTE_ADDR_TITLE"] = "IP-Adresse";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_REQUEST_URI_DESCRIPTION"] = "Die URL, die genutzt wurde, um die Anfrage zu initiieren.";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_REQUEST_URI_TITLE"] = "URL der Anfrage";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_SEVERITY_DESCRIPTION"] = "Schweregrad des Ereignisses (INFO, WARNING, ERROR usw.)";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_SEVERITY_TITLE"] = "Schweregrad";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_SITE_ID_DESCRIPTION"] = "Die ID einer Website, die mit dem Ereignis verknüpft ist.";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_SITE_ID_TITLE"] = "Website-ID";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_TIMESTAMP_DESCRIPTION"] = "Datum und Uhrzeit des Ereignisses.";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_TIMESTAMP_TITLE"] = "Zeit des Ereignisses";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_USER_AGENT_DESCRIPTION"] = "Die Zeile des Nutzeragenten: der Browser und das Betriebssystem des Nutzers.";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_USER_AGENT_TITLE"] = "Nutzeragent";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_USER_ID_DESCRIPTION"] = "Die ID eines Nutzers, der mit dem Ereignis verknüpft ist.";
+$MESS["REST_V3_DTO_EVENTLOG_FIELD_USER_ID_TITLE"] = "Nutzer-ID";

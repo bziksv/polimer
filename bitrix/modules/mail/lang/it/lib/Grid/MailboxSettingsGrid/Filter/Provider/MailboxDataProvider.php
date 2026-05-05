@@ -1,0 +1,9 @@
+<?php
+$MESS["MAIL_MAILBOX_GRID_FILTER_ACCESS_USERS"] = "Utenti con accesso";
+$MESS["MAIL_MAILBOX_GRID_FILTER_CRM_INTEGRATION"] = "Nel CRM";
+$MESS["MAIL_MAILBOX_GRID_FILTER_CRM_QUEUE"] = "Responsabili (CRM)";
+$MESS["MAIL_MAILBOX_GRID_FILTER_DISK_SIZE"] = "Spazio su disco (MB)";
+$MESS["MAIL_MAILBOX_GRID_FILTER_EMAIL"] = "Indirizzo e-mail";
+$MESS["MAIL_MAILBOX_GRID_FILTER_LAST_SYNC"] = "Ultima sincronizzazione";
+$MESS["MAIL_MAILBOX_GRID_FILTER_OWNER"] = "Proprietario della casella di posta";
+$MESS["MAIL_MAILBOX_GRID_FILTER_SENDER_NAME"] = "Nome mittente";

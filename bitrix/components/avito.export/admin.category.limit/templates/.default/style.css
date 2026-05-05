@@ -1,0 +1,62 @@
+.avito-limit-row {
+	display: flex;
+	justify-content: flex-start;
+	padding: 12px 16px;
+	max-width: 600px;
+	border: 1px solid #cacfd8;
+	border-radius: 3px;
+
+	position: relative;
+
+	margin-bottom: 20px;
+
+	background: #fff;
+}
+
+.avito-limit-column {
+	padding-right: 20px;
+}
+
+.avito-limit-column:last-of-type {
+	padding-right: 0;
+}
+
+.avito-limit-label {
+	display: block;
+	margin-bottom: 9px;
+}
+
+.avito-limit-delete {
+	border: 0;
+	padding: 0;
+
+	position: absolute;
+	top: 0;
+	right: -30px;
+
+	background: none;
+
+	cursor: pointer;
+
+	width: 30px;
+	height: 100%;
+}
+
+.avito-limit-delete:before,
+.avito-limit-delete:after {
+	content: "";
+	width: 9px;
+	height: 2px;
+
+	position: absolute;
+	top: 50%;
+	left: 50%;
+
+	background-color: #979797;
+	transform: rotate(-45deg);
+	transform-origin: 50% 50%;
+}
+
+.avito-limit-delete:after {
+	transform: rotate(45deg);
+}

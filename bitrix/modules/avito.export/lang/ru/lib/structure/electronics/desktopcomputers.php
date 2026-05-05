@@ -1,0 +1,3 @@
+<?php
+
+$MESS['AVITO_EXPORT_STRUCTURE_ELECTRONICS_DESKTOP_COMPUTERS_NAME'] = 'Настольные компьютеры';

@@ -1,0 +1,29 @@
+<?
+$MESS["DISCOUNT_ENTITY_ID_FIELD"] = "Rabatt-ID";
+$MESS["DISCOUNT_ENTITY_XML_ID_FIELD"] = "Externe ID";
+$MESS["DISCOUNT_ENTITY_SITE_ID_FIELD"] = "Website";
+$MESS["DISCOUNT_ENTITY_TYPE_FIELD"] = "Typ";
+$MESS["DISCOUNT_ENTITY_ACTIVE_FIELD"] = "Aktiv";
+$MESS["DISCOUNT_ENTITY_ACTIVE_FROM_FIELD"] = "Aktiv von";
+$MESS["DISCOUNT_ENTITY_ACTIVE_TO_FIELD"] = "Aktiv bis";
+$MESS["DISCOUNT_ENTITY_NAME_FIELD"] = "Name";
+$MESS["DISCOUNT_ENTITY_SORT_FIELD"] = "Sortierung";
+$MESS["DISCOUNT_ENTITY_VALIDATOR_TYPE"] = "Rabatttyp ist nicht gültig.";
+$MESS["DISCOUNT_ENTITY_RENEWAL_FIELD"] = "Abonnementverlängerung";
+$MESS["DISCOUNT_ENTITY_MAX_DISCOUNT_FIELD"] = "Maximaler Rabattwert";
+$MESS["DISCOUNT_ENTITY_VALUE_TYPE_FIELD"] = "Rabatttyp";
+$MESS["DISCOUNT_ENTITY_VALUE_FIELD"] = "Rabattwert";
+$MESS["DISCOUNT_ENTITY_CURRENCY_FIELD"] = "Währung";
+$MESS["DISCOUNT_ENTITY_TIMESTAMP_X_FIELD"] = "Geändert am";
+$MESS["DISCOUNT_ENTITY_MODIFIED_BY_FIELD"] = "Geändert von";
+$MESS["DISCOUNT_ENTITY_DATE_CREATE_FIELD"] = "Erstellt am";
+$MESS["DISCOUNT_ENTITY_CREATED_BY_FIELD"] = "Erstellt von";
+$MESS["DISCOUNT_ENTITY_PRIORITY_FIELD"] = "Priorität der Anwendung";
+$MESS["DISCOUNT_ENTITY_LAST_DISCOUNT_FIELD"] = "Rabatte nicht mehr anwenden";
+$MESS["DISCOUNT_ENTITY_NOTES_FIELD"] = "Kurzbeschreibung";
+$MESS["CATALOG_DISCOUNT_ENTITY_MESS_ADD_BLOCKED"] = "CCatalogDiscount::Add aufrufen, um Produktrabatte zu erstellen";
+$MESS["CATALOG_DISCOUNT_ENTITY_MESS_UPDATE_BLOCKED"] = "CCatalogDiscount::Update aufrufen, um Produktrabatte zu bearbeiten";
+$MESS["CATALOG_DISCOUNT_ENTITY_MESS_DELETE_BLOCKED"] = "CCatalogDiscount::Delete aufrufen, um Produktrabatte zu löschen";
+$MESS["DISCOUNT_ENTITY_CONDITIONS_LIST_FIELD"] = "Anwendungsbedingungen";
+$MESS["DISCOUNT_ENTITY_USE_COUPONS_FIELD"] = "Gutscheine";
+?>

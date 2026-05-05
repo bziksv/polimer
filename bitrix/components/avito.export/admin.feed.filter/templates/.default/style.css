@@ -1,0 +1,168 @@
+.avito-filter-junction {
+	display: block;
+	width: 45px;
+	height: 30px;
+	border: 0;
+	border-radius: 3px;
+
+	margin: -5px 0 -5px -13px;
+
+	background: #7ea502;
+	color: #fff;
+
+	line-height: 30px;
+	text-transform: uppercase;
+	text-align: center;
+
+	cursor: pointer;
+}
+
+.avito-filter-junction.is--active {
+	margin-left: 27px;
+	background: #c5c500;
+}
+
+.avito-filter-row {
+	display: flex;
+	justify-content: flex-start;
+	padding: 12px 16px;
+	max-width: 600px;
+	border: 1px solid #cacfd8;
+	border-radius: 3px;
+
+	position: relative;
+
+	background: #fff;
+}
+
+.avito-filter-row.level--1 {
+	margin-left: 40px;
+}
+
+.avito-filter-column {
+	width: 200px;
+	padding-right: 20px;
+}
+
+.avito-filter-column.for--compare {
+	width: 150px;
+}
+
+.avito-filter-column.for--value {
+	padding-right: 0;
+}
+
+.avito-filter-label {
+	display: block;
+	margin-bottom: 9px;
+}
+
+.avito-filter-column > input,
+.avito-filter-column > select,
+.avito-filter-column > .adm-input-wrap {
+	width: 100%;
+	height: 29px !important;
+	box-sizing: border-box;
+}
+
+.avito-filter-compare option:disabled {
+	display: none;
+}
+
+.avito-row-delete {
+	border: 0;
+	padding: 0;
+
+	position: absolute;
+	top: 0;
+	right: -30px;
+
+	background: none;
+
+	cursor: pointer;
+
+	width: 30px;
+	height: 100%;
+}
+
+.avito-row-delete:before,
+.avito-row-delete:after {
+	content: "";
+	width: 9px;
+	height: 2px;
+
+	position: absolute;
+	top: 50%;
+	left: 50%;
+
+	background-color: #979797;
+	transform: rotate(-45deg);
+	transform-origin: 50% 50%;
+}
+
+.avito-row-delete:after {
+	transform: rotate(45deg);
+}
+
+.avito-filter-add {
+	margin-top: 20px;
+}
+
+.avito-filter-container {
+	position: relative;
+	margin-bottom: 10px;
+	padding: 25px 20px 20px;
+	border: 1px solid #c9cdd6;
+	border-radius: 4px;
+	background-color: #edf5f6;
+	box-shadow: 0 1px 0 #eceded;
+	max-width: 700px;
+}
+
+.avito-filter-container-add {
+	border-bottom: 1px dashed #113c7d;
+	color: #113c7d;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.avito-filter-container-add:hover,
+.avito-filter-container-add:focus {
+	text-decoration: none;
+	border-bottom-color: transparent;
+}
+
+.avito-filter-container-delete {
+	width: 20px;
+	height: 20px;
+	overflow: hidden;
+	padding: 0;
+	border: 0;
+
+	position: absolute;
+	top: 5px;
+	right: 5px;
+
+	margin: 0;
+
+	background: url('i/delete.svg') no-repeat 50% 50%;
+	background-size: 15px 15px;
+
+	text-indent: 110%;
+	white-space: nowrap;
+
+	opacity: 0.33;
+	transition: opacity .15s ease-in;
+
+	cursor: pointer;
+}
+
+.avito-filter-container-delete:hover,
+.avito-filter-container-delete:focus {
+	opacity: 1;
+	transition-timing-function: ease-out;
+}
+
+.avito--hidden {
+	display: none !important;
+}

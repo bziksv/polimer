@@ -1,0 +1,32 @@
+<?
+$MESS["SUP_ADMIN_TAB1"] = "Zeitplan";
+$MESS["SUP_ADMIN_TAB2"] = "Arbeitszeiten";
+$MESS["SUP_ADMIN_TITLE"] = "Zeitpläne";
+$MESS["SUP_ADMIN_TITLE_ADD"] = "Neuer Zeitplan";
+$MESS["SUP_ADMIN_TITLE_EDIT"] = "Zeitplan \"#NAME#\" bearbeiten";
+$MESS["SUP_ERROR"] = "Fehler";
+$MESS["SUP_BACK_TO_ADMIN"] = "Zurück";
+$MESS["SUP_TIMETABLE_NOT_FOUND"] = "Zeitplan wurde nicht gefunden.";
+$MESS["SUP_CONFIRM_DEL_MESSAGE"] = "Möchten Sie diesen Zeitplan wirklich löschen?";
+$MESS["SUP_FORM_SETTINGS"] = "Einstellungen";
+$MESS["SUP_FORM_SETTINGS_EX"] = "Einstellungen";
+$MESS["SUP_NAME"] = "Name";
+$MESS["SUP_DESCRIPTION"] = "Beschreibung";
+$MESS["SUP_HOURS"] = "Arbeitszeiten";
+$MESS["SUP_24H"] = "24 Stunden";
+$MESS["SUP_CLOSED"] = "Support hat geschlossen";
+$MESS["SUP_CUSTOM"] = "Arbeitszeiten:<br>(HH24:MI)";
+$MESS["SUP_ADMIN_USER_FIELDS"] = "Zusätzliche Eigenschaften";
+$MESS["SUP_ADMIN_ROW_COPY"] = "Kopieren";
+$MESS["SUP_ADMIN_ROW_DELETE"] = "Zeile löschen";
+$MESS["MAIN_ADMIN_MENU_LIST"] = "Liste";
+$MESS["MAIN_ADMIN_MENU_DELETE"] = "Löschen";
+$MESS["MAIN_ADMIN_MENU_COPY"] = "Kopieren";
+$MESS["SUP_WEEKDAY_0"] = "Montag";
+$MESS["SUP_WEEKDAY_1"] = "Dienstag";
+$MESS["SUP_WEEKDAY_2"] = "Mittwoch";
+$MESS["SUP_WEEKDAY_3"] = "Donnerstag";
+$MESS["SUP_WEEKDAY_4"] = "Freitag";
+$MESS["SUP_WEEKDAY_5"] = "Samstag";
+$MESS["SUP_WEEKDAY_6"] = "Sonntag";
+?>

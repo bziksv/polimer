@@ -1,0 +1,8 @@
+.select2-container .select2-selection__placeholder {
+	white-space: nowrap !important;
+}
+
+/* fix conflict select2 and dialog */
+.select2-dropdown {
+	z-index: 3000 !important;
+}

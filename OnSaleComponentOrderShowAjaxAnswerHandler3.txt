@@ -1,0 +1,117 @@
+Host: polimer-vrn.ru
+Date: 2025-04-30 11:36:43
+Module: OnSaleComponentOrderJsDataHandler
+array (
+  'PERSON_TYPE_ID' => 1,
+  'PERSON_TYPE_OLD' => false,
+  'PAY_SYSTEM_ID' => false,
+  'DELIVERY_ID' => false,
+  'ORDER_PROP' => 
+  array (
+    42 => '0000293598',
+    46 => '',
+    45 => '',
+    3 => '',
+    54 => '',
+    36 => '',
+    44 => '',
+  ),
+  'DELIVERY_LOCATION' => false,
+  'TAX_LOCATION' => false,
+  'PAYER_NAME' => false,
+  'USER_EMAIL' => false,
+  'PROFILE_NAME' => false,
+  'PAY_CURRENT_ACCOUNT' => false,
+  'CONFIRM_ORDER' => false,
+  'FINAL_STEP' => false,
+  'ORDER_DESCRIPTION' => false,
+  'PROFILE_ID' => false,
+  'PROFILE_CHANGE' => false,
+  'DELIVERY_LOCATION_ZIP' => false,
+  'ZIP_PROPERTY_CHANGED' => 'N',
+  'QUANTITY_LIST' => 
+  array (
+  ),
+  'USE_PRELOAD' => true,
+  'BUYER_STORE' => 0,
+)
+#0: AddMessage2Log
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/php_interface/init.php:433
+#1: OnSaleComponentOrderPropertiesHandler
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/modules/main/tools.php:5246
+#2: ExecuteModuleEventEx
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/components/bitrix/sale.order.ajax/class.php:940
+#3: SaleOrderAjax->initProperties
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/components/bitrix/sale.order.ajax/class.php:5980
+#4: SaleOrderAjax->getOrder
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/components/bitrix/sale.order.ajax/class.php:5935
+#5: SaleOrderAjax->createOrder
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/components/bitrix/sale.order.ajax/class.php:6263
+----------
+Host: polimer-vrn.ru
+Date: 2025-04-30 11:43:28
+Module: OnSaleComponentOrderJsDataHandler
+array (
+  'PERSON_TYPE_ID' => 1,
+  'PERSON_TYPE_OLD' => false,
+  'PAY_SYSTEM_ID' => false,
+  'DELIVERY_ID' => false,
+  'ORDER_PROP' => 
+  array (
+    42 => '0000293598',
+    46 => '',
+    45 => '',
+    3 => '',
+    54 => '',
+    36 => '',
+    44 => '',
+  ),
+  'DELIVERY_LOCATION' => false,
+  'TAX_LOCATION' => false,
+  'PAYER_NAME' => false,
+  'USER_EMAIL' => false,
+  'PROFILE_NAME' => false,
+  'PAY_CURRENT_ACCOUNT' => false,
+  'CONFIRM_ORDER' => false,
+  'FINAL_STEP' => false,
+  'ORDER_DESCRIPTION' => false,
+  'PROFILE_ID' => false,
+  'PROFILE_CHANGE' => false,
+  'DELIVERY_LOCATION_ZIP' => false,
+  'ZIP_PROPERTY_CHANGED' => 'N',
+  'QUANTITY_LIST' => 
+  array (
+  ),
+  'USE_PRELOAD' => true,
+  'BUYER_STORE' => 0,
+)
+#0: AddMessage2Log
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/php_interface/init.php:433
+#1: OnSaleComponentOrderPropertiesHandler
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/modules/main/tools.php:5246
+#2: ExecuteModuleEventEx
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/components/bitrix/sale.order.ajax/class.php:940
+#3: SaleOrderAjax->initProperties
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/components/bitrix/sale.order.ajax/class.php:5980
+#4: SaleOrderAjax->getOrder
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/components/bitrix/sale.order.ajax/class.php:5935
+#5: SaleOrderAjax->createOrder
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/components/bitrix/sale.order.ajax/class.php:6263
+----------
+Host: polimer-vrn.ru
+Date: 2025-04-30 11:46:22
+Module: OnSaleComponentOrderJsDataHandler
+0000293598
+#0: AddMessage2Log
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/php_interface/init.php:442
+#1: OnSaleComponentOrderPropertiesHandler
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/modules/main/tools.php:5246
+#2: ExecuteModuleEventEx
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/components/bitrix/sale.order.ajax/class.php:940
+#3: SaleOrderAjax->initProperties
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/components/bitrix/sale.order.ajax/class.php:5980
+#4: SaleOrderAjax->getOrder
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/components/bitrix/sale.order.ajax/class.php:5935
+#5: SaleOrderAjax->createOrder
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/components/bitrix/sale.order.ajax/class.php:6263
+----------

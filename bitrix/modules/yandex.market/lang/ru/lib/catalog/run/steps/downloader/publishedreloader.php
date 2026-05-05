@@ -1,0 +1,2 @@
+<?php
+$MESS['YANDEX_MARKET_RUN_STEPS_DOWNLOADER_TEXT_NOTIFY_TEXT'] = 'Для магазина #BUSSINES_NAME# [#BUSSINES_ID#]: обнаружены несовпадающие категории с Яндекс.Маркет. Кол-во: #COUNT#. Проверьте: <a href="#LINK#">Товары</a>.';

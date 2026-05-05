@@ -1,0 +1,5 @@
+<?
+$MESS["SONET_COMMENTAUX_SHARE_TEXT"] = "Neue Empfänger: #SHARE_LIST#";
+$MESS["SONET_COMMENTAUX_SHARE_TEXT_1"] = "Neue Empfänger: #SHARE_LIST#";
+$MESS["SONET_COMMENTAUX_SHARE_HIDDEN"] = "Verborgener Empfänger";
+?>

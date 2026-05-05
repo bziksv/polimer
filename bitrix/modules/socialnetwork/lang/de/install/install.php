@@ -1,0 +1,33 @@
+<?
+$MESS["SONET_GROUP_NAME_4"] = "4x4";
+$MESS["SONET_GROUP_DESCRIPTION_3"] = "Alles über das Autotuning";
+$MESS["SONET_GROUP_DESCRIPTION_4"] = "Alles über Geländewagen";
+$MESS["SONET_I_IBLOCK_NAME"] = "Auto Katalog";
+$MESS["SONET_I_IBLOCK_TYPE_NAME"] = "Auto Katalog";
+$MESS["SONET_GROUP_NAME_0"] = "Autoreparatur";
+$MESS["SONET_GROUP_NAME_2"] = "Autosport";
+$MESS["SONET_I_FEATURE_BLOG"] = "Blog";
+$MESS["SONET_GROUP_DESCRIPTION_0"] = "Merkmale und Grunde von Autodefekten, simple und einfache Wege ihrer Entdeckung und Beseitigung mit eigenen Kräften.";
+$MESS["SONET_I_USER_PROP_EFL"] = "Automodell";
+$MESS["SONET_I_USER_PROP_LCL"] = "Automodell";
+$MESS["SONET_I_USER_PROP_LFL"] = "Automodell";
+$MESS["SONET_GROUP_NAME_3"] = "Autotuning";
+$MESS["SONET_GROUP_DESCRIPTION_2"] = "Autos und Sport.";
+$MESS["SONET_I_FEATURE_FORUM"] = "Forum";
+$MESS["SONET_I_PHOTO_IBLOCK_TYPE_NAME"] = "Galerie";
+$MESS["SONET_GROUP_SUBJECT_1"] = "Interessen";
+$MESS["SONET_GROUP_SUBJECT_0"] = "Modell";
+$MESS["SONET_GROUP_KEYWORDS_4"] = "Geländewagen, Jeep, Auto";
+$MESS["SONET_GROUP_KEYWORDS_0"] = "Reparatur, Service, Instandhaltung, Auto";
+$MESS["SONET_GROUP_SUBJECT_2"] = "Reparatur";
+$MESS["SONET_GROUP_KEYWORDS_3"] = "Service, Auto, Tuning";
+$MESS["SONET_I_BLOG_NAME"] = "Blogs des Sozialen Netzwerks";
+$MESS["SONET_I_FORUM_NAME"] = "Forum des sozialen Netzwerks";
+$MESS["SONET_I_IBLOCK_PHOTO_GROUP_NAME"] = "Gruppengalerien des soz. Netzes";
+$MESS["SONET_I_IBLOCK_PHOTO_USER_NAME"] = "Nutzergalerien des soz. Netzes";
+$MESS["SONET_GROUP_KEYWORDS_2"] = "Sport, Rennen, Auto";
+$MESS["SONET_GROUP_DESCRIPTION_1"] = "VOLKSWAGEN-Fahrer, vereinigt euch.";
+$MESS["SONET_GROUP_NAME_1"] = "Der VOLKSWAGEN-Club";
+$MESS["SONET_GROUP_KEYWORDS_1"] = "Volkswagen, Golf";
+$MESS["SONET_I_VOTE_NAME"] = "Umfragen des Forums im Sozialen Netzwerk";
+?>

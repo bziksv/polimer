@@ -1,0 +1,7 @@
+<?php
+
+$MESS['AVITO_EXPORT_T_ADMIN_FORM_CATEGORY_LIMIT_NAME_CATEGORY'] = 'Выберите категорию';
+$MESS['AVITO_EXPORT_T_ADMIN_FORM_CATEGORY_LIMIT_COUNT'] = 'Количество объявлений';
+$MESS['AVITO_EXPORT_T_ADMIN_FORM_CATEGORY_LIMIT_ADD'] = 'Добавить ограничение';
+$MESS['AVITO_EXPORT_T_ADMIN_FORM_CATEGORY_LIMIT_DELETE'] = 'Удалить ограничение';
+$MESS['AVITO_EXPORT_T_ADMIN_FORM_CATEGORY_LIMIT_CATEGORY_PLACEHOLDER'] = 'Введите название категории и выберите...';

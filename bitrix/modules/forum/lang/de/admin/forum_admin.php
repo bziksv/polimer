@@ -1,0 +1,36 @@
+<?
+$MESS["ACTIVE"] = "Aktiv";
+$MESS["DELETE_CONFIRM"] = "Das Forum wird unwiderruflich gelöscht. Wollen Sie fortfahren?";
+$MESS["FA_DELETE_ERROR"] = "Beim Löschen des Forums ist ein Fehler aufgetreten. Möglicherweise gibt es Daten, die mit dem Forum in Verbindung stehen und das Löschen verhindern";
+$MESS["FA_DELETE_NO_PERMS"] = "Sie haben nicht genügend Rechte, um das Forum zu löschen";
+$MESS["FA_ERROR_UPDATE"] = "Beim Aktuallisieren des Forums ist ein Fehler aufgetreten, ID";
+$MESS["FA_NO_PERMS2UPDATE"] = "Sie haben nicht genügend Rechte zum Ändern des Forums mit der ID";
+$MESS["FFAN_ACTIVE"] = "Aktiv";
+$MESS["FFAN_ADD_NEW"] = "Neues Forum";
+$MESS["FFAN_ADD_NEW_ALT"] = "Klicken Sie hier, um ein neues Forum hizuzufügen";
+$MESS["FFAN_ALL"] = "Alle";
+$MESS["FFAN_GROUP_ID"] = "Forengruppe";
+$MESS["FFAN_NO"] = "Nein";
+$MESS["FFAN_SITE_ID"] = "Seite";
+$MESS["FFAN_YES"] = "Ja";
+$MESS["FORUMS"] = "Foren";
+$MESS["FORUM_ADMIN_GO_BACK_TO_OLD_VIEW"] = "Zurück zur alten Ansicht";
+$MESS["FORUM_ADMIN_GO_TO_NEW_VIEW"] = "Zur neuen Ansicht wechseln";
+$MESS["FORUM_DELETE"] = "Forum löschen";
+$MESS["FORUM_EDIT"] = "Bearbeiten";
+$MESS["FORUM_GROUP_ID"] = "Gruppe";
+$MESS["INDEXATION"] = "Indexierung";
+$MESS["LAND"] = "Seite";
+$MESS["MAIN_ADMIN_LIST_ACTIVATE"] = "aktivieren";
+$MESS["MAIN_ADMIN_LIST_CHECKED"] = "Ausgewählt:";
+$MESS["MAIN_ADMIN_LIST_CLEAR_HTML"] = "Cache der Forenbeiträge bereinigen";
+$MESS["MAIN_ADMIN_LIST_DEACTIVATE"] = "deaktivieren";
+$MESS["MAIN_ADMIN_LIST_DELETE"] = "löschen";
+$MESS["MAIN_ADMIN_LIST_SELECTED"] = "Gesamt:";
+$MESS["MODERATION"] = "Vormoderieren";
+$MESS["NAME"] = "Name";
+$MESS["NAV"] = "Foren";
+$MESS["ORDER_BY"] = "Sort. nach";
+$MESS["ORDER_DIRECTION"] = "Sort. nach (Richtung)";
+$MESS["SORT"] = "Sort.";
+?>

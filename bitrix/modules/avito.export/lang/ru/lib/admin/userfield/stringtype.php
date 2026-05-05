@@ -1,0 +1,3 @@
+<?php
+
+$MESS['AVITO_EXPORT_ADMIN_USER_FIELD_STRING_TYPE_ADD'] = 'Добавить';

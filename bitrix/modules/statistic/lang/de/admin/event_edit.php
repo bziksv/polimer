@@ -1,0 +1,32 @@
+<?
+$MESS ['STAT_PARAM'] = "Weitere Parameter<br>(#GROUP_SITE_ID#.Session.<br>Besucher.Land.<br>Werbekampagne.<br>Zurück zur Seite)";
+$MESS ['STAT_MONEY'] = "Geldbetrag";
+$MESS ['STAT_ATTENTION_1'] = "Achtung";
+$MESS ['STAT_CONVERT_TO_DEFAULT_CUR'] = "Vor dem Laden werden alle Geldsummen in die Basiswährung konvertiert. ";
+$MESS ['STAT_CALENDAR'] = "Kalender";
+$MESS ['STAT_CHARGEBACK'] = "Geldrückgabe";
+$MESS ['STAT_COPY'] = "In die untere Zeile kopieren";
+$MESS ['STAT_HANDLER'] = "Handler der CSV-Datei:";
+$MESS ['STAT_FILE'] = "CSV Datei:";
+$MESS ['STAT_CURRENCY'] = "Währung";
+$MESS ['STAT_DATE'] = "Datum<br>";
+$MESS ['STAT_DUPLICATE'] = "Duplikate:";
+$MESS ['STAT_LOADING_FROM_CSV'] = "Ereignisimport aus der CSV-Datei";
+$MESS ['STAT_EVENTS_LOADING'] = "Events werden importiert. Bitte warten...";
+$MESS ['STAT_EVENT_TYPE'] = "Eventtyp<br>ID";
+$MESS ['STAT_TITLE'] = "Eventimport";
+$MESS ['STAT_FROM_FILE'] = "Aus Datei";
+$MESS ['STAT_LOAD'] = "Laden";
+$MESS ['STAT_UNIQUE'] = "Nur die eindeutigen Events importieren";
+$MESS ['STAT_LOADED'] = "Importiert:";
+$MESS ['STAT_STEP'] = "Ladeschritte (Sek.):";
+$MESS ['STAT_LOADING_FROM_TABLE'] = "Manuelle Eventeingabe";
+$MESS ['STAT_FROM_FORM'] = "Manuelle Eingabe";
+$MESS ['STAT_NEXT_STEP'] = "nächster Schritt";
+$MESS ['STAT_ON_STEP'] = "Schritt";
+$MESS ['STAT_PROCESSED'] = "Bearbeitet:";
+$MESS ['STAT_SELECT_EVENT'] = "Eventtyp wählen";
+$MESS ['STAT_TOTAL_CSV'] = "Gesamt Zeilen in der CSV-Datei:";
+$MESS ['STAT_UNIQUE_ALT'] = "Die Eindeutigkeit wird durch Kombination aller geladenen Felder überprüft (ausgenommen des Geldbetrags)";
+$MESS ['STAT_PREVIEW'] = "Vorläufige Vorschau:";
+?>

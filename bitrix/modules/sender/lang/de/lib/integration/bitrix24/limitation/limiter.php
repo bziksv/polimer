@@ -1,0 +1,5 @@
+<?
+$MESS["SENDER_INTEGRATION_BITRIX24_LIMITER_DAILY_DETAILS"] = "Nähere Informationen zum Limit";
+$MESS["SENDER_INTEGRATION_BITRIX24_LIMITER_DAILY_HELP_URL"] = "https://helpdesk.bitrix24.de/open/6895609/";
+$MESS["SENDER_INTEGRATION_BITRIX24_LIMITER_MONTH_HELP_URL"] = "https://helpdesk.bitrix24.de/open/6904367/";
+?>

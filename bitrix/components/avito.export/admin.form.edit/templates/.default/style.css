@@ -1,0 +1,65 @@
+.b-adm-hr {
+	width: 100%;
+	height: 0;
+	border: 0;
+	border-top: 1px solid #cacfd8;
+	outline: 0;
+
+	margin: 20px 0;
+}
+
+.b-adm-restriction-title,
+.b-adm-filter-title {
+	font-size: 15px;
+	line-height: 18px;
+	display: block;
+	margin-bottom: 13px;
+	color: #24282b;
+	font-weight: bold;
+}
+
+.filter-section-iblock{
+	padding: 20px;
+	border-bottom: 1px solid #cacfd8;
+	margin-left: -19px;
+	margin-right: -19px;
+	background: #f5f9f9;
+}
+
+.filter-section-iblock:first-child{
+	padding-top: unset;
+}
+
+.filter-section-iblock:last-child {
+	border-bottom: none;
+	padding-bottom: unset;
+}
+
+.adm-detail-content-cell-l.push--top {
+	padding-top: 11px;
+}
+
+.avito-export-form .adm-detail-content-cell-r > table {
+	border-spacing: 0;
+}
+
+.avito-export-form .adm-detail-content-cell-r > table > tbody > tr > td {
+	border: 0;
+	padding: 0;
+}
+
+.avito-export-form .adm-detail-content-cell-r > table > tbody > tr + tr > td {
+	border-top: 5px solid transparent;
+}
+
+.is--hidden {
+	display: none !important;
+}
+
+.pos-inner--top {
+	padding-top: 0;
+}
+
+.pos-inner--bottom {
+	padding-bottom: 0;
+}

@@ -1,0 +1,3 @@
+<?php
+$MESS["REST_V3_CONTROLLER_LISTORMACTIONTRAIT_ACTION_DESCRIPTION"] = "Ruft eine Liste mit a gegebenen Einträgen ab.";
+$MESS["REST_V3_CONTROLLER_LISTORMACTIONTRAIT_ACTION_TITLE"] = "Liste mit Einträgen abrufen";

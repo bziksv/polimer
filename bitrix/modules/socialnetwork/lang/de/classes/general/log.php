@@ -1,0 +1,29 @@
+<?
+$MESS["SONET_GL_EMPTY_ENTITY_TYPE"] = "Der Elementtyp wurde nicht angegeben";
+$MESS["SONET_GL_ERROR_NO_ENTITY_TYPE"] = "Der Elementtyp ist falsch";
+$MESS["SONET_GL_EMPTY_ENTITY_ID"] = "Die Element-ID wurde nicht angegeben";
+$MESS["SONET_GL_ERROR_CALC_ENTITY_TYPE"] = "Es ist ein Fehler bei der Berechnung des Elements aufgetreten";
+$MESS["SONET_GL_ERROR_NO_ENTITY_ID"] = "Die Element-ID ist falsch";
+$MESS["SONET_GL_ERROR_NO_USER_ID"] = "Die Nzuer-ID ist falsch";
+$MESS["SONET_GL_EMPTY_EVENT_ID"] = "Das Ereignis wurde nicht angegeben";
+$MESS["SONET_GL_ERROR_NO_FEATURE_ID"] = "Das Event wurde falsch angegeben";
+$MESS["SONET_GL_EMPTY_DATE_CREATE"] = "Das Erstellungsdatum ist falsch";
+$MESS["SONET_GL_EMPTY_TITLE"] = "Die Überschrift wurde nicht angegeben";
+$MESS["SONET_GL_WRONG_PARAMETER_ID"] = "Die Parameter ID ist falsch";
+$MESS["SONET_GL_TITLE_JOIN1"] = "Es ist ein neuer Teilnehmer #TITLE# der Gruppe beigetreten.";
+$MESS["SONET_GL_TITLE_JOIN2"] = "Es sind neue Teilnehmer #TITLE# der Gruppe beigetreten.";
+$MESS["SONET_GL_TITLE_UNJOIN1"] = "Der Teilnehmer #TITLE# hat die Gruppe verlassen";
+$MESS["SONET_GL_TITLE_UNJOIN2"] = "Die Teilnehmer #TITLE# haben die Gruppe verlassen";
+$MESS["SONET_GL_TITLE_MODERATE1"] = "In der Gruppe wurde #TITLE# als Moderator eingesetzt.";
+$MESS["SONET_GL_TITLE_MODERATE2"] = "In der Gruppe wurden #TITLE# als Moderatoren eingesetzt.";
+$MESS["SONET_GL_TITLE_OWNER1"] = "Ein neuer Besitzer wurde der Gruppe #TITLE# zugeteilt.";
+$MESS["SONET_GL_TITLE_UNMODERATE1"] = "In der Gruppe ist  #TITLE# kein Moderator mehr.";
+$MESS["SONET_GL_TITLE_UNMODERATE2"] = "In der Gruppe sind #TITLE# keine Moderatoren mehr.";
+$MESS["SONET_GL_TITLE_FRIEND1"] = "Der Nutzer #TITLE#  wurde zur Freundesliste hinzugefügt.";
+$MESS["SONET_GL_TITLE_UNFRIEND1"] = "Der Nutzer #TITLE# ist nicht mehr Ihr Freund.";
+$MESS["SONET_GL_TITLE_GROUP1"] = "Der Nutzer ist zur Gruppe #TITLE# beigetreten.";
+$MESS["SONET_GL_TITLE_UNGROUP1"] = "Der Nutzer hat die Gruppe #TITLE# verlassen.";
+$MESS["SONET_GL_TITLE_EXCLUDE_USER1"] = "Der Nutzer wurde aus der Gruppe #TITLE# entfernt.";
+$MESS["SONET_GL_TITLE_EXCLUDE_GROUP1"] = "Der Nutzer #TITLE# wurde aus der Gruppe entfernt.";
+$MESS["SONET_GL_SEND_EVENT_LINK"] = "Wechseln zu: ";
+?>

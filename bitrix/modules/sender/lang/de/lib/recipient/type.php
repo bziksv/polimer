@@ -1,0 +1,11 @@
+<?
+$MESS["SENDER_TYPE_CAPTION_CRM_COMPANY_ID"] = "Unternehmen";
+$MESS["SENDER_TYPE_CAPTION_CRM_CONTACT_ID"] = "Kontakt";
+$MESS["SENDER_TYPE_CAPTION_CRM_DEAL_PRODUCT_COMPANY_ID"] = "Unternehmen (Produkte in Aufträgen)";
+$MESS["SENDER_TYPE_CAPTION_CRM_DEAL_PRODUCT_CONTACT_ID"] = "Kontakt (Produkte in Aufträgen)";
+$MESS["SENDER_TYPE_CAPTION_CRM_ORDER_PRODUCT_COMPANY_ID"] = "Unternehmen (Produkte in Bestellungen)";
+$MESS["SENDER_TYPE_CAPTION_CRM_ORDER_PRODUCT_CONTACT_ID"] = "Kontakt (Produkte in Bestellungen)";
+$MESS["SENDER_TYPE_CAPTION_EMAIL"] = "E-Mail";
+$MESS["SENDER_TYPE_CAPTION_IM"] = "Messenger";
+$MESS["SENDER_TYPE_CAPTION_PHONE"] = "Telefon";
+?>

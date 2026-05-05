@@ -1,0 +1,68 @@
+<?
+$MESS["TITLE"] = "Verfügbare Lösungen";
+$MESS["MOD_SETUP"] = "Status";
+$MESS["MOD_ACTION"] = "Aktion";
+$MESS["MOD_NAME"] = "Name";
+$MESS["MOD_VERSION"] = "Version";
+$MESS["SAVE"] = "Änderungen speichern";
+$MESS["RESET"] = "Zurücksetzen";
+$MESS["MOD_INSTALL"] = "Modul installieren";
+$MESS["MOD_INSTALL_BUTTON"] = "Installieren";
+$MESS["MOD_DELETE"] = "Löschen";
+$MESS["MOD_INSTALLED"] = "Installiert";
+$MESS["MOD_NOT_INSTALLED"] = "Nicht installiert";
+$MESS["MOD_DATE_UPDATE"] = "Aktualisierungsdatum";
+$MESS["MOD_UNINST_WARN"] = "Achtung!<br>Das Modul wird aus dem System entfernt.";
+$MESS["MOD_UNINST_SAVE"] = "Sie können die Daten in den Tabellen der Datenbank speichern:";
+$MESS["MOD_UNINST_SAVE_TABLES"] = "Tabellen speichern";
+$MESS["MOD_UNINST_SAVE_EVENTS"] = "E-Mail-Typen und -Vorlagen speichern";
+$MESS["MOD_UNINST_DEL"] = "Modul deinstallieren";
+$MESS["MOD_UNINST_OK"] = "Deinstallation des Moduls wurde erfolgreich abgeschlossen";
+$MESS["MOD_BACK"] = "Zurück zur Liste";
+$MESS["MOD_UNINST_ERR"] = "Fehler bei der Deinstallation:";
+$MESS["MOD_INST_ERR"] = "Fehler bei der Installation:";
+$MESS["MOD_INST_OK"] = "Das Modul wurde erfolgreich installiert";
+$MESS["COPY_PUBLIC_FILES"] = "Öffentliche Dateien kopieren";
+$MESS["COPY_FOLDER"] = "Zielordner, in den die Dateien kopiert werden:";
+$MESS["INSTALL_PUBLIC_REW"] = "Existierende Dateien überschreiben";
+$MESS["MOD_DEMO_DIR"] = "Folgen Sie den Links, um die Komponenten im Bereich Ansicht der Website angezeigt zu bekommen:";
+$MESS["MOD_DEMO_SITE"] = "Website";
+$MESS["MOD_DEMO_LINK"] = "Link";
+$MESS["MOD_PARTNER_NAME"] = "<a target='_blank' href='#URI#'>#NAME#</a>";
+$MESS["MOD_PARTNER"] = "Entwickler";
+$MESS["MOD_SMP_AV_MOD"] = "Verfügbare Lösungen";
+$MESS["MOD_SMP_AV_MOD_TEXT1"] = "Verfügbare Lösungen";
+$MESS["MOD_SMP_AV_MOD_TEXT2"] = "Sie können Lösungen installieren, deinstallieren und endgültig löschen. Um eine Lösung endgültig löschen zu können, müssen Sie diese Lösung zuerst deinstallieren.";
+$MESS["MOD_SMP_BUY_MOD"] = "Gekaufte Lösungen";
+$MESS["MOD_SMP_BUY_MOD_TEXT1"] = "Lösungen, die in Ihrer Lizenz enthalten aber bei Ihnen noch nicht installiert sind.";
+$MESS["MOD_SMP_BUY_MOD_TEXT2"] = "Sie müssen diese Lösungen erst herunterladen, um sie benutzen zu können.";
+$MESS["MOD_SMP_NEW_UPDATES"] = "Verfügbare Aktualisierungen";
+$MESS["MOD_SMP_UPDATE"] = "Aktualisieren";
+$MESS["MOD_SMP_DELETE"] = "Endgültig löschen";
+$MESS["MOD_SMP_INSTALLED"] = "Die Lösung \"#MODULE_NAME#\" wurde erfolgreich installiert.";
+$MESS["MOD_SMP_UNINSTALLED"] = "Die Lösung \"#MODULE_NAME#\" wurde erfolgreich deinstalliert.";
+$MESS["MOD_SMP_DELETED"] = "Die Lösung \"#MODULE_NAME#\" wurde erfolgreich endgültig gelöscht.";
+$MESS["MOD_SMP_DOWNLOAD"] = "Herunterladen";
+$MESS["MOD_DATE_TO"] = "Aktiv bis";
+$MESS["MOD_DEMO"] = "Demo-Modus";
+$MESS["MOD_DEMO_END"] = "Die Testzeit ist abgelaufen.";
+$MESS["MOD_UPDATE_BUY"] = "Neue Version kaufen";
+$MESS["MOD_UPDATE_BUY_DEMO"] = "Kaufen";
+$MESS["MOD_INSTALL_ERROR"] = "Fehler bei der Installation der Lösung #CODE#";
+$MESS["MOD_UNINSTALL_ERROR"] = "Fehler bei der Deinstallation der Lösung #CODE#";
+$MESS["MOD_CLEAR_CONFIRM"] = "Möchten Sie die Lösung #NAME# wirklich löschen? Sie wird dann von der Website komplett entfernt.";
+$MESS["MOD_SMP_DELETE_OPINION"] = "<p>Es tut uns sehr leid, dass Sie beschlossen haben, die Lösung <b>#NAME#</b> (#ID#) zu löschen.</p>
+<p>Wenn Sie uns mitteilen, warum diese Lösung Ihnen nicht passt, werden wir versuchen, dies in den neuen Versionen zu berücksichtigen.</p>
+<p>Vielen Dank für Ihr Feedback!</p>
+";
+$MESS["MOD_SMP_OPONION_ADD"] = "Feedback senden";
+$MESS["MOD_SMP_OPONION_OK"] = "Danke für Ihr Feedback!";
+$MESS["MOD_SMP_DELETE_OPINION_THANKS"] = "Danke für Ihr Feedback!";
+$MESS["MOD_SMP_DELETE_OPINION_REASON"] = "Wählen Sie bitte die am meisten passende Option aus:";
+$MESS["MOD_SMP_DELETE_OPINION_REASON1"] = "Anwendung könnte nicht installiert bzw. konfiguriert werden";
+$MESS["MOD_SMP_DELETE_OPINION_REASON2"] = "Anwendung funktioniert nicht mehr nach der Aktualisierung";
+$MESS["MOD_SMP_DELETE_OPINION_REASON3"] = "Anwendung hat Fehler";
+$MESS["MOD_SMP_DELETE_OPINION_REASON4"] = "Es ist nicht das, was ich benötigte";
+$MESS["MOD_SMP_DELETE_OPINION_REASON5"] = "Ich benötige diese Anwendung nicht mehr";
+$MESS["MOD_SMP_DELETE_OPINION_REASON6"] = "Sonstiges";
+?>

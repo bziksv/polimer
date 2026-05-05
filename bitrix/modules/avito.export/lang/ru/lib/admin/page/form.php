@@ -1,0 +1,4 @@
+<?php
+
+$MESS['AVITO_EXPORT_ADMIN_PAGE_FORM_APPLY'] = 'Применить';
+$MESS['AVITO_EXPORT_ADMIN_PAGE_FORM_RESET'] = 'Отменить';

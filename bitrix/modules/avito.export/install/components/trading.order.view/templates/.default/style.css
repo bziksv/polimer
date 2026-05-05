@@ -1,0 +1,159 @@
+/* title */
+
+.avito-export-section-title {
+	margin-top: 40px;
+}
+
+.avito-export-section-hgroup {
+	margin-top: 40px;
+	margin-bottom: 16px;
+}
+
+.avito-export-section-hgroup__inline {
+	display: inline-block;
+	vertical-align: middle;
+
+	margin: 0 0 0 10px;
+}
+
+.avito-export-section-hgroup__inline:first-child {
+	margin-left: 0;
+}
+
+/* properties */
+
+.avito-export-properties-title {
+	margin-top: 2em;
+	margin-bottom: 1em;
+}
+
+.avito-export-properties-title.pos--top {
+	margin-top: 0;
+}
+
+.avito-export-property {
+	display: table;
+	margin-top: 10px;
+	line-height: 1.375;
+}
+
+.avito-export-property__title {
+	display: table-cell;
+	vertical-align: top;
+	padding-right: 10px;
+	width: 255px;
+
+	position: relative;
+}
+
+.avito-export-property__title:after {
+	content:
+		". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "
+		". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "
+		". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ";
+	display: inline-block;
+	overflow: hidden;
+	height: 1.375em;
+	border-left: 2px solid transparent;
+	position: absolute;
+	text-align: right;
+	white-space: normal;
+	letter-spacing: -.0625em;
+	opacity: .2;
+}
+
+.avito-export-property__value {
+	display: table-cell;
+	vertical-align: bottom;
+	padding-left: 15px;
+}
+
+/* basket */
+
+.avito-export-basket-wrapper {
+	max-width: 800px;
+}
+
+.avito-export-basket-table {
+	width: 100%;
+}
+
+.avito-export-basket-col.for--number {
+	width: 40px;
+}
+
+.avito-export-basket-col.for--price {
+	width: 150px;
+}
+
+.avito-export-basket-col.for--quantity {
+	width: 120px;
+}
+
+.avito-export-basket-table thead td {
+	padding-left: 10px !important;
+	padding-right: 10px !important;
+}
+
+.avito-export-basket-table thead td:first-child {
+	text-align: left;
+}
+
+.avito-export-basket-table tbody td {
+	vertical-align: top;
+	padding: 10px !important;
+}
+
+.avito-export-basket-table tbody td.for--name {
+	min-width: 250px;
+}
+
+.avito-export-basket-table tfoot td {
+	padding: 16px !important;
+	background: #f7fafa;
+}
+
+.avito-export-basket-summary {
+	text-align: right !important;
+	font-weight: bold !important;
+	line-height: 1.2;
+}
+
+.avito-export-link-icon{
+	margin-right: 4px;
+}
+
+.avito-export-link-icon__icon{
+	width: 16px;
+	transform: translate(0, 2px);
+}
+
+.avito-export-activity-buttons {
+	margin-bottom: 24px;
+}
+
+.avito-export-activity-buttons .adm-btn {
+	margin-right: 10px;
+	margin-bottom: 16px;
+}
+.adm-workarea .avito-export-activity-buttons .adm-btn:active {
+	height: 29px!important;
+	padding: 1px 13px 2px!important;
+}
+
+.avito-export-activity-buttons .adm-info-message-wrap {
+	max-width: 500px;
+}
+
+.avito-export-activity-buttons .adm-info-message {
+	margin: 0 !important;
+}
+
+.avito-export-activity-buttons .adm-info-message h3:first-child,
+.avito-export-activity-buttons .adm-info-message p:first-child {
+	margin-top: 0;
+}
+
+.avito-export-activity-buttons .adm-info-message p:last-child {
+	margin-bottom: 0;
+}

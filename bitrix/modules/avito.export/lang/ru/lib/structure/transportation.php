@@ -1,0 +1,3 @@
+<?php
+
+$MESS['AVITO_EXPORT_STRUCTURE_TRANSPORTATION_NAME'] = 'Транспорт';

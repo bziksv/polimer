@@ -1,0 +1,1 @@
+(typeof jQuery === 'function') && (window.AvitoJQuery = jQuery);

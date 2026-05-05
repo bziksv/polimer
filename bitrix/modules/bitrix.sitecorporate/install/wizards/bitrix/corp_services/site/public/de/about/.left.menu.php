@@ -1,0 +1,39 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"Wir über uns", 
+		"index.php", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Geschichte", 
+		"history.php", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Mission", 
+		"mission.php", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Management", 
+		"management/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Stellenangebot", 
+		"vacancies.php", 
+		Array(), 
+		Array(), 
+		"" 
+	)
+);
+?>

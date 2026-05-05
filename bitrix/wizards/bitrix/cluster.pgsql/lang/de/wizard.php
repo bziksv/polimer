@@ -1,0 +1,24 @@
+<?php
+$MESS["CLUWIZ_ALL_OK"] = "Um eine Slave-Datenbank hinzuzufügen, müssen Sie die Replikation manuell konfigurieren und den Assistenten erneut ausführen.";
+$MESS["CLUWIZ_CANCELSTEP_BUTTONTITLE"] = "Schließen";
+$MESS["CLUWIZ_CANCELSTEP_CONTENT"] = "Der Assistent wurde abgebrochen.";
+$MESS["CLUWIZ_CANCELSTEP_TITLE"] = "Assistent abgebrochen";
+$MESS["CLUWIZ_CREATE_BY_USER"] = "Ich erstelle diese Funktion manuell";
+$MESS["CLUWIZ_CREATE_BY_WIZARD"] = "Nutzen Sie den Assistenten, um die Funktion zu erstellen";
+$MESS["CLUWIZ_ERROR_CREATE_FUNCTION"] = "Die Funktion der Replikationsüberwachung kann nicht erstellt werden.";
+$MESS["CLUWIZ_ERROR_GRANT_REPLICATION"] = "Die Berechtigung zur Verwaltung der Replikation kann nicht gewährt werden.";
+$MESS["CLUWIZ_ERRROR_CONNECT"] = "Fehler der Verbindung mit der Datenbank.";
+$MESS["CLUWIZ_FINALSTEP_BUTTONTITLE"] = "Fertig";
+$MESS["CLUWIZ_FINALSTEP_CONTENT"] = "Der Assistent wurde erfolgreich abgeschlossen.";
+$MESS["CLUWIZ_FINALSTEP_TITLE"] = "Der Assistent ist fertig";
+$MESS["CLUWIZ_FUNCTION_ERROR"] = "Funktion zur Überwachung des Replikationsstatus kann nicht gefunden werden.";
+$MESS["CLUWIZ_GRANT_BY_USER"] = "I bekomme die Rechte manuell";
+$MESS["CLUWIZ_GRANT_BY_WIZARD"] = "Nutzen Sie den Assistenten, um die Rechte zu bekommen.";
+$MESS["CLUWIZ_HOST"] = "Server:";
+$MESS["CLUWIZ_NEW_NODE"] = "Slave #CLIENT_ADDR# hinzufügen";
+$MESS["CLUWIZ_NO_MODULE_ERROR"] = "Das Modul Web-Cluster ist nicht installiert. Der Assistent wird abgebrochen.";
+$MESS["CLUWIZ_OLD_NODE"] = "Slave ##NODE_ID# löschen";
+$MESS["CLUWIZ_REPLICATION_GRANT_ERROR"] = "Sie haben nicht genügend Rechte, um Replikation zu verwalten.";
+$MESS["CLUWIZ_ROOT_PASSWORD"] = "Administratorpasswort:";
+$MESS["CLUWIZ_ROOT_USER"] = "Nutzername (Administrator):";
+$MESS["CLUWIZ_STEP1_TITLE"] = "Replikationsstatus prüfen";

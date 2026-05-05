@@ -1,0 +1,29 @@
+<?
+$MESS["SUP_DELETE_RECORD_CONFIRM"] = "Wollen Sie die ausgewählten Verzeichnisdatensätze wirklich löschen?";
+$MESS["SUP_CREATE_NEW_RECORD"] = "Neuen Datensatz erstellen";
+$MESS["SUP_DELETE_RECORD"] = "Datensatz löschen";
+$MESS["SUP_DESCRIPTION"] = "Beschreibung:";
+$MESS["SUP_RECORDS_LIST"] = "Verzeichnis";
+$MESS["SUP_EDIT_RECORD"] = "Datensatz Nr. #ID# bearbeiten";
+$MESS["SUP_ERROR"] = "Es ist ein Fehler beim Speichern des Datensatzes aufgetreten";
+$MESS["SUP_EVENT12"] = "event1, event2 - Parameter für den Eventtyp";
+$MESS["SUP_EVENT3"] = "event3 - weiterer Parameter";
+$MESS["SUP_SID_ALREADY_IN_USE"] = "Der mnemonischer Code wird bereits für den Datensatz Nr. #RECORD_ID# im Verzeichnis \"#TYPE#\"  und site \"#LANG#\" verwendet.";
+$MESS["SUP_INCORRECT_SID"] = "Falscher mnemonischer Code (Es sind nur lateinische Buchstaben, Ziffern und der Unterstrich \"_\" erlaubt). ";
+$MESS["SUP_EVENT_PARAMS"] = "Wie sollen neue Anfragen an den Technischen Support im Modul \"Statistik\" registriert werden";
+$MESS["SUP_SID"] = "Mnemonischer Code:";
+$MESS["SUP_NEW_RECORD"] = "Neuer Verzeichnis-Datensatz";
+$MESS["SUP_FORGOT_NAME"] = "Füllen Sie das Feld \"Bezeichnung\" aus";
+$MESS["SUP_RECORD"] = "Eintrag";
+$MESS["SUP_RECORD_TITLE"] = "Datensatz-Parameter für das Verzeichnis";
+$MESS["SUP_RESPONSIBLE"] = "Verantwortlicher:";
+$MESS["SUP_BY_DEFAULT"] = "Als Standard im Dropdown-Menü einstellen, wenn ein neues Ticket auf der Website erstellt wird:";
+$MESS["SUP_SITE"] = "Seiten:";
+$MESS["SUP_SORT"] = "Sortieren nach:";
+$MESS["SUP_STAT"] = "Statistik";
+$MESS["SUP_STAT_TITLE"] = "Registrierung in der Statistik";
+$MESS["SUP_NAME"] = "Überschrift:";
+$MESS["SUP_TYPE"] = "Typ:";
+$MESS["MAIN_ADMIN_MENU_EDIT"] = "Bearbeiten";
+$MESS["SUP_NO"] = "keine Angabe";
+?>

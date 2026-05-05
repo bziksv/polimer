@@ -1,0 +1,21 @@
+<?
+$MESS["CONVERSION_CALC_TITLE"] = "Profitmodell des Onlineshops";
+$MESS["CONVERSION_CALC_TITLE2"] = "Profitabilität des Onlineshops";
+$MESS["CONVERSION_CALC_INDICATORS"] = "Kennzahlen der Profitabilität";
+$MESS["CONVERSION_CALC_GROSS_INCOME"] = "Umsatz";
+$MESS["CONVERSION_CALC_ADVERT_BUDGET"] = "Werbebudget";
+$MESS["CONVERSION_CALC_OTHER_EXPENSES"] = "Sonstige Ausgaben";
+$MESS["CONVERSION_CALC_PROFIT"] = "Gesamt";
+$MESS["CONVERSION_CALC_CONVERSION"] = "Konversion";
+$MESS["CONVERSION_CALC_FUNNEL"] = "Funnel";
+$MESS["CONVERSION_CALC_CLICK_PRICE"] = "Klickpreis";
+$MESS["CONVERSION_CALC_NUMERATOR"] = "Anzahl der Bestellungen";
+$MESS["CONVERSION_CALC_DENOMINATOR"] = "Klicks";
+$MESS["CONVERSION_CALC_AVERAGE_BILL"] = "Durchschnittlicher Auftragswert";
+$MESS["CONVERSION_CALC_CPA"] = "Kosten pro Auftrag (CPO)";
+$MESS["CONVERSION_CALC_MARGIN"] = "Marge";
+$MESS["CONVERSION_CALC_ROI"] = "ROI";
+$MESS["CONVERSION_CALC_COST"] = "Nettokosten";
+$MESS["CONVERSION_CALC_PROFITABILITY"] = "Profitmodell";
+$MESS["CONVERSION_CALC_FORECAST"] = "Prognose";
+?>

@@ -1,0 +1,35 @@
+<?
+$MESS ['STAT_ADD_TO_STOPLIST_TITLE'] = "IP zur Sperrliste hinzufügen";
+$MESS ['STAT_EDIT_USER'] = "Userprofil";
+$MESS ['STAT_VIEW_HITS_LIST_1'] = "Hits für diese Besucher ID";
+$MESS ['STAT_VIEW_HITS_LIST_2'] = "Hits für diese Session ID";
+$MESS ['STAT_NEW_GUEST'] = "(zuerst)";
+$MESS ['STAT_OLD_GUEST'] = "(zurückgekehrt)";
+$MESS ['STAT_TITLE'] = "Session Details";
+$MESS ['STAT_ID'] = "ID:";
+$MESS ['STAT_LAST_PAGE'] = "Letzte Seite:";
+$MESS ['STAT_NUM_PAGES'] = "Hits:";
+$MESS ['STAT_TIME'] = "Zeit:";
+$MESS ['STAT_HOUR'] = "Std.";
+$MESS ['STAT_MIN'] = "Min.";
+$MESS ['STAT_SEC'] = "Sek.";
+$MESS ['STAT_USER'] = "Besucher:";
+$MESS ['STAT_NOT_AUTH'] = "(nicht angemeldet)";
+$MESS ['STAT_NOT_REGISTERED'] = "nicht registriert";
+$MESS ['STAT_IP_FIRST'] = "Erste IP Adresse:";
+$MESS ['STAT_IP_LAST'] = "Letzte IP Adresse:";
+$MESS ['STAT_REFERER'] = "Eintrittspunkt:";
+$MESS ['STAT_URL_TO'] = "Erste Seite:";
+$MESS ['STAT_NOT_FOUND'] = "Nicht gefunden";
+$MESS ['STAT_ADV'] = "Werbekampagne:";
+$MESS ['STAT_USER_AGENT'] = "UserAgent:";
+$MESS ['STAT_DATE_FIRST'] = "Start:";
+$MESS ['STAT_DATE_LAST'] = "Ende:";
+$MESS ['STAT_CITY'] = "Ort";
+$MESS ['STAT_CLOSE'] = "Schließen";
+$MESS ['STAT_COUNTRY'] = "Land";
+$MESS ['STAT_REGION'] = "Region";
+$MESS ['STAT_SITE'] = "Seite";
+$MESS ['STAT_STOP'] = "Sperrliste";
+$MESS ['STAT_STOPED'] = "Stop";
+?>

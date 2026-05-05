@@ -1,0 +1,29 @@
+<?php
+
+$MESS['FLOW_PAGE_PARAM_TITLE'] = "Aktuelle Seitenparameter";
+$MESS['FLOW_CURRENT_SETTINGS'] = "Aktuelle Parameter";
+$MESS['FLOW_VIEW_DOC_ALT'] = "Ausgangsseite anzeigen";
+$MESS['FLOW_DOCUMENT_DATE_LOCK'] = "Blockiert:";
+$MESS['FLOW_VIEW_FILE_ALT'] = "Datei anzeigen";
+$MESS['FLOW_DOCUMENT_FILENAME'] = "Dateiname:";
+$MESS['FLOW_FILENAME'] = "Dateiname:";
+$MESS['FLOW_RECORD_SETTINGS'] = "Seite";
+$MESS['FLOW_DOCUMENT_ID'] = "Seiten-ID:";
+$MESS['FLOW_DOCUMENT_LIST'] = "Seiten";
+$MESS['FLOW_PAGE_DIFF_TITLE'] = "Seitenvergleich Nr. #ID# und Nr. #PREV_ID#";
+$MESS['FLOW_PAGE_TITLE'] = "Eintrag Nr. #ID#";
+$MESS['FLOW_DOCUMENT_DATE_ENTER'] = "Erstellt:";
+$MESS['FLOW_RECORD_NOT_FOUND'] = "Falsche Seiten-ID, oder die Seite konnte in der Datenbank nicht gefunden werden.";
+$MESS['FLOW_DOCUMENT_DATE_MODIFY'] = "Geändert:";
+$MESS['FLOW_TIMESTAMP'] = "Geändert:";
+$MESS['FLOW_HISTORY'] = "History";
+$MESS['FLOW_COMMENTS'] = "Kommentar:";
+$MESS['FLOW_HIST_VIEW_SITE'] = "Website:";
+$MESS['FLOW_SITE_ALT'] = "Website-Information anzeigen";
+$MESS['FLOW_DOCUMENT_STATUS'] = "Status:";
+$MESS['FLOW_STATUS'] = "Status:";
+$MESS['FLOW_STATUS_ALT'] = "Statusinformation anzeigen";
+$MESS['FLOW_TEXT'] = "Text";
+$MESS['FLOW_DOCUMENT_TITLE'] = "Überschrift:";
+$MESS['FLOW_TITLE'] = "Überschrift:";
+$MESS['FLOW_USER_ALT'] = "Userinformation anzeigen";

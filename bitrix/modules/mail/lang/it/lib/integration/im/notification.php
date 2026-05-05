@@ -1,0 +1,20 @@
+<?php
+$MESS["MAIL_CLIENT_CONFIG_HAS_CHANGED_NOTIFY_MESSAGE_F"] = "ha modificato le impostazioni di #EMAIL#.";
+$MESS["MAIL_CLIENT_CONFIG_HAS_CHANGED_NOTIFY_MESSAGE_M"] = "ha modificato le impostazioni di #EMAIL#.";
+$MESS["MAIL_CLIENT_CONFIG_HAS_CHANGED_NOTIFY_MESSAGE_PARAMS_F"] = "#AUTHOR# ha modificato le impostazioni di #EMAIL#.";
+$MESS["MAIL_CLIENT_CONFIG_HAS_CHANGED_NOTIFY_MESSAGE_PARAMS_M"] = "#AUTHOR# ha modificato le impostazioni di #EMAIL#.";
+$MESS["MAIL_MASS_CONNECTING_MAILBOX_NOTIFICATION_NOTIFY_MESSAGE_F"] = "ha collegato una casella di posta #EMAIL# per te.";
+$MESS["MAIL_MASS_CONNECTING_MAILBOX_NOTIFICATION_NOTIFY_MESSAGE_M"] = "ha collegato una casella di posta #EMAIL# per te.";
+$MESS["MAIL_MASS_CONNECTING_MAILBOX_NOTIFICATION_SUBJECT_F"] = "#AUTHOR# ha collegato una casella di posta [URL=#LINK#]#EMAIL#[/URL] per te.";
+$MESS["MAIL_MASS_CONNECTING_MAILBOX_NOTIFICATION_SUBJECT_M"] = "#AUTHOR# ha collegato una casella di posta [URL=#LINK#]#EMAIL#[/URL] per te.";
+$MESS["MAIL_NOTIFY_FULL_MAILBOX_TARIFF_RESTRICTIONS_HAVE_BEEN_IMPOSED"] = "Hai effettuato il passaggio a un piano che supporta un numero inferiore di caselle di posta rispetto a quelle esistenti. L'accesso a #EMAIL# è stato temporaneamente bloccato. Non verranno creati lead né affari dalle e-mail in arrivo. Le risposte inviate dai clienti a questo indirizzo e-mail non verranno salvate nel CRM. Per attivare questa casella di posta, disattiva le caselle di posta inutilizzate o passa a uno dei piani superiori.";
+$MESS["MAIL_NOTIFY_IMPOSE_TARIFF_RESTRICTIONS_ON_THE_MAILBOX"] = "Numero massimo di caselle di posta superato";
+$MESS["MAIL_NOTIFY_MAILBOX_TARIFF_RESTRICTIONS_HAVE_BEEN_IMPOSED"] = "L'accesso a \"<a target=\"_blank\" href=\"#VIEW_URL#\">#EMAIL#</a>\" è stato temporaneamente bloccato perché sono presenti più caselle di posta di quelle supportate dal tuo piano attuale.<br/><br/><a target=\"_blank\" href=\"#VIEW_URL#\">Maggiori informazioni</a>";
+$MESS["MAIL_NOTIFY_NEW_MESSAGE"] = "Nuovo messaggio";
+$MESS["MAIL_NOTIFY_NEW_MESSAGE_MULTI_1"] = "Nuove e-mail: #COUNT#<br/><br/><a target=\"_blank\" href=\"#VIEW_URL#\">Visualizza</a>";
+$MESS["MAIL_NOTIFY_NEW_MESSAGE_TITLE"] = "E-mail";
+$MESS["MAIL_NOTIFY_NEW_SINGLE_MESSAGE_IN_MAIL_CLIENT_1"] = "Nuova e-mail: <a target=\"_blank\" href=\"#VIEW_URL#\">\"#SUBJECT#\"</a>";
+$MESS["MAIL_NOTIFY_NEW_SINGLE_MESSAGE_IN_MAIL_CLIENT_EMPTY_SUBJECT"] = "<a target=\"_blank\" href=\"#VIEW_URL#\">Nuova e-mail</a>";
+$MESS["MAIL_PUSH_NOTIFY_NEW_MESSAGE_MULTI"] = "Nuovi messaggi: #COUNT#.";
+$MESS["MAIL_PUSH_NOTIFY_NEW_SINGLE_MESSAGE_IN_MAIL_CLIENT"] = "Nuovo messaggio: \"#SUBJECT#\".";
+$MESS["MAIL_PUSH_NOTIFY_NEW_SINGLE_MESSAGE_IN_MAIL_CLIENT_EMPTY_SUBJECT"] = "Hai ricevuto un nuovo messaggio.";

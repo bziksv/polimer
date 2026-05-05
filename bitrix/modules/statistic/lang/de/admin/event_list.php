@@ -1,0 +1,33 @@
+<?
+$MESS ['STAT_ADV'] = "Werbekampagne";
+$MESS ['STAT_F_ADV_ID'] = "Werbekampagnen ID";
+$MESS ['STAT_F_MONEY'] = "Geldbetrag";
+$MESS ['STAT_TOTAL_MONEY'] = "Geldbetrag:";
+$MESS ['STAT_ADD_TITLE'] = "Klicken Sie hier, um ein neues Ereignis hinzuzufügen";
+$MESS ['STAT_DATE'] = "Datum";
+$MESS ['STAT_DELETE_ERROR'] = "Beim Löschen ist ein Fehler aufgetreten";
+$MESS ['STAT_DESCRIPTION'] = "Beschreibung:";
+$MESS ['STAT_RECORDS_LIST'] = "Events";
+$MESS ['STAT_F_EVENT_ID'] = "Eventtyp ID";
+$MESS ['STAT_F_EVENT_TYPE_NAME'] = "Bezeichnung des Eventtyps";
+$MESS ['STAT_EVENT_PAGES'] = "Events";
+$MESS ['STAT_F_FILTER_LOGIC'] = "Logik zwischen den Feldern";
+$MESS ['STAT_GUEST'] = "Besucher";
+$MESS ['STAT_HIT'] = "Hits";
+$MESS ['STAT_F_HIT_ID'] = "Hit ID";
+$MESS ['STAT_F_ID'] = "ID";
+$MESS ['STAT_MONEY'] = "Geldbetrag";
+$MESS ['STAT_NAME'] = "Name:";
+$MESS ['STAT_F_URL'] = "Aufgetreten auf";
+$MESS ['STAT_URL'] = "Aufgetreten auf";
+$MESS ['STAT_ADV_BACK_ALT'] = "nach der Wiederkehr der Werbekampagne";
+$MESS ['STAT_F_ADV_BACK'] = "Nach der Wiederkehr der Werbekampagne";
+$MESS ['STAT_F_REDIRECT_URL'] = "Weitergeleitet zu";
+$MESS ['STAT_REDIRECT_URL'] = "Weitergeleitet zu";
+$MESS ['STAT_F_REFERER_URL'] = "Eintrittspunkt";
+$MESS ['STAT_REFERER_URL'] = "Eintrittspunkt";
+$MESS ['STAT_SESSION'] = "Session";
+$MESS ['STAT_F_SESSION_ID'] = "Session ID";
+$MESS ['STAT_EVENT'] = "Typ";
+$MESS ['STAT_F_GUEST_ID'] = "Gast ID";
+?>

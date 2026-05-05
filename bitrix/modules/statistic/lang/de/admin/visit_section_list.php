@@ -1,0 +1,31 @@
+<?
+$MESS ['STAT_OTHER'] = "(andere)";
+$MESS ['STAT_F_ADV'] = "Werbekampagnen";
+$MESS ['STAT_ATTENTION_GOTO'] = "Für den Übergang zum Verzeichnis/Seite klicken Sie das Symbol \"&raquo;\".";
+$MESS ['STAT_F_ADV_DATA_TYPE'] = "Datentyp für die Werbekampagnen";
+$MESS ['STAT_GROUP_BY_ENTERS'] = "Eintrittspunkte";
+$MESS ['STAT_T_ENTER_DIAGRAM'] = "Eintrittspunkte";
+$MESS ['STAT_GROUP_BY_EXITS'] = "Austrittspunkte";
+$MESS ['STAT_T_EXIT_DIAGRAM'] = "Austrittspunkte";
+$MESS ['STAT_HITS'] = "Hits";
+$MESS ['STAT_GROUP_BY_HITS'] = "Hits";
+$MESS ['STAT_SECTION_LINK_STAT'] = "Klickstatistik für diese Seite / dieses Verzeichnis";
+$MESS ['STAT_GO'] = "Link öffnen";
+$MESS ['STAT_NO_DATA'] = "Nicht genügend Daten zur Diagrammerstellung";
+$MESS ['STAT_ADV_NO_BACK'] = "nach dem Direktaufruf";
+$MESS ['STAT_ADV_BACK'] = "nach der Wiederkehr";
+$MESS ['STAT_F_SECTIONS'] = "Seite / Verzeichnis";
+$MESS ['STAT_RECORDS_LIST'] = "Traffic für das Verzeichnis und die Seiten";
+$MESS ['STAT_F_VIEW_FILES'] = "nur Seiten";
+$MESS ['STAT_PERCENT'] = "Prozent";
+$MESS ['STAT_T_HITS_DIAGRAM'] = "Traffic";
+$MESS ['STAT_SECTION_PAGES'] = "Einträge";
+$MESS ['STAT_PAGE'] = "Verzeichnis/Seite";
+$MESS ['STAT_F_VIEW_SECTIONS'] = "nur Verzeichnisse";
+$MESS ['STAT_SESSIONS'] = "Sessions";
+$MESS ['STAT_FILTER_PAGE_DIAGRAM_ALT'] = "Diagramm: Hits für dieses Verzeichnis";
+$MESS ['STAT_ADV_SUMMA'] = "Summe nach dem Wiederkehren und nach Direktaufrufen";
+$MESS ['STAT_SECTION_GRAPH'] = "Grafik: Traffic für diese/s Seite/Verzeichnis";
+$MESS ['STAT_F_VIEW'] = "Was soll angezeigt werden";
+$MESS ['STAT_ATTENTION'] = "Achtung";
+?>

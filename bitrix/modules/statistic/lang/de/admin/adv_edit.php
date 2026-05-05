@@ -1,0 +1,34 @@
+<?
+$MESS ['STAT_PRIORITY_ALT'] = "(je höher der Wert, desto höher die Priorität)";
+$MESS ['STAT_SELECT_WHAT_YOU_NEED'] = "(gewünschte wählen)";
+$MESS ['STAT_DEFAULT'] = "< Standard >";
+$MESS ['STAT_ID_ADD'] = "Weitere Bedingungen";
+$MESS ['STAT_ADDITIONAL'] = "Weitere Einstellungen";
+$MESS ['STAT_MORE_TITLE'] = "Weitere Einstellungen und Finanzen";
+$MESS ['STAT_EDIT_RECORD'] = "Werbekampagne Nr. #ID#";
+$MESS ['STAT_IDENTIFIERS'] = "Werbekampagne ID";
+$MESS ['STAT_PROP_TITLE'] = "Werbekampagnen-Parameter";
+$MESS ['STAT_DELETE_ADV_CONFIRM'] = "Sind Sie sich sicher, dass Sie die Werbekampagne wirklich löschen?";
+$MESS ['STAT_RESET_ADV_CONFIRM'] = "Wollen Sie die Werbekampagne wirklich zurücksetzen?";
+$MESS ['STAT_BASE'] = "Basis";
+$MESS ['STAT_COST'] = "Kosten:";
+$MESS ['STAT_DELETE_ADV'] = "Werbekampagne löschen";
+$MESS ['STAT_DESCRIPTION'] = "Beschreibung:";
+$MESS ['STAT_ERROR'] = "Fehler!";
+$MESS ['STAT_FINANCES'] = "Finanzen";
+$MESS ['STAT_RECORDS_LIST'] = "Werbekampagnen";
+$MESS ['STAT_EVENTS_VIEW'] = "Wie sollen die Events angezeigt werden:";
+$MESS ['STAT_MORE'] = "Mehr";
+$MESS ['STAT_PAGES_FROM'] = "Eintrittspunkt [%_]:<br>(verlinkte Seiten,<br>mit einem Zeilenumbruch getrennt)";
+$MESS ['STAT_PAGES_TO'] = "Ziel [%_]::<br>(vollständige Adresse Ihrer Seite<br>getrennt mit einem Zeilenumbruch)";
+$MESS ['STAT_NEW_ADV'] = "Neue Werbekampagne";
+$MESS ['STAT_NEW_RECORD'] = "Neue Werbekampagne";
+$MESS ['STAT_FORGOT_REFERER'] = "Geben Sie referer1 und referer2 ein";
+$MESS ['STAT_PRIORITY'] = "Priorität:";
+$MESS ['STAT_PROP'] = "Eigenschaften";
+$MESS ['STAT_RESET_ADV'] = "Werbekampagne zurücksetzen";
+$MESS ['STAT_REVENUE'] = "Einnahmen:";
+$MESS ['STAT_SEARCHERS'] = "Suchmaschinen:";
+$MESS ['STAT_ID_ADD_NOTE'] = "Die Kampagne läuft, wenn irgendeine Bedingung erfüllt ist";
+$MESS ['STAT_WRONG_REFERER'] = "Diese referer1 und referer2 werden bereits verwendet";
+?>

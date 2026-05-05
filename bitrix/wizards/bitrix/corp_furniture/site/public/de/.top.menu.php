@@ -1,0 +1,40 @@
+<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
+<?
+$aMenuLinks = Array(
+	Array(
+		"Unternehmen", 
+		"company/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"News", 
+		"news/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Produkte", 
+		"products/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Dienstleistungen", 
+		"services/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Kontakte", 
+		"contacts/", 
+		Array(), 
+		Array(), 
+		"" 
+	)
+);
+?>

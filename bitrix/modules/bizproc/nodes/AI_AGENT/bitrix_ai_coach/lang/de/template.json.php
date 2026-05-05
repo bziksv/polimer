@@ -1,0 +1,42 @@
+<?php
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_DEFAULT_1"] = "Testautor";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_DEFAULT_2"] = "Testbot";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_DESCRIPTION_1"] = "Dieser Agent hilft Ihnen, das Wissen Ihres Teams zu testen und spart Zeit bei der Prüfung der Ergebnisse. Teilen Sie dem Agenten mit, welche Art von Test Sie benötigen. Der Agent erstellt Fragen für den Test und schickt den Test an die Mitarbeiter. Der Mitarbeiter macht den Test, indem er im Chat mit dem Agenten kommuniziert. Der Agent stellt Fragen, prüft die Antworten und schickt einen Bericht an den Vorgesetzten des Mitarbeiters.";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_MESSAGE_1"] = "Hallo! Ich bin bereit, Ihnen bei der Bewertung des Mitarbeiterwissens zu helfen. Bitte nennen Sie mir das Thema oder Fachgebiet, das bewertet werden muss. Ich werde Fragen für den Test erstellen.";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_MESSAGE_2"] = "Sie müssen einen Test von {=A4769_8071_8996_8194:SenderId > bbcode} zum Thema {=A9692_4897_2126_2020:topic} machen. Teilen Sie mir bitte mit, wann Sie den Test anfangen können.";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_MESSAGE_3"] = "Der Mitarbeiter hat den Test abgeschlossen. {=A9654_3504_4807_2932:SenderId > friendly}
+Ergebnis:
+{=A1535_5119_7045_4611:results_of_test}";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_MESSAGE_4"] = "Fehler beim Verarbeiten der Anfrage. Bitte versuchen Sie es später erneut.";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_MESSAGE_5"] = "Momentan gibt keine aktiven Tests.";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_NAME_1"] = "Agent zur Bewertung des Mitarbeiterwissens";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_NAME_2"] = "Name des Chatbots, der die Tests erstellt:";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_NAME_3"] = "Folgende Nutzer können diesen Agenten verwenden:";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_NAME_4"] = "Name des Chatbots, der den für die Mitarbeiter durchführt:";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_NAME_5"] = "Symbolischer Codes des Eintrags";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_NAME_6"] = "Testname";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_NAME_7"] = "Testfragen";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_NAME_8"] = "Testautor";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_NAME_9"] = "Testname";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_NAME_10"] = "Testfragen";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_NAME_11"] = "Testautor";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_STORAGETITLE_1"] = "Testspeicher";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TEXT_1"] = "Es wird zwei Chatbots geben. Der erste wird als Testautor fungieren; Sie werden mit ihm Tests besprechen und vorbereiten. Geben Sie ihm einen sinnvollen Namen (z.B.: \"Autor der Tests für Vertrieb\").";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TEXT_2"] = "Chatbot für Tests";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TEXT_3"] = "Dieser Chatbot führt die Mitarbeitertests durch.";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TITLE_1"] = "Knoten-Workflow";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TITLE_2"] = "Chatbot hat eine Nachricht bekommen";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TITLE_3"] = "Nachricht als Chatbot senden";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TITLE_4"] = "KI-Agenten starten";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TITLE_5"] = "Bot-Maker speichern";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TITLE_6"] = "Chatbot-Einstellungen speichern";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TITLE_7"] = "Bot-Interviewer speichern";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TITLE_9"] = "Daten schreiben";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TITLE_10"] = "Daten lesen. Aktueller Test.";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TITLE_11"] = "Daten lesen";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TITLE_12"] = "Daten löschen";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TITLE_13"] = "Parameter der Workflow-Vorlagen bearbeiten";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TITLE_14"] = "Bedingung";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TITLE_15"] = "KI-Agent";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TITLE_16"] = "Iterator";
+$MESS["BIZPROC_NODES_BITRIX_AI_COACH_TITLE_17"] = "Speicher erstellen";

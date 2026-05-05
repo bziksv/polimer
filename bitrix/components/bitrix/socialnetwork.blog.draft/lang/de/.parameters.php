@@ -1,0 +1,31 @@
+<?
+$MESS["BB_MESSAGE_COUNT"] = "Nachrichten pro Seite";
+$MESS["BB_PATH_TO_BLOG"] = "Vorlage des Pfads zur Seite der Nachrichten";
+$MESS["BB_PATH_TO_BLOG_CATEGORY"] = "Vorlage des Pfads zur Seite der Nachrichten mit dem Tagfilter";
+$MESS["BB_PATH_TO_POST"] = "Vorlage des Pfads zur Seite der Nachricht";
+$MESS["BB_PATH_TO_POST_EDIT"] = "Vorlage des Pfads zur Seite der Nachrichtbearbeitung";
+$MESS["BB_PATH_TO_USER"] = "Vorlage des Pfads zum Nutzerprofil";
+$MESS["BB_PATH_TO_GROUP"] = "Vorlage des Pfads zum Gruppenprofil";
+$MESS["BB_PATH_TO_SMILE"] = "Pfad zum Smiley-Verzeichnis, relativ zum Root-Verzeichnis";
+$MESS["BB_POST_VAR"] = "Variable für die Nachricht-ID";
+$MESS["BB_USER_VAR"] = "Variable für die Nutzer-ID";
+$MESS["BB_PAGE_VAR"] = "Variable für die Seite";
+$MESS["BB_CACHE_TIME_LONG"] = "Zeit für den Cache für die restlichen Seiten";
+$MESS["BB_CATEGORY_ID"] = "Tagfilter-ID";
+$MESS["BB_SET_NAV_CHAIN"] = "Punkt in die Navigationskette hinzufügen";
+$MESS["POST_PROPERTY_LIST"] = "Zusätzliche Nachrichteneigenschaften anzeigen";
+$MESS["BB_FILTER_NAME_IN"] = "Bereich mit Filterwerten für Nachrichtenfilter";
+$MESS["B_VARIABLE_ALIASES"] = "Variablen";
+$MESS["BC_DATE_TIME_FORMAT"] = "Datum- und Zeitformat";
+$MESS["BB_NAV_TEMPLATE"] = "Vorlagenname für die Seitennavigation";
+$MESS["SHOW_RATING"] = "Ranking aktivieren";
+$MESS["SHOW_RATING_CONFIG"] = "Standardmäßig";
+$MESS["RATING_TYPE"] = "Design der Ranking-Schaltflächen";
+$MESS["RATING_TYPE_CONFIG"] = "Standardmäßig";
+$MESS["RATING_TYPE_STANDART_TEXT"] = "Gefällt mir / Gefällt mir nicht (Text)";
+$MESS["RATING_TYPE_STANDART_GRAPHIC"] = "Gefällt mir / Gefällt mir nicht (Bild)";
+$MESS["RATING_TYPE_LIKE_TEXT"] = "Gefällt mir (Text)";
+$MESS["RATING_TYPE_LIKE_GRAPHIC"] = "Gefällt mir (Bild)";
+$MESS["BPC_IMAGE_MAX_WIDTH"] = "Maximal zulässige Bildbreite";
+$MESS["BPC_IMAGE_MAX_HEIGHT"] = "Maximal zulässige Bildhöhe";
+?>

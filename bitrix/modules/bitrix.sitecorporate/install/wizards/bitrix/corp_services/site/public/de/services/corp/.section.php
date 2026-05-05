@@ -1,0 +1,6 @@
+<?
+$sSectionName = "Firmenkunden";
+$arDirProperties = Array(
+
+);
+?>

@@ -1,0 +1,3 @@
+<?php
+$MESS["BIZPROCDESIGNER_COMMAND_VALIDATE_SINGLE_RULE_NO_ACTIVITY"] = "Aktion \"#NAME#\" wurde nicht gefunden.";
+$MESS["BIZPROCDESIGNER_COMMAND_VALIDATE_SINGLE_RULE_NO_HANDLE_DOCUMENT"] = "Aktion \"#NAME#\" erfordert ein Workflow-Element.";

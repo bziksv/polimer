@@ -1,0 +1,11 @@
+<?
+$MESS["LOG_ENTITY_HOST_FIELD"] = "Host";
+$MESS["LOG_ENTITY_URI_FIELD"] = "Seitenadresse";
+$MESS["LOG_ENTITY_TITLE_FIELD"] = "Seitenname";
+$MESS["LOG_ENTITY_CREATED_FIELD"] = "Erstellt am";
+$MESS["LOG_ENTITY_TYPE_FIELD"] = "Ereignistyp";
+$MESS["LOG_ENTITY_MESSAGE_FIELD"] = "Nachricht";
+$MESS["LOG_ENTITY_AJAX_FIELD"] = "AJAX-Anfrage";
+$MESS["LOG_ENTITY_USER_ID_FIELD"] = "Nutzer";
+$MESS["LOG_ENTITY_PAGE_ID_FIELD"] = "Seiten-ID";
+?>

@@ -1,0 +1,9 @@
+<?
+$MESS["LANDING_TABLE_FIELD_CHAT_AVATAR"] = "ID des Chat-Icons";
+$MESS["LANDING_TABLE_FIELD_CHAT_ID"] = "ID des Chats";
+$MESS["LANDING_TABLE_FIELD_CHAT_TITLE"] = "Überschrift des Chats";
+$MESS["LANDING_TABLE_FIELD_CREATED_BY_ID"] = "Erstellt von (Nutzer-ID)";
+$MESS["LANDING_TABLE_FIELD_DATE_CREATE"] = "Erstellt am";
+$MESS["LANDING_TABLE_FIELD_DATE_MODIFY"] = "Geändert am";
+$MESS["LANDING_TABLE_FIELD_MODIFIED_BY_ID"] = "Geändert von (Nutzer-ID)";
+?>

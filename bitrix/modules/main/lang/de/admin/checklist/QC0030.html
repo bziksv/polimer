@@ -1,0 +1,26 @@
+<p>Es muss verständlich sein, wie die speziell für ein Projekt erstellten Komponenten 2.0 eingestellt werden, ohne dafür Programmierer extra heranziehen zu müssen.
+Ein Beispiel: Für das Projekt "myproject" wurden 30 Komponenten 2.0 erstellt, eine davon - "Liste der registrierten Teilnehmer" befindet sich im Namenraum
+"myproject:members.list". Welche Einstellungen können für eine solche Komponente 2.0 erforderlich sein? Dies hängt vom Projekt sowie von den Nutzungsszenarien ab.
+Es können beispielsweise folgende Einstellungen sein:</p>
+<ul>
+<li>Anzahl der Teilnehmer pro Seite</li>
+<li>Namenformat des Teilnehmers: Voller Name/Nur Nachname</li>
+<li>Anzahl der Wörter in der Beschreibung (nach welcher Auslassungspunkte angezeigt werden)</li>
+<li>Verschlüsselte E-Mail anzeigen</li>
+<li>Spalte zur Sortierung der Liste usw.</li>
+</ul>
+<p>Der Systemadministrator kann solche Einstellungen benötigen, aber sie können im Laufe der Projektnutzung geändert werden.</p>
+<p>Hier ein Beispiel von anderen Einstellungen, welche einen Systemadministrator nur verwirren würden, da sie lediglich für Programmierer verständlich sind:</p>
+<ul>
+<li>Algorithmus des Daten-Caches</li>
+<li>Format der JSON-Anfrage</li>
+<li>Nutzergruppen, die berechtigt sind, Liste anzuzeigen usw.</li>
+</ul>
+<p>Sind solche Einstellungen jedoch erforderlich, sollten sie in einer Extragruppe platziert und mit notwendiger Dokumentation inkl. zulässiger Werte versehen werden.</p>
+<p>Wenn eine Standardkomponente eingesetzt wird, welche auch in mehreren Web-Projekten genutzt werden kann, sollte sie konfigurierbar sein und die Einstellungen
+ für diese Komponente sollten sowohl für Programmierer als auch für den Systemadministrator verfügbar sein. Ist die Komponente eher spezifisch, hat es keinen
+ Sinn, sie auch konfigurierbar zu machen bzw. Zugriff auf Einstellungen für diese Komponente allen zu gewähren.</p>
+<p>Einstellungen für jede anpassbare Komponente 2.0 sollten im Ansichtsbereich überprüft werden: Jede Einstellung muss eine klare Bezeichnung haben und
+detailliert beschrieben sein. Ein Projektadministrator muss ganz klar verstehen, ober die Einstellungen ändern kann, und wenn ja innerhalb von welchen Werten
+ und in welchem Dateiformat. Es wird empfohlen, jede einzelne Einstellung, die einem Administrator verfügbar sein soll, auf eine korrekte Arbeitsweise hin zu
+ überprüfen.</p>

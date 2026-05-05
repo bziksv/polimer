@@ -1,0 +1,3 @@
+<?php
+
+$MESS['AVITO_EXPORT_FEED_SOURCE_OFFER_FETCHER_TITLE'] = 'Предложение';

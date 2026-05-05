@@ -1,0 +1,20 @@
+<?php
+$MESS["MAIL_CLIENT_CONFIG_HAS_CHANGED_NOTIFY_MESSAGE_F"] = "hat die Einstellungen für #EMAIL# geändert.";
+$MESS["MAIL_CLIENT_CONFIG_HAS_CHANGED_NOTIFY_MESSAGE_M"] = "hat die Einstellungen für #EMAIL# geändert.";
+$MESS["MAIL_CLIENT_CONFIG_HAS_CHANGED_NOTIFY_MESSAGE_PARAMS_F"] = "#AUTHOR# hat die Einstellungen für #EMAIL# geändert.";
+$MESS["MAIL_CLIENT_CONFIG_HAS_CHANGED_NOTIFY_MESSAGE_PARAMS_M"] = "#AUTHOR# hat die Einstellungen für #EMAIL# geändert.";
+$MESS["MAIL_MASS_CONNECTING_MAILBOX_NOTIFICATION_NOTIFY_MESSAGE_F"] = "hat eine Mailbox #EMAIL# für Sie verbunden.";
+$MESS["MAIL_MASS_CONNECTING_MAILBOX_NOTIFICATION_NOTIFY_MESSAGE_M"] = "hat eine Mailbox #EMAIL# für Sie verbunden.";
+$MESS["MAIL_MASS_CONNECTING_MAILBOX_NOTIFICATION_SUBJECT_F"] = "#AUTHOR# hat eine Mailbox [URL=#LINK#]#EMAIL#[/URL] für Sie verbunden.";
+$MESS["MAIL_MASS_CONNECTING_MAILBOX_NOTIFICATION_SUBJECT_M"] = "#AUTHOR# hat eine Mailbox [URL=#LINK#]#EMAIL#[/URL] für Sie verbunden.";
+$MESS["MAIL_NOTIFY_FULL_MAILBOX_TARIFF_RESTRICTIONS_HAVE_BEEN_IMPOSED"] = "Sie haben ein Downgrade auf den Tarif gemacht, der weniger Mailboxen unterstützt, als Sie haben. Zugriff auf #EMAIL# wurde vorübergehend verweigert. Aus den eingehenden E-Mails werden weder Leads noch Aufträge erstellt. Antworten, die von den Kunden an diese E-Mail-Adresse gesendet werden, werden nicht im CRM gespeichert. Möchten Sie diese Mailbox aktivieren, sollten Sie die Mailboxen deaktivieren, die Sie nicht nutzen, oder auf einen höheren Tarif upgraden.";
+$MESS["MAIL_NOTIFY_IMPOSE_TARIFF_RESTRICTIONS_ON_THE_MAILBOX"] = "Maximale Anzahl der Mailboxen überschritten";
+$MESS["MAIL_NOTIFY_MAILBOX_TARIFF_RESTRICTIONS_HAVE_BEEN_IMPOSED"] = "Zugriff auf \"<a target=\"_blank\" href=\"#VIEW_URL#\">#EMAIL#</a>\" wurde vorübergehend verweigert, da es mehr Mailboxen gibt, als von Ihrem aktuellen Tarif unterstützt.<br/><br/><a target=\"_blank\" href=\"#VIEW_URL#\">Mehr</a>";
+$MESS["MAIL_NOTIFY_NEW_MESSAGE"] = "Neue Nachricht";
+$MESS["MAIL_NOTIFY_NEW_MESSAGE_MULTI_1"] = "Neue E-Mails: #COUNT#<br/><br/><a target=\"_blank\" href=\"#VIEW_URL#\">Anzeigen</a>";
+$MESS["MAIL_NOTIFY_NEW_MESSAGE_TITLE"] = "E-Mail";
+$MESS["MAIL_NOTIFY_NEW_SINGLE_MESSAGE_IN_MAIL_CLIENT_1"] = "Neue E-Mail: <a target=\"_blank\" href=\"#VIEW_URL#\">\"#SUBJECT#\"</a>";
+$MESS["MAIL_NOTIFY_NEW_SINGLE_MESSAGE_IN_MAIL_CLIENT_EMPTY_SUBJECT"] = "<a target=\"_blank\" href=\"#VIEW_URL#\">Neue E-Mail</a>";
+$MESS["MAIL_PUSH_NOTIFY_NEW_MESSAGE_MULTI"] = "Neue Nachrichten: #COUNT#.";
+$MESS["MAIL_PUSH_NOTIFY_NEW_SINGLE_MESSAGE_IN_MAIL_CLIENT"] = "Neue Nachrichten: \"#SUBJECT#\".";
+$MESS["MAIL_PUSH_NOTIFY_NEW_SINGLE_MESSAGE_IN_MAIL_CLIENT_EMPTY_SUBJECT"] = "Sie haben eine neue Nachricht erhalten.";

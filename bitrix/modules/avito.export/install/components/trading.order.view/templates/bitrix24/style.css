@@ -1,0 +1,155 @@
+.avito-export-editor-wrapper {
+	max-width: 1220px;
+}
+
+.avito-export-editor-wrapper__title {
+	margin-left: 20px;
+	margin-bottom: 5px;
+
+	color: #535c69;
+	font-family: "OpenSans-Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-transform: uppercase;
+}
+
+.avito-export-editor-wrapper__refresh {
+	float: right;
+	margin-right: 20px;
+	margin-bottom: 5px;
+}
+
+.avito-export-editor-wrapper .ui-entity-editor-column-wrapper {
+	flex-wrap: wrap;
+	width: calc(100% + 20px);
+	margin-left: -20px;
+}
+
+.avito-export-editor-wrapper .ui-entity-editor-column-content {
+	box-sizing: border-box;
+	flex-basis: 600px;
+	padding-left: 20px;
+	padding-right: 0;
+}
+
+.avito-export-editor-wrapper .ui-entity-editor-column-content + .ui-entity-editor-column-content {
+	padding-left: 20px;
+}
+
+.avito-export-editor-wrapper .ui-entity-editor-section,
+.avito-export-editor-wrapper .ui-entity-editor-section-edit {
+	width: 600px;
+	max-width: 100%;
+}
+
+.avito-export-editor-wrapper .ui-entity-editor-section[data-cid="ATTENTION_SECTION"],
+.avito-export-editor-wrapper .ui-entity-editor-section[data-cid="COMMON"],
+.avito-export-editor-wrapper .ui-entity-editor-section-edit[data-cid="COMMON"] {
+	width: 1220px;
+}
+
+.avito-export-basket {
+	max-width: 1500px;
+}
+
+.avito-export-basket-table-viewport {
+	display: block;
+	width: 100%;
+	overflow-x: auto;
+}
+
+.avito-export-basket-table {
+	width: 100%;
+	min-width: 800px;
+	border: 1px solid #F1F1F1;
+	border-spacing: 0;
+	background: #fff;
+}
+
+.avito-export-basket-table td {
+	padding: 10px;
+	vertical-align: top;
+	text-align: left;
+}
+
+.avito-export-basket-table td.for--number {
+	width: 1%;
+	white-space: nowrap;
+}
+
+.avito-export-basket-table td.for--name {
+	min-width: 250px;
+}
+
+.avito-export-basket-table td.for--price {
+	width: 20%;
+	white-space: nowrap;
+}
+
+.avito-export-basket-table td.for--quantity {
+	width: 15%;
+	white-space: nowrap;
+}
+
+.avito-export-basket-table thead td {
+	border-bottom: 1px solid #F1F1F1;
+	vertical-align: bottom;
+	white-space: nowrap;
+}
+
+.avito-export-basket-summary {
+	display: table;
+	margin-top: 12px;
+}
+
+.avito-export-basket-summary__row {
+	display: table-row;
+}
+
+.avito-export-basket-summary__label {
+	display: table-cell;
+	padding-right: 6px;
+	padding-top: 8px;
+	text-align: right;
+}
+
+.avito-export-basket-summary__value {
+	display: table-cell;
+	padding-right: 10px;
+	padding-top: 8px;
+	width: 1%;
+	white-space: nowrap;
+	text-align: right;
+}
+
+.avito-export-link-icon{
+	margin-right: 4px;
+}
+
+.avito-export-link-icon__icon{
+	width: 16px;
+	transform: translate(0, 2px);
+}
+
+.avito-export-link-empty{
+	display: inline-block;
+	width: 16px;
+	margin-right: 4px;
+}
+
+.avito-export-editor-wrapper .ui-entity-editor-section[data-cid="ATTENTION_SECTION"] {
+	padding: 0;
+	margin-bottom: 0;
+	background: none;
+	box-shadow: none;
+}
+
+.avito-export-editor-wrapper .ui-entity-editor-section[data-cid="ATTENTION_SECTION"] > .ui-entity-editor-section-content {
+	padding: 0;
+}
+
+.avito-export-editor-wrapper .ui-entity-editor-section[data-cid="ATTENTION_SECTION"] .ui-entity-editor-content-block:empty {
+	margin-bottom: 0;
+}
+
+.ui-entity-editor-content-block[data-cid="ATTENTION"] .ui-alert {
+	flex-direction: column;
+}

@@ -1,0 +1,12 @@
+<?
+$MESS["LANDING_TABLE_ERROR_TITLE_REQUIRED"] = "Rollenname ist erforderlich";
+$MESS["LANDING_TABLE_FIELD_CREATED_BY_ID"] = "Erstellt von Nutzer-ID";
+$MESS["LANDING_TABLE_FIELD_DATE_CREATE"] = "Erstellt am";
+$MESS["LANDING_TABLE_FIELD_DATE_MODIFY"] = "Geändert am";
+$MESS["LANDING_TABLE_FIELD_MODIFIED_BY_ID"] = "Geändert von Nutzer-ID";
+$MESS["LANDING_TABLE_FIELD_ROLE_ACCESS_CODES"] = "Verfügbare Zugriffsrechte";
+$MESS["LANDING_TABLE_FIELD_ROLE_ADDITIONAL_RIGHTS"] = "Zusätzliche Zugriffsrechte";
+$MESS["LANDING_TABLE_FIELD_ROLE_TITLE"] = "Name der Rolle";
+$MESS["LANDING_TABLE_FIELD_ROLE_TYPE"] = "Rollentyp";
+$MESS["LANDING_TABLE_FIELD_ROLE_XML_ID"] = "Symbolischer Code der Rolle";
+?>

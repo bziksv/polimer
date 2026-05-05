@@ -1,0 +1,37 @@
+<?
+$MESS["ELEMENT_ENTITY_ID_FIELD"] = "ID";
+$MESS["ELEMENT_ENTITY_NAME_FIELD"] = "Name";
+$MESS["ELEMENT_ENTITY_TIMESTAMP_X_FIELD"] = "Geändert am";
+$MESS["ELEMENT_ENTITY_MODIFIED_BY_FIELD"] = "Geändert von";
+$MESS["ELEMENT_ENTITY_DATE_CREATE_FIELD"] = "Erstellt am";
+$MESS["ELEMENT_ENTITY_CREATED_BY_FIELD"] = "Erstellt von";
+$MESS["ELEMENT_ENTITY_IBLOCK_ID_FIELD"] = "Informationsblock-ID";
+$MESS["ELEMENT_ENTITY_IBLOCK_SECTION_ID_FIELD"] = "Hauptbereich";
+$MESS["ELEMENT_ENTITY_ACTIVE_FIELD"] = "Aktiv";
+$MESS["ELEMENT_ENTITY_ACTIVE_FROM_FIELD"] = "Aktiv von";
+$MESS["ELEMENT_ENTITY_ACTIVE_TO_FIELD"] = "Aktiv bis";
+$MESS["ELEMENT_ENTITY_SORT_FIELD"] = "Sortierungsindex";
+$MESS["ELEMENT_ENTITY_PREVIEW_PICTURE_FIELD"] = "Vorschaubild";
+$MESS["ELEMENT_ENTITY_PREVIEW_TEXT_FIELD"] = "Vorschautext";
+$MESS["ELEMENT_ENTITY_PREVIEW_TEXT_TYPE_FIELD"] = "Typ des Vorschautextes";
+$MESS["ELEMENT_ENTITY_DETAIL_PICTURE_FIELD"] = "Vollbild";
+$MESS["ELEMENT_ENTITY_DETAIL_TEXT_FIELD"] = "Detaillierte Beschreibung";
+$MESS["ELEMENT_ENTITY_DETAIL_TEXT_TYPE_FIELD"] = "Typ der detaillierten Beschreibung";
+$MESS["ELEMENT_ENTITY_SEARCHABLE_CONTENT_FIELD"] = "Suchindex";
+$MESS["ELEMENT_ENTITY_WF_STATUS_ID_FIELD"] = "Dokumenten-Workflow-Status";
+$MESS["ELEMENT_ENTITY_WF_PARENT_ELEMENT_ID_FIELD"] = "Übergeordnetes Element";
+$MESS["ELEMENT_ENTITY_WF_NEW_FIELD"] = "Option \"Entwurf veröffentlicht\"";
+$MESS["ELEMENT_ENTITY_WF_LOCKED_BY_FIELD"] = "Gesperrt durch";
+$MESS["ELEMENT_ENTITY_WF_DATE_LOCK_FIELD"] = "Gesperrt am";
+$MESS["ELEMENT_ENTITY_WF_COMMENTS_FIELD"] = "Kommentar zum Dokumenten-Workflow";
+$MESS["ELEMENT_ENTITY_IN_SECTIONS_FIELD"] = "Eingeschlossen in Bereiche der Informationsblöcke";
+$MESS["ELEMENT_ENTITY_XML_ID_FIELD"] = "Externe ID";
+$MESS["ELEMENT_ENTITY_CODE_FIELD"] = "Symbolischer Code";
+$MESS["ELEMENT_ENTITY_TAGS_FIELD"] = "Tags";
+$MESS["ELEMENT_ENTITY_TMP_ID_FIELD"] = "Temporäre ID";
+$MESS["ELEMENT_ENTITY_SHOW_COUNTER_FIELD"] = "Angezeigt";
+$MESS["ELEMENT_ENTITY_SHOW_COUNTER_START_FIELD"] = "Zum ersten Mal angezeigt am";
+$MESS["ELEMENT_ENTITY_MESS_ADD_BLOCKED"] = "Rufen Sie CIBlockElement::Add() auf, um Informationsblockelemente hinzuzufügen";
+$MESS["ELEMENT_ENTITY_MESS_UPDATE_BLOCKED"] = "Rufen Sie CIBlockElement::Update() auf, um Informationsblockelemente zu ändern";
+$MESS["ELEMENT_ENTITY_MESS_DELETE_BLOCKED"] = "Rufen Sie CIBlockElement::Delete() auf, um Informationsblockelemente zu löschen";
+?>

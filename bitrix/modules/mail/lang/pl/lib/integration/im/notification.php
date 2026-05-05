@@ -1,0 +1,20 @@
+<?php
+$MESS["MAIL_CLIENT_CONFIG_HAS_CHANGED_NOTIFY_MESSAGE_F"] = "zmieniła ustawienia dla #EMAIL#.";
+$MESS["MAIL_CLIENT_CONFIG_HAS_CHANGED_NOTIFY_MESSAGE_M"] = "zmienił ustawienia dla #EMAIL#.";
+$MESS["MAIL_CLIENT_CONFIG_HAS_CHANGED_NOTIFY_MESSAGE_PARAMS_F"] = "#AUTHOR# zmienił ustawienia dla #EMAIL#.";
+$MESS["MAIL_CLIENT_CONFIG_HAS_CHANGED_NOTIFY_MESSAGE_PARAMS_M"] = "#AUTHOR# zmieniła ustawienia dla #EMAIL#.";
+$MESS["MAIL_MASS_CONNECTING_MAILBOX_NOTIFICATION_NOTIFY_MESSAGE_F"] = "podłączyła dla Ciebie skrzynkę mailową #EMAIL#.";
+$MESS["MAIL_MASS_CONNECTING_MAILBOX_NOTIFICATION_NOTIFY_MESSAGE_M"] = "podłączył dla Ciebie skrzynkę mailową #EMAIL#.";
+$MESS["MAIL_MASS_CONNECTING_MAILBOX_NOTIFICATION_SUBJECT_F"] = "#AUTHOR# podłączyła dla Ciebie skrzynkę mailową [URL=#LINK#]#EMAIL#[/URL].";
+$MESS["MAIL_MASS_CONNECTING_MAILBOX_NOTIFICATION_SUBJECT_M"] = "#AUTHOR# podłączył dla Ciebie skrzynkę mailową [URL=#LINK#]#EMAIL#[/URL].";
+$MESS["MAIL_NOTIFY_FULL_MAILBOX_TARIFF_RESTRICTIONS_HAVE_BEEN_IMPOSED"] = "Zmieniono plan na taki, który obsługuje mniej skrzynek mailowych niż masz. Dostęp do skrzynki #EMAIL# został tymczasowo zamknięty. Z przychodzących wiadomości e-mail nie będą tworzone żadne leady ani deale. Odpowiedzi przesyłane przez klientów na ten adres e-mail nie będą zapisywane w CRM. Aby aktywować tę skrzynkę mailową, wyłącz skrzynki mailowe, których nie używasz, lub przejdź na jeden z głównych planów.";
+$MESS["MAIL_NOTIFY_IMPOSE_TARIFF_RESTRICTIONS_ON_THE_MAILBOX"] = "Przekroczono maksymalną liczbę skrzynek pocztowych";
+$MESS["MAIL_NOTIFY_MAILBOX_TARIFF_RESTRICTIONS_HAVE_BEEN_IMPOSED"] = "Dostęp do „<a target=\"_blank\" href=\"#VIEW_URL#\">#EMAIL#</a>” został tymczasowo zamknięty, ponieważ masz więcej skrzynek pocztowych niż obsługuje Twój bieżący plan.<br/><br/><a target=\"_blank\" href=\"#VIEW_URL#\">Dowiedz się więcej</a>";
+$MESS["MAIL_NOTIFY_NEW_MESSAGE"] = "Nowa wiadomość";
+$MESS["MAIL_NOTIFY_NEW_MESSAGE_MULTI_1"] = "Nowe wiadomości e-mail: #COUNT#<br/><br/><a target=\"_blank\" href=\"#VIEW_URL#\">Wyświetl</a>";
+$MESS["MAIL_NOTIFY_NEW_MESSAGE_TITLE"] = "E-mail";
+$MESS["MAIL_NOTIFY_NEW_SINGLE_MESSAGE_IN_MAIL_CLIENT_1"] = "Nowa wiadomość e-mail <a target=\"_blank\" href=\"#VIEW_URL#\">„#SUBJECT#”</a>";
+$MESS["MAIL_NOTIFY_NEW_SINGLE_MESSAGE_IN_MAIL_CLIENT_EMPTY_SUBJECT"] = "<a target=\"_blank\" href=\"#VIEW_URL#\">Nowa wiadomość e-mail</a>";
+$MESS["MAIL_PUSH_NOTIFY_NEW_MESSAGE_MULTI"] = "Nowe wiadomości: #COUNT#.";
+$MESS["MAIL_PUSH_NOTIFY_NEW_SINGLE_MESSAGE_IN_MAIL_CLIENT"] = "Nowa wiadomość: „#SUBJECT#”.";
+$MESS["MAIL_PUSH_NOTIFY_NEW_SINGLE_MESSAGE_IN_MAIL_CLIENT_EMPTY_SUBJECT"] = "Masz nową wiadomość.";

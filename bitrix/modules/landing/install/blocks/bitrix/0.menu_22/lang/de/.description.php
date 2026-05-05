@@ -1,0 +1,5 @@
+<?php
+$MESS["LANDING_BLOCK_MENU_22-LINK"] = "Link";
+$MESS["LANDING_BLOCK_MENU_22-NAME"] = "Senkrechtes Menü";
+$MESS["LANDING_BLOCK_MENU_22-NAVBAR"] = "Menü";
+$MESS["LANDING_BLOCK_MENU_22_HAMB"] = "Mobiles Menü";

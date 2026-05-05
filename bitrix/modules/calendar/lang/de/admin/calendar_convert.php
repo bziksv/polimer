@@ -1,0 +1,34 @@
+<?
+$MESS["MOD_BACK"] = "Zurück zu Modulen";
+$MESS["TYPE_ID"] = "Symbolischer Code";
+$MESS["TYPE_TITLE"] = "Name";
+$MESS["TYPE_CONVERT_IT"] = "Diesen Typ konvertieren";
+$MESS["CAL_SETTINGS"] = "Einstellungen";
+$MESS["CAL_PRODUCT_SETTINGS"] = "Systemeinstellungen";
+$MESS["CAL_MODULES"] = "Module";
+$MESS["CAL_CONVERT"] = "Kalender konvertieren";
+$MESS["CAL_CONVERT_IBLOCK_LIST"] = "Informationsblöcke, die zu Kalendertypen konvertiert werden sollen";
+$MESS["CAL_CONVERT_START"] = "Konvertieren";
+$MESS["CAL_CONVERT_PROCESSING"] = "Wird konvertiert...";
+$MESS["CAL_CONVERT_PROCESSING_NOTICE"] = "Achtung! Unterbrechen Sie nicht das Konvertieren und schließen Sie nicht das Browser-Fenster, sonst bekommen Sie ungültige Konvertierergebnisse.";
+$MESS["CAL_CONVERT_FROM"] = "von";
+$MESS["CAL_CONVERT_USERS"] = "Nutzerkalender";
+$MESS["CAL_CONVERT_GROUPS"] = "Gruppenkalender";
+$MESS["CAL_CONVERT_STAGE_PREPARE"] = "Konvertieren wird vorbereitet";
+$MESS["CAL_CONVERT_STAGE_SAVE"] = "Parameter werden gespeichert";
+$MESS["CAL_CONVERT_STAGE_CREATE_TYPES"] = "Kalendertypen werden erstellt";
+$MESS["CAL_CONVERT_STAGE_USER_CALS"] = "Kalender von #USER_NAME# werden konvertiert: (Kalender: #SECT_COUNT#, Termine: #EVENTS_COUNT#)";
+$MESS["CAL_CONVERT_STAGE_GROUP_CALS"] = "Kalender von \"#GROUP_NAME# \" werden konvertiert: (Kalender: #SECT_COUNT#, Termine: #EVENTS_COUNT#)";
+$MESS["CAL_CONVERT_STAGE_TYPE"] = "Kalender von \"#TYPE_NAME# \" werden konvertiert: (Kalender: #SECT_COUNT#, Termine: #EVENTS_COUNT#)";
+$MESS["CAL_CONVERT_SET"] = "Einstellungen des Moduls Terminkalender";
+$MESS["CAL_CONVERT_PROCES"] = "Konvertieren";
+$MESS["CAL_GO_TO_SETTINGS"] = "In die Moduleinstellungen wechseln";
+$MESS["CAL_CONVERT_SUCCESS"] = "Konvertieren abgeschlossen.";
+$MESS["CAL_NOT_1"] = "Markieren Sie Informationsblöcke, die Sie zu Kalendertypen konvertieren möchten. Wenn erforderlich können Sie die Namen und/oder symbolische Codes der ausgewählten Typen ändern.";
+$MESS["CAL_NOT_2"] = "Überprüfen Sie die vorgeschlagenen Einstellungen für das Modul Terminkalender.";
+$MESS["CAL_NOT_3"] = "Klicken Sie auf die Schaltfläche \"Konvertieren\".";
+$MESS["CAL_NOT_4"] = "Nachdem der Prozess des Konvertierens abgeschlossen wird, öffnen Sie die Seite mit Einstellungen des Moduls Terminkalender und stellen Sie sicher, dass die Kalendertypen korrekt sind und auf sie auch zugegriffen werden kann.";
+$MESS["CAL_PARSE_CONTENT"] = "Öffentliche Dateien analysieren";
+$MESS["CAL_NOT_PARSE"] = "Die öffentlichen Dateien der Website müssen analysiert werden, damit die Modulparameter korrekt eingestellt werden.";
+$MESS["CAL_PROC_WAIT"] = "Öffentliche Dateien werden analysiert...";
+?>

@@ -1,0 +1,4 @@
+<?php
+$MESS["SOCIALNETWORK_COLLAB_CHAT_USER_LEAVE_F"] = "#SENDER_NAME# hat das Collab verlassen.";
+$MESS["SOCIALNETWORK_COLLAB_CHAT_USER_LEAVE_M"] = "#SENDER_NAME# hat das Collab verlassen.";
+$MESS["SOCIALNETWORK_COLLAB_CHAT_USER_LEAVE_N"] = "#SENDER_NAME# hat das Collab verlassen.";

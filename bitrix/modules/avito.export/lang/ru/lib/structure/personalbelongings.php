@@ -1,0 +1,3 @@
+<?php
+
+$MESS['AVITO_EXPORT_STRUCTURE_PERSONAL_BELONGINGS_NAME'] = 'Личные вещи';

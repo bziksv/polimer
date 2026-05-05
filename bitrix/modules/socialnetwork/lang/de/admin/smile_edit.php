@@ -1,0 +1,37 @@
+<?
+$MESS ['SONET_IMAGE_NOTE'] = "(empfohlene Abmessungen für Smileys: 16 x 16px, Icons: 15 x 15px)";
+$MESS ['SONET_TYPING_NOTE'] = "(Sie können mehrere Varianten angeben, indem Sie diese mit einem Leerzeichen trennen)";
+$MESS ['SONET_ADD'] = "Hinzufügen";
+$MESS ['ERROR_EXISTS_IMAGE'] = "Ein Bild mit diesem Namen existiert bereits";
+$MESS ['SONET_APPLY'] = "Anwenden";
+$MESS ['FSN_DELETE_SMILE_CONFIRM'] = "Wollen Sie diesen Smiley wirklich löschen?";
+$MESS ['SONET_RESET'] = "Abbrechen";
+$MESS ['SONET_CODE'] = "Code";
+$MESS ['FSN_DELETE_SMILE'] = "Smiley löschen";
+$MESS ['SONET_DESCR'] = "Beschreibung";
+$MESS ['SONET_EDIT_RECORD'] = "Smiley Nr. #ID# ändern";
+$MESS ['ERROR_ADD_SMILE'] = "Beim Erstellen des Smileys ist ein Fehler aufgetreten";
+$MESS ['ERROR_EDIT_SMILE'] = "Beim Ändern des Smileys ist ein Fehler aufgetreten";
+$MESS ['FSE_ICON'] = "Icon";
+$MESS ['ERROR_COPY_IMAGE'] = "Beim Hochladen des Bildes ist ein Fehler aufgetreten. Wahrscheinlich haben Sie nicht genügend Schreibrechte";
+$MESS ['SONET_CODE_LEN'] = "Buchstabe";
+$MESS ['FSN_NEW_SMILE'] = "Neuer Smiley";
+$MESS ['SONET_NEW_RECORD'] = "Neuer Smiley";
+$MESS ['SONET_PT_PROPS'] = "Parameter";
+$MESS ['SONET_SAVE'] = "Speichern";
+$MESS ['FSE_SMILE'] = "Smiley";
+$MESS ['SONET_IMAGE'] = "Smiley-Bild";
+$MESS ['SONET_TYPE'] = "Smiley-Typ";
+$MESS ['SONET_TYPING'] = "Schreibweise des Smileys";
+$MESS ['FSN_2FLIST'] = "Smileys";
+$MESS ['SONET_RECORDS_LIST'] = "Smileys";
+$MESS ['FSN_TAB_SMILE'] = "Smiley des sozialen Netzwerks";
+$MESS ['FSN_TAB_SMILE_DESCR'] = "Smiley des sozialen Netzwerks";
+$MESS ['SONET_SORT'] = "Sortierung";
+$MESS ['FSE_ERROR_EXT'] = "Unzulässige Erweiterung der Bilddatei";
+$MESS ['ERROR_NO_MIN_NUM_POSTS'] = "Geben Sie die minimale Anzahl der Beiträge für diesen Rang an.";
+$MESS ['ERROR_NO_IMAGE'] = "Geben Sie das Bild für den Smiley an.";
+$MESS ['ERROR_NO_NAME'] = "Die sprachabhängige Bezeichnung des Smileys wurde nicht angegeben";
+$MESS ['ERROR_NO_TYPE'] = "Geben Sie den Smiley-Typ an.";
+$MESS ['SONET_NAME'] = "Überschrift";
+?>

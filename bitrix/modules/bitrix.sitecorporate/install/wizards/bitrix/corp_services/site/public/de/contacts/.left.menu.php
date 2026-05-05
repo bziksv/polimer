@@ -1,0 +1,25 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"Kontakte", 
+		"index.php", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Impressum", 
+		"requisites.php", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Fragen", 
+		"feedback.php", 
+		Array(), 
+		Array(), 
+		"" 
+	)
+);
+?>

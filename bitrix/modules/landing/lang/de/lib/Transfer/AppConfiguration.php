@@ -1,0 +1,23 @@
+<?php
+$MESS["LANDING_TRANSFER_EXPORT_ACTION_DESCRIPTION_KNOWLEDGE"] = "Klicken Sie auf die Schaltfläche, um die Wissensbasis in eine Archivdatei zu exportieren.";
+$MESS["LANDING_TRANSFER_EXPORT_ACTION_DESCRIPTION_VIBE"] = "Startseite wird in der Archivdatei gespeichert.";
+$MESS["LANDING_TRANSFER_EXPORT_ACTION_DESCRIPTION_PAGE"] = "Klicken Sie auf die Schaltfläche, um die Website in eine Archivdatei zu exportieren.";
+$MESS["LANDING_TRANSFER_EXPORT_ACTION_DESCRIPTION_STORE"] = "Klicken Sie auf die Schaltfläche, um den Onlineshop in eine Archivdatei zu exportieren.";
+$MESS["LANDING_TRANSFER_EXPORT_ACTION_TITLE_BLOCK_KNOWLEDGE"] = "Wissensbasis exportieren";
+$MESS["LANDING_TRANSFER_EXPORT_ACTION_TITLE_BLOCK_VIBE"] = "Startseite exportieren";
+$MESS["LANDING_TRANSFER_EXPORT_ACTION_TITLE_BLOCK_PAGE"] = "Website exportieren";
+$MESS["LANDING_TRANSFER_EXPORT_ACTION_TITLE_BLOCK_STORE"] = "Onlineshop exportieren";
+$MESS["LANDING_TRANSFER_GROUP_TITLE_KNOWLEDGE"] = "Wissensbasen";
+$MESS["LANDING_TRANSFER_GROUP_TITLE_VIBE"] = "Startseite";
+$MESS["LANDING_TRANSFER_GROUP_TITLE_PAGE"] = "Websites";
+$MESS["LANDING_TRANSFER_GROUP_TITLE_STORE"] = "Onlineshops";
+$MESS["LANDING_TRANSFER_IMPORT_ACTION_TITLE_BLOCK_CREATE_PAGE"] = "Website erstellen";
+$MESS["LANDING_TRANSFER_IMPORT_ACTION_TITLE_BLOCK_KNOWLEDGE"] = "Wissensbasis importieren";
+$MESS["LANDING_TRANSFER_IMPORT_ACTION_TITLE_BLOCK_VIBE"] = "Startseite importieren";
+$MESS["LANDING_TRANSFER_IMPORT_ACTION_TITLE_BLOCK_PAGE"] = "Website importieren";
+$MESS["LANDING_TRANSFER_IMPORT_ACTION_TITLE_BLOCK_STORE"] = "Onlineshop importieren";
+$MESS["LANDING_TRANSFER_IMPORT_DESCRIPTION_STEP_VIBE"] = "Startseite wird installiert";
+$MESS["LANDING_TRANSFER_IMPORT_DESCRIPTION_UPLOAD_KNOWLEDGE"] = "Klicken Sie auf die Schaltfläche, um die Wissensbasis aus einer Archivdatei zu importieren.";
+$MESS["LANDING_TRANSFER_IMPORT_DESCRIPTION_UPLOAD_VIBE"] = "Wählen Sie eine Archivdatei mit der Startseite aus und laden Sie diese hoch.";
+$MESS["LANDING_TRANSFER_IMPORT_DESCRIPTION_UPLOAD_PAGE"] = "Klicken Sie auf die Schaltfläche, um die Website aus einer Archivdatei zu importieren.";
+$MESS["LANDING_TRANSFER_IMPORT_DESCRIPTION_UPLOAD_STORE"] = "Klicken Sie auf die Schaltfläche, um den Onlineshop aus einer Archivdatei zu importieren.";

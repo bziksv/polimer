@@ -1,0 +1,63 @@
+span.bx-avito-massive-edit-panel-heading {
+	display: block;
+
+	margin-bottom: 13px;
+
+	color: #24282b;
+
+	font-size: 15px;
+	line-height: 18px;
+	font-weight: bold;
+}
+
+span.bx-avito-massive-edit-panel-heading small {
+	display: block;
+	font-weight: normal;
+	opacity: 0.5;
+	font-size: 12px;
+}
+
+.bx-avito-massive-edit-panel {
+	display: block;
+	padding: 20px;
+	max-width: 600px;
+	border: 1px solid #cacfd8;
+	border-radius: 3px;
+
+	position: relative;
+
+	margin-bottom: 20px;
+
+	background: #fff;
+}
+
+span.bx-avito-massive-edit-panel__title {
+	display: block;
+
+	margin-bottom: 13px;
+
+	color: #24282b;
+
+	font-size: 15px;
+	line-height: 18px;
+	font-weight: bold;
+}
+
+.bx-avito-massive-edit-field {
+	margin-bottom: 15px;
+}
+
+span.bx-avito-massive-edit-field__label {
+	display: block;
+	margin-bottom: 10px;
+	font-style: italic;
+}
+
+.bx-avito-massive-edit-field > .bx-avito-export-characteristic {
+	border-spacing: 0;
+}
+
+/* fix conflict select2 and dialog */
+.select2-dropdown {
+	z-index: 3000 !important;
+}

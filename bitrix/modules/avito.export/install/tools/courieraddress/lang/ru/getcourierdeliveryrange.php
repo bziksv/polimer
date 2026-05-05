@@ -1,0 +1,4 @@
+<?php
+
+$MESS['AVITO_EXPORT_TOOLS_COURIER_ADDRESS_GET_COURIER_DELIVERY_RANGE_MODULE_REQUIRED'] = 'Модуль avito.export не установлен';
+$MESS['AVITO_EXPORT_TOOLS_COURIER_ADDRESS_GET_COURIER_DELIVERY_RANGE_ACCESS_DENIED'] = 'Доступ на запись в модуле avito.export запрещен';

@@ -1,0 +1,4 @@
+<?php
+
+$MESS['AVITO_EXPORT_TRADING_ENTITY_SALE_PLATFORM_NAME'] = 'Авито';
+$MESS['AVITO_EXPORT_TRADING_ENTITY_SALE_PLATFORM_ACTIVATE_FAILED'] = 'Не удалось активировать торговую платформу';

@@ -1,0 +1,6 @@
+<?
+$MESS["SENDER_UI_TILEVIEW_SECTION_LAST"] = "Jüngste Elemente";
+$MESS["SENDER_UI_TILEVIEW_SECTION_FREQ"] = "Beliebte Elemente";
+$MESS["SENDER_UI_TILEVIEW_SECTION_SYSTEM"] = "Vordefinierte Elemente";
+$MESS["SENDER_UI_TILEVIEW_SECTION_ALL"] = "Alle";
+?>

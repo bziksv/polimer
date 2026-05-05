@@ -1,0 +1,4 @@
+<?php
+
+$MESS['AVITO_EXPORT_STRUCTURE_ELECTRONICS_NAME'] = 'Электроника';
+$MESS['AVITO_EXPORT_STRUCTURE_ELECTRONICS_NAME_OLD'] = 'Бытовая электроника';

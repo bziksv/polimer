@@ -1,0 +1,12 @@
+<?
+$MESS["PAGE_ENTITY_CACHE_KEY_FIELD"] = "Cache-ID";
+$MESS["PAGE_ENTITY_HOST_FIELD"] = "Host";
+$MESS["PAGE_ENTITY_URI_FIELD"] = "Seitenadresse";
+$MESS["PAGE_ENTITY_TITLE_FIELD"] = "Seitenname";
+$MESS["PAGE_ENTITY_CREATED_FIELD"] = "Erstellt am";
+$MESS["PAGE_ENTITY_CHANGED_FIELD"] = "Geändert am";
+$MESS["PAGE_ENTITY_LAST_VIEWED_FIELD"] = "Zuletzt angezeigt am";
+$MESS["PAGE_ENTITY_VIEWS_FIELD"] = "Angezeigt";
+$MESS["PAGE_ENTITY_REWRITES_FIELD"] = "Überschrieben";
+$MESS["PAGE_ENTITY_SIZE_FIELD"] = "Größe";
+?>

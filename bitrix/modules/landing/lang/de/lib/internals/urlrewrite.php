@@ -1,0 +1,9 @@
+<?
+$MESS["LANDING_TABLE_FIELD_RULE"] = "Regel";
+$MESS["LANDING_TABLE_FIELD_SITE_ID"] = "Website-ID";
+$MESS["LANDING_TABLE_FIELD_LANDING_ID"] = "Seiten-ID";
+$MESS["LANDING_TABLE_FIELD_CREATED_BY_ID"] = "ID des Nutzers, der erstellt hat";
+$MESS["LANDING_TABLE_FIELD_MODIFIED_BY_ID"] = "ID des Nutzers, der geändert hat";
+$MESS["LANDING_TABLE_FIELD_DATE_CREATE"] = "Erstellt am";
+$MESS["LANDING_TABLE_FIELD_DATE_MODIFY"] = "Geändert am";
+?>

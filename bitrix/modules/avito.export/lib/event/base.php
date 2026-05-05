@@ -1,0 +1,68 @@
+<?php
+
+namespace Avito\Export\Event;
+
+use Bitrix\Main;
+
+abstract class Base
+{
+
+	/**
+	 * Добавляем событие
+	 *
+	 * @param $handlerParams array|null параметры обработчика, ключи:
+	 *                       module => string # название метода
+	 *                       event => string, # название события
+	 *                       method => string, # название метода (необязательно)
+	 *                       sort => integer, # сортировка (необязательно)
+	 *                       arguments => array # аргументы (необязательно)
+	 *
+	 * @throws Main\NotImplementedException
+	 * @throws Main\SystemException
+	 * */
+	public static function register(array $handlerParams = null):void
+	{
+		$className = static::getClassName();
+
+		$handlerParams = !isset($handlerParams) ? static::getDefaultParams() :
+			array_merge(static::getDefaultParams(), $handlerParams);
+
+		Controller::register($className, $handlerParams);
+	}
+
+	public static function getClassName():string
+	{
+		return '\\' . static::class;
+	}
+
+	/**
+	 * @return array описания обработчика для выполнения по умолчанию, ключи:
+	 *               module => string # название метода
+	 *               event => string, # название события
+	 *               method => string, # название метода (необязательно)
+	 *               sort => integer, # сортировка (необязательно)
+	 *               arguments => array # аргументы (необязательно)
+	 * */
+
+	public static function getDefaultParams():array
+	{
+		return array();
+	}
+
+	/**
+	 * @param null $handlerParams
+	 *
+	 * @throws \Bitrix\Main\ArgumentException
+	 * @throws \Bitrix\Main\Db\SqlQueryException
+	 * @throws \Bitrix\Main\NotImplementedException
+	 */
+	public static function unregister($handlerParams = null):void
+	{
+		$className = static::getClassName();
+
+		$handlerParams = !isset($handlerParams) ? static::getDefaultParams() :
+			array_merge(static::getDefaultParams(), $handlerParams);
+
+		Controller::unregister($className, $handlerParams);
+	}
+}

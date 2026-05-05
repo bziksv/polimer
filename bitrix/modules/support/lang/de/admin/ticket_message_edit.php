@@ -1,0 +1,34 @@
+<?
+$MESS["SUP_EXTERNAL_FIELD_1"] = "Weiteres Feld des Originals (E-Mail, Überschrift, etc.)";
+$MESS["SUP_DELETE_MESSAGE_CONFIRM"] = "Wollen Sie diese Nachricht wirklich löschen?";
+$MESS["SUP_ATTACH_NEW_FILES"] = "Neue Dateien anhängen:";
+$MESS["SUP_ATTACHED_FILES"] = "Dateianhänge:";
+$MESS["SUP_CREATE"] = "Erstellt:";
+$MESS["SUP_DELETE_MESSAGE"] = "Anfrage löschen";
+$MESS["CHANGE_STATUS"] = "Anfragenstatus nicht ändern";
+$MESS["SUP_DOWNLOAD"] = "download";
+$MESS["SUP_EDIT_ALT"] = "Anfragenparameter bearbeiten";
+$MESS["SUP_ERROR"] = "Es ist ein Fehler beim Speichern der Anfrage aufgetreten";
+$MESS["SUP_MAX_FILE_SIZE_EXCEEDING"] = "Fehler! Maximale Dateigröße für \"#FILE_NAME#\" ist überschritten.";
+$MESS["SUP_FROM"] = "Von:";
+$MESS["SUP_IS_HIDDEN"] = "Versteckt:";
+$MESS["SUP_EXTERNAL_ID"] = "ID des Originals (E-Mail usw.):";
+$MESS["SUP_IS_LOG"] = "Eintrag im Änderungsprotokoll";
+$MESS["SUP_EDIT_RECORD"] = "Nachricht Nr. #ID# (Anfrage Nr. #TID#)";
+$MESS["SUP_MESSAGE_NOT_FOUND"] = "Die Nachricht wurde nicht gefunden";
+$MESS["SUP_IS_OVERDUE"] = "User-Nachricht wurde zu spät beantwortet";
+$MESS["SUP_MESSAGE"] = "Nachricht:";
+$MESS["SUP_TIMESTAMP"] = "Geändert:";
+$MESS["SUP_TICKET_EDIT"] = "Anfrage Nr. #TID# bearbeiten";
+$MESS["SUP_MORE"] = "Mehr...";
+$MESS["SUP_NUMBER"] = "Nummer:";
+$MESS["SUP_POSSIBLE_SPAM"] = "Verdacht auf Spam";
+$MESS["SUP_RESET"] = "Zurücksetzen";
+$MESS["SUP_SAVE"] = "Speichern";
+$MESS["SUP_CERTAIN_SPAM"] = "Spam";
+$MESS["SUP_SPAM_MARK"] = "Spammarkierung:";
+$MESS["SUP_TASK_TIME"] = "Bearbeitungszeit (Min):";
+$MESS["SUP_TICKETS_LIST"] = "Anfragen";
+$MESS["SUP_VIEW_ALT"] = "Datei anzeigen";
+$MESS["SUP_GUEST_ID"] = "Gastprofil";
+?>

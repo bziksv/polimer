@@ -1,0 +1,3 @@
+<?php
+$MESS["MAIL_CREATE_MAIL_CHAT_EMPTY_SUBJECT"] = "Лист #MESSAGE_ID#";
+$MESS["MAIL_POST_WELCOME_MESSAGE"] = "Чат створено з листа \"#MAIL_TITLE#\".";

@@ -1,0 +1,19 @@
+<?php
+$MESS["BPABS_BACK"] = "Zurück";
+$MESS["BPABS_DESCRIPTION"] = "Beschreibung der Workflow-Vorlage";
+$MESS["BPABS_DO_CANCEL"] = "Abbrechen";
+$MESS["BPABS_DO_START"] = "Start";
+$MESS["BPABS_EMPTY_DOC_ID"] = "Keine Element-ID angegeben, für die der Workflow erstellt werden soll.";
+$MESS["BPABS_EMPTY_DOC_TYPE"] = "Elementtyp erforderlich";
+$MESS["BPABS_EMPTY_ENTITY"] = "Kein Element definiert, für welches ein Workflow erstellt werden kann.";
+$MESS["BPABS_ERROR"] = "Fehler";
+$MESS["BPABS_MESSAGE_ERROR"] = "Kann den Workflow des Typs '#TEMPLATE#' nicht starten.";
+$MESS["BPABS_MESSAGE_SUCCESS"] = "Der Workflow des Typs '#TEMPLATE#' wurde erfolgreich gestartet.";
+$MESS["BPABS_NAME"] = "Name der Workflow-Vorlage";
+$MESS["BPABS_NO_PERMS"] = "Sie haben nicht genügend Rechte um einen Workflow für dieses Element zu starten.";
+$MESS["BPABS_NO_TEMPLATES"] = "Keine Workflow-Vorlage für dieses Element gefunden.";
+$MESS["BPABS_TAB"] = "Workflow";
+$MESS["BPABS_TAB1"] = "Workflow";
+$MESS["BPABS_TAB1_TITLE"] = "Wählen Sie eine Workflow-Vorlage.";
+$MESS["BPABS_TAB_TITLE_MSGVER_1"] = "Workflow-Startparameter";
+$MESS["BPABS_TITLE"] = "Workflow ausführen";

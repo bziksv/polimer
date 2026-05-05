@@ -1,0 +1,85 @@
+.adm-informer .adm-informer-item.adm-informer-item-avito-white{
+	background: white !important;
+	margin: 0 8px 9px !important;
+	border:1px solid !important;
+	border-radius: 5px !important;
+}
+
+.adm-informer .adm-informer-item.adm-informer-item-avito-white .adm-informer-item-title {
+	color: black !important;
+}
+
+/*noinspection CssUnknownTarget*/
+.adm-informer .adm-informer-item-avito-white .adm-informer-icon{
+	background: url(/bitrix/components/avito.export/admin.chat/templates/.default/i/avito.svg) no-repeat !important;
+	height: 29px !important;
+	left: 14px !important;
+	position: absolute !important;
+	top: 13px !important;
+	width: 28px !important;
+	background-size: 100% auto !important;
+}
+
+.adm-informer .adm-informer-item-avito-white .adm-informer-item-html{
+	word-wrap: break-word !important;
+	box-sizing: content-box !important;
+}
+
+/*noinspection CssUnknownTarget*/
+#bx-panel .adm-header-notif-block.has-avito-messages .adm-header-notif-icon {
+	background: url(/bitrix/components/avito.export/admin.chat/templates/.default/i/avito.svg) no-repeat !important;
+	background-size: 100% auto !important;
+	height: 14px !important;
+	vertical-align: top;
+	width: 16px !important;
+	margin-right: 4px !important;
+}
+
+#bx-panel .adm-header-notif-block.has-avito-messages,
+#bx-panel #bx-panel-top .adm-header-notif-block.has-avito-messages {
+	background: #ffffff !important;
+	border-radius: 4px !important;
+	border: 1px solid #151618 !important;
+	height: 31px !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	padding: 0 9px !important;
+}
+
+#bx-panel.bx-panel-folded .adm-header-notif-block.has-avito-messages,
+#bx-panel.bx-panel-folded #bx-panel-top .adm-header-notif-block.has-avito-messages {
+	height: 27px !important;
+}
+
+#bx-panel .adm-header-notif-block-active.has-avito-messages,
+#bx-panel #bx-panel-tabs .adm-header-notif-block-active.has-avito-messages,
+#bx-panel #bx-panel-tabs .adm-header-notif-block.has-avito-messages:active,
+#bx-panel .adm-header-notif-block.has-avito-messages:active {
+	background: rgba(25,31,42,0.78) !important;
+}
+
+#bx-panel .adm-header-notif-block.has-avito-messages .adm-header-notif-counter,
+#bx-panel #bx-panel-top .adm-header-notif-block.has-avito-messages .adm-header-notif-counter {
+	color: #353C49 !important;
+	background: none !important;
+	padding: 0 !important;
+	min-width: 11px !important;
+	text-align: right !important;
+}
+
+#bx-panel.bx-panel-folded .adm-header-notif-block.has-avito-messages .adm-header-notif-counter {
+	vertical-align: baseline !important;
+	height: auto !important;
+}
+
+#bx-panel .adm-header-notif-block.has-avito-messages:hover .adm-header-notif-counter,
+#bx-panel #bx-panel-top #bx-panel-tabs .adm-header-notif-block.has-avito-messages .adm-header-notif-counter {
+	background: unset !important;
+}
+
+#bx-panel .adm-header-notif-block-active.has-avito-messages > .adm-header-notif-counter,
+#bx-panel .adm-header-notif-block.has-avito-messages:active > .adm-header-notif-counter,
+#bx-panel #bx-panel-top .adm-header-notif-block-active.has-avito-messages > .adm-header-notif-counter,
+#bx-panel #bx-panel-top .adm-header-notif-block.has-avito-messages:active > .adm-header-notif-counter {
+	color: #e3ebed !important;
+}

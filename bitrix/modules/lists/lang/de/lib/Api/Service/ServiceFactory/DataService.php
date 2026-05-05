@@ -1,0 +1,5 @@
+<?php
+$MESS["LISTS_LIB_API_DATA_SERVICE_ERROR_NEGATIVE_CREATED_BY_ID"] = "Negative Nutzer-ID angegeben.";
+$MESS["LISTS_LIB_API_DATA_SERVICE_ERROR_NEGATIVE_ELEMENT_ID"] = "Negative Element-ID angegeben.";
+$MESS["LISTS_LIB_API_DATA_SERVICE_ERROR_NEGATIVE_SECTION_ID"] = "Negative Bereichs-ID angegeben.";
+$MESS["LISTS_LIB_API_DATA_SERVICE_ERROR_WRONG_IBLOCK"] = "Die angegebene Liste ist nicht korrekt.";

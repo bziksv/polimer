@@ -1,0 +1,16 @@
+div.discount {
+    position: absolute;
+	bottom: 0px;
+    right: 20px;
+    background-color: #0060bf;
+    width: fit-content;
+    color: #FFF;
+    padding: 2px 5px;
+    border-radius: 5px;
+    font-weight: bold;
+	z-index: 1;
+}
+
+.d-inline {
+	display: inline-block;
+}

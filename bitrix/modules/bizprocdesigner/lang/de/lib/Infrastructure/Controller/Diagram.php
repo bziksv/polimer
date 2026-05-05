@@ -1,0 +1,3 @@
+<?php
+$MESS["BIZPROCDESIGNER_CONTROLLER_DIAGRAM_ERROR_TEMPLATE_TYPE"] = "Dieser Typ der Workflow-Vorlagen wird nicht unterstützt.";
+$MESS["BIZPROCDESIGNER_CONTROLLER_DIAGRAM_TEMPLATE_DEFAULT_TITLE"] = "Workflow-Vorlage";

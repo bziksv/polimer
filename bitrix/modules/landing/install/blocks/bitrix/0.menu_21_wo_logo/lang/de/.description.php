@@ -1,0 +1,5 @@
+<?php
+$MESS["LANDING_BLOCK_0.MENU_21_LINK"] = "Menüpunkt";
+$MESS["LANDING_BLOCK_0.MENU_21_NAME"] = "Menü ohne Logo";
+$MESS["LANDING_BLOCK_MENU_21--NAVBAR"] = "Menü";
+$MESS["LANDING_BLOCK_MENU_21_HAMB"] = "Mobiles Menü";

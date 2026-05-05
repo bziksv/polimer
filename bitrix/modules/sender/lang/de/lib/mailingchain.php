@@ -1,0 +1,12 @@
+<?
+$MESS["SENDER_CHAIN_STATUS_N"] = "Bereit zum Senden";
+$MESS["SENDER_CHAIN_STATUS_S"] = "Wird gesendet...";
+$MESS["SENDER_CHAIN_STATUS_W"] = "Auf Versand wird gewartet";
+$MESS["SENDER_CHAIN_STATUS_Y"] = "Gesendet";
+$MESS["SENDER_ENTITY_MAILING_CHAIN_FIELD_TITLE_SUBJECT"] = "Betreff der Nachricht";
+$MESS["SENDER_ENTITY_MAILING_CHAIN_FIELD_TITLE_MESSAGE"] = "Nachrichtentext";
+$MESS["SENDER_ENTITY_MAILING_CHAIN_VALID_EMAIL_FROM"] = "Das Feld \"Von\" ist nicht eine E-Mail-Adresse.";
+$MESS["SENDER_ENTITY_MAILING_CHAIN_FIELD_TITLE_EMAIL_FROM1"] = "Absender";
+$MESS["SENDER_CHAIN_STATUS_P"] = "Pause";
+$MESS["SENDER_ENTITY_MAILING_CHAIN_FIELD_TITLE_TITLE1"] = "Überschrift der Kampagne";
+?>

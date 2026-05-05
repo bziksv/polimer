@@ -1,0 +1,28 @@
+<?
+$MESS["IBLOCK_SECTION_ENTITY_ACTIVE_FIELD"] = "Aktiv";
+$MESS["IBLOCK_SECTION_ENTITY_CODE_FIELD"] = "Symbolischer Code";
+$MESS["IBLOCK_SECTION_ENTITY_CREATED_BY_FIELD"] = "Erstellt von";
+$MESS["IBLOCK_SECTION_ENTITY_DATE_CREATE_FIELD"] = "Erstellt am";
+$MESS["IBLOCK_SECTION_ENTITY_DEPTH_LEVEL_FIELD"] = "Tiefe";
+$MESS["IBLOCK_SECTION_ENTITY_DESCRIPTION_FIELD"] = "Beschreibung";
+$MESS["IBLOCK_SECTION_ENTITY_DESCRIPTION_TYPE_FIELD"] = "Beschreibungstyp";
+$MESS["IBLOCK_SECTION_ENTITY_DETAIL_PICTURE_FIELD"] = "Detailliertes Bild";
+$MESS["IBLOCK_SECTION_ENTITY_GLOBAL_ACTIVE_FIELD"] = "Aktiver Status mit Rücksicht auf Hierarchie";
+$MESS["IBLOCK_SECTION_ENTITY_IBLOCK_ID_FIELD"] = "Informationsblock-ID";
+$MESS["IBLOCK_SECTION_ENTITY_IBLOCK_SECTION_ID_FIELD"] = "Übergeordneter Bereich";
+$MESS["IBLOCK_SECTION_ENTITY_ID_FIELD"] = "ID";
+$MESS["IBLOCK_SECTION_ENTITY_LEFT_MARGIN_FIELD"] = "Linker Rand des Levels in der Hierarchie";
+$MESS["IBLOCK_SECTION_ENTITY_MESS_ADD_BLOCKED"] = "Nutzen Sie den Aufruf CIBlockSection::Add(), um Bereiche des Informationsblocks hinzuzufügen";
+$MESS["IBLOCK_SECTION_ENTITY_MESS_DELETE_BLOCKED"] = "Nutzen Sie den Aufruf CIBlockSection::Delete(), um Bereiche des Informationsblocks zu löschen";
+$MESS["IBLOCK_SECTION_ENTITY_MESS_UPDATE_BLOCKED"] = "Nutzen Sie den Aufruf CIBlockSection::Update(), um Bereiche des Informationsblocks zu aktualisieren";
+$MESS["IBLOCK_SECTION_ENTITY_MODIFIED_BY_FIELD"] = "Geändert von";
+$MESS["IBLOCK_SECTION_ENTITY_NAME_FIELD"] = "Name";
+$MESS["IBLOCK_SECTION_ENTITY_PICTURE_FIELD"] = "Bild";
+$MESS["IBLOCK_SECTION_ENTITY_RIGHT_MARGIN_FIELD"] = "Rechter Rand des Levels in der Hierarchie";
+$MESS["IBLOCK_SECTION_ENTITY_SEARCHABLE_CONTENT_FIELD"] = "Suchtext";
+$MESS["IBLOCK_SECTION_ENTITY_SOCNET_GROUP_ID_FIELD"] = "Gruppe des sozialen Netzwerks";
+$MESS["IBLOCK_SECTION_ENTITY_SORT_FIELD"] = "Sortierung";
+$MESS["IBLOCK_SECTION_ENTITY_TIMESTAMP_X_FIELD"] = "Geändert am";
+$MESS["IBLOCK_SECTION_ENTITY_TMP_ID_FIELD"] = "Temporäre ID";
+$MESS["IBLOCK_SECTION_ENTITY_XML_ID_FIELD"] = "Externe ID";
+?>

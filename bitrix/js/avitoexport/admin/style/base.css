@@ -1,0 +1,41 @@
+.adm-workarea .adm-btn.adm-btn-save:active,
+.adm-workarea button.adm-btn.adm-btn-save:active {
+	height: 29px!important;
+	padding: 1px 13px 2px!important;
+}
+
+.adm-btn {
+	padding: 1px 13px 3px;
+	background-position: 0 0;
+}
+
+.adm-detail-content-cell-r > table {
+	border-spacing: 0;
+}
+
+.js-export-form__message .adm-btn.adm-btn-save.margin-top{
+	margin-top: 7px;
+}
+
+/* fix bitrix styles */
+.avito-adm-form-run .avito-btnform-run {
+	height: 29px !important;
+	padding-top: 0 !important;
+}
+
+.adm-workarea .avito-adm-form-run input[disabled][type="submit"].adm-btn-save {
+	height: 29px !important;
+	padding-top: 0 !important;
+	background: #86AD00 !important;
+	background: -webkit-linear-gradient(top, #97BA00, #729E00 ) !important;
+	background:    -moz-linear-gradient(top, #97BA00, #729E00 ) !important;
+	background:     -ms-linear-gradient(top, #97BA00, #729E00 ) !important;
+	background:      -o-linear-gradient(top, #97BA00, #729E00 )!important;
+	background:         linear-gradient(to bottom, #97BA00, #729E00) !important;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25), 0 1px 0 #CBDC00 inset !important;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25), 0 1px 0 #CBDC00 inset !important;
+	border: 1px solid !important;
+	border-color: #97C004 #7EA502 #648900 !important;
+	color: #b5cc80 !important;
+	text-shadow: none !important;
+}

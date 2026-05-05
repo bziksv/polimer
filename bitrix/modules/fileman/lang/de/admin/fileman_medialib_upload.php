@@ -1,0 +1,30 @@
+<?
+$MESS["FM_ML"] = "Medienbibliothek";
+$MESS["FM_ML_UPL_LOACATE"] = "Sammlung wählen";
+$MESS["FM_ML_UPL_NOTICE"] = "Nachdem der Upload abgeschlossen ist, können Sie neue Dateien als Sammlungen  zusammenstellen.";
+$MESS["FM_ML_UPL_NOTICE_CYR"] = "Der Datenname kann nur lateinische Buchstaben, Zahlen, Bindestriche, Punkte und Unterstriche enthalten. Alle anderen Zeichen werden ausgeschnitten.";
+$MESS["FM_ML_UPL_TITLE1"] = "Mehrere Dateien in das Multimedia-Archiv hochladen";
+$MESS["FM_ML_UPL_TITLE2"] = "Parameter des neuen Elements";
+$MESS["FM_ML_UPL_NO_NAME_WARN"] = "Der Objektname ist angegeben.";
+$MESS["FM_ML_UPL_NO_COLS_WARN"] = "Das Objekt muss in mindestens einer Sammlung vorhanden sein.";
+$MESS["FM_ML_UPL_ACCESS_DENIED"] = "Nicht genügend Rechte, um Dateien in diese Sammlung hochzuladen.";
+$MESS["ML_ADD_COL2ITEM"] = "Neuer Eintrag in der Sammlung";
+$MESS["MEDIALIB_UPLOADER_APPLET"] = "In den Multi-Foto-Modus wechseln";
+$MESS["MEDIALIB_UPLOADER_DESCRIPTION"] = "Beschreibung";
+$MESS["MEDIALIB_UPLOADER_HAS_BEEN_UPLOADED"] = "Hochgeladen";
+$MESS["MEDIALIB_UPLOADER_CANCEL"] = "Abbrechen";
+$MESS["MEDIALIB_UPLOADER_UPLOAD1"] = "Dateien hochladen";
+$MESS["MEDIALIB_UPLOADER_UPLOAD"] = "Hochladen";
+$MESS["MEDIALIB_UPLOADER_UPLOAD_FROM"] = "von";
+$MESS["MEDIALIB_UPLOADER_ADD"] = "Mehr hinzufügen";
+$MESS["MEDIALIB_UPLOADER_DND"] = "Bilder hierher verschieben";
+$MESS["MEDIALIB_UPLOADER_COUNT2"] = "Dateien ausgewählt";
+$MESS["MEDIALIB_UPLOADER_SIMPLIFIED"] = "Vereinfachte Ansicht";
+$MESS["MEDIALIB_UPLOADER_NORMAL"] = "Normale Ansicht";
+$MESS["MEDIALIB_UPLOADER_EDIT"] = "Bearbeiten";
+$MESS["MEDIALIB_UPLOADER_TURN"] = "Im Uhrzeigersinn drehen";
+$MESS["MEDIALIB_UPLOADER_DEL"] = "Löschen";
+$MESS["MEDIALIB_UPLOADER_TITLE1"] = "HTML5-Uploader";
+$MESS["MEDIALIB_UPLOADER_TITLE2"] = "Java-Uploader";
+$MESS["MEDIALIB_UPLOADER_INTO"] = "In die Sammlung hochladen";
+?>

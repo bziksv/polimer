@@ -1,0 +1,34 @@
+<?
+$MESS["ACTIVE"] = "Aktiv";
+$MESS["ADD_TYPE"] = "Neuer Typ";
+$MESS["ADD_TYPE_TITLE1"] = "Ereignistyp hinzufügen";
+$MESS["CONFIRM_DEL_ALL_MESSAGE"] = "Wollen Sie den aktuellen Typ inklusive Vorlagen wirklich löschen?";
+$MESS["DELETE_ERROR"] = "Fehler beim Löschen des Eventtyps";
+$MESS["DELETE_LANG"] = "Bereinigen";
+$MESS["EVENT_DESCRIPTION"] = "Beschreibung";
+$MESS["EVENT_NAME"] = "Überschrift";
+$MESS["EVENT_TEMPLATES"] = "Vorlagen";
+$MESS["EVENT_TYPE"] = "Typ";
+$MESS["F_DESCRIPTION"] = "Typbeschreibung";
+$MESS["F_EVENT_NAME1"] = "Ereignistyp";
+$MESS["F_FILTER"] = "Filter";
+$MESS["F_ID"] = "ID";
+$MESS["F_NAME"] = "Typenbezeichnung";
+$MESS["F_SEARCH"] = "Suchen";
+$MESS["F_SEARCH_TITLE"] = "Geben Sie den Suchbegriff ein";
+$MESS["F_TMPL"] = "Vorlage";
+$MESS["F_TYPE1"] = "Ereignistyp";
+$MESS["LANG"] = "Sprache";
+$MESS["MAIN_ADMIN_MENU_DELETE"] = "Löschen";
+$MESS["MAIN_ADMIN_MENU_EDIT"] = "Bearbeiten";
+$MESS["PAGES"] = "Eventtypen";
+$MESS["SAVE_ERROR"] = "Fehler beim Ändern des Eventtyps Nr.";
+$MESS["SORT"] = "Sortierung";
+$MESS["TITLE1"] = "E-Mail- und SMS-Ereignistypen";
+$MESS["event_type_admin_type"] = "Ereignistyp";
+$MESS["event_type_admin_type_flt"] = "Ereignistyp";
+$MESS["event_type_admin_type_flt_all"] = "(alle Typen)";
+$MESS["event_type_admin_type_flt_email"] = "E-Mail-Ereignisse";
+$MESS["event_type_admin_type_flt_sms"] = "SMS-Ereignisse";
+$MESS["type_admin_edit_title1"] = "Ereignis bearbeiten";
+?>

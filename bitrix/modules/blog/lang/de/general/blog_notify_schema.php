@@ -1,0 +1,20 @@
+<?php
+$MESS["BLG_NS"] = "Nachrichten (Beiträge im Activity Stream)";
+$MESS["BLG_NS_BROADCAST_COMMENT"] = "Einen Kommentar zur Nachricht hinzufügen, die an alle Nutzer gesendet wurde";
+$MESS["BLG_NS_BROADCAST_POST_MSGVER_2"] = "Neue Nachricht an alle hinzugefügt";
+$MESS["BLG_NS_COMMENT_MSGVER_1"] = "Jemand hat Ihre Nachricht kommentiert";
+$MESS["BLG_NS_GRAT_MSGVER_1"] = "Auszeichnung erhalten";
+$MESS["BLG_NS_IM_ANSWER_ERROR"] = "Fehler bei Veröffentlichung des Kommentars";
+$MESS["BLG_NS_IM_ANSWER_SUCCESS"] = "Kommentar wurde veröffentlicht";
+$MESS["BLG_NS_MENTION"] = "Sie wurden erwähnt";
+$MESS["BLG_NS_MENTION_COMMENT"] = "Sie wurden im Kommentar erwähnt";
+$MESS["BLG_NS_MODERATE_COMMENT"] = "Neuer nicht moderierter Kommentar";
+$MESS["BLG_NS_MODERATE_POST"] = "Neuer nicht moderierter Beitrag";
+$MESS["BLG_NS_MSGVER_2"] = "Nachrichten im Feed";
+$MESS["BLG_NS_POST_MAIL"] = "Ihre Nachricht wurde im Activity Stream veröffentlicht.";
+$MESS["BLG_NS_POST_MAIL_MSGVER_2"] = "Ihre E-Mail-Nachricht im Feed veröffentlicht";
+$MESS["BLG_NS_POST_MSGVER_1"] = "Sie wurden als Nachrichtenempfänger angegeben";
+$MESS["BLG_NS_PUBLISHED_COMMENT"] = "Ihr Kommentar wurde vom Moderator veröffentlicht";
+$MESS["BLG_NS_PUBLISHED_POST"] = "Ihr Beitrag wurde vom Moderator veröffentlicht";
+$MESS["BLG_NS_SHARE2USERS_MSGVER_1"] = "Jemand hat eine Nachricht für Sie freigegeben";
+$MESS["BLG_NS_SHARE_MSGVER_1"] = "Neue Empfänger wurden zu Ihrer Nachricht hinzugefügt";

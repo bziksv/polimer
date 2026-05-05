@@ -1,0 +1,9 @@
+<?
+$MESS["FILE_SAVE_ENTITY_BUCKET_ID_FIELD"] = "ID des Speichers";
+$MESS["FILE_SAVE_ENTITY_EXTERNAL_ID_FIELD"] = "Externe ID der Datei";
+$MESS["FILE_SAVE_ENTITY_FILE_NAME_FIELD"] = "Dateiname";
+$MESS["FILE_SAVE_ENTITY_FILE_SIZE_FIELD"] = "Dateigröße";
+$MESS["FILE_SAVE_ENTITY_ID_FIELD"] = "ID der Aufgabe";
+$MESS["FILE_SAVE_ENTITY_SUBDIR_FIELD"] = "Dateiverzeichnis";
+$MESS["FILE_SAVE_ENTITY_TIMESTAMP_X_FIELD"] = "Aufgabe aktualisiert am";
+?>

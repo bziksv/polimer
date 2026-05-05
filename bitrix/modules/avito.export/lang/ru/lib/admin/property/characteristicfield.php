@@ -1,0 +1,4 @@
+<?php
+
+$MESS['AVITO_EXPORT_ADMIN_PROPERTY_CHARACTERISTIC_FIELD_DESCRIPTION'] = 'Авито: Характеристики';
+$MESS['AVITO_EXPORT_ADMIN_PROPERTY_CHARACTERISTIC_FIELD_MULTIPLE_NOT_SUPPORTED'] = 'Для разделов множественное свойство не поддерживается';

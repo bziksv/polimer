@@ -1,0 +1,3 @@
+<?php
+$MESS["IM_LIST_CONTAINER_TASK_HEADER_MENU_READ_ALL"] = "Барлық міндеттер чатын оқу";
+$MESS["IM_LIST_CONTAINER_TASK_SEARCH_INPUT_PLACEHOLDER"] = "Міндетті табу";

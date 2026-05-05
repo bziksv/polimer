@@ -1,0 +1,33 @@
+<?
+$MESS["SONET_UR_NO_FRIEND_REQUEST"] = "Die Freundeseinladung wurde nicht gefunden";
+$MESS["SONET_UR_AGREE_FRIEND_MESSAGE"] = "Der Nutzer hat die Einladung, Ihr Freund zu sein, akzeptiert";
+$MESS["SONET_UR_REJECT_FRIEND_MESSAGE"] = "Der Nutzer hat abgelehnt, Ihr Freund zu sein";
+$MESS["SONET_UR_RELATION_DELETE_ERROR"] = "Die Beziehung zwischen den Nutzern konnte nicht gelöscht werden";
+$MESS["SONET_UR_ERROR_CREATE_RELATION"] = "Beim Erstellen einer Beziehung zwischen Nutzern ist ein Fehler aufgetreten";
+$MESS["SONET_UR_ERROR_UPDATE_RELATION"] = "Es ist ein Fehler bei der Änderung der Verbindung zwischen den Nutzern aufgetreten ";
+$MESS["SONET_UR_EMPTY_DATE_CREATE"] = "Das Erstellungsdatum wurde falsch angegeben";
+$MESS["SONET_UR_EMPTY_DATE_UPDATE"] = "Das Datum der Parameteränderung wurde falsch angegeben";
+$MESS["SONET_UR_ERROR_NO_FIRST_USER_ID"] = "Der erste Nutzer wurde falsch angegeben";
+$MESS["SONET_UR_EMPTY_FIRST_USER_ID"] = "Der erste Nutzer wurde falsch angegeben";
+$MESS["SONET_UR_EMPTY_RELATION"] = "Die Verbindung wurde nicht angegeben";
+$MESS["SONET_UR_ERROR_NO_RELATION"] = "Die Verbindung wurde falsch angegeben";
+$MESS["SONET_UR_EMPTY_RELATION_ID"] = "Die Verbindungs ID wurde nicht angegeben";
+$MESS["SONET_UR_EMPTY_TARGET_USER_ID"] = "Der Nutzer, der die Anfrage bekommen soll, wurde nicht angegeben";
+$MESS["SONET_UR_EMPTY_SENDER_USER_ID"] = "Der Nutzer, der die Anfrage gesendet hat, wurde nicht angegeben";
+$MESS["SONET_UR_ERROR_NO_SECOND_USER_ID"] = "Der zweite Nutzer wurde falsch angegeben";
+$MESS["SONET_UR_EMPTY_SECOND_USER_ID"] = "Der zweite Nutzer wurde falsch angegeben";
+$MESS["SONET_UR_RELATION_NOT_FOUND"] = "Die Beziehung zwischen den Nutzern wurde nicht gefunden";
+$MESS["SONET_UR_ALREADY_BAN"] = "Dieser Nutzer wurde bereits in der schwarzen Liste hinzufgefügt";
+$MESS["SONET_UR_UNBAN_ERROR"] = "Sie dürfen diesen Nutzer nicht aus der schwarzen Liste löschen";
+$MESS["SONET_UR_BANUSER_MESSAGE"] = "Sie wurden zur schwarzen Liste hinzugefügt";
+$MESS["SONET_UR_UNBANUSER_MESSAGE"] = "Sie wurden aus der schwarzen Liste entfernt";
+$MESS["SONET_U_INVITE_CONFIRM_TEXT"] = "Einladung zum Freund: \"#TEXT#\"";
+$MESS["SONET_U_INVITE_CONFIRM"] = "Annehmen";
+$MESS["SONET_U_INVITE_REJECT"] = "Ablehnen";
+$MESS["SONET_UR_INVALID_TARGET_USER_ID"] = "Es wurde kein Nutzer mit einer solchen Absender-ID gefunden.";
+$MESS["SONET_U_INVITE_CONFIRM_TITLE"] = "Freundschaftsanfrage von #USER#";
+$MESS["SONET_UR_IM_UNFRIEND"] = "wurde aus der Liste Ihrer Freunde entfernt";
+$MESS["SONET_UR_IM_UNFRIEND_M"] = "wurde aus der Liste Ihrer Freunde entfernt";
+$MESS["SONET_UR_IM_UNFRIEND_F"] = "wurde aus der Liste Ihrer Freunde entfernt";
+$MESS["SONET_UR_ERROR_RELATION_FRIENDS2"] = "Die Bindung \"Freunde von Freunden\" wird nicht mehr unterstützt";
+?>

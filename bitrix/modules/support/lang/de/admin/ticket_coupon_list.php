@@ -1,0 +1,37 @@
+<?
+$MESS["SUP_CL_ACTIVE"] = "Aktiv";
+$MESS["SUP_CL_ACTIVE_FROM"] = "Aktiv vom";
+$MESS["SUP_CL_ACTIVE_TO"] = "Aktiv bis";
+$MESS["SUP_CL_COUPON"] = "Gutschein";
+$MESS["SUP_CL_FLT_COUPON"] = "Gutschein";
+$MESS["SUP_CL_PAGES"] = "Gutscheine";
+$MESS["SUP_GL_PAGES"] = "Gutscheine";
+$MESS["SUP_CL_TITLE"] = "Gutscheine";
+$MESS["SUP_CL_DATE_CREATE"] = "Erstellt";
+$MESS["SUP_CL_CREATED_FIRST_NAME"] = "Vorname des Users, der die Anfrage erstellt hat";
+$MESS["SUP_CL_CREATED_LAST_NAME"] = "Nachname des Users, der den Beitrag erstellt hat";
+$MESS["SUP_CL_CREATED_USER_ID"] = "User ID, der den Beitrag erstellt hat";
+$MESS["SUP_CL_CREATED_LOGIN"] = "Loginname des User, der den Beitrag erstellt hat.";
+$MESS["SUP_CL_DELETE"] = "Löschen";
+$MESS["SUP_CL_DELETE_CONFIRMATION"] = "Wirklich löschen?";
+$MESS["SUP_CL_EDIT"] = "Gutschein bearbeiten";
+$MESS["SUP_CL_UPDATED_FIRST_NAME"] = "Vorname des Users, der die Anfrage geändert hat";
+$MESS["SUP_CL_UPDATED_USER_ID"] = "User ID, der den Beitrag aktualisiert hat";
+$MESS["SUP_CL_UPDATED_LAST_NAME"] = "Nachname des Users, der den Beitrag aktualisiert hat";
+$MESS["SUP_CL_UPDATED_LOGIN"] = "Loginname des Users, der den Beitrag aktualisiert hat";
+$MESS["SUP_CL_GENERATE_ERROR"] = "Es ist ein Fehler beim Generieren des Gutscheins aufgetreten";
+$MESS["SUP_CL_EXACT_MATCH"] = "Nur genaue Treffer";
+$MESS["SUP_CL_ADD_TITLE"] = "Neuen Gutschein generieren";
+$MESS["SUP_CL_TIMESTAMP_X"] = "Geändert";
+$MESS["SUP_CL_ADD"] = "Neuer Gutschein";
+$MESS["SUP_CL_SLA_NAME"] = "Support Level";
+$MESS["SUP_CL_SLA_ID"] = "Support Level ID";
+$MESS["SUP_CL_GENERATE_MESS_OK"] = "Neuen Gutschein %COUPON% generieren";
+$MESS["SUP_CL_LOG"] = "Aktivitätsprotokoll";
+$MESS["SUP_CL_COUNT_TICKETS"] = "Anzahl der Anfragen";
+$MESS["SUP_CL_COUNT_USED"] = "Wie oft benutzt";
+$MESS["SUP_CL_GENERATE_CONFIRM"] = "Sie haben bereits einen Gutschein generiert. Wollen Sie noch einen generieren?";
+$MESS["MAIN_ADMIN_LIST_SELECTED"] = "Gesamt:";
+$MESS["MAIN_ADMIN_LIST_CHECKED"] = "Ausgewählt:";
+$MESS["MAIN_ADMIN_LIST_DELETE"] = "löschen";
+?>

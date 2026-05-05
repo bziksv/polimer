@@ -1,0 +1,32 @@
+<?
+$aMenuLinks = Array(
+	Array(
+		"Über die Bank", 
+		"about/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"News", 
+		"news/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Angebote", 
+		"services/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Kontakte", 
+		"contacts/", 
+		Array(), 
+		Array(), 
+		"" 
+	)
+);
+?>

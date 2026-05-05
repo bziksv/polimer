@@ -1,0 +1,2 @@
+<?php
+$MESS["REST_V3_EXCEPTION_VALIDATION_REQUIREDFIELDINREQUESTEXCEPTION"] = "Das Pflichtfeld `#FIELD#` ist nicht angegeben.";

@@ -1,0 +1,4 @@
+<?php
+
+$MESS['AVITO_EXPORT_ADMIN_COMPONENT_CATEGORY_NO_VALUE'] = '(не выбрано)';
+$MESS['AVITO_EXPORT_ADMIN_COMPONENT_CATEGORY_SELECT_PLACEHOLDER'] = 'Введите название категории и выберите...';

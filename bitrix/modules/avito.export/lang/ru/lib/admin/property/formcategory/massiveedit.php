@@ -1,0 +1,3 @@
+<?php
+
+$MESS['AVITO_EXPORT_ADMIN_PROPERTY_FORM_CATEGORY_MASSIVE_EDIT_FORM_VALUE_REQUIRED'] = 'Сначала выберите категорию Авито';

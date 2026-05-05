@@ -1,0 +1,3 @@
+<?php
+
+$MESS['AVITO_EXPORT_ADMIN_PROPERTY_AD_STATUS_PROPERTY_DESCRIPTION'] = 'Авито: Услуга продвижения';

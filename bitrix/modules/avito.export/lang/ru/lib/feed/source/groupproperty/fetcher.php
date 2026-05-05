@@ -1,0 +1,3 @@
+<?php
+
+$MESS['AVITO_EXPORT_FEED_SOURCE_GROUP_PROPERTY_FETCHER_TITLE'] = 'Группа свойств';

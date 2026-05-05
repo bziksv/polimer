@@ -1,0 +1,26 @@
+<?php
+$MESS['PERFMON_SQL_BIG_FIELDS_NO'] = "Nein";
+$MESS['PERFMON_SQL_BIG_FIELDS_YES'] = "Ja";
+$MESS['PERFMON_SQL_COMPONENT_ID'] = "Komponente";
+$MESS['PERFMON_SQL_COMPONENT_NAME'] = "Komponente";
+$MESS['PERFMON_SQL_EXPLAIN'] = "Ausführungsplan";
+$MESS['PERFMON_SQL_FIELD_FETCHED_LENGTH'] = "Datengröße verarbeitet";
+$MESS['PERFMON_SQL_FIELD_FETCHED_ROWS'] = "Zeilen genutzt";
+$MESS['PERFMON_SQL_FIELD_HAS_BIG_FIELDS'] = "Es gab große Felder";
+$MESS['PERFMON_SQL_FIELD_SELECTED_FIELDS'] = "Felder ausgewählt";
+$MESS['PERFMON_SQL_FIELD_SELECTED_ROWS'] = "Zeilen ausgewählt";
+$MESS['PERFMON_SQL_FILE'] = "Datei";
+$MESS['PERFMON_SQL_FIND'] = "Suchen";
+$MESS['PERFMON_SQL_FUNCTION'] = "Funktion";
+$MESS['PERFMON_SQL_HIT_ID'] = "Hit";
+$MESS['PERFMON_SQL_ID'] = "ID";
+$MESS['PERFMON_SQL_LINE_NUMBER'] = "Zeile";
+$MESS['PERFMON_SQL_MODULE_NAME'] = "Module";
+$MESS['PERFMON_SQL_NN'] = "#";
+$MESS['PERFMON_SQL_NODE_ID'] = "Cluster-Datenbank";
+$MESS['PERFMON_SQL_PAGE'] = "Abfragen";
+$MESS['PERFMON_SQL_QUERY_STAT'] = "Abfragenstatistik";
+$MESS['PERFMON_SQL_QUERY_TIME'] = "Zeit";
+$MESS['PERFMON_SQL_SQL_TEXT'] = "Abfrage";
+$MESS['PERFMON_SQL_TITLE'] = "Performance Monitor: Abfragen";
+$MESS['PERFMON_SQL_WRONG_LIMIT'] = "Nicht alle Zeilen wurden verarbeitet";

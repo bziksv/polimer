@@ -1,0 +1,43 @@
+Host: polimer-vrn.ru
+Date: 2025-04-18 11:13:23
+Module: OnAfterUserRegisterHandler
+array (
+  'LOGIN' => '77r7q@ptct.net',
+  'NAME' => '77r7q@ptct.net',
+  'LAST_NAME' => '77r7q@ptct.net',
+  'PASSWORD' => '$6$lnQo9QAUh9Dtl2z6$YCcx8pbO/wYDjihfinXszCQmI7KWoGZnyYL.aTLs7YXC.OSX4ZhdaK083g4GJyRxh2hC7/ajQzMTaF08G3o8r.',
+  'CHECKWORD' => 'ex1yq3ncdir09m3zhih4qmuere6fix5y',
+  '~CHECKWORD_TIME' => 'now()',
+  'CONFIRM_PASSWORD' => '77r7q@ptct.net',
+  'EMAIL' => '77r7q@ptct.net',
+  'PHONE_NUMBER' => '',
+  'ACTIVE' => 'Y',
+  'CONFIRM_CODE' => '',
+  'SITE_ID' => 's1',
+  'LANGUAGE_ID' => 'ru',
+  'USER_IP' => '109.106.142.129',
+  'USER_HOST' => '109.106.142.129',
+  'GROUP_ID' => 
+  array (
+    0 => '6',
+  ),
+  'LID' => 's1',
+  'BLOCKED' => 'N',
+  'PASSWORD_EXPIRED' => 'N',
+  'PERSONAL_GENDER' => '',
+  'ID' => 14666,
+  'RESULT' => 14666,
+)
+#0: AddMessage2Log
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/php_interface/init.php:420
+#1: OnAfterUserRegisterHandler
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/modules/main/tools.php:5246
+#2: ExecuteModuleEventEx
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/modules/main/classes/general/user.php:329
+#3: CAllUser->Add
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/modules/main/classes/general/user.php:2908
+#4: CAllUser->Register
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/modules/main/include.php:548
+#5: require_once(string)
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/modules/main/include/prolog_before.php:19
+----------

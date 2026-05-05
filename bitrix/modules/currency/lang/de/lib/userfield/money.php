@@ -1,0 +1,3 @@
+<?php
+$MESS["USER_TYPE_MONEY_DESCRIPTION"] = "Geld";
+$MESS["USER_TYPE_MONEY_DEFAULT_VALUE"] = "Standardwert";

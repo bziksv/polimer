@@ -1,0 +1,3 @@
+<?php
+
+$MESS['AVITO_EXPORT_ADMIN_PROPERTY_CATEGORY_FIELD_DESCRIPTION'] = 'Авито: Категория';

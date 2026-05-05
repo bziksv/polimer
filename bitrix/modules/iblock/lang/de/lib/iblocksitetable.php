@@ -1,0 +1,3 @@
+<?php
+$MESS["IBLOCK_SITE_ENTITY_IBLOCK_ID_FIELD"] = "Informationsblock-ID";
+$MESS["IBLOCK_SITE_ENTITY_SITE_ID_FIELD"] = "Website-ID";

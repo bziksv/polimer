@@ -1,0 +1,30 @@
+<?
+$MESS["LEARNING_ADMIN_TAB2"] = "Antworten";
+$MESS["LEARNING_ADMIN_TAB2_EX"] = "Antwortoptionen";
+$MESS["LEARNING_CONFIRM_DEL_MESSAGE"] = "Wollen Sie diese Frage wirklich löschen?";
+$MESS["LEARNING_ADMIN_TAB3"] = "Beschreibung";
+$MESS["LEARNING_ERROR"] = "Es ist ein Fehler beim Speichern der Frage aufgetreten";
+$MESS["LEARNING_LESSON"] = "Lektion";
+$MESS["LEARNING_QUESTION_LIST"] = "Fragen";
+$MESS["LEARNING_ADMIN_TAB1"] = "Frage";
+$MESS["LEARNING_QUESTION_NAME"] = "Frage";
+$MESS["LEARNING_ADMIN_TAB3_EX"] = "Detaillierte Fragenbeschreibung";
+$MESS["LEARNING_CONFIRM_CHECK_ANSWER"] = "Die Frage hat keine richtigen Antworten. Wollen Sie fortfahren?";
+$MESS["LEARNING_ADMIN_TAB1_EX"] = "Fragen-Parameter";
+$MESS["LEARNING_PATH_TO_FILE"] = "Pfad zur Datei";
+$MESS["LEARNING_WIDTH"] = "Breite";
+$MESS["LEARNING_HEIGHT"] = "Höhe";
+$MESS["LEARNING_SAVE"] = "Speichern";
+$MESS["LEARNING_VIDEO_AUDIO"] = "Video/Audio";
+$MESS["LEARNING_CORRECT_REQUIRED"] = "Eine richtige Antwort ist erforderlich";
+$MESS["LEARNING_INCORRECT_MESSAGE"] = "Nachricht bei einer nicht korrekten Antwort";
+$MESS["LEARNING_EMAIL_ANSWER"] = "Den Lehrer über die Antwort benachrichtigen";
+$MESS["LEARNING_TEXT_ANSWER"] = "Der Text der Antwort";
+$MESS["LEARNING_SORTING"] = "Sortierung";
+$MESS["LEARNING_ANSWERS"] = "Antworten";
+$MESS["LEARNING_NO_ANSWERS"] = "Für diesen Fragentyp sind keine Antwortoptionen vorgesehen.";
+$MESS["LEARNING_ADD_ANSWER"] = "Antwort hinzufügen";
+$MESS["LEARNING_ADD_RIGHT_ANSWER_NOT_SELECTED"] = "Die korrekte Antwort wurde nicht ausgewählt.";
+$MESS["LEARNING_COMMENT"] = "Kommentar";
+$MESS["LEARNING_CHANGE_ATTACHED_LESSON"] = "ändern";
+?>

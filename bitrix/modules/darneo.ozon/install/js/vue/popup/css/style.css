@@ -1,0 +1,44 @@
+.popup-modal {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 105;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-modal__wrapper {
+    min-width: 400px;
+    min-height: 200px;
+    max-width: 500px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.animate {
+    -webkit-animation: fadeIn 0.3s;
+    animation: fadeIn 0.3s;
+}
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

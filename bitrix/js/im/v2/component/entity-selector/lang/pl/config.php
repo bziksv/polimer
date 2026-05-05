@@ -1,0 +1,25 @@
+<?php
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_CHAT_ADD_MEMBERS_TITLE"] = "Dodaj uczestników czatu";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_CHAT_ADD_MORE"] = "Dodaj";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_CHAT_ADD_MSGVER_1"] = "Dodaj użytkownika";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_CHAT_CANCEL_BUTTON"] = "Anuluj";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_CHAT_FORWARD_TITLE"] = "Prześlij wiadomość dalej";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_CHAT_FORWARD_TITLE_SEVERAL_MESSAGES"] = "Prześlij dalej wiadomości";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_CHAT_INVITE_BUTTON"] = "Zaproś";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_CHAT_SHOW_HISTORY"] = "Pokaż historię czatu";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_COLLAB_COPY_LINK"] = "Kopiuj link";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_COLLAB_DEFAULT_LANGUAGE_TITLE"] = "#LANG_NAME# (domyślnie)";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_COLLAB_DESCRIPTION_TEXT_EMPLOYEE"] = "Goście to uczestnicy collaba nie będący pracownikami firmy. Zaproś partnerów, klientów oraz zewnętrzne zespoły i kontrahentów. Goście będą mieli dostęp wyłącznie do tego collaba.";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_COLLAB_DESCRIPTION_TEXT_GUEST"] = "Dodaj użytkowników do collaba, aby współpracować i uniknąć wysyłania wiadomości na wiele czatów lub komunikatorów.";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_COLLAB_DESCRIPTION_TITLE_EMPLOYEE"] = "Zaproś gości do collaba";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_COLLAB_DESCRIPTION_TITLE_GUEST"] = "Zaproś innych użytkowników";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_COLLAB_HELPDESK_LINK"] = "Dowiedz się więcej";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_COLLAB_INVITE_BY_EMAIL"] = "Zaproś poprzez e-mail";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_COLLAB_INVITE_BY_LINK"] = "Zaproś za pomocą linka";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_COLLAB_INVITE_BY_PHONE_OR_EMAIL"] = "Zaproś za pomocą numeru telefonu i adresu e-mail";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_COLLAB_INVITE_LANGUAGE_TITLE"] = "Język zaproszenia:";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_COLLAB_LANGUAGE_SELECTOR_HINT"] = "To spowoduje wybranie języka stosowanego w zaproszeniu dla gościa i interfejsie użytkownika.";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_COLLAB_LINK_UPDATE_HINT"] = "Utwórz nowy link zaproszenia, aby unieważnić poprzednio wygenerowany.";
+$MESS["IM_ENTITY_SELECTOR_ADD_TO_COLLAB_TITLE"] = "Dodaj do collaba";
+$MESS["IM_ENTITY_SELECTOR_EMPLOYEES_TAB"] = "Pracownicy";
+$MESS["IM_ENTITY_SELECTOR_GUESTS_TAB"] = "Goście";

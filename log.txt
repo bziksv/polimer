@@ -1,0 +1,17 @@
+Host: polimer-vrn.ru
+Date: 2024-02-21 16:19:17
+Module: roistat.leads
+{"status":"success","data":"Lead saved to project 117475","code":null}
+#0: RoiStat::send
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/modules/main/tools.php:4741
+#1: ExecuteModuleEventEx
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/modules/main/lib/mail/event.php:230
+#2: Bitrix\Main\Mail\Event::handleEvent
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/modules/main/lib/mail/eventmanager.php:116
+#3: Bitrix\Main\Mail\EventManager::executeEvents
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/modules/main/lib/mail/eventmanager.php:36
+#4: Bitrix\Main\Mail\EventManager::checkEvents
+	
+#5: call_user_func_array
+	/var/www/polimer-vrn.ru/data/www/polimer-vrn.ru/bitrix/modules/main/lib/application.php:830
+----------

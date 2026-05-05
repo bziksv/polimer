@@ -1,0 +1,9 @@
+<?
+$MESS["LANDING_TABLE_FIELD_CREATED_BY_ID"] = "ID des Nutzers, der erstellt hat";
+$MESS["LANDING_TABLE_FIELD_DATE_CREATE"] = "Erstellt am";
+$MESS["LANDING_TABLE_FIELD_DATE_MODIFY"] = "Geändert am";
+$MESS["LANDING_TABLE_FIELD_FILTER"] = "Filter";
+$MESS["LANDING_TABLE_FIELD_FILTER_HASH"] = "Hash des Filters";
+$MESS["LANDING_TABLE_FIELD_MODIFIED_BY_ID"] = "ID des Nutzers, der geändert hat";
+$MESS["LANDING_TABLE_FIELD_SOURCE_ID"] = "Quellen-ID";
+?>

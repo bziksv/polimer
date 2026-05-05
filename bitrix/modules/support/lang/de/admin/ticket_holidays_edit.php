@@ -1,0 +1,31 @@
+<?
+$MESS["SUP_ADMIN_TAB1"] = "Ausnahme";
+$MESS["SUP_ADMIN_TITLE"] = "Ausnahme";
+$MESS["SUP_ERROR"] = "Fehler";
+$MESS["SUP_BACK_TO_ADMIN"] = "Zurück";
+$MESS["SUP_TIMETABLE_NOT_FOUND"] = "Ausnahme wurde nicht gefunden.";
+$MESS["SUP_CONFIRM_DEL_MESSAGE"] = "Möchten Sie diese Ausnahme wirklich löschen?";
+$MESS["SUP_FORM_SETTINGS"] = "Einstellungen";
+$MESS["SUP_FORM_SETTINGS_EX"] = "Einstellungen";
+$MESS["SUP_NAME"] = "Name";
+$MESS["SUP_DESCRIPTION"] = "Beschreibung";
+$MESS["SUP_OPEN_TIME"] = "Aktion";
+$MESS["SUP_SLA"] = "SLA";
+$MESS["SUP_SLA_ID"] = "Gilt für SLA's";
+$MESS["SUP_OPEN_TIME_HOLIDAY_G"] = "Veranstaltungen";
+$MESS["SUP_OPEN_TIME_WORKDAY_G"] = "Arbeit";
+$MESS["SUP_OPEN_TIME_HOLIDAY_H"] = "Zeitbasierte Pause";
+$MESS["SUP_OPEN_TIME_HOLIDAY"] = "Ruhetag";
+$MESS["SUP_OPEN_TIME_WORKDAY_H"] = "Spezifische Arbeitszeiten (zeitbasiert)";
+$MESS["SUP_OPEN_TIME_WORKDAY_0"] = "Arbeitstag anstatt Montag";
+$MESS["SUP_OPEN_TIME_WORKDAY_1"] = "Arbeitstag anstatt Diensttag";
+$MESS["SUP_OPEN_TIME_WORKDAY_2"] = "Arbeitstag anstatt Mittwoch";
+$MESS["SUP_OPEN_TIME_WORKDAY_3"] = "Arbeitstag anstatt Donnerstag";
+$MESS["SUP_OPEN_TIME_WORKDAY_4"] = "Arbeitstag anstatt Freitag";
+$MESS["SUP_OPEN_TIME_WORKDAY_5"] = "Arbeitstag anstatt Samstag";
+$MESS["SUP_OPEN_TIME_WORKDAY_6"] = "Arbeitstag anstatt Sonntag";
+$MESS["SUP_ADMIN_USER_FIELDS"] = "Zusätzliche Eigenschaften";
+$MESS["MAIN_ADMIN_MENU_LIST"] = "Liste";
+$MESS["SUP_DATE_FROM"] = "Aktiv von";
+$MESS["SUP_DATE_TILL"] = "Bis";
+?>

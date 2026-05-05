@@ -1,0 +1,4 @@
+<?php
+$MESS["MAIL_MAILBOX_GRID_MASSCONNECT_BUTTON"] = "Podłącz";
+$MESS["MAIL_MAILBOX_LIST_CONFIG_PERMISSIONS_BUTTON"] = "Uprawnienia dostępu";
+$MESS["MAIL_MAILBOX_LIST_TITLE"] = "Podłączone skrzynki mailowe";

@@ -1,0 +1,3 @@
+<?php
+
+$MESS['AVITO_EXPORT_FEED_ENGINE_COMMAND_STORE_TAGS_LOG_WRITTEN'] = 'Успешно выгружен';

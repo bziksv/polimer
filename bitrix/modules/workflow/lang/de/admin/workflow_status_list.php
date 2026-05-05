@@ -1,0 +1,30 @@
+<?php
+
+$MESS["FLOW_ACTIVE"] = "Akt.";
+$MESS["FLOW_F_ACTIVE"] = "Aktiv";
+$MESS["FLOW_EDIT"] = "Ändern";
+$MESS["FLOW_DESCRIPTION"] = "Beschreibung";
+$MESS["FLOW_F_DESCRIPTION"] = "Beschreibung";
+$MESS["FLOW_TILL"] = "bis";
+$MESS["FLOW_DOCUMENTS"] = "Seiten";
+$MESS["FLOW_F_DOCUMENTS"] = "Seiten";
+$MESS["FLOW_PAGE_TITLE"] = "Seitenstatus";
+$MESS["FLOW_CANNOT_DELETE_STATUS"] = "Es existieren Seiten, die sich im Status \"gelöscht\" befinden";
+$MESS["FLOW_CANNOT_DELETE_STATUS_IBLOCK"] = "Es existieren Informationsblockelemente, die sich im Status \"gelöscht\" befinden";
+$MESS["FLOW_TIMESTAMP"] = "Geändert";
+$MESS["FLOW_FORGOT_NAME"] = "Geben Sie die Überschrift für den Datensatz Nr. #ID# ein";
+$MESS["FLOW_ADD"] = "Hinzufügen";
+$MESS["FLOW_F_LOGIC"] = "Logik zwischen den Feldern";
+$MESS["FLOW_DELETE"] = "Löschen";
+$MESS["FLOW_C_SORT"] = "Sort.";
+$MESS["FLOW_PAGES"] = "Status";
+$MESS["FLOW_TITLE"] = "Überschrift";
+$MESS["FLOW_DELETE_STATUS_CONFIRM"] = "Wollen Sie den aktuellen Status wirklich löschen?";
+$MESS["MAIN_ADMIN_LIST_SELECTED"] = "Gesamt:";
+$MESS["MAIN_FIND"] = "Suchen";
+$MESS["MAIN_ADMIN_LIST_CHECKED"] = "Ausgewählt:";
+$MESS["MAIN_FIND_TITLE"] = "Geben Sie den Suchbegriff ein";
+$MESS["MAIN_ADMIN_LIST_ACTIVATE"] = "aktivieren";
+$MESS["MAIN_ALL"] = "(alle)";
+$MESS["MAIN_ADMIN_LIST_DEACTIVATE"] = "deaktivieren";
+$MESS["MAIN_ADMIN_LIST_DELETE"] = "löschen";

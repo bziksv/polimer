@@ -1,0 +1,20 @@
+<?php
+$MESS["BLOG_VIDEO_RECORD_AGREE"] = "Erlauben";
+$MESS["BLOG_VIDEO_RECORD_ASK_PERMISSIONS"] = "Sie müssen den Zugriff auf Ihre Kamera und Ihr Mikrofon erlauben, um ein Video aufzuzeichnen.";
+$MESS["BLOG_VIDEO_RECORD_BUTTON"] = "Video aufzeichnen";
+$MESS["BLOG_VIDEO_RECORD_CANCEL_BUTTON"] = "Abbrechen";
+$MESS["BLOG_VIDEO_RECORD_CLOSE"] = "Schließen";
+$MESS["BLOG_VIDEO_RECORD_DEFAULT_CAMERA_NAME"] = "Kamera";
+$MESS["BLOG_VIDEO_RECORD_ERROR_CHROME_HTTPS"] = "Leider unterstützt Ihr Browser kein HTTP Protokoll.<br /><br />Versuchen Sie es bitte in einem anderen Browser, bspw. in Firefox.";
+$MESS["BLOG_VIDEO_RECORD_IN_PROGRESS_LABEL"] = "Wird aufgezeichnet";
+$MESS["BLOG_VIDEO_RECORD_LOGO"] = "<span class=\"logo\"><span class=\"logo-text\">Bitrix</span><span class=\"logo-color\">24</span></span>";
+$MESS["BLOG_VIDEO_RECORD_PERMISSIONS_ERROR"] = "Kein Zugriff auf Ihre Kamera und Ihr Mikrofon.";
+$MESS["BLOG_VIDEO_RECORD_PERMISSIONS_ERROR_TITLE"] = "Fehler";
+$MESS["BLOG_VIDEO_RECORD_PERMISSIONS_TITLE"] = "Zugriff auf Gerät";
+$MESS["BLOG_VIDEO_RECORD_REQUIREMENTS"] = "Ihr Browser unterstützt leider keine Videoaufzeichnung. <br />Sie können einen anderen Browser probieren, bspw. die aktuellste Version von FireFox oder Chrome.";
+$MESS["BLOG_VIDEO_RECORD_REQUIREMENTS_TITLE"] = "Achtung";
+$MESS["BLOG_VIDEO_RECORD_RESTART_BUTTON"] = "Erneut aufzeichnen";
+$MESS["BLOG_VIDEO_RECORD_SPOTLIGHT_MESSAGE"] = "<b>Sie können Videos aufzeichnen und sie mit Ihrem Team teilen.</b>";
+$MESS["BLOG_VIDEO_RECORD_STOP_BUTTON"] = "Stopp";
+$MESS["BLOG_VIDEO_RECORD_TRANFORM_LIMIT_TEXT"] = "Damit das Video in Bitrix24 abgespielt werden kann, sollten Sie mit der Aufzeichnung innerhalb von <span class=\"bx-videomessage-transform-time-tip\">60 Sekunden</span> fertig werden. Längere Videodateien werden zwar auch gespeichert, aber sie können evtl. nicht in jedem Browser abgespielt werden.";
+$MESS["BLOG_VIDEO_RECORD_USE_BUTTON"] = "Video nutzen";

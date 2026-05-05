@@ -1,0 +1,36 @@
+<?
+$MESS["SMILE_EDIT_RECORD"] = "Smiley bearbeiten";
+$MESS["SMILE_NEW_RECORD"] = "Smiley hinzufügen";
+$MESS["ERROR_EDIT_SMILE"] = "Fehler beim Bearbeiten von Smiley.";
+$MESS["ERROR_ADD_SMILE"] = "Fehler beim Hinzufügen von Smiley.";
+$MESS["ERROR_BAD_SESSID"] = "Ihre Sitzung ist abgelaufen. Versuchen Sie bitte erneut.";
+$MESS["ERROR_COPY_IMAGE"] = "Fehler beim Bildhochladen (evtl. unzureichende Zugriffsrechte fürs Schreiben).";
+$MESS["ERROR_EXISTS_IMAGE"] = "Die Datei #FILE# existiert bereits auf der Festplatte. <br> Sie kann von einem der Smileys genutzt werden.";
+$MESS["SMILE_SET_ID"] = "Satz";
+$MESS["SMILE_IMAGE_HR"] = "Hohe Auflösung";
+$MESS["SMILE_IMAGE_HR_TITLE"] = "Das Bild wird dank der erhöhten Pixel-Dichte schärfer aussehen.";
+$MESS["SMILE_SORT"] = "Sortierung";
+$MESS["SMILE_TYPE"] = "Typ";
+$MESS["SMILE_TYPING"] = "Schreibweise (Smiley-Code)";
+$MESS["SMILE_TYPING_NOTE"] = "Mehrere Schreibweisen durch ein Leerzeichen trennen";
+$MESS["SMILE_IMAGE"] = "Bild";
+$MESS["SMILE_IMAGE_UPLOAD"] = "Neues Bild";
+$MESS["SMILE_IMAGE_NOTE_2"] = "Empfohlene Smiley-Größe: 20 mal 20 oder 40 mal 40 für Bilder mit hoher Auflösung<br> Icon-Größen: 15 mal 15 oder 30 mal 30 für Icons mit hoher Auflösung";
+$MESS["SMILE_IMAGE_NAME"] = "Smiley-Name";
+$MESS["SMILE_IMAGE_NAME_EN"] = "Englisch";
+$MESS["SMILE_IMAGE_NAME_DE"] = "Deutsch";
+$MESS["SMILE_IMAGE_NAME_RU"] = "Russisch";
+$MESS["SMILE_TYPE_SMILE"] = "Smiley";
+$MESS["SMILE_TYPE_ICON"] = "Icon";
+$MESS["SMILE_BTN_BACK"] = "Smileys";
+$MESS["SMILE_BTN_NEW"] = "Ein neues hinzufügen";
+$MESS["SMILE_BTN_DELETE"] = "Löschen";
+$MESS["SMILE_BTN_DELETE_CONFIRM"] = "Möchten Sie dieses Smiley wirklich löschen?";
+$MESS["SMILE_TAB_SMILE"] = "Parameter";
+$MESS["SMILE_TAB_SMILE_DESCR"] = "Smiley-Parameter";
+$MESS["SMILE_IMAGE_SD"] = "Standardauflösung (SD)";
+$MESS["SMILE_IMAGE_HD"] = "Hochauflösung (HD)";
+$MESS["SMILE_IMAGE_UHD"] = "Ultra-Hochauflösung (Ultra HD)";
+$MESS["SMILE_IMAGE_HR_TITLE_2"] = "Bilder in HD und Ultra-HD hochladen. Diese werden auf den HD-Bildschirmen viel besser abgebildet.";
+$MESS["SMILE_HIDDEN"] = "Ausgeblendete Emoticons";
+?>

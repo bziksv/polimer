@@ -1,0 +1,35 @@
+<?
+$MESS ['STAT_AVERAGE_HITS'] = "Durchschnittliche Hits";
+$MESS ['STAT_GRAPH'] = "Grafik";
+$MESS ['STAT_DATE_INSERT'] = "Datum";
+$MESS ['STAT_FL_DATE'] = "Datum";
+$MESS ['STAT_SITE_EDIT'] = "Seiteneistellungen bearbeiten";
+$MESS ['STAT_PHRASE_SORT'] = "Nach dem Begriff filtern";
+$MESS ['STAT_FL_PAGE'] = "Ziel";
+$MESS ['STAT_F_ID'] = "ID:";
+$MESS ['STAT_FIND_SESSION'] = "Sessions";
+$MESS ['STAT_NAME'] = "Name";
+$MESS ['STAT_NUM'] = "Nummer";
+$MESS ['STAT_LINK_OPEN'] = "Zur Seite wechseln";
+$MESS ['STAT_FL_ID'] = "Phrasen ID";
+$MESS ['STAT_QUANTITY'] = "Anzahl";
+$MESS ['STAT_PHRASE_PAGES'] = "Einträge";
+$MESS ['STAT_FL_ID_REF'] = "Referer ID";
+$MESS ['STAT_REFERER'] = "Verweis";
+$MESS ['STAT_F_REFERER'] = "Referer ID:";
+$MESS ['STAT_REFERRING_SITE'] = "Verweisende Seite";
+$MESS ['STAT_FL_SEARCHER'] = "Suchmaschine";
+$MESS ['STAT_SERVER'] = "Suchmaschine";
+$MESS ['STAT_F_SEARCH_SYSTEM'] = "Suchmaschine:";
+$MESS ['STAT_SEARCHER_PHRASES'] = "Suchbegriffe dieser Suchmaschine";
+$MESS ['STAT_SEARCHER_INDEXING'] = "Seitenindexierung mit dieser Suchmaschine";
+$MESS ['STAT_F_SEARCH_PHRASE'] = "Suchbegriff:";
+$MESS ['STAT_PHRASE'] = "Suchbegriff";
+$MESS ['STAT_RECORDS_LIST'] = "Suchbegriffe";
+$MESS ['STAT_PHRASES'] = "Suchbegriffe";
+$MESS ['STAT_SESSION'] = "Session";
+$MESS ['STAT_FL_ID_SESS'] = "Session ID";
+$MESS ['STAT_F_SESSION'] = "Session ID:";
+$MESS ['STAT_PAGE_TO'] = "Ziel";
+$MESS ['STAT_F_PAGE_TO'] = "Ziel:";
+?>

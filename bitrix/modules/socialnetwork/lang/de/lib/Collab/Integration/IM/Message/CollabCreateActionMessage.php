@@ -1,0 +1,4 @@
+<?php
+$MESS["SOCIALNETWORK_COLLAB_CHAT_COLLAB_CREATE_F"] = "#SENDER_NAME# hat dieses Collab erstellt.";
+$MESS["SOCIALNETWORK_COLLAB_CHAT_COLLAB_CREATE_M"] = "#SENDER_NAME# hat dieses Collab erstellt.";
+$MESS["SOCIALNETWORK_COLLAB_CHAT_COLLAB_CREATE_N"] = "#SENDER_NAME# hat dieses Collab erstellt.";

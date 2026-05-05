@@ -1,0 +1,7 @@
+<?php
+$MESS["CONVERSION_CURRENCY"] = "Basiswährung";
+$MESS["CONVERSION_CURRENCY_NOT_SELECTED"] = "nicht ausgewählt";
+$MESS["CONVERSION_TAB_MODULES_ACTIVE"] = "Konversion berechnen";
+$MESS["CONVERSION_TAB_MODULES_DESC"] = "Moduleinstellungen";
+$MESS["CONVERSION_TAB_MODULES_MODULE_NAME"] = "Modulname";
+$MESS["CONVERSION_TAB_MODULES_NAME"] = "Module";
