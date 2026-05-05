@@ -3,7 +3,11 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetPageProperty("description", "Инженерная сантехника и строительные материалы в интернет-магазине кампании ООО «Полимер»");
 $APPLICATION->SetPageProperty("title", "Интернет-магазин инженерной сантехники и строительных материалов c доставкой — «Полимер»");
 $APPLICATION->SetTitle("«Полимер» — главная страница сайта");
-?><div class="mp__categories">
+
+// test new branch
+?>
+
+<div class="mp__categories">
 
 	<?$APPLICATION->IncludeComponent("bitrix:menu", "mobile-cat-menu", Array(
 		"ALLOW_MULTI_SELECT" => "N",	// Р Р°Р·СЂРµС€РёС‚СЊ РЅРµСЃРєРѕР»СЊРєРѕ Р°РєС‚РёРІРЅС‹С… РїСѓРЅРєС‚РѕРІ РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕ
