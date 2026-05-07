@@ -42,7 +42,7 @@ $this->setFrameMode(true);
 			<div class="about">
 				<?=$arItem['PROPERTIES']['SITY']['VALUE'];?>
 				<br>
-				Добавлен: <?=$arItem['TIMESTAMP_X'];?>
+				Добавлен: <?=$arItem['DATE_CREATE'];?>
 			</div>
 		</div>
 		<div class="text_block"><?=$arItem['PROPERTIES']['MESSAGE']['VALUE'];?></div>
