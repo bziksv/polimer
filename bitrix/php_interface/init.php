@@ -141,8 +141,11 @@ function AddOrderProperty($code, $value, $order)    {
 }
 
 function resizeImage($id, $w, $h){
-    if(!is_numeric($id) || empty($id))
-        return '/bitrix/templates/main/img/no_photo.png';
+    $no_photo_path = '/bitrix/templates/main/img/no_photo.png';
+
+    if(!isImageExists($id)) {
+        return $no_photo_path;
+    }
 
     return CFile::ResizeImageGet(
         $id,
@@ -153,6 +156,19 @@ function resizeImage($id, $w, $h){
         false,
         85
     )['src'];
+}
+
+function isImageExists($fileId) {
+    if (!is_numeric($fileId) || empty($fileId)) {
+        return false;
+    }
+
+    $path = CFile::GetPath($fileId);
+    if ($path && file_exists($_SERVER['DOCUMENT_ROOT'] . $path)) {
+        return true;
+    }
+
+    return false;
 }
 
 function tel($phone){
