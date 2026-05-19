@@ -146,7 +146,7 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 							"SHOW_EMPTY_VALUES" => "Y",	// Выводить нулевые значения в пустой корзине
 							"SHOW_NUM_PRODUCTS" => "Y",	// Показывать количество товаров
 							"SHOW_PERSONAL_LINK" => "Y",	// Отображать персональный раздел
-							"SHOW_PRODUCTS" => "N",	// Показывать список товаров
+							"SHOW_PRODUCTS" => "Y",	// Показывать список товаров
 							"SHOW_TOTAL_PRICE" => "Y",	// Показывать общую сумму по товарам
 						),
 							false
@@ -502,7 +502,7 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                             "SHOW_EMPTY_VALUES" => "Y",	// Выводить нулевые значения в пустой корзине
                             "SHOW_NUM_PRODUCTS" => "Y",	// Показывать количество товаров
                             "SHOW_PERSONAL_LINK" => "Y",	// Отображать персональный раздел
-                            "SHOW_PRODUCTS" => "N",	// Показывать список товаров
+                            "SHOW_PRODUCTS" => "Y",	// Показывать список товаров
                             "SHOW_TOTAL_PRICE" => "Y",	// Показывать общую сумму по товарам
                         ),
                             false
