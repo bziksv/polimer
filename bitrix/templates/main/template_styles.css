@@ -4809,13 +4809,11 @@ header .header__bottom.fixed .header__account
 .product_top .filter_top .body_f .item_f a{
     border: 1px solid #ced5d9;
     padding: 5px 10px;
-    line-height: 2.5;
     background: #fff;
     border-radius: 3px;
     color: #333;
     font-size: 12px;
     margin-right: 4px;
-	white-space: nowrap;
 }
 
 .product_top .filter_top .body_f .item_f a:hover{
