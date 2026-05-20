@@ -5004,11 +5004,12 @@ header .header__bottom.fixed .header__account
 .products_roll .pr_box .item .hover .inner .compare {
     display: none;
     position: absolute;
-    right: 0;
-    top: -20px;
+    right: 10px;
+    top: 10px;
     font: 400 14px/20px 'roboto', sans-serif;
     text-align: left;
-    color: #666
+    color: #666;
+    z-index: 10;
 }
 
 .products_roll .pr_box .item .hover .inner .compare input[type="checkbox"] {
@@ -5355,18 +5356,6 @@ header .header__bottom.fixed .header__account
     background-size: 100%
 }
 
-.products_roll .pr_box .item .hover .inner .incode {
-    display: none;
-    position: absolute;
-    width: 100%;
-    left: 0;
-    bottom: -14px;
-    font: 400 14px/18px 'roboto', sans-serif;
-    text-align: center;
-    color: #0060bf;
-}
-
-
 .products_roll .pr_box .item .hover .inner .instock {
     display: block;
 	margin-bottom: 10px;
@@ -5404,22 +5393,19 @@ header .header__bottom.fixed .header__account
 }
 
 .products_roll .pr_box .item:hover .hover {
-    z-index: 99;
-    width: 260px;
-    height: 440px;
-    margin: -20px;
-    -webkit-box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.25);
-    -moz-box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.25);
-    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.25)
+    border-color: #0464bb;
 }
 
 .products_roll .pr_box .item:hover .hover .inner .compare {
     display: block
 }
 
-
-.products_roll .pr_box .item:hover .hover .inner .incode {
-    display: block
+.products_roll .pr_box .item .inner .incode {
+    position: absolute;
+    bottom: 0px;
+    left: 5px;
+    font-size: 10px;
+    color: grey;
 }
 
 .products_roll .pr_box .item:hover .hover .inner .outstock {
