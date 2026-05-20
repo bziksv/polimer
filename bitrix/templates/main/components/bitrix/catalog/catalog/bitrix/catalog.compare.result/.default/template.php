@@ -19,14 +19,16 @@ $templateData = array(
 );
 $arrPropertyCode = array();
 ?>
+
 <div class="compare-page cl">
+    <div class="action-btn">
+        <a class="sortbutton<? echo (!$arResult["DIFFERENT"] ? ' current' : ''); ?>" href="<? echo $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=N'; ?>" rel="nofollow"><?=GetMessage("CATALOG_ALL_CHARACTERISTICS")?></a>
+        <a class="sortbutton<? echo ($arResult["DIFFERENT"] ? ' current' : ''); ?>" href="<? echo $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=Y'; ?>" rel="nofollow"><?=GetMessage("CATALOG_ONLY_DIFFERENT")?></a>
+        <a href="?action=DELETE_FROM_COMPARE_LIST&id=0" style="border-color: red;color: red;">Удалить все товары из сравнения</a>
+    </div>
+
 	<div class="inn">
-		<a href="?action=DELETE_FROM_COMPARE_LIST&id=0" class="delete-all">Удалить все товары из сравнения</a>
 		<div class="params-name">
-            <div class="action-btn">
-                <a class="sortbutton<? echo (!$arResult["DIFFERENT"] ? ' current' : ''); ?>" href="<? echo $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=N'; ?>" rel="nofollow"><?=GetMessage("CATALOG_ALL_CHARACTERISTICS")?></a>
-                <a class="sortbutton<? echo ($arResult["DIFFERENT"] ? ' current' : ''); ?>" href="<? echo $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=Y'; ?>" rel="nofollow"><?=GetMessage("CATALOG_ONLY_DIFFERENT")?></a>
-            </div>
 			<div class="values">
 				<div class="val">Цена</div>
 				<? if (!empty($arResult["SHOW_PROPERTIES"])):

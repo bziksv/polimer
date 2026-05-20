@@ -14442,30 +14442,6 @@ a.pickup-stores__item .desc {
     background-color: #00a1f2
 }
 
-.compare-page .delete-all {
-    position: absolute;
-    top: -51px;
-    right: 0;
-    border: 0;
-    color: #808080;
-    margin: 0 25px 0 0
-}
-
-.compare-page .delete-all:after {
-    position: absolute;
-    right: -30px;
-    top: 4px;
-    background: url(img/compare-close-ico.jpg) left top no-repeat transparent;
-    width: 12px;
-    height: 12px;
-    display: block;
-    content: ''
-}
-
-.compare-page .delete-all:hover:after {
-    background-position: left bottom
-}
-
 .compare-page .values .val {
     padding: 12px 0;
     min-height: 62px
@@ -14666,24 +14642,6 @@ a.pickup-stores__item .desc {
 @media screen and (max-width: 660px) {
     .compare-page .inn {
         position: relative
-    }
-
-    .compare-page .delete-all {
-        position: absolute;
-        top: 12px;
-        text-align: left;
-        right: auto;
-        left: 0;
-        border: 0;
-        color: #808080;
-        width: 180px;
-        padding: 0 0 0 30px;
-        margin: 0 25px 0 0;
-        z-index: 40
-    }
-
-    .compare-page .delete-all:after {
-        left: 0
     }
 }
 
