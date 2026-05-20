@@ -5388,10 +5388,6 @@ header .header__bottom.fixed .header__account
     color: #00a600
 }
 
-.products_roll .pr_box .item:hover {
-    z-index: 9999999
-}
-
 .products_roll .pr_box .item:hover .hover {
     border-color: #0464bb;
 }
@@ -5410,10 +5406,6 @@ header .header__bottom.fixed .header__account
 
 .products_roll .pr_box .item:hover .hover .inner .outstock {
     display: block
-}
-
-.products_roll .pr_box .item.add2cart2:hover {
-    z-index: 999999
 }
 
 .products_roll .pr_box .item.add2cart2 .hover {
