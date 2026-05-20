@@ -47,10 +47,6 @@ article, aside, details, figcaption, figurefooter, header, hgroup, menu, nav, se
     position: relative
 }
 
-img {
-    max-width: 99%;
-}
-
 .phone_top_1, .phone_top_2 {
 	cursor: pointer;
 }
@@ -4998,7 +4994,7 @@ header .header__bottom.fixed .header__account
     left: 50%;
     margin-top: -190px;
     margin-left: -110px;
-    padding: 175px 20px 0
+    padding: 170px 10px 0
 }
 
 .products_roll .pr_box .item .hover .inner .compare {
@@ -5093,11 +5089,11 @@ header .header__bottom.fixed .header__account
 .products_roll .pr_box .item .hover .inner .title {
     display: block;
 	margin-bottom: 5px;
-    font: 400 14px/20px 'roboto', sans-serif;
+    font: 400 13px/18px 'roboto', sans-serif;
     text-align: center;
     color: #0464bb;
-    min-height: 80px;
-	height: 80px;
+    min-height: 85px;
+	height: 85px;
     overflow: hidden;
     background: #FFF;
 }
