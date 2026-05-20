@@ -5092,13 +5092,12 @@ header .header__bottom.fixed .header__account
 
 .products_roll .pr_box .item .hover .inner .title {
     display: block;
-	padding: 0 10px;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
     font: 400 14px/20px 'roboto', sans-serif;
     text-align: center;
     color: #0464bb;
-    min-height: 60px;
-	height: 60px;
+    min-height: 80px;
+	height: 80px;
     overflow: hidden;
     background: #FFF;
 }
@@ -5885,7 +5884,7 @@ header .header__bottom.fixed .header__account
         top: 0;
         margin-left: 0;
         margin-top: 0;
-        padding: 70px 0 0 140px
+        padding: 70px 10px 0 140px
     }
 
     .products_roll .pr_box .item .hover .inner .incode{
