@@ -31,6 +31,8 @@ $PRINT_PRICE = Loc::getMessage(
 		'#UNIT#' => $arResult['ITEM_MEASURE']['TITLE']
 	)
 );
+
+$inCompare = inCompare($arResult['IBLOCK_ID'], $arResult['ID']);
 ?>
 <script type="text/javascript">
     var viewedCounter = {
@@ -149,10 +151,14 @@ $PRINT_PRICE = Loc::getMessage(
             <a href="#" class="bb_btn spec_help show-popup" data-id="specialist"><span>Помощь специалиста</span></a>
 
              <div class="bb_compare">
-                 <a href="#" id="compare" data-id="<?=$arResult['IBLOCK_SECTION_ID']?>" data-value="<?=$arResult['ID']?>">
-                     <i class="fa fa-bar-chart" aria-hidden="true"></i>
-                     <span>Сравнить</span>
-                 </a>
+                 <?php if ($inCompare): ?>
+                     <a href="/catalog/compare/" data-id="<?=$arResult['IBLOCK_SECTION_ID']?>" data-value="<?=$arResult['ID']?>">Перейти в сравнение товаров</a>
+                 <?php else: ?>
+                     <a href="#" id="compare" data-id="<?=$arResult['IBLOCK_SECTION_ID']?>" data-value="<?=$arResult['ID']?>">
+                         <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                         <span>Сравнить</span>
+                     </a>
+                 <?php endif; ?>
              </div>
 
              <div class="bb_info">

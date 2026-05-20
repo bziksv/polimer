@@ -1,6 +1,11 @@
 <?php
 define("IBLOCK_CATALOG", 21);
 
+function inCompare($IBLOCK_ID, $ID)
+{
+    return isset($_SESSION["CATALOG_COMPARE_LIST"][$IBLOCK_ID]["ITEMS"][$ID]);
+}
+
 function price($id){
     $ar_res_price = CPrice::GetBasePrice($id, false, false);
     if($ar_res_price['PRICE']){

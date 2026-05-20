@@ -48,6 +48,8 @@ $PRINT_PRICE = Loc::getMessage(
 		'#UNIT#' => $arItem['ITEM_MEASURE']['TITLE']
 	)
 );
+
+$inCompare = inCompare($arItem['IBLOCK_ID'], $arItem['ID']);
 ?>
 
 <div class="item" id="product_<?=$arItem['ID']?>">
@@ -55,10 +57,17 @@ $PRINT_PRICE = Loc::getMessage(
 		<div class="inner">
 			
 			<div class="compare">
-				<label>
-					<input type="checkbox" id-cat="<?=$arItem['IBLOCK_SECTION_ID']?>" value="<?=$arItem['ID']?>">
-					<span>Сравнить</span>
-				</label>
+                <?php if ($inCompare): ?>
+                    <label>
+                        <input type="checkbox" id-cat="<?=$arItem['IBLOCK_SECTION_ID']?>" value="<?=$arItem['ID']?>" checked>
+                        <span><a href="/catalog/compare/">Перейти</a></span>
+                    </label>
+                <?php else: ?>
+                    <label>
+                        <input type="checkbox" id-cat="<?=$arItem['IBLOCK_SECTION_ID']?>" value="<?=$arItem['ID']?>">
+                        <span>Сравнить</span>
+                    </label>
+                <?php endif; ?>
 			</div>
 			
 			<div class="close"></div>
