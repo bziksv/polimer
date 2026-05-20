@@ -9,29 +9,20 @@ function replaseBasketTop() {
     })
 }
 function addToBasket2(idel, quantity,el) {
-    $href = "/ajax/add.php?id="+idel;
-    var _result = true;
+    let $href = "/ajax/add.php?id=" + idel;
+
     $.ajax({
         url: $href + '&quantity=' + quantity,
         type: 'get',
         success: function (data) {
-            if (data == 'Товар успешно добавлен в корзину') {
+            if (data === "Товар успешно добавлен в корзину") {
                 replaseBasketTop();
                 alertify.success(data);
             } else {
                 alertify.error(data);
-                _result = false;
             }
         }
-    })
-
-    if(el){
-        $(el).text('Перейти');
-        $(el).attr('onclick','window.location.href="/personal/cart/"');
-    }
-
-
-    return _result;
+    });
 }
 
 function setCupon(){
