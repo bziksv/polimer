@@ -521,7 +521,7 @@ header .hmobile {
 header .hmobile .wr {
     display: flex;
     justify-content: space-between;
-    align-items: normal;
+    align-items: center;
 }
 
 header .hmobile .menu__trigger {
@@ -538,7 +538,7 @@ header .hmobile .menu__trigger span {
 }
 
 header .hmobile .menu__trigger.close .i1 {
-    transform: translateY(10px) rotate(-135deg)
+    transform: translateY(8px) rotate(-135deg)
 }
 
 header .hmobile .menu__trigger.close .i2 {
@@ -546,7 +546,7 @@ header .hmobile .menu__trigger.close .i2 {
 }
 
 header .hmobile .menu__trigger.close .i3 {
-    transform: translateY(3px) rotate(135deg)
+    transform: translateY(0px) rotate(135deg)
 }
 
 header .hmobile .hmobile__cart {
