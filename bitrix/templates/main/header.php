@@ -123,18 +123,20 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
       	<div class="container">
 			<header>
 				<div class="hmobile">
-					<div class="wr cl">
+					<div class="wr">
 						<a href="/" class="hmobile__logo">
 							<img src="<?=SITE_TEMPLATE_PATH?>/img/logo_svg.svg" alt="Полимер" width="165" />
 						</a>
-						<div class="hmobile__phone">+7 (473) 207-55-05</div>
-						<a href="/search/index.php" class="hmobile__search"></a>
-						<a href="#" class="menu__trigger">
-							<span class="i1"></span>
-							<span class="i2"></span>
-							<span class="i3"></span>
-						</a>
-						<?$APPLICATION->IncludeComponent("bitrix:sale.basket.basket.line", "basket.small.mobile", Array(
+
+						<a href="tel:+74732075505" class="hmobile__phone">
+                            <i class="fa fa-phone fa-2x fa-flip-horizontal" aria-hidden="true"></i>
+                        </a>
+
+						<a href="/search/index.php" class="hmobile__search">
+                            <img src="/bitrix/templates/main/img/hmobile_search.png" alt="Поиск">
+                        </a>
+
+						<?php $APPLICATION->IncludeComponent("bitrix:sale.basket.basket.line", "basket.small.mobile", Array(
 							"HIDE_ON_BASKET_PAGES" => "Y",	// Не показывать на страницах корзины и оформления заказа
 							"PATH_TO_BASKET" => SITE_DIR."personal/cart/",	// Страница корзины
 							"PATH_TO_ORDER" => SITE_DIR."personal/order/",	// Страница оформления заказа
@@ -151,6 +153,12 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 						),
 							false
 						);?>
+
+                        <a class="menu__trigger">
+                            <span class="i1"></span>
+                            <span class="i2"></span>
+                            <span class="i3"></span>
+                        </a>
 
 					</div>
 				</div><!--end::hmobile-->

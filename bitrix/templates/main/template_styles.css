@@ -104,10 +104,6 @@ article, aside, details, figcaption, figurefooter, header, hgroup, menu, nav, se
     overflow: hidden
 }
 
-.over .hmobile {
-    border-bottom: 1px solid #cdd2d6
-}
-
 .breadcrumbs {
     padding: 15px 0;
     background: #f5f6f8
@@ -518,36 +514,19 @@ header .hmobile {
     padding-top: 30px;
     z-index: 201;
     position: relative;
-    background-color: #fff
+    background-color: #fff;
+    border-bottom: 1px solid #cdd2d6;
 }
 
-header .hmobile .hmobile__logo {
-    float: left;
-    margin-right: 75px
-}
-
-header .hmobile .hmobile__phone {
-    color: #333;
-    float: left;
-    font-size: 1.5em;
-    font-weight: 500;
-    padding-top: 5px
-}
-
-header .hmobile .hmobile__search {
-    width: 25px;
-    height: 25px;
-    float: left;
-    background: url(img/hmobile_search.png);
-    margin-left: 60px;
-    margin-top: 5px
+header .hmobile .wr {
+    display: flex;
+    justify-content: space-between;
+    align-items: normal;
 }
 
 header .hmobile .menu__trigger {
-    float: right;
+    display: block;
     width: 30px;
-    border: 0;
-    margin: 5px 0 0 0
 }
 
 header .hmobile .menu__trigger span {
@@ -575,8 +554,6 @@ header .hmobile .hmobile__cart {
     width: 34px;
     height: 28px;
     display: block;
-    float: right;
-    margin: 5px 40px 0 0;
     background-image: url(img/hmobile_cart.png)
 }
 
@@ -1585,6 +1562,12 @@ header .header__bottom.fixed .header__account
     header .header__bottom {
         display: none
     }
+
+    header {
+        position: sticky;
+        top: 0px;
+        z-index: 20;
+    }
 }
 
 @media screen and (max-width: 659px) {
@@ -1593,17 +1576,8 @@ header .header__bottom.fixed .header__account
         padding-top: 25px
     }
 
-    header .hmobile .hmobile__logo {
-        margin-right: 0;
-        width: 133px
-    }
-
-    header .hmobile .hmobile__phone {
-        display: none
-    }
-
     header .hmobile .hmobile__search {
-        display: none
+        display: none;
     }
 
     header .mm__wrap .mm__search {
