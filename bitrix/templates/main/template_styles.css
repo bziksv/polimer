@@ -11871,7 +11871,8 @@ a.pickup-stores__item .desc {
         width: 180px;
         padding-right: 0;
         padding-bottom: 10px;
-        font: 400 12px/16px 'roboto', sans-serif
+        font: 400 12px/16px 'roboto', sans-serif;
+        margin-left: 40px;
     }
 
     .list .l-block .l-row .l-cell.name .plink {
@@ -11882,7 +11883,7 @@ a.pickup-stores__item .desc {
         width: auto;
         float: none;
         clear: both;
-        margin-left: 100px
+        margin-left: 140px
     }
 
     .list .l-block .l-row .l-cell.price .txt {
@@ -11894,7 +11895,7 @@ a.pickup-stores__item .desc {
         float: none;
         text-align: left;
         width: auto;
-        margin-left: 100px
+        margin-left: 140px
     }
 
     .list .l-block .l-row .l-cell.sale .txt {
@@ -11911,7 +11912,8 @@ a.pickup-stores__item .desc {
         float: right;
         width: auto;
         margin-left: 0;
-        text-align: right
+        text-align: right;
+        font-size: larger;
     }
 
     .list .l-block .l-row .l-cell.cost .txt {
