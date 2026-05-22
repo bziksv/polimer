@@ -75,7 +75,7 @@ $APPLICATION->SetTitle("«Полимер» — главная страница 
                 <? for($i = 0;$i < $rows;$i++):?>
                     <div class="catalog_top cl <?if($i >= 2):?>toggle_product_no<? endif; ?>">
                         <? foreach($section[$i] as $item):?>
-                            <div class="item_c" style="margin-left: 8px">
+                            <div class="item_c" style="margin-left: 8px;margin-bottom: 10px;float: left;">
                                 <a href="<?=$item['SECTION_PAGE_URL']?>">
                                     <div class="img_c">
                                         <img src="<?=resizeImage($item['PICTURE'], 140, 120);?>" alt="<?=$item['NAME']?>">

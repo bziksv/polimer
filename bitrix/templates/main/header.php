@@ -181,22 +181,44 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 						</div>
                         <!--end::cl-->
 
-						<?$APPLICATION->IncludeComponent("bitrix:menu", "mobile-cat-menu-one", Array(
-							"ALLOW_MULTI_SELECT" => "N",	// Разрешить несколько активных пунктов одновременно
-							"CHILD_MENU_TYPE" => "left",	// Тип меню для остальных уровней
-							"DELAY" => "N",	// Откладывать выполнение шаблона меню
-							"MAX_LEVEL" => "1",	// Уровень вложенности меню
-							"MENU_CACHE_GET_VARS" => array(	// Значимые переменные запроса
-								0 => "",
-							),
-							"MENU_CACHE_TIME" => "3600",	// Время кеширования (сек.)
-							"MENU_CACHE_TYPE" => "N",	// Тип кеширования
-							"MENU_CACHE_USE_GROUPS" => "Y",	// Учитывать права доступа
-							"ROOT_MENU_TYPE" => "mobile-categories",	// Тип меню для первого уровня
-							"USE_EXT" => "N",	// Подключать файлы с именами вида .тип_меню.menu_ext.php
-						),
-							false
-						);?>
+                        <ul class="mm__category cl">
+                            <li class="maincategory maincategory--1 cl">
+                                <a href="/personal/orders-list.php">
+                                    <span class="img"></span>
+                                    <span class="name">Личный кабинет</span>
+                                </a>
+                            </li>
+                            <li class="maincategory maincategory--1 cl">
+                                <a href="/catalog/inzhenernaya_santekhnika/">
+                                    <span class="img"></span>
+                                    <span class="name">Инженерная<br> сантехника</span>
+                                </a>
+                            </li>
+                            <li class="maincategory maincategory--1 cl">
+                                <a href="/catalog/stroitelno_otdelochnye_materialy/">
+                                    <span class="img"></span>
+                                    <span class="name">Cтроительные<br> материалы</span>
+                                </a>
+                            </li>
+                            <li class="maincategory maincategory--1 cl">
+                                <a href="/catalog/avtomatika/">
+                                    <span class="img"></span>
+                                    <span class="name">Ворота,<br> автоматика,<br> рольставни</span>
+                                </a>
+                            </li>
+                            <li class="maincategory maincategory--1 cl">
+                                <a href="/sale/">
+                                    <span class="img"></span>
+                                    <span class="name">Акции</span>
+                                </a>
+                            </li>
+                            <li class="maincategory maincategory--1 cl">
+                                <a href="/calc/">
+                                    <span class="img"></span>
+                                    <span class="name">Бесплатный расчет</span>
+                                </a>
+                            </li>
+                        </ul>
 
 						<div class="mm__phone">
                             <a href="tel:<?=tel(tplvar('phone_top_mobile'))?>" class="phone_engineer"><?= tplvar('phone_top_mobile', true);?></a>

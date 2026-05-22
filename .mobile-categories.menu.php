@@ -1,12 +1,5 @@
 <?
 $aMenuLinks = Array(
-    Array(
-        "Личный кабинет",
-        "/personal/orders-list.php",
-        Array(),
-        Array(),
-        ""
-    ),
 
     Array(
         "Инженерная<br> сантехника",
@@ -26,22 +19,6 @@ $aMenuLinks = Array(
 	Array(
         "Ворота,<br> автоматика,<br> рольставни",
         "/catalog/avtomatika/",
-        Array(),
-        Array(),
-        ""
-    ),
-
-    Array(
-        "Акции",
-        "/sale/",
-        Array(),
-        Array(),
-        ""
-    ),
-
-    Array(
-        "Бесплатный расчет",
-        "/calc/",
         Array(),
         Array(),
         ""
