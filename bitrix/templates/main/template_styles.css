@@ -4705,7 +4705,7 @@ header .header__bottom.fixed .header__account
 }
 
 /* header catalog */
-.page_content .product_top .catalog_top{
+.product_top .catalog_top{
     margin-top: 10px;
     margin-bottom: 10px;
     width: 100%;
@@ -4715,7 +4715,7 @@ header .header__bottom.fixed .header__account
 }
 
 @media screen and (max-width: 659px) {
-    .page_content .product_top .catalog_top {
+    .product_top .catalog_top {
         justify-content: center;
     }
 }
