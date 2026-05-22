@@ -4705,6 +4705,21 @@ header .header__bottom.fixed .header__account
 }
 
 /* header catalog */
+.page_content .product_top .catalog_top{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+@media screen and (max-width: 659px) {
+    .page_content .product_top .catalog_top {
+        justify-content: center;
+    }
+}
+
 .product_top .catalog_top .item_c{
     text-align: center;
     width: 140px;
