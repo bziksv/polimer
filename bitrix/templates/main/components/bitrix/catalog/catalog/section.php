@@ -57,14 +57,15 @@ if(empty($_REQUEST['PAGE_ELEMENT_COUNT'])){
             $arSelect = Array("ID");
             $arFilter = Array("IBLOCK_ID"=> $arParams['IBLOCK_ID'],"SECTION_CODE" => $arResult['VARIABLES']['SECTION_CODE'], "ACTIVE"=>"Y");
             $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
-            if($res->GetNextElement()):
+            if ($res->GetNextElement()) {
                 include_once('theme/new.php');
-            else:
-                if($arSect['UF_SHOW_NEW'])
+            } else {
+                if ($arSect['UF_SHOW_NEW']) {
                     include_once('theme/new.php');
-                else
+                } else {
                     include_once('theme/old.php');
-            endif;
+                }
+            }
 			?>
 
     <?

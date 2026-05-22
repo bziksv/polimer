@@ -12,10 +12,11 @@
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
 ?>
+
 <?if($arResult['SECTIONS']):?>
 <div class="product_top cl">
 
-    <div class="catalog_top cl">
+    <div class="catalog_top">
         <? foreach($arResult['SECTIONS'] as &$arSection):?>
             <div class="item_c">
                 <a href="<?=$arSection['SECTION_PAGE_URL']?>">

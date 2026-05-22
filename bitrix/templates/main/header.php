@@ -161,7 +161,9 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                         </a>
 
 					</div>
-				</div><!--end::hmobile-->
+				</div>
+                <!--end::hmobile-->
+
 				<div class="mm__wrap">
 					<div class="wr cl">
 						<div class="cl">
@@ -176,10 +178,8 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 								),
 								false
 							);?>
-
-
-							<a href="/personal/orders-list.php" class="mm__account">Личный кабинет</a>
-						</div><!--end::cl-->
+						</div>
+                        <!--end::cl-->
 
 						<?$APPLICATION->IncludeComponent("bitrix:menu", "mobile-cat-menu-one", Array(
 							"ALLOW_MULTI_SELECT" => "N",	// Разрешить несколько активных пунктов одновременно
@@ -198,13 +198,10 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 							false
 						);?>
 
-						<div class="cl">
-							<a href="/sale/" class="mm__action">Акции</a>
-							<a href="/calc/" class="mm__calculation">Бесплатный расчет</a>
-						</div>
 						<div class="mm__phone">
                             <a href="tel:<?=tel(tplvar('phone_top_mobile'))?>" class="phone_engineer"><?= tplvar('phone_top_mobile', true);?></a>
                         </div>
+
 						<div class="cl">
 							<div class="mm__timework header__timework">
 								<div class="line cl">
