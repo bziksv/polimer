@@ -10895,10 +10895,63 @@ a.pickup-stores__item .desc {
     }
 }
 
+/* Мобильные крошки в карточке товара — по умолчанию скрыты (только для мобильных) */
+.breadcrumbs-mob {
+    display: none;
+}
+
 @media screen and (max-width: 659px) {
     .prod_card h2 {
         font-weight: 400;
         font-size: 18px
+    }
+
+    /* Перенос инфо-элементов под галерею на мобильных */
+    .pc__prod-info {
+        display: flex;
+        flex-direction: column;
+    }
+    .pc__prod-info > .cl {
+        display: contents;            /* промотируем детей обёрток в общий flex */
+    }
+    .pc__mobile-below-gallery {
+        order: 1;                     /* 4 целевых элемента — под слайдером */
+    }
+    .pc__prod-info .pc__buy-block,
+    .pc__prod-info .pc__tabs {
+        order: 2;                     /* блок покупки и табы — после них */
+    }
+    /* заголовок, рейтинг, слайдер остаются order:0 (исходный порядок) */
+
+    /* Крошки над h1: одна строка через "/", виден конец, начало обрезается слева */
+    .breadcrumbs-mob {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-end;   /* при переполнении обрезается начало (слева) */
+        overflow: hidden;
+        width: 100%;
+        margin-bottom: 15px;
+        font: 400 13px/18px 'roboto', sans-serif;
+        text-align: left;
+    }
+    .breadcrumbs-mob > * {
+        flex: 0 0 auto;              /* не сжимать — пусть переполняют и обрезаются */
+        white-space: nowrap;
+    }
+    .breadcrumbs-mob a {
+        color: #808080;
+        text-decoration: none;
+    }
+    .breadcrumbs-mob a:hover {
+        text-decoration: underline;
+    }
+    .breadcrumbs-mob span {
+        color: #414141;
+    }
+    .breadcrumbs-mob .bc-sep {
+        margin: 0 6px;
+        font-style: normal;
+        color: #b0b0b0;
     }
 
     .pc__prod-info .bb_col.right,

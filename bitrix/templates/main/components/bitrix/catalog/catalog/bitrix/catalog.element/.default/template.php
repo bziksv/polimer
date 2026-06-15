@@ -57,12 +57,18 @@ $inCompare = inCompare($arResult['IBLOCK_ID'], $arResult['ID']);
 <div class="prod_card cl">
    <div class="pc__prod-info">
 
+       <?$APPLICATION->IncludeComponent("bitrix:breadcrumb", "breadcrumb_mobile", Array(
+           "PATH" => "",
+           "SITE_ID" => SITE_ID,
+           "START_FROM" => "0",
+       ), false);?>
+
        <div class="cl">
            <div class="bb_col">
                <h1><?=$arResult['NAME']?></h1>
            </div>
            <? if($arResult['BRAND']): ?>
-           <div class="bb_col right">
+           <div class="bb_col right pc__mobile-below-gallery">
                <a href="/brands/<?=$arResult['BRAND']['URL']?>/" target="_blank">
                    <img src="<?=$arResult['BRAND']['IMAGE']?>" alt="<?=$arResult['NAME']?>" style="max-height:50px">
                </a>
@@ -71,19 +77,19 @@ $inCompare = inCompare($arResult['IBLOCK_ID'], $arResult['ID']);
        </div>
 
        <div class="cl mb-40">
-           <div class="bb_col">
+           <div class="bb_col pc__mobile-below-gallery">
                <span>Код товара: <?=$arResult['PROPERTIES']['CML2_TRAITS']['VALUE'][2];?></span>
            </div>
            <!--<div class="bb_col">
                <span><a href="#" class="blue">Бесплатная доставка</a></span>
            </div>-->
            <? if ($price['PERCENT'] > 0): ?>
-               <div class="bb_col" >
+               <div class="bb_col pc__mobile-below-gallery" >
 				   <span><a href="#" class="red" title='<b>Скидка <?=$price['PERCENT']?>%</b> При заказе через интернет-магазин'>Скидка <?=$price['PERCENT']?>% онлайн</a></span>
 			   </div>
            <? endif; ?>
 		   
-			<div class="bb_col">
+			<div class="bb_col pc__mobile-below-gallery">
                <span><a href="#" class="blue" title="<ul><li>Доставим бесплатно заказы стоимостью выше 20 000 р. по городу.</li><li>Предложение действует при заказе и оплате на сайте или в кассе магазина.</li><li>Максимальный габарит товара 4 м и вес не более 1 тн.</li><li>Доставка осуществляется в течение 1-5 рабочих дней после заказа.</li><li>Для получения товара необходимо при себе иметь паспорт или иной документ, удостоверяющий личность.</li><li>Подъем на этаж не осуществляется.</li><li>Условия действуют по г. Воронеж.</li></ul>">Доставим бесплатно заказы стоимостью выше 20 000 р. по городу*.</a></span>
            </div>
            <div class="bb_col right">
