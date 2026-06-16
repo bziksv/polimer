@@ -133,17 +133,14 @@ $inCompare = inCompare($arResult['IBLOCK_ID'], $arResult['ID']);
             <? else: ?>
                 <div class="bb_row">
                    <div class="price">
-                      
 					  <div class="price-new"><?=$PRINT_PRICE;?></div>
-					  
 					  <? if ($price["BASE_PRICE"] > $price["PRICE"]): ?>
 						<div class="price-old"><?=$PRINT_BASE_PRICE;?></div>
 					  <? endif; ?>
-                        
-                       <? if($price['PERCENT'] > 0): ?>
-                           <div class="sale-y"><span>- <?=$price['PERCENT']?>%</span></div>
-                       <? endif; ?>
                    </div>
+                    <? if($price['PERCENT'] > 0): ?>
+                        <div class="sale-y"><span>- <?=$price['PERCENT']?>%</span></div>
+                    <? endif; ?>
                 </div>
             <? endif; ?>
 

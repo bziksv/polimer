@@ -9877,10 +9877,6 @@ a.pickup-stores__item .desc {
     color:red;
 }
 
-.pc__buy-block .bb_row .price {
-    padding-bottom: 30px;
-}
-
 .pc__buy-block .bb_row .price .price-old {
     float: left;
     font: 400 18px/20px 'roboto', sans-serif;
@@ -9905,17 +9901,24 @@ a.pickup-stores__item .desc {
     font: 700 30px/32px 'roboto', sans-serif
 }
 
-.pc__buy-block .bb_row .price .sale-y {
-    float: right;
+.pc__buy-block .bb_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pc__buy-block .bb_row .sale-y {
     width: fit-content;
+    height: 30px;
     position: relative;
     font: 500 16px/20px 'roboto', sans-serif;
     vertical-align: super;
     background: #FDD302;
     padding: 5px;
+    margin: 20px 0;
 }
 
-.pc__buy-block .bb_row .price .sale-y::before{
+.pc__buy-block .bb_row .sale-y::before{
     content: '';
     border: 15px solid transparent;
     border-right: 15px solid #FDD302;
@@ -10662,12 +10665,6 @@ a.pickup-stores__item .desc {
         font: 700 18px/20px 'roboto', sans-serif
     }
 
-    .pc__buy-block .bb_row .price .price-new {
-        padding-top: 13px;
-        font: 400 20px/22px 'roboto', sans-serif;
-        color: #333
-    }
-
     .pc__buy-block .bb_row .price .price-new span {
         font: 700 30px/32px 'roboto', sans-serif
     }
@@ -10996,10 +10993,6 @@ a.pickup-stores__item .desc {
         float: none;
         width: 100%;
         padding: 0px 15px;
-    }
-
-    .pc__buy-block .bb_row .price{
-        padding: 20px 40px;
     }
 
     .pc__buy-block .bb_row .price .price-new {
