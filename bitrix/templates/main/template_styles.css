@@ -14566,7 +14566,8 @@ a.pickup-stores__item .desc {
 
     .compare-page .inn {
         overflow-x: scroll;
-        overflow-y: hidden
+        overflow-y: hidden;
+        touch-action: pan-y
     }
 
     .compare-page .params-name {
