@@ -14560,10 +14560,6 @@ a.pickup-stores__item .desc {
         text-align: center
     }
 
-    .compare-page .add2basket {
-        margin: -12px auto 0 auto
-    }
-
     .compare-page .inn {
         overflow-x: scroll;
         overflow-y: hidden;
@@ -14616,7 +14612,7 @@ a.pickup-stores__item .desc {
     }
 
     .compare-page .compare-items .items .item .delete {
-        top: 0
+        top: 32%;
     }
 
     .compare-page .compare-items .items .item .values {
@@ -14651,7 +14647,8 @@ a.pickup-stores__item .desc {
     .compare-page .compare-items .items .item .info .name {
         display: inline-block;
         white-space: normal !important;
-        text-align: left
+        text-align: left;
+        width: 150px;
     }
 }
 
