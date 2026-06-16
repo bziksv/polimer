@@ -9689,7 +9689,7 @@ a.pickup-stores__item .desc {
     float: left;
     display: block;
     position: relative;
-    width: 600px;
+    width: 720px;
     text-align: center;
     margin: auto 10px;
 }
@@ -14934,7 +14934,7 @@ footer .footer__bottom .footer__studio a {
 @media screen and (max-width: 659px) {
     footer .footer__top {
         height: auto;
-        padding-bottom: 400px
+        padding-bottom: 300px
     }
 
     footer .footer__top .footer__col .footer__list.footer__list--50 {
