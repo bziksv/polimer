@@ -1,10 +1,6 @@
 	.products_roll.sale {
 		margin-bottom: 15px;
 	}
-	
-	.products_roll .pr_box .item:nth-child(4n+1) {
-		margin-left: 10px!important;
-	}
 
 	.products_roll.sale .pr_box .item .hover {
 		background-size: cover;
