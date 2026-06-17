@@ -24,7 +24,6 @@ $arrPropertyCode = array();
     <div class="action-btn">
         <a class="sortbutton<? echo (!$arResult["DIFFERENT"] ? ' current' : ''); ?>" href="<? echo $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=N'; ?>" rel="nofollow"><?=GetMessage("CATALOG_ALL_CHARACTERISTICS")?></a>
         <a class="sortbutton<? echo ($arResult["DIFFERENT"] ? ' current' : ''); ?>" href="<? echo $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=Y'; ?>" rel="nofollow"><?=GetMessage("CATALOG_ONLY_DIFFERENT")?></a>
-        <a href="?action=DELETE_FROM_COMPARE_LIST&id=0" style="border-color: red;color: red;">Удалить все товары из сравнения</a>
     </div>
 
 	<div class="inn">
@@ -91,13 +90,19 @@ $arrPropertyCode = array();
 
 						<div class="val"><a class="add2basket" href="javascript:void(0)" onclick="addToBasket2(<?=$arElement['ID']?>, 1);">&nbsp;</a></div>
 					</div>
-				</div><div class="br"></div>
+				</div>
 				<? endforeach; ?>
 
 			</div>
 		</div><!--end::compare-items-->
-	</div><!--end::inn-->
-</div><!--end::compare-page-->
+	</div>
+    <!--end::inn-->
+
+    <div class="action-btn">
+        <a href="?action=DELETE_FROM_COMPARE_LIST&id=0" style="border-color: red;color: red;">Удалить все товары из сравнения</a>
+    </div>
+</div>
+<!--end::compare-page-->
 
 
 

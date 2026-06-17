@@ -9693,7 +9693,6 @@ a.pickup-stores__item .desc {
     margin: 0 auto;
 }
 
-
 .pc__buy-block {
     float: right;
     position: relative;
@@ -14559,7 +14558,7 @@ a.pickup-stores__item .desc {
     .compare-page .compare-items .items .item {
         float: none;
         vertical-align: top;
-        display: inline-block;
+        display: block;
         width: auto;
         white-space: nowrap;
         border: 0;
@@ -14604,6 +14603,14 @@ a.pickup-stores__item .desc {
         white-space: normal !important;
         text-align: left;
         width: 150px;
+    }
+
+    .compare-page .values .val:nth-child(even) {
+        background: unset;
+    }
+
+    .compare-page .compare-items .items .item:nth-child(2n) {
+        background: #f5f6f8;
     }
 }
 
