@@ -118,10 +118,6 @@ $inCompare = inCompare($arResult['IBLOCK_ID'], $arResult['ID']);
                      </li>
                  <? endforeach; ?>
              </ul>
-             <div class="GallerylSAction">
-                 <a class="GallerylSPrev"></a>
-                 <a class="GallerylSNext"></a>
-             </div>
          </div>
 
          <div class="pc__buy-block cl">

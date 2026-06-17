@@ -9680,30 +9680,6 @@ a.pickup-stores__item .desc {
     margin: auto 10px;
 }
 
-
-.GallerylSAction > a{
-    width: 32px;
-    display: block;
-    bottom: 8%;
-    height: 32px;
-    background-image: url(/bitrix/templates/main/img/controls.png);
-    cursor: pointer;
-    position: absolute;
-    z-index: 99;
-    opacity: 0.5;
-    transition: opacity 0.35s linear 0s;
-}
-.GallerylSAction > a:hover {
-    opacity: 1;
-}
-.GallerylSAction > .GallerylSPrev {
-    background-position: 0 0;
-    left: -20px;
-}
-.GallerylSAction > .GallerylSNext {
-    background-position: -32px 0;
-    right: -20px;
-}
 .lSSlideOuter .lSPager.lSGallery li{
     padding: 10px;
 }
