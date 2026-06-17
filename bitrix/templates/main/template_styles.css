@@ -372,21 +372,23 @@ header .cart__number {
 }
 
 header .search__input {
-    width: 90%;
     border: 0;
+    width: 100%;
     height: 100%;
-    float: left
 }
 
 header .search__btn {
+    position: absolute;
+    top: 0;
+    right: 0;
     border: 0;
     outline: 0;
-    height: 100%;
-    width: 25px;
-    background-image: url(img/hbottom_icons.png);
+    height: 34px;
+    width: 34px;
+    background-image: url(/bitrix/templates/main/img/hbottom_icons.png);
     background-color: transparent;
     cursor: pointer;
-    background-position: -168px -13px
+    background-position: -168px -13px;
 }
 
 header .header__timework {
@@ -605,7 +607,7 @@ header .mm__wrap .mm__search .search__input {
 }
 
 header .mm__wrap .mm__search .search__btn {
-    background-position: -168px -3px
+    top: 12px;
 }
 
 header .mm__wrap .mm__account {
@@ -1029,11 +1031,16 @@ header .header__bottom {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#056ac8', endColorstr='#034f96', GradientType=0)
 }
 
+header .header__bottom .wr {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
 header .header__bottom .header__catalog {
     width: 20%;
-    float: left;
     padding: 20px 20px 0 20px;
-    margin: 0 48px 0 -20px;
     height: 60px;
     cursor: pointer;
     color: #fff;
@@ -1111,7 +1118,7 @@ header .header__bottom .header__catalog .catalog-sections-menu a {
 header .header__bottom .header__catalog .catalog-sections-menu ul.first-sections {
     display: block;
     list-style: none;
-    margin: 0 0 0 -20px;
+    margin-top: 0;
     padding: 0;
     width: 240px;
     background: #fff;
@@ -1229,9 +1236,7 @@ header .header__bottom .header__catalog:hover .catalog-sections-menu {
 
 header .header__bottom .header__action {
     width: auto;
-    float: left;
     position: relative;
-    margin: 0 25px 0 0;
     padding: 18px 30px 18px 37px
 }
 
@@ -1329,10 +1334,8 @@ header .header__bottom .header__action:hover .action__list {
     display: block
 }
 
-header .header__bottom .header__search {
-    width: 31.666%;
-    float: left;
-    margin: 10px 50px 0 0
+header .header__bottom #title-search {
+    flex-grow: 1;
 }
 
 header .header__bottom .header__search .search {
@@ -1352,7 +1355,6 @@ header .header__bottom .header__search .search {
 }
 
 header .header__bottom .header__account {
-    float: left;
     text-decoration: none;
     color: #fff;
     -moz-transition: all .3s ease;
@@ -1360,8 +1362,7 @@ header .header__bottom .header__account {
     -webkit-transition: all .3s ease;
     transition: all .3s ease;
     font-weight: 600;
-    font-size: 1.285em;
-    margin: 18px 0 0 0
+    font-size: 1.285em
 }
 
 header .header__bottom .header__account:hover {
@@ -1372,14 +1373,15 @@ header .header__bottom .header__account:hover {
     transition: all .3s ease
 }
 
+header .header__bottom .header__account i {
+    margin-right: 5px;
+}
+
 header .header__bottom .header__cart {
-    float: right;
     text-decoration: none;
     color: #fff;
-    margin: 17px 0 0 0;
     position: relative;
     padding-left: 50px;
-    padding-right: 28px
 }
 
 header .header__bottom .header__cart:before {
@@ -1433,22 +1435,15 @@ header .header__bottom.fixed .header__catalog .catalog__trigger span{
 }
 header .header__bottom.fixed .logo{
     display: block;
-    float: left;
-    margin-top: 12px;
-    margin-right: 30px;
 }
 header .header__bottom.fixed .f_phone{
     display: block;
-    float: left;
-    height: 60px;
-    margin-top: 10px;
-    margin-right: 5px;
 }
 header .header__bottom.fixed .f_phone div{
     display: inline-block;
 }
 header .header__bottom.fixed .f_phone div p{
-    margin: 0px 30px 0px 0px;
+    margin: 0px 15px 0px 0px;
     font-size: 0.9em;
 }
 header .header__bottom.fixed .f_phone div p:first-child{
@@ -1457,7 +1452,8 @@ header .header__bottom.fixed .f_phone div p:first-child{
     font-size: 1.2em;
 }
 
-header .header__bottom.fixed .header__cart{
+header .header__bottom.fixed .header__cart,
+header .header__bottom.fixed .header__account {
     color:#0358a6;
 }
 header .header__bottom.fixed .header__cart:before{
@@ -1467,23 +1463,13 @@ header .header__bottom.fixed .cart__number{
     background-color:#0358a6;
     color: #fff;
 }
-header .header__bottom.fixed .header__catalog{
-    margin: 0 5px 0 -20px;
-}
-header .header__bottom.fixed .header__catalog .catalog-sections-menu{
-    left: 205px;
-}
 
-header .header__bottom.fixed .header__search{
-    max-width: 220px;
-    margin-right:auto;
-}
-header .header__bottom.fixed .header__search .search__input{
-    max-width: 160px;
+header .header__bottom.fixed .header__catalog .catalog-sections-menu{
+    left: 185px;
 }
 
 header .header__bottom.fixed .header__action,
-header .header__bottom.fixed .header__account
+header .header__bottom.fixed .header__account span
 {
     display: none;
 }

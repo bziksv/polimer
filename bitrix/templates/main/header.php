@@ -358,7 +358,7 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 				</div><!--end::header__main-->
 
                 <div class="header__bottom"> <!-- fixed -->
-                    <div class="wr cl">
+                    <div class="wr">
 
                         <a href="/" class="logo">
                             <img src="<?=SITE_TEMPLATE_PATH?>/img/logo_svg.svg" alt="Полимер">
@@ -515,7 +515,9 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                             false
                         );?>
 
-                        <a href="/personal/orders-list.php" class="header__account">Личный кабинет</a>
+                        <a href="/personal/orders-list.php" class="header__account">
+                            <i class="fa fa-user-o fa-lg" aria-hidden="true"></i> <span>Личный кабинет</span>
+                        </a>
 
                         <?$APPLICATION->IncludeComponent("bitrix:sale.basket.basket.line", "basket.small", Array(
                             "HIDE_ON_BASKET_PAGES" => "Y",	// Не показывать на страницах корзины и оформления заказа
