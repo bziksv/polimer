@@ -200,3 +200,51 @@ $(function(){
 
 });
 
+// hover-слайдер превью карточки товара: скраб мышью на десктопе, свайп на мобильном
+$(function () {
+    var ZONE = '.products_roll .pic.has-slider';
+    var SWIPE_STEP = 30; // px на один кадр при свайпе
+
+    function setFrame($pic, index) {
+        var $slides = $pic.find('.pic-slide');
+        var max = $slides.length - 1;
+        if (index < 0) index = 0;
+        if (index > max) index = max;
+        $slides.removeClass('active').eq(index).addClass('active');
+        $pic.find('.pic-dot').removeClass('active').eq(index).addClass('active');
+    }
+
+    // десктоп: переключение кадров движением курсора
+    $(document).on('mousemove', ZONE, function (e) {
+        var $pic = $(this);
+        var rect = this.getBoundingClientRect();
+        var count = $pic.find('.pic-slide').length;
+        if (!count || !rect.width) return;
+        var index = Math.floor((e.clientX - rect.left) / rect.width * count);
+        setFrame($pic, index);
+    });
+    $(document).on('mouseleave', ZONE, function () {
+        setFrame($(this), 0); // возврат к первому кадру
+    });
+
+    // мобильный: переключение свайпом
+    var touchPic = null, touchStartX = 0, touchStartIndex = 0;
+    $(document).on('touchstart', ZONE, function (e) {
+        touchPic = $(this);
+        touchStartX = e.originalEvent.touches[0].clientX;
+        touchStartIndex = touchPic.find('.pic-slide.active').index();
+    });
+    $(document).on('touchmove', ZONE, function (e) {
+        if (!touchPic) return;
+        var dx = e.originalEvent.touches[0].clientX - touchStartX;
+        if (Math.abs(dx) > SWIPE_STEP) {
+            var steps = Math.floor(Math.abs(dx) / SWIPE_STEP) * (dx < 0 ? 1 : -1);
+            setFrame(touchPic, touchStartIndex + steps);
+            e.preventDefault(); // блокируем переход по ссылке и скролл при горизонтальном свайпе
+        }
+    });
+    $(document).on('touchend touchcancel', ZONE, function () {
+        touchPic = null;
+    });
+});
+

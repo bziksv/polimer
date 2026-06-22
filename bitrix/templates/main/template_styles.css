@@ -4919,9 +4919,9 @@ header .header__bottom.fixed .header__account span
     position: relative;
     float: left;
     width: 220px;
-    height: 380px;
+    height: 540px;
     margin-top: 10px;
-    margin-left: 10px
+    margin-left: 10px;
 }
 
 .products_roll .pr_box .item:nth-child(4n+1) {
@@ -4943,13 +4943,13 @@ header .header__bottom.fixed .header__account span
 
 .products_roll .pr_box .item .hover .inner {
     position: absolute;
-    width: 220px;
-    height: 380px;
+    width: 218px;
+    height: 540px;
     top: 50%;
     left: 50%;
-    margin-top: -190px;
-    margin-left: -110px;
-    padding: 170px 10px 0
+    margin-top: -269px;
+    margin-left: -109px;
+    padding: 310px 10px 0;
 }
 
 .products_roll .pr_box .item .hover .inner .compare {
@@ -5026,8 +5026,8 @@ header .header__bottom.fixed .header__account span
     position: absolute;
     display: table;
     width: 100%;
-    top: 10px;
-    left: 0
+    top: 0px;
+    left: 0px;
 }
 
 .products_roll .pr_box .item .hover .inner .pic span {
@@ -5038,7 +5038,54 @@ header .header__bottom.fixed .header__account span
 .products_roll .pr_box .item .hover .inner .pic span img {
     display: block;
     margin: 0 auto;
-    max-height: 150px
+}
+
+/* hover-слайдер превью */
+.products_roll .pr_box .item .hover .inner .pic.has-slider {
+    touch-action: pan-y;
+}
+
+.products_roll .pr_box .item .hover .inner .pic.has-slider .pic-slides {
+    display: block;
+    position: relative;
+    height: 293px;
+}
+
+.products_roll .pr_box .item .hover .inner .pic.has-slider .pic-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    transition: opacity .15s ease;
+}
+
+.products_roll .pr_box .item .hover .inner .pic.has-slider .pic-slide.active {
+    position: relative;
+    opacity: 1;
+}
+
+.products_roll .pr_box .item .hover .inner .pic.has-slider .pic-dots {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 6px;
+    z-index: 2;
+}
+
+.products_roll .pr_box .item .hover .inner .pic.has-slider .pic-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #c7c7c7;
+    transition: background .15s ease;
+}
+
+.products_roll .pr_box .item .hover .inner .pic.has-slider .pic-dot.active {
+    background: #0464bb;
 }
 
 .products_roll .pr_box .item .hover .inner .title {
@@ -5360,7 +5407,7 @@ header .header__bottom.fixed .header__account span
 .products_roll .pr_box .item.add2cart2 .hover {
     z-index: 99;
     width: 260px;
-    height: 440px;
+    height: 600px;
     margin: -20px;
     background: #FFF;
     -webkit-box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.25);
@@ -5858,8 +5905,8 @@ header .header__bottom.fixed .header__account span
     }
 
     .products_roll .pr_box .item .hover .inner .pic {
-        top: 50px;
         width: 130px;
+        height: 195px;
         display: block;
         overflow: hidden;
         margin: 10px;
