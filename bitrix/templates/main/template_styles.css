@@ -9877,6 +9877,7 @@ a.pickup-stores__item .desc {
     background: #FDD302;
     padding: 5px;
     margin: 20px 0;
+    white-space: nowrap;
 }
 
 .pc__buy-block .bb_row .sale-y::before{

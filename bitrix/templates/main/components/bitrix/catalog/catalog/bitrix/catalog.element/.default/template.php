@@ -199,8 +199,6 @@ $inCompare = inCompare($arResult['IBLOCK_ID'], $arResult['ID']);
 
       </div>
 
-
-
       <div class="pc__tabs" id="all_tabs">
          <div class="t-list cl">
             <a href="#"><span>Описание</span></a>
@@ -228,6 +226,35 @@ $inCompare = inCompare($arResult['IBLOCK_ID'], $arResult['ID']);
                <div class="content">
                    <div class="cl">
                        <div class="bb_col w-70">
+
+                           <?php if ($arResult['PRODUCT']['WEIGHT']): ?>
+                           <div class="line cl">
+                               <div class="prop">Вес (гр.)</div>
+                               <div class="val"><?=$arResult['PRODUCT']['WEIGHT']?></div>
+                           </div>
+                           <?php endif; ?>
+
+                           <?php if ($arResult['PRODUCT']['LENGTH']): ?>
+                               <div class="line cl">
+                                   <div class="prop">Длина (мм)</div>
+                                   <div class="val"><?=$arResult['PRODUCT']['LENGTH']?></div>
+                               </div>
+                           <?php endif; ?>
+
+                           <?php if ($arResult['PRODUCT']['WIDTH']): ?>
+                               <div class="line cl">
+                                   <div class="prop">Ширина (мм)</div>
+                                   <div class="val"><?=$arResult['PRODUCT']['WIDTH']?></div>
+                               </div>
+                           <?php endif; ?>
+
+                           <?php if ($arResult['PRODUCT']['HEIGHT']): ?>
+                               <div class="line cl">
+                                   <div class="prop">Высота (мм)</div>
+                                   <div class="val"><?=$arResult['PRODUCT']['HEIGHT']?></div>
+                               </div>
+                           <?php endif; ?>
+
                            <?
 						   $arShowProp = $arResult['PROPERTIES'];
 						   
