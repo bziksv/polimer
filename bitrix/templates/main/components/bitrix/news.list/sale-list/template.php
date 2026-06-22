@@ -19,7 +19,7 @@ $this->setFrameMode(true);
             <? if($arItem['DETAIL_PICTURE']['SRC']): ?>
                 <div class="image">
                     <a href="<?=$arItem["DETAIL_PAGE_URL"]?>">
-                        <img src="<?=$arItem['DETAIL_PICTURE']['SRC']?>" alt="<?echo $arItem["NAME"]?>">
+                        <img src="<?=resizeImage($arItem['DETAIL_PICTURE']['ID'], 180, 180)?>" alt="<?=$arItem["NAME"]?>">
                     </a>
                 </div>
             <? endif; ?>

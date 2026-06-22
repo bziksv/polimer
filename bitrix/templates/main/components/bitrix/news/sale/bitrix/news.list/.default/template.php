@@ -23,7 +23,7 @@ $this->setFrameMode(true);
 		}
 		?>
 		<a href="<?echo $arItem["DETAIL_PAGE_URL"]?>" class="item">
-			<div class="hover" style="background-image: url('<?=$arItem["PREVIEW_PICTURE"]["SRC"]?>')">
+			<div class="hover" style="background-image: url('<?=resizeImage($arItem['PREVIEW_PICTURE']['ID'], 220, 540)?>')">
 				<div class="inner">
 					<? if ($arItem["PROPERTIES"]["DISCOUTN_PERCENT"]["VALUE"]): ?>
 						<div class="discount">- <?echo $arItem["PROPERTIES"]["DISCOUTN_PERCENT"]["VALUE"]?> %</div>
