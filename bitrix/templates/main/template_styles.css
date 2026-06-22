@@ -5055,7 +5055,6 @@ header .header__bottom.fixed .header__account span
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
     opacity: 0;
     transition: opacity .15s ease;
 }
