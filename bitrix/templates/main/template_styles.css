@@ -4770,6 +4770,7 @@ header .header__bottom.fixed .header__account span
     color: #333;
     font-size: 12px;
     margin-right: 4px;
+    line-height: 30px;
 }
 
 .product_top .filter_top .body_f .item_f a:hover{
