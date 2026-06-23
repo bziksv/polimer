@@ -9915,6 +9915,7 @@ a.pickup-stores__item .desc {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .pc__buy-block .bb_row .sale-y {
