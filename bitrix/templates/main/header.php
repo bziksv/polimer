@@ -128,8 +128,8 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 							<img src="<?=SITE_TEMPLATE_PATH?>/img/logo_svg.svg" alt="Полимер" />
 						</a>
 
-						<a href="tel:+74732075505" class="hmobile__phone">
-                            <i class="fa fa-phone fa-2x fa-flip-horizontal" aria-hidden="true"></i>
+						<a href="tel:+74732502233" class="hmobile__phone">
+                            <i class="fa fa-phone fa-2x" aria-hidden="true"></i>
                         </a>
 
 						<a href="/search/index.php" class="hmobile__search">

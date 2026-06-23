@@ -1,13 +1,15 @@
 
-function replaseBasketTop() {
+function replaceBasket(url, $el)
+{
     $.ajax({
-        url: '/ajax/basket.php',
+        url: url,
         type: 'get',
         success: function (data) {
-            $('.header__cart').replaceWith(data);
+            $el.replaceWith(data);
         }
     })
 }
+
 function addToBasket2(idel, quantity,el) {
     let $href = "/ajax/add.php?id=" + idel;
 
@@ -16,7 +18,8 @@ function addToBasket2(idel, quantity,el) {
         type: 'get',
         success: function (data) {
             if (data === "Товар успешно добавлен в корзину") {
-                replaseBasketTop();
+                replaceBasket('/ajax/basket.php', $('.header__cart'));
+                replaceBasket('/ajax/basket-mobile.php', $('.hmobile__cart'));
                 alertify.success(data);
             } else {
                 alertify.error(data);

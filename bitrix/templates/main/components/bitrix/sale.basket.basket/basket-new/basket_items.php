@@ -52,11 +52,11 @@ if ($normalCount > 0)
 			<a href="javascript:void(0)" onclick="deleteBasket()" class="clear_basket">Очистить корзину</a>
 			<a href="/catalog/" class="continue_shopping">Продолжить покупки</a>
 			<div class="promo cl">
-				<a class="apply bx_bt_button bx_big" href="javascript:void(0)" onclick="setCupon()" title="Нажмите для применения нового купона">Применить</a>
-				<input type="text" id="coupon" name="COUPON" value="">
-				<span>Активировать промокод:</span>
-			</div>
-<!--			<a href="/check-out/step2.php" class="checkout_wr">Оформить заказ без регистрации</a>-->
+                <span>Активировать промокод:</span>
+                <input type="text" id="coupon" name="COUPON" value="">
+                <a class="apply bx_bt_button bx_big" href="javascript:void(0)" onclick="setCupon()" title="Нажмите для применения нового купона">Применить</a>
+            </div>
+
 			<a href="javascript:void(0)" class="checkout_wr show-popup" data-id="oneclickcart">Купить в один клик</a>
 			<a href="<?=$arParams['PATH_TO_ORDER']?>" class="checkout">Оформить заказ</a>
 			<div class="total">
@@ -68,7 +68,7 @@ if ($normalCount > 0)
 				<div class="t-row cl t-quan">
 					<div class="line"></div>
 					<div class="name">Общее кол-во товаров:</div>
-					<div class="value"><span><?=count($arResult["GRID"]["ROWS"]);?></span> шт.</div>
+					<div class="value"><span><?=array_sum(array_column($arResult["GRID"]["ROWS"], 'QUANTITY'))?></span> шт.</div>
 				</div>
 				<div class="t-row cl t-cost">
 					<div class="line"></div>

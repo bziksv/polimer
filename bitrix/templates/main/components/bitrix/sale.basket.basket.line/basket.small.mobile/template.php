@@ -2,6 +2,8 @@
 $compositeStub = (isset($arResult['COMPOSITE_STUB']) && $arResult['COMPOSITE_STUB'] == 'Y');
 ?>
 
+<?php if (!$arResult['DISABLE_USE_BASKET']): ?>
 <a href="<?= $arParams['PATH_TO_BASKET'] ?>" class="hmobile__cart cart">
-    <span class="cart__number"><? echo $arResult['NUM_PRODUCTS']; ?></span>
+    <span class="cart__number"><?= $arResult['TOTAL_QUANTITY'] ?></span>
 </a>
+<?php endif; ?>

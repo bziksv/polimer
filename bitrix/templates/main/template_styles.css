@@ -1397,7 +1397,7 @@ header .header__bottom .header__cart:before {
 }
 
 header .header__bottom .header__cart .cart__sum--numbers {
-    font-weight: 600;
+    font-weight: 700;
     font-size: 1.285em
 }
 
@@ -4934,6 +4934,7 @@ header .header__bottom.fixed .header__account span
     height: 100%;
 	background: #FFF;
     border: 1px solid #ced5d9;
+    overflow: hidden;
     -webkit-transition: all .2s ease;
     -moz-transition: all .2s ease;
     -ms-transition: all .2s ease;
@@ -5055,6 +5056,7 @@ header .header__bottom.fixed .header__account span
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
     opacity: 0;
     transition: opacity .15s ease;
 }
@@ -11582,7 +11584,6 @@ a.pickup-stores__item .desc {
 }
 
 .options .promo span {
-    float: right;
     margin-right: 20px;
     padding: 10px 0;
     font: 400 14px/20px 'roboto', sans-serif;
@@ -11591,7 +11592,6 @@ a.pickup-stores__item .desc {
 }
 
 .options .promo input[type=text], .options .promo input[type=password] {
-    float: right;
     margin-right: 10px;
     width: 120px;
     height: 40px;
@@ -11722,7 +11722,7 @@ a.pickup-stores__item .desc {
 }
 
 .options .total .t-row.t-cost .value span {
-    font-weight: 500;
+    font-weight: 700;
     font-size: 24px
 }
 
@@ -11868,25 +11868,25 @@ a.pickup-stores__item .desc {
     }
 
     .options .promo {
-        top: 50px
+        max-width: 300px;
+        position: unset;
+        display: flex;
+        flex-wrap: wrap;
+        column-gap: 10px;
     }
 
     .options .promo span {
-        position: absolute;
         display: block;
-        float: none;
-        width: 300px;
-        left: 0;
-        top: -40px;
-        text-align: left
+        float: unset;
+        text-align: left;
     }
 
     .options .promo input[type=text] {
-        width: 180px
+        float: unset;
     }
 
     .options .promo .apply {
-        width: 145px
+        float: unset;
     }
 
     .options .checkout_wr {
@@ -11999,16 +11999,6 @@ a.pickup-stores__item .desc {
 
     .options .continue_shopping {
         font: 400 12px/20px 'roboto', sans-serif
-    }
-
-    .options .promo {
-        right: 0;
-        top: 30px;
-        width: 100%
-    }
-
-    .options .promo .apply {
-        width: 130px
     }
 
     .options .total {
