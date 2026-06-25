@@ -2306,7 +2306,7 @@ header .header__bottom.fixed .header__account span
 .slider_product .product .name {
     color: #0464bb;
     text-decoration: none;
-    margin: 40px 0 15px;
+    margin: 15px 0;
     display: block;
     min-height: 145px
 }
@@ -14864,7 +14864,7 @@ footer .footer__bottom .footer__studio a {
     }
 
     footer .footer__top .footer__col.col--1 {
-        width: 29%
+        width: 100%
     }
 
     footer .footer__top .footer__col.col--2 {
@@ -14885,16 +14885,6 @@ footer .footer__bottom .footer__studio a {
 }
 
 @media screen and (max-width: 1019px) {
-    footer .footer__top {
-        height: 460px
-    }
-
-    footer .footer__top .footer__col.col--1 {
-        position: absolute;
-        left: 0;
-        top: 195px;
-        width: 45.312%
-    }
 
     footer .footer__top .footer__col.col--1 img {
         width: 166px;
@@ -14940,11 +14930,6 @@ footer .footer__bottom .footer__studio a {
 }
 
 @media screen and (max-width: 659px) {
-    footer .footer__top {
-        height: auto;
-        padding-bottom: 300px
-    }
-
     footer .footer__top .footer__col .footer__list.footer__list--50 {
         width: 100%;
         border-top: 1px solid #cdd2d6
