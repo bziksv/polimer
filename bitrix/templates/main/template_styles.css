@@ -5387,6 +5387,8 @@ header .header__bottom.fixed .header__account span
 
 .products_roll .pr_box .item:hover .hover {
     border-color: #0464bb;
+    box-shadow: 0 8px 30px rgba(4, 100, 187, 0.18), 0 2px 8px rgba(0, 0, 0, 0.08);
+    transform: translateY(-3px);
 }
 
 .products_roll .pr_box .item:hover .hover .inner .compare {
