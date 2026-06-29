@@ -31,23 +31,15 @@ table.title-search-result td img {
 }
 
 table.title-search-result td {
+	max-width: 350px;
 	background-color:white;
 	color:black;
 	font-weight:normal;
 	padding: 4px;
-	padding-left: 10px;
-	padding-right: 10px;
 	text-align:left;
-	white-space:nowrap;
-}
-
-table.title-search-result td.title-search-item {
-	padding-left: 0px;
-	padding-right: 10px;
 }
 
 table.title-search-result td.title-search-item a {
-	padding-left:4px;
 	text-decoration: none;
 	color:black;
 	vertical-align:top;
