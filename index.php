@@ -341,7 +341,8 @@ $APPLICATION->SetTitle("«Полимер» — главная страница 
 		</div><!-- end::tab_item -->
    	</div><!-- end::tab_content -->
 </div><!-- end::mp__products -->
-<div class="mp__content cl">
+
+<!--<div class="mp__content cl" style="display: flex; flex-deriction: column;">
 	<div class="mp__company">
 		<div class="content__title"><h1>Компания ООО «Полимер»</h1></div>
 		<div class="company__text">
@@ -360,12 +361,101 @@ $APPLICATION->SetTitle("«Полимер» — главная страница 
 		</div>
 		<a href="/about/" class="content__link">Подробнее</a>
 	</div>
+-->
+
+
+<style>
+.about-company-main {
+    display: flex;
+    flex-wrap: wrap;           /* исправил опечатку */
+    gap: 40px;
+    align-items: flex-start;
+    margin: 40px 0;
+}
+
+.about-text {
+    flex: 1 1 50%;             /* гибкая ширина */
+    min-width: 300px;
+}
+
+.about-image {
+    flex: 1 1 40%;             /* немного меньше, чтобы тексту было комфортнее */
+    min-width: 300px;
+}
+
+.image-company-main {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.about-company-button {
+    color: #fff !important;
+    background: #0466C0;
+    border-radius: 10px;
+    padding: 12px 24px;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+/* ===================== АДАПТИВ ===================== */
+
+@media (max-width: 992px) {
+    .about-company-main {
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-company-main {
+        flex-direction: column;     /* текст сверху, картинка снизу */
+        gap: 25px;
+        margin: 30px 0;
+    }
+    
+    .about-text,
+    .about-image {
+        flex-basis: 100%;           /* занимают всю ширину */
+        min-width: auto;
+    }
+    
+    .about-text h3 {
+        font-size: 1.1rem;
+    }
+}
+</style>
+<div>
+<div class="about-company-main">
+	<div class="about-text">
+		<h2>О компании <span style="color: #004994;">"Полимер"</span></h2>
+		<h3>Компания ООО «Полимер» была основана в 2007 году как дочернее предприятие ООО «Металлинвест плюс» (одного из крупнейших поставщиков стального металлопроката и труб в Воронежской области с почти 20-летней историей).</h3>
+
+<p>Изначально целью основания фирмы была продажа уже имеющимся клиентам большего ассортимента товаров, а именно полипропиленовых труб и фитингов.
+			</p>
+			<p>
+				В настоящее время ООО «Полимер» является одной из крупнейших компаний оптово-розничной торговли материалами и оборудованием для отопления и водоснабжения в Воронежской области. Наш ассортимент постоянно расширяется и уже можно выделить несколько
+			основных товарных групп:
+			</p>
+			<ul class="content__list">
+				<li>Инженерная сантехника (газовые котлы, радиаторы отопления, трубы и фитинги, запорная арматура, насосы и др.)</li>
+				<li>Строительно-отделочные материалы (гипсокартон, сухие смеси, поликарбонат, лакокраска, инструменты, электрика, крепеж и др.)</li>
+			</ul>
+		<div style="text-align: center;"><a target="_blank" class="about-company-button" href="/about/">Узнать больше</a></div>
+	</div>
+	<div class="about-image"><img class="image-company-main" src="/upload/medialibrary/196/e975vcrtpvbizcycozzwk3u2t0m6is2r.jpg"></div>
+</div>
+
+
+
+
 	<div class="mp__articles cl">
-		
 		<?$APPLICATION->IncludeComponent(
-	"bitrix:news.list",
-	"articles-list-home",
-	array(
+	"bitrix:news.list", 
+	"articles-list-home", 
+	[
 		"ACTIVE_DATE_FORMAT" => "j F Y",
 		"ADD_SECTIONS_CHAIN" => "N",
 		"AJAX_MODE" => "N",
@@ -385,10 +475,10 @@ $APPLICATION->SetTitle("«Полимер» — главная страница 
 		"DISPLAY_PICTURE" => "Y",
 		"DISPLAY_PREVIEW_TEXT" => "Y",
 		"DISPLAY_TOP_PAGER" => "N",
-		"FIELD_CODE" => array(
+		"FIELD_CODE" => [
 			0 => "",
 			1 => "",
-		),
+		],
 		"FILTER_NAME" => "",
 		"HIDE_LINK_WHEN_NO_DETAIL" => "N",
 		"IBLOCK_ID" => "4",
@@ -396,7 +486,7 @@ $APPLICATION->SetTitle("«Полимер» — главная страница 
 		"INCLUDE_IBLOCK_INTO_CHAIN" => "N",
 		"INCLUDE_SUBSECTIONS" => "Y",
 		"MESSAGE_404" => "",
-		"NEWS_COUNT" => "2",
+		"NEWS_COUNT" => "4",
 		"PAGER_BASE_LINK_ENABLE" => "N",
 		"PAGER_DESC_NUMBERING" => "N",
 		"PAGER_DESC_NUMBERING_CACHE_TIME" => "36000",
@@ -408,10 +498,10 @@ $APPLICATION->SetTitle("«Полимер» — главная страница 
 		"PARENT_SECTION" => "",
 		"PARENT_SECTION_CODE" => "",
 		"PREVIEW_TRUNCATE_LEN" => "50",
-		"PROPERTY_CODE" => array(
+		"PROPERTY_CODE" => [
 			0 => "",
 			1 => "",
-		),
+		],
 		"SET_BROWSER_TITLE" => "N",
 		"SET_LAST_MODIFIED" => "N",
 		"SET_META_DESCRIPTION" => "N",
@@ -423,8 +513,9 @@ $APPLICATION->SetTitle("«Полимер» — главная страница 
 		"SORT_BY2" => "SORT",
 		"SORT_ORDER1" => "DESC",
 		"SORT_ORDER2" => "ASC",
-		"COMPONENT_TEMPLATE" => "articles-list-home"
-	),
+		"COMPONENT_TEMPLATE" => "articles-list-home",
+		"STRICT_SECTION_CHECK" => "N"
+	],
 	false
 );?>
 

@@ -107,4 +107,8 @@ if($arResult['SECTION']['ID'] == 0 AND $APPLICATION->GetCurPage() != '/catalog/'
 	@define("ERROR_404","Y");
 }
 
+usort($arResult['SECTIONS'], function($a, $b) {
+    return strcasecmp($a['NAME'], $b['NAME']);
+});
+
 ?>

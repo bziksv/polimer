@@ -21,3 +21,18 @@ foreach ($arResult['SECTIONS'] as $key => $section) {
 
 }
 
+function sortSectionsByName(&$sections) {
+    usort($sections, function($a, $b) {
+        return strcasecmp($a['NAME'], $b['NAME']);
+    });
+    foreach ($sections as &$section) {
+        if (isset($section['SECTION_1']) && is_array($section['SECTION_1'])) {
+            sortSectionsByName($section['SECTION_1']);
+        }
+        if (isset($section['SECTION_2']) && is_array($section['SECTION_2'])) {
+            sortSectionsByName($section['SECTION_2']);
+        }
+    }
+}
+
+sortSectionsByName($arResult['SECTIONS']);
