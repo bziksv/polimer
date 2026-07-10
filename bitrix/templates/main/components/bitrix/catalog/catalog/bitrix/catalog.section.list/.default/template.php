@@ -21,7 +21,7 @@ $this->setFrameMode(true);
             <div class="item_c">
                 <a href="<?=$arSection['SECTION_PAGE_URL']?>">
                     <div class="img_c">
-                        <img src="<?=resizeImage($arSection['PICTURE']['ID'], 140, 120);?>" alt="<?=$arSection['NAME']?>">
+                        <img src="<?=resizeImage(is_array($arSection['PICTURE']) ? $arSection['PICTURE']['ID'] : $arSection['PICTURE'], 140, 120);?>" alt="<?=htmlspecialcharsbx($arSection['NAME'])?>" width="140" height="120" loading="lazy">
                     </div>
                     <div class="name_c"><?=$arSection['NAME']?></div>
                 </a>

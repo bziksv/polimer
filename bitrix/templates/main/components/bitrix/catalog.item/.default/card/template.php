@@ -148,8 +148,6 @@ $hasSlider = count($sliderImages) > 1;
 				<span class="txt1" onclick="if(document.body.clientWidth < 659){addToBasket2(<?=$arItem['ID']?>, $('#count_<?=$arItem['ID']?> input').val(),this)};">В корзину</span>
 				<span class="txt2" onclick="addToBasket2(<?=$arItem['ID']?>, $('#count_<?=$arItem['ID']?> input').val(),this);">Добавить в корзину</span>
 			</a>
-			
-			<span class="incode">Код товара: <?=$arItem['PROPERTIES']['CML2_TRAITS']['VALUE'][2];?></span>
 			<?else:?>
 			<div class="cost_total"><span></span></div>
 			
@@ -157,6 +155,10 @@ $hasSlider = count($sliderImages) > 1;
 			
 			<div class="outstock"></div>
 			<? endif; ?>
+
+			<?php if (!empty($arItem['PROPERTIES']['CML2_TRAITS']['VALUE'][2])): ?>
+			<span class="incode">Код товара: <?=htmlspecialcharsbx($arItem['PROPERTIES']['CML2_TRAITS']['VALUE'][2])?></span>
+			<?php endif; ?>
 
 		</div>
 	</div>

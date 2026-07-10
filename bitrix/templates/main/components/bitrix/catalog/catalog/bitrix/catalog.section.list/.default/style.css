@@ -7,9 +7,12 @@
 	gap: 10px;
 }
 
+.product_top .catalog_top .item_c{
+	flex: 0 0 140px;
+}
+
 @media screen and (max-width: 659px) {
 	.product_top .catalog_top {
 		justify-content: center;
 	}
 }
-
