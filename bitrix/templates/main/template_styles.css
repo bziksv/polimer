@@ -1034,17 +1034,25 @@ header .header__bottom {
 header .header__bottom .wr {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 20px;
+    justify-content: flex-start;
+    gap: 22px;
+    height: 60px;
 }
 
 header .header__bottom .header__catalog {
-    width: 20%;
-    padding: 20px 20px 0 20px;
+    width: auto;
+    flex: 0 0 auto;
+    min-width: 180px;
+    display: flex;
+    align-items: center;
     height: 60px;
+    padding: 0 12px;
+    box-sizing: border-box;
     cursor: pointer;
     color: #fff;
-    transition: .2s all
+    transition: .2s all;
+    position: relative;
+    overflow: visible;
 }
 
 header .header__bottom .header__catalog:hover {
@@ -1061,7 +1069,7 @@ header .header__bottom .header__catalog:hover .catalog__name {
 }
 
 header .header__bottom .header__catalog .catalog__trigger {
-    float: left;
+    flex: 0 0 auto;
     width: 30px;
     border: 0
 }
@@ -1087,13 +1095,14 @@ header .header__bottom .header__catalog .catalog__trigger.close .i3 {
 }
 
 header .header__bottom .header__catalog .catalog__name {
-    margin: -2px 0 0 20px;
-    float: left;
+    margin: 0 0 0 12px;
+    flex: 0 1 auto;
     font-weight: 600;
     font-size: 1.285em;
     color: #fff;
     border: 0;
-    text-decoration: none
+    text-decoration: none;
+    line-height: 1.2;
 }
 
 header .header__bottom .header__catalog .catalog-sections-menu {
@@ -1103,12 +1112,15 @@ header .header__bottom .header__catalog .catalog-sections-menu {
     left: 0;
     min-height: 100px;
     z-index: 200;
-    width: 100%;
+    width: auto;
     text-align: center
 }
 
 header .header__bottom .header__catalog .catalog-sections-menu .wr {
-    text-align: left
+    display: block;
+    text-align: left;
+    height: auto;
+    gap: 0;
 }
 
 header .header__bottom .header__catalog .catalog-sections-menu a {
@@ -1128,7 +1140,8 @@ header .header__bottom .header__catalog .catalog-sections-menu ul.first-sections
 
 header .header__bottom .header__catalog .catalog-sections-menu ul.first-sections > li {
     font-size: 16px;
-    border-top: 1px solid #cdd2d6
+    border-top: 1px solid #cdd2d6;
+    position: relative
 }
 
 header .header__bottom .header__catalog .catalog-sections-menu ul.first-sections > li:first-child {
@@ -1161,8 +1174,8 @@ header .header__bottom .header__catalog .catalog-sections-menu ul.first-sections
     top: 0;
     font-size: 14px;
     left: 240px;
-    width: 1030px;
-    min-height:100%;
+    width: 960px;
+    max-width: calc(100vw - 260px);
     background: #fff;
     position: absolute;
     padding: 40px;
@@ -1335,7 +1348,27 @@ header .header__bottom .header__action:hover .action__list {
 }
 
 header .header__bottom #title-search {
-    flex-grow: 1;
+    flex: 1 1 240px;
+    min-width: 180px;
+    margin: 0;
+}
+
+header .header__bottom .header__search {
+    margin: 0;
+}
+
+header .header__bottom .header__account,
+header .header__bottom .header__cart,
+header .header__bottom .header__action,
+header .header__bottom .header__aside {
+    flex: 0 0 auto;
+}
+
+header .header__bottom .header__aside {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-left: auto;
 }
 
 header .header__bottom .header__search .search {
@@ -1434,22 +1467,100 @@ header .header__bottom.fixed .header__catalog .catalog__trigger span{
     background:#0358a6;
 }
 header .header__bottom.fixed .logo{
+    display: flex;
+    align-items: center;
+}
+
+header .header__bottom.fixed .wr {
+    justify-content: flex-start;
+    gap: 22px;
+    height: 60px;
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+
+header .header__bottom.fixed .logo {
+    flex: 0 0 auto;
+    align-self: center;
+    line-height: 0;
+}
+
+header .header__bottom.fixed .logo img {
     display: block;
+    height: 34px;
+    width: auto;
 }
-header .header__bottom.fixed .f_phone{
+
+header .header__bottom.fixed .header__catalog {
+    display: flex;
+    align-items: center;
+    align-self: center;
+    height: 60px;
+    min-width: 0;
+    min-height: 0;
+    padding: 0 8px;
+}
+
+header .header__bottom.fixed .header__catalog .catalog__trigger {
+    flex: 0 0 auto;
+}
+
+header .header__bottom.fixed .header__catalog .catalog__name {
+    margin: 0 0 0 12px;
+    font-size: 1.05em;
+    line-height: 1.2;
+}
+
+header .header__bottom.fixed .header__search,
+header .header__bottom.fixed #title-search {
+    flex: 1 1 260px;
+    min-width: 180px;
+}
+
+header .header__bottom.fixed .header__aside {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+header .header__bottom.fixed .f_phone {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+header .header__bottom.fixed .f_phone div {
     display: block;
+    margin: 0;
 }
-header .header__bottom.fixed .f_phone div{
-    display: inline-block;
-}
-header .header__bottom.fixed .f_phone div p{
-    margin: 0px 15px 0px 0px;
+
+header .header__bottom.fixed .f_phone div p {
+    margin: 0;
+    line-height: 1.25;
     font-size: 0.9em;
 }
+
 header .header__bottom.fixed .f_phone div p:first-child{
     color: #0358a6;
     font-weight: 600;
     font-size: 1.2em;
+}
+
+header .header__bottom.fixed .header__account {
+    margin: 0;
+    font-size: 1.15em;
+}
+
+header .header__bottom.fixed .header__account i {
+    margin: 0;
+}
+
+header .header__bottom.fixed .header__cart {
+    margin: 0;
+    padding-left: 42px;
 }
 
 header .header__bottom.fixed .header__cart,
@@ -1465,7 +1576,8 @@ header .header__bottom.fixed .cart__number{
 }
 
 header .header__bottom.fixed .header__catalog .catalog-sections-menu{
-    left: 185px;
+    left: 0;
+    margin-left: -185px;
 }
 
 header .header__bottom.fixed .header__action,
@@ -1505,8 +1617,12 @@ header .header__bottom.fixed .header__account span
     }
 
     header .header__bottom .header__catalog {
-        width: 26%;
-        margin-right: 10px
+        min-width: 160px;
+        margin-right: 0;
+    }
+
+    header .header__bottom .header__catalog .catalog-sections-menu {
+        width: auto
     }
 
     header .header__bottom .header__catalog .catalog-sections-menu ul.first-sections {
@@ -1514,12 +1630,14 @@ header .header__bottom.fixed .header__account span
     }
 
     header .header__bottom .header__catalog .catalog-sections-menu ul.first-sections > li .subsections {
-        width: 778px
+        left: 244px;
+        width: 756px;
+        max-width: calc(100vw - 264px)
     }
 
     header .header__bottom .header__search {
-        width: 24%;
-        margin: 10px 30px 0 0
+        width: auto;
+        margin: 0;
     }
 
     header .header__bottom .header__search .search .search__input {
@@ -2296,19 +2414,71 @@ header .header__bottom.fixed .header__account span
     background: #0464bb
 }
 
+.slider_product .slick-track {
+    display: flex !important;
+    align-items: stretch
+}
+
+.slider_product .slick-slide {
+    height: auto;
+    display: flex !important
+}
+
+.slider_product .slick-slide > div {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex: 1 1 auto
+}
+
 .slider_product .product {
     padding: 30px 20px 30px 30px;
     border-left: 1px solid #cdd2d6;
     position: relative;
-    margin-left: -1px
+    margin-left: -1px;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    width: 100%;
+    min-height: 100%;
+    box-sizing: border-box
+}
+
+.slider_product .product > a:first-child,
+.slider_product .product .product__thumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    min-height: 150px;
+    flex: 0 0 150px
+}
+
+.slider_product .product img,
+.slider_product .product .img {
+    display: block;
+    max-height: 150px;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain
 }
 
 .slider_product .product .name {
     color: #0464bb;
     text-decoration: none;
     margin: 15px 0;
-    display: block;
-    min-height: 145px
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    overflow: hidden;
+    line-height: 1.35;
+    height: 5.4em;
+    min-height: 5.4em;
+    max-height: 5.4em;
+    flex: 0 0 5.4em
 }
 
 .slider_product .product .name:hover, .slider_product .product .name:active {
@@ -2317,7 +2487,9 @@ header .header__bottom.fixed .header__account span
 
 .slider_product .product .price {
     font-size: 1.142em;
-    margin-bottom: 15px
+    margin-top: auto;
+    margin-bottom: 15px;
+    flex-shrink: 0
 }
 
 .slider_product .product .price span {
@@ -2333,6 +2505,8 @@ header .header__bottom.fixed .header__account span
     padding: 12px 25px 12px 50px;
     border-radius: 5px;
     display: inline-block;
+    flex-shrink: 0;
+    align-self: flex-start;
     -moz-transition: all .3s ease;
     -o-transition: all .3s ease;
     -webkit-transition: all .3s ease;
@@ -6724,6 +6898,14 @@ header .header__bottom.fixed .header__account span
     position: relative
 }
 
+@media screen and (min-width: 1020px) {
+    .lk_leftbar {
+        position: sticky;
+        top: 80px;
+        z-index: 5;
+    }
+}
+
 .lk_leftbar .lk_sandwich {
     display: none
 }
@@ -7388,6 +7570,12 @@ header .header__bottom.fixed .header__account span
     color: #fff
 }
 
+@media screen and (min-width: 1020px) and (max-width: 1319px) {
+    .lk_leftbar {
+        width: 270px;
+    }
+}
+
 @media screen and (max-width: 1319px) {
     .lk_leftbar {
         width: 270px
@@ -7444,6 +7632,7 @@ header .header__bottom.fixed .header__account span
 
 @media screen and (max-width: 1019px) {
     .lk_leftbar {
+        position: static;
         width: 100%
     }
 

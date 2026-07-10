@@ -33,6 +33,1222 @@ function checkProduct($id){
     return false;
 }
 
+function polimerGetProductAvailability($id)
+{
+    $id = (int)$id;
+    if ($id <= 0)
+        return 'unavailable';
+
+    if (checkProduct($id))
+        return 'available';
+
+    if ((float)price($id) > 0)
+        return 'order';
+
+    return 'unavailable';
+}
+
+function polimerGetSearchProductSortPrice(array $productItem)
+{
+    if (array_key_exists('PRICE_SORT', $productItem) && $productItem['PRICE_SORT'] !== null)
+        return (float)$productItem['PRICE_SORT'];
+
+    $productId = (int)($productItem['ELEMENT_ID'] ?? $productItem['ITEM_ID'] ?? 0);
+    if ($productId <= 0)
+        return PHP_FLOAT_MAX;
+
+    $productPrice = price($productId);
+
+    return $productPrice ? (float)$productPrice : PHP_FLOAT_MAX;
+}
+
+function polimerSortSearchProductsByAvailabilityAndPrice(array $products)
+{
+    $availableProducts = [];
+    $orderProducts = [];
+    $unavailableProducts = [];
+
+    foreach ($products as $productItem)
+    {
+        $stockStatus = $productItem['STOCK_STATUS'] ?? 'unavailable';
+
+        if ($stockStatus === 'available')
+            $availableProducts[] = $productItem;
+        elseif ($stockStatus === 'order')
+            $orderProducts[] = $productItem;
+        else
+            $unavailableProducts[] = $productItem;
+    }
+
+    $sortByPrice = static function (array $left, array $right): int {
+        $priceCompare = polimerGetSearchProductSortPrice($left) <=> polimerGetSearchProductSortPrice($right);
+
+        if ($priceCompare !== 0)
+            return $priceCompare;
+
+        return strcmp((string)($left['NAME'] ?? ''), (string)($right['NAME'] ?? ''));
+    };
+
+    usort($availableProducts, $sortByPrice);
+    usort($orderProducts, $sortByPrice);
+    usort($unavailableProducts, $sortByPrice);
+
+    return array_merge($availableProducts, $orderProducts, $unavailableProducts);
+}
+
+function polimerNormalizePropValue($value)
+{
+    if (is_array($value))
+    {
+        $value = array_filter($value, static function ($item) {
+            return $item !== '' && $item !== null;
+        });
+        sort($value);
+
+        return implode('|', $value);
+    }
+
+    return trim((string)$value);
+}
+
+function polimerGetProductPropMatchValue(array $prop)
+{
+    if (!empty($prop['VALUE_ENUM_ID']))
+        return (string)$prop['VALUE_ENUM_ID'];
+
+    return polimerNormalizePropValue($prop['VALUE'] ?? '');
+}
+
+function polimerGetSimilarSearchSectionId($sectionId)
+{
+    $sectionId = (int)$sectionId;
+    if ($sectionId <= 0)
+        return 0;
+
+    $section = CIBlockSection::GetByID($sectionId)->Fetch();
+    if (!$section)
+        return $sectionId;
+
+    if ((int)$section['IBLOCK_SECTION_ID'] > 0)
+        return (int)$section['IBLOCK_SECTION_ID'];
+
+    return $sectionId;
+}
+
+function polimerGetSectionSmartFilterCodes($iblockId, $sectionId, $limit = 3)
+{
+    if (!CModule::IncludeModule('iblock'))
+        return [];
+
+    $iblockId = (int)$iblockId;
+    $sectionId = (int)$sectionId;
+    $limit = max(1, (int)$limit);
+    $checkedSections = [];
+
+    while ($sectionId > 0 && count($checkedSections) < 5)
+    {
+        if (in_array($sectionId, $checkedSections, true))
+            break;
+
+        $checkedSections[] = $sectionId;
+
+        $res = \Bitrix\Iblock\SectionPropertyTable::getList([
+            'filter' => [
+                'IBLOCK_ID' => $iblockId,
+                'SECTION_ID' => $sectionId,
+                'SMART_FILTER' => 'Y',
+            ],
+            'select' => [
+                'PROPERTY_ID',
+                'PROPERTY_CODE' => 'PROPERTY.CODE',
+                'PROPERTY_SORT' => 'PROPERTY.SORT',
+            ],
+            'order' => [
+                'PROPERTY_SORT' => 'ASC',
+                'PROPERTY_ID' => 'ASC',
+            ],
+            'limit' => $limit,
+        ]);
+
+        $codes = [];
+        while ($row = $res->fetch())
+        {
+            if (!empty($row['PROPERTY_CODE']))
+                $codes[] = $row['PROPERTY_CODE'];
+        }
+
+        if (!empty($codes))
+            return array_values(array_unique($codes));
+
+        $section = CIBlockSection::GetByID($sectionId)->Fetch();
+        $sectionId = $section ? (int)$section['IBLOCK_SECTION_ID'] : 0;
+    }
+
+    return [];
+}
+
+function polimerFetchSectionProductsForSimilar($iblockId, $sectionId, $excludeId, array $propCodes, $limit = 150)
+{
+    $items = [];
+    $propCodes = array_values(array_filter(array_unique($propCodes)));
+
+    $arSelect = ['ID', 'IBLOCK_ID', 'NAME', 'SORT'];
+    $arFilter = [
+        'IBLOCK_ID' => (int)$iblockId,
+        'SECTION_ID' => (int)$sectionId,
+        'INCLUDE_SUBSECTIONS' => 'Y',
+        'ACTIVE' => 'Y',
+        'ACTIVE_DATE' => 'Y',
+        '!ID' => (int)$excludeId,
+    ];
+
+    $res = CIBlockElement::GetList(
+        ['SORT' => 'ASC', 'NAME' => 'ASC'],
+        $arFilter,
+        false,
+        ['nTopCount' => max(20, (int)$limit)],
+        $arSelect
+    );
+
+    while ($ob = $res->GetNextElement())
+    {
+        $fields = $ob->GetFields();
+        $props = $ob->GetProperties();
+
+        $propValues = [];
+        foreach ($propCodes as $code)
+        {
+            if (!empty($props[$code]))
+                $propValues[$code] = polimerGetProductPropMatchValue($props[$code]);
+        }
+
+        $items[] = [
+            'ID' => (int)$fields['ID'],
+            'PROPS' => $propValues,
+        ];
+    }
+
+    return $items;
+}
+
+function polimerGetSimilarProductIds(array $product, $limit = 10)
+{
+    $limit = max(1, (int)$limit);
+    $productId = (int)($product['ID'] ?? 0);
+    $iblockId = (int)($product['IBLOCK_ID'] ?? 0);
+    $sectionId = (int)($product['IBLOCK_SECTION_ID'] ?? 0);
+
+    if ($productId <= 0 || $iblockId <= 0 || $sectionId <= 0)
+        return [];
+
+    if (!CModule::IncludeModule('iblock'))
+        return [];
+
+    $cache = \Bitrix\Main\Data\Cache::createInstance();
+    $cacheKey = 'similar_v1_' . $productId . '_' . $limit;
+    $cacheDir = '/polimer/similar_products';
+
+    if ($cache->initCache(3600, $cacheKey, $cacheDir))
+        return $cache->getVars();
+
+    $cacheStarted = $cache->startDataCache();
+
+    $searchSectionId = polimerGetSimilarSearchSectionId($sectionId);
+    $propCodes = polimerGetSectionSmartFilterCodes($iblockId, $sectionId, 3);
+
+    $matchProps = [];
+    foreach ($propCodes as $code)
+    {
+        if (empty($product['PROPERTIES'][$code]))
+            continue;
+
+        $value = polimerGetProductPropMatchValue($product['PROPERTIES'][$code]);
+        if ($value !== '')
+            $matchProps[$code] = $value;
+    }
+
+    $candidates = polimerFetchSectionProductsForSimilar(
+        $iblockId,
+        $searchSectionId,
+        $productId,
+        $propCodes,
+        150
+    );
+
+    $exact = [];
+    $partial = [];
+    $rest = [];
+    $matchCount = count($matchProps);
+
+    foreach ($candidates as $candidate)
+    {
+        if ((int)$candidate['ID'] === $productId)
+            continue;
+
+        if ($matchCount === 0)
+        {
+            $rest[] = (int)$candidate['ID'];
+            continue;
+        }
+
+        $score = 0;
+        foreach ($matchProps as $code => $value)
+        {
+            if (($candidate['PROPS'][$code] ?? '') === $value)
+                $score++;
+        }
+
+        if ($score === $matchCount)
+            $exact[] = (int)$candidate['ID'];
+        elseif ($score > 0)
+            $partial[] = ['ID' => (int)$candidate['ID'], 'SCORE' => $score];
+        else
+            $rest[] = (int)$candidate['ID'];
+    }
+
+    usort($partial, static function ($a, $b) {
+        return $b['SCORE'] <=> $a['SCORE'];
+    });
+
+    $partialIds = array_column($partial, 'ID');
+    $result = array_values(array_unique(array_merge($exact, $partialIds, $rest)));
+    $result = array_slice($result, 0, $limit);
+
+    if ($cacheStarted)
+        $cache->endDataCache($result);
+
+    return $result;
+}
+
+function polimerFormatPropertyDisplayValue(array $prop)
+{
+    if (empty($prop))
+        return '';
+
+    $value = $prop['DISPLAY_VALUE'] ?? $prop['VALUE'] ?? '';
+    if (is_array($value))
+        $value = implode(', ', array_filter($value, static function ($item) {
+            return $item !== '' && $item !== null;
+        }));
+
+    return trim(strip_tags((string)$value));
+}
+
+function polimerShortPropertyName($name)
+{
+    $name = trim((string)$name);
+    if ($name === '')
+        return '';
+
+    $lower = mb_strtolower($name);
+    $map = [
+        'мощност' => 'Мощность',
+        'контур' => 'Контурность',
+        'объ' => 'Объём',
+        'вес' => 'Вес',
+        'напряж' => 'Напряжение',
+        'диаметр' => 'Диаметр',
+        'напор' => 'Напор',
+        'подач' => 'Подача',
+        'тип насос' => 'Тип',
+        'вид насос' => 'Вид',
+    ];
+
+    foreach ($map as $needle => $label)
+    {
+        if (mb_strpos($lower, $needle) !== false)
+            return $label;
+    }
+
+    return $name;
+}
+
+function polimerIsPowerInWatts($code, $nameLower)
+{
+    $code = mb_strtoupper((string)$code);
+
+    if (preg_match('/_KVT|_KW($|_)/i', $code))
+        return false;
+
+    if (preg_match('/_VT($|_)|MOSHCHNOST_VT/i', $code))
+        return true;
+
+    if (mb_strpos($nameLower, 'мощност') !== false)
+    {
+        if (mb_strpos($nameLower, 'квт') !== false || mb_strpos($nameLower, 'kw') !== false)
+            return false;
+
+        if (mb_strpos($nameLower, 'вт') !== false || mb_strpos($nameLower, 'w') !== false)
+            return true;
+    }
+
+    return false;
+}
+
+function polimerFormatPowerNumeric($value, $inWatts = false)
+{
+    $normalized = str_replace(',', '.', preg_replace('/[^\d,\.]/u', '', (string)$value));
+    if ($normalized === '' || !is_numeric($normalized))
+        return trim((string)$value) . ($inWatts ? ' Вт' : ' кВт');
+
+    $num = (float)$normalized;
+
+    if ($inWatts)
+    {
+        if ($num >= 1000)
+        {
+            $kwt = $num / 1000;
+            $formatted = rtrim(rtrim(number_format($kwt, 1, ',', ''), '0'), ',');
+
+            return $formatted . ' кВт';
+        }
+
+        $formatted = rtrim(rtrim(number_format($num, 0, ',', ''), '0'), ',');
+
+        return $formatted . ' Вт';
+    }
+
+    $formatted = rtrim(rtrim(number_format($num, 2, ',', ''), '0'), ',');
+
+    return $formatted . ' кВт';
+}
+
+function polimerFormatSearchSpecPart(array $prop)
+{
+    $value = polimerFormatPropertyDisplayValue($prop);
+    if ($value === '')
+        return '';
+
+    $code = mb_strtoupper((string)($prop['CODE'] ?? ''));
+    $name = trim((string)($prop['NAME'] ?? ''));
+    $nameLower = mb_strtolower($name);
+
+    if (preg_match('/\s(квт|kw|кг|kg|л|l|мм|mm|м³|м3|bar|бар|в|w)\b/ui', $value))
+        return $value;
+
+    if (preg_match('/MOSHCH|MOHNOST|_KVT|_VT|_KW$/i', $code) || mb_strpos($nameLower, 'мощност') !== false)
+    {
+        if (preg_match('/^[\d\s,\.]+$/u', $value))
+            return polimerFormatPowerNumeric($value, polimerIsPowerInWatts($code, $nameLower));
+    }
+
+    if (preg_match('/NAPOR|PODACH|PROIZVODITEL/i', $code) || mb_strpos($nameLower, 'напор') !== false || mb_strpos($nameLower, 'подач') !== false)
+    {
+        if (preg_match('/^[\d\s,\.]+$/u', $value))
+        {
+            if (mb_strpos($nameLower, 'напор') !== false || preg_match('/NAPOR/i', $code))
+                return rtrim(str_replace('.', ',', $value)) . ' м';
+
+            if (mb_strpos($nameLower, 'подач') !== false || preg_match('/PODACH|PROIZVODITEL/i', $code))
+                return rtrim(str_replace('.', ',', $value)) . ' л/мин';
+        }
+    }
+
+    if (preg_match('/VES|MASS|WEIGHT/i', $code) || mb_strpos($nameLower, 'вес') !== false)
+    {
+        if (preg_match('/^[\d\s,\.]+$/u', $value))
+            return 'Вес: ' . $value . ' кг';
+    }
+
+    if (preg_match('/OBEM|EMKOST|VOLUME/i', $code) || mb_strpos($nameLower, 'объ') !== false)
+    {
+        if (preg_match('/^[\d\s,\.]+$/u', $value))
+            return $value . ' л';
+    }
+
+    if (!preg_match('/^[\d\s,\.]+$/u', $value))
+        return $value;
+
+    $shortName = polimerShortPropertyName($name);
+    if ($shortName !== '')
+        return $shortName . ': ' . $value;
+
+    return $value;
+}
+
+function polimerGetSectionSearchableCodes($iblockId, $limit = 3)
+{
+    if (!CModule::IncludeModule('iblock'))
+        return [];
+
+    $codes = [];
+    $res = \Bitrix\Iblock\PropertyTable::getList([
+        'filter' => [
+            'IBLOCK_ID' => (int)$iblockId,
+            'ACTIVE' => 'Y',
+            'SEARCHABLE' => 'Y',
+        ],
+        'select' => ['CODE'],
+        'order' => ['SORT' => 'ASC', 'ID' => 'ASC'],
+        'limit' => max(1, (int)$limit),
+    ]);
+
+    while ($row = $res->fetch())
+    {
+        if (!empty($row['CODE']))
+            $codes[] = $row['CODE'];
+    }
+
+    return $codes;
+}
+
+function polimerGetSearchSpecFallbackCodes()
+{
+    return [
+        'TIP_KOTLA',
+        'KONTOURNOST',
+        'KOLICHESTVO_KONTOUROV',
+        'VOZMOZHNOE_PODKLYUCHENIE',
+        'TIP_NASOSOV',
+        'VID_NASOSOV',
+        'NAPOR_M_VOD_ST_',
+        'MOSHCHNOST_KVT',
+        'MOSHCHNOST_VT',
+    ];
+}
+
+function polimerIsExcludedSearchSpecCode($code)
+{
+    $code = mb_strtoupper((string)$code);
+
+    if (preg_match('/^(VES|MASS|WEIGHT|SHIRINA|VYSOTA|GLUBINA|DLINA|RAZMER|DIAMETR|UDELNYY_VES|UDERZHIVAEMYY_VES)/', $code))
+        return true;
+
+    return false;
+}
+
+function polimerGetSearchSpecCandidateCodes($iblockId, $sectionId)
+{
+    $codes = polimerGetSectionSmartFilterCodes($iblockId, $sectionId, 20);
+    $codes = array_merge($codes, polimerGetSearchSpecFallbackCodes());
+    $codes = polimerPrioritizeSearchSpecCodes($codes);
+
+    return array_values(array_filter(array_unique($codes), static function ($code) {
+        return !polimerIsExcludedSearchSpecCode($code);
+    }));
+}
+
+function polimerExtractSpecsFromName($name)
+{
+    $parts = [];
+    $name = trim((string)$name);
+
+    if ($name === '')
+        return $parts;
+
+    if (preg_match('/(\d+(?:[,\.]\d+)?)\s*(?:квт|kw|kwt)\b/ui', $name, $match))
+        $parts[] = str_replace('.', ',', $match[1]) . ' кВт';
+
+    if (preg_match('/(одноконтурн\w*|двухконтурн\w*|комбинированн\w*)/ui', $name, $match))
+        $parts[] = mb_strtolower($match[1]);
+
+    return $parts;
+}
+
+function polimerGetSearchSectionPropertyCodes($iblockId, $sectionId, $limit = 2)
+{
+    return array_slice(polimerGetSearchSpecCandidateCodes($iblockId, $sectionId), 0, max($limit, 8));
+}
+
+function polimerPrioritizeSearchSpecCodes(array $codes)
+{
+    $priority = [
+        'TIP_KOTLA', 'KONTOURNOST', 'KOLICHESTVO_KONTOUROV', 'VOZMOZHNOE_PODKLYUCHENIE',
+        'TIP_NASOSOV', 'VID_NASOSOV',
+        'NAPOR_M_VOD_ST_', 'NAPOR', 'PODACHA', 'PROIZVODITELNOST',
+        'MOSHCHNOST_KVT', 'MOSHCHNOST', 'MOSHCH', 'MOCHNOST', 'NOMINALNAYA_MOSHCHNOST',
+        'MOSHCHNOST_VT',
+        'TIP',
+        'OBEM', 'EMKOST', 'OBEM_BAKA',
+    ];
+    $deprioritize = ['VES_KG', 'VES', 'MASS', 'WEIGHT', 'SHIRINA', 'VYSOTA', 'GLUBINA', 'DLINA'];
+    usort($codes, static function ($a, $b) use ($priority, $deprioritize) {
+        $aUpper = mb_strtoupper($a);
+        $bUpper = mb_strtoupper($b);
+
+        $aDep = in_array($aUpper, $deprioritize, true) ? 1 : 0;
+        $bDep = in_array($bUpper, $deprioritize, true) ? 1 : 0;
+        if ($aDep !== $bDep)
+            return $aDep <=> $bDep;
+
+        $aIndex = array_search($aUpper, $priority, true);
+        $bIndex = array_search($bUpper, $priority, true);
+        $aIndex = $aIndex === false ? 100 : $aIndex;
+        $bIndex = $bIndex === false ? 100 : $bIndex;
+
+        if ($aIndex === $bIndex)
+            return strcmp($a, $b);
+
+        return $aIndex <=> $bIndex;
+    });
+
+    return array_values(array_unique($codes));
+}
+
+function polimerFillSearchProductSpecs(array &$products, $iblockId = IBLOCK_CATALOG, $propsLimit = 2)
+{
+    if (empty($products) || !CModule::IncludeModule('iblock'))
+        return;
+
+    $iblockId = (int)$iblockId;
+    $propsLimit = max(1, (int)$propsLimit);
+    $sectionCodesCache = [];
+    $productIds = [];
+    $codesByProduct = [];
+
+    foreach ($products as $index => $product)
+    {
+        $productId = (int)($product['ELEMENT_ID'] ?? $product['ITEM_ID'] ?? 0);
+        $sectionId = (int)($product['SECTION_ID'] ?? 0);
+
+        if ($productId <= 0)
+            continue;
+
+        $productIds[] = $productId;
+
+        if ($sectionId > 0)
+        {
+            if (!isset($sectionCodesCache[$sectionId]))
+                $sectionCodesCache[$sectionId] = polimerGetSearchSpecCandidateCodes($iblockId, $sectionId);
+
+            $codesByProduct[$productId] = $sectionCodesCache[$sectionId];
+        }
+        else
+        {
+            $codesByProduct[$productId] = polimerGetSearchSpecFallbackCodes();
+        }
+    }
+
+    $productIds = array_values(array_unique($productIds));
+    if (empty($productIds))
+        return;
+
+    $allCodes = polimerGetSearchSpecFallbackCodes();
+    foreach ($codesByProduct as $codes)
+        $allCodes = array_merge($allCodes, $codes);
+
+    $allCodes = array_values(array_unique(array_filter($allCodes, static function ($code) {
+        return !polimerIsExcludedSearchSpecCode($code);
+    })));
+    $propsByProduct = [];
+
+    $res = CIBlockElement::GetList(
+        [],
+        ['IBLOCK_ID' => $iblockId, 'ID' => $productIds, 'ACTIVE' => 'Y'],
+        false,
+        false,
+        ['ID', 'IBLOCK_ID']
+    );
+
+    while ($ob = $res->GetNextElement())
+    {
+        $fields = $ob->GetFields();
+        $props = $ob->GetProperties();
+
+        if (!empty($allCodes))
+        {
+            $filteredProps = [];
+            foreach ($allCodes as $code)
+            {
+                if (isset($props[$code]))
+                    $filteredProps[$code] = $props[$code];
+            }
+            $props = $filteredProps;
+        }
+
+        $propsByProduct[(int)$fields['ID']] = $props;
+    }
+
+    foreach ($products as &$product)
+    {
+        $productId = (int)($product['ELEMENT_ID'] ?? $product['ITEM_ID'] ?? 0);
+        $specs = [];
+        $codes = $codesByProduct[$productId] ?? [];
+
+        $descriptive = [];
+        $numeric = [];
+
+        foreach ($codes as $code)
+        {
+            if (polimerIsExcludedSearchSpecCode($code))
+                continue;
+
+            $prop = $propsByProduct[$productId][$code] ?? [];
+            $rawValue = polimerFormatPropertyDisplayValue($prop);
+            if ($rawValue === '')
+                continue;
+
+            $part = polimerFormatSearchSpecPart($prop);
+            if ($part === '')
+                continue;
+
+            if (preg_match('/^[\d\s,\.]+$/u', $rawValue))
+                $numeric[] = $part;
+            else
+                $descriptive[] = $part;
+        }
+
+        foreach (array_merge($descriptive, $numeric) as $part)
+        {
+            if (!in_array($part, $specs, true))
+                $specs[] = $part;
+
+            if (count($specs) >= $propsLimit)
+                break;
+        }
+
+        if (count($specs) < $propsLimit)
+        {
+            foreach (polimerExtractSpecsFromName($product['NAME'] ?? '') as $part)
+            {
+                if ($part !== '' && !in_array($part, $specs, true))
+                    $specs[] = $part;
+
+                if (count($specs) >= $propsLimit)
+                    break;
+            }
+        }
+
+        $product['SPECS'] = implode(' · ', $specs);
+    }
+    unset($product);
+}
+
+function polimerBuildSearchSectionsFromProducts(array $products, $noPhoto = '/bitrix/templates/main/img/no_photo.png')
+{
+    if (empty($products) || !CModule::IncludeModule('iblock'))
+        return [];
+
+    $counts = [];
+    foreach ($products as $product)
+    {
+        $sectionId = (int)($product['SECTION_ID'] ?? 0);
+        if ($sectionId > 0)
+            $counts[$sectionId] = ($counts[$sectionId] ?? 0) + 1;
+    }
+
+    if (empty($counts))
+        return [];
+
+    $sections = [];
+    $res = CIBlockSection::GetList(
+        ['NAME' => 'ASC'],
+        ['ID' => array_keys($counts)],
+        false,
+        ['ID', 'NAME', 'SECTION_PAGE_URL', 'PICTURE', 'ELEMENT_CNT']
+    );
+
+    while ($row = $res->GetNext())
+    {
+        $sectionId = (int)$row['ID'];
+        $picture = $noPhoto;
+
+        if (!empty($row['PICTURE']))
+        {
+            $resized = CFile::ResizeImageGet(
+                $row['PICTURE'],
+                ['width' => 48, 'height' => 48],
+                BX_RESIZE_IMAGE_EXACT,
+                true
+            );
+            if (!empty($resized['src']))
+                $picture = $resized['src'];
+        }
+
+        $searchCount = (int)($counts[$sectionId] ?? 0);
+        $sections[] = [
+            'ID' => $sectionId,
+            'NAME' => $row['NAME'],
+            'URL' => $row['SECTION_PAGE_URL'],
+            'PICTURE' => $picture,
+            'COUNT' => $searchCount,
+            'TOTAL' => (int)$row['ELEMENT_CNT'],
+        ];
+    }
+
+    usort($sections, static function ($a, $b) {
+        if ($a['COUNT'] !== $b['COUNT'])
+            return $b['COUNT'] <=> $a['COUNT'];
+
+        return strcmp($a['NAME'], $b['NAME']);
+    });
+
+    return $sections;
+}
+
+function polimerConvertMixedLayoutChars($text)
+{
+    static $map = [
+        'q' => 'й', 'w' => 'ц', 'e' => 'у', 'r' => 'к', 't' => 'е', 'y' => 'н', 'u' => 'г', 'i' => 'ш', 'o' => 'щ', 'p' => 'з',
+        '[' => 'х', ']' => 'ъ', 'a' => 'ф', 's' => 'ы', 'd' => 'в', 'f' => 'а', 'g' => 'п', 'h' => 'р', 'j' => 'о', 'k' => 'л',
+        'l' => 'д', ';' => 'ж', '\'' => 'э', 'z' => 'я', 'x' => 'ч', 'c' => 'с', 'v' => 'м', 'b' => 'и', 'n' => 'т', 'm' => 'ь',
+        ',' => 'б', '.' => 'ю', '/' => '.',
+        'Q' => 'Й', 'W' => 'Ц', 'E' => 'У', 'R' => 'К', 'T' => 'Е', 'Y' => 'Н', 'U' => 'Г', 'I' => 'Ш', 'O' => 'Щ', 'P' => 'З',
+        'A' => 'Ф', 'S' => 'Ы', 'D' => 'В', 'F' => 'А', 'G' => 'П', 'H' => 'Р', 'J' => 'О', 'K' => 'Л',
+        'L' => 'Д', 'Z' => 'Я', 'X' => 'Ч', 'C' => 'С', 'V' => 'М', 'B' => 'И', 'N' => 'Т', 'M' => 'Ь',
+    ];
+
+    $chars = preg_split('//u', $text, -1, PREG_SPLIT_NO_EMPTY);
+    $converted = [];
+
+    foreach ($chars as $char)
+        $converted[] = $map[$char] ?? $char;
+
+    return implode('', $converted);
+}
+
+function polimerConvertKeyboardLayoutMixed($text)
+{
+    if (!CModule::IncludeModule('search'))
+        return $text;
+
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/search/tools/language.php';
+
+    $variants = [
+        CSearchLanguage::ConvertKeyboardLayout($text, 'en', 'ru'),
+        CSearchLanguage::ConvertKeyboardLayout($text, 'ru', 'en'),
+    ];
+
+    foreach ($variants as $variant)
+    {
+        if ($variant && $variant !== $text)
+            return $variant;
+    }
+
+    return $text;
+}
+
+function polimerGetCyrillicTypoSubstitutes($char)
+{
+    static $map = [
+        'а' => 'аоея', 'б' => 'бп', 'в' => 'вм', 'г' => 'гн', 'д' => 'дл', 'е' => 'еиё', 'ё' => 'ёео',
+        'ж' => 'жш', 'з' => 'зс', 'и' => 'иеы', 'й' => 'йи', 'к' => 'кул', 'л' => 'лдк', 'м' => 'мнв',
+        'н' => 'нмг', 'о' => 'оаеу', 'п' => 'прб', 'р' => 'рл', 'с' => 'сз', 'т' => 'ть', 'у' => 'уко',
+        'ф' => 'фа', 'х' => 'х', 'ц' => 'цс', 'ч' => 'чш', 'ш' => 'шщч', 'щ' => 'щш', 'ы' => 'ыи',
+        'ь' => 'ьъ', 'ъ' => 'ъь', 'э' => 'эе', 'ю' => 'юу', 'я' => 'яа',
+    ];
+
+    $char = mb_strtolower((string)$char);
+
+    return preg_split('//u', $map[$char] ?? $char, -1, PREG_SPLIT_NO_EMPTY);
+}
+
+function polimerGenerateTypoQueries($query, $maxVariants = 40)
+{
+    $query = mb_strtolower(trim((string)$query));
+    $length = mb_strlen($query);
+
+    if ($length < 3 || $length > 24)
+        return [];
+
+    if (!preg_match('/^[а-яё\-]+$/u', $query))
+        return [];
+
+    $variants = [];
+
+    for ($i = 0; $i < $length; $i++)
+    {
+        $char = mb_substr($query, $i, 1);
+        foreach (polimerGetCyrillicTypoSubstitutes($char) as $substitute)
+        {
+            if ($substitute === $char)
+                continue;
+
+            $candidate = mb_substr($query, 0, $i) . $substitute . mb_substr($query, $i + 1);
+            if ($candidate !== $query)
+                $variants[] = $candidate;
+        }
+    }
+
+    $chars = preg_split('//u', $query, -1, PREG_SPLIT_NO_EMPTY);
+    for ($i = 0; $i < $length - 1; $i++)
+    {
+        $swapped = $chars;
+        $tmp = $swapped[$i];
+        $swapped[$i] = $swapped[$i + 1];
+        $swapped[$i + 1] = $tmp;
+        $variants[] = implode('', $swapped);
+    }
+
+    return array_slice(array_values(array_unique($variants)), 0, max(1, (int)$maxVariants));
+}
+
+function polimerBuildTokenTypoQueries($query, $maxVariants = 40, $maxVariantsPerToken = 12)
+{
+    $query = trim((string)$query);
+    if ($query === '')
+        return [];
+
+    if (!preg_match('/[\s,]+/u', $query))
+        return polimerGenerateTypoQueries($query, $maxVariants);
+
+    $tokens = preg_split('/[\s,]+/u', $query, -1, PREG_SPLIT_NO_EMPTY);
+    if (count($tokens) < 2)
+        return polimerGenerateTypoQueries($query, $maxVariants);
+
+    $variants = [];
+    foreach ($tokens as $index => $token)
+    {
+        if (mb_strlen($token) < 3)
+            continue;
+
+        foreach (polimerGenerateTypoQueries($token, $maxVariantsPerToken) as $variant)
+        {
+            if ($variant === mb_strtolower($token))
+                continue;
+
+            $rebuilt = $tokens;
+            $rebuilt[$index] = $variant;
+            $variants[] = implode(' ', $rebuilt);
+        }
+    }
+
+    if (count($tokens) >= 2 && count($tokens) <= 4)
+    {
+        $tokenOptions = [];
+        foreach ($tokens as $token)
+        {
+            $options = [mb_strtolower($token)];
+            if (mb_strlen($token) >= 3)
+            {
+                foreach (polimerGenerateTypoQueries($token, $maxVariantsPerToken) as $variant)
+                    $options[] = $variant;
+            }
+            $tokenOptions[] = array_values(array_unique($options));
+        }
+
+        $combined = [[]];
+        foreach ($tokenOptions as $options)
+        {
+            $next = [];
+            foreach ($combined as $prefix)
+            {
+                foreach ($options as $option)
+                    $next[] = array_merge($prefix, [$option]);
+            }
+            $combined = $next;
+        }
+
+        foreach ($combined as $parts)
+        {
+            $candidate = implode(' ', $parts);
+            if (mb_strtolower($candidate) !== mb_strtolower($query))
+                $variants[] = $candidate;
+        }
+    }
+
+    return array_slice(array_values(array_unique($variants)), 0, max(1, (int)$maxVariants));
+}
+
+function polimerCorrectSearchQueryByTokens($query, $iblockId = IBLOCK_CATALOG)
+{
+    $query = trim((string)$query);
+    if ($query === '')
+        return null;
+
+    if (!empty(polimerSearchCatalogByTokens($query, $iblockId, 1)))
+        return $query;
+
+    foreach (polimerBuildSearchQueries($query, true) as $variant)
+    {
+        if (mb_strtolower($variant) === mb_strtolower($query))
+            continue;
+
+        if (!empty(polimerSearchCatalogByTokens($variant, $iblockId, 1)))
+            return $variant;
+    }
+
+    $tokens = preg_split('/[\s,]+/u', $query, -1, PREG_SPLIT_NO_EMPTY);
+    if (count($tokens) < 2)
+        return null;
+
+    $corrected = $tokens;
+    $changed = true;
+    $passes = 0;
+
+    while ($changed && $passes < count($tokens) * 2)
+    {
+        $changed = false;
+        $passes++;
+
+        foreach ($corrected as $index => $token)
+        {
+            if (mb_strlen($token) < 3)
+                continue;
+
+            foreach (polimerGenerateTypoQueries($token, 15) as $variant)
+            {
+                if ($variant === mb_strtolower($token))
+                    continue;
+
+                $candidateTokens = $corrected;
+                $candidateTokens[$index] = $variant;
+                $candidate = implode(' ', $candidateTokens);
+
+                if (!empty(polimerSearchCatalogByTokens($candidate, $iblockId, 1)))
+                {
+                    $corrected = $candidateTokens;
+                    $changed = true;
+                    break 2;
+                }
+            }
+        }
+    }
+
+    $result = implode(' ', $corrected);
+
+    return !empty(polimerSearchCatalogByTokens($result, $iblockId, 1)) ? $result : null;
+}
+
+function polimerSuggestSearchCorrection($query, $iblockId = IBLOCK_CATALOG)
+{
+    $corrected = polimerCorrectSearchQueryByTokens($query, $iblockId);
+    if (!$corrected || mb_strtolower($corrected) === mb_strtolower(trim((string)$query)))
+        return null;
+
+    return $corrected;
+}
+
+function polimerBuildSearchQueries($query, $includeTypo = false)
+{
+    $query = trim((string)$query);
+    if ($query === '')
+        return [];
+
+    $queries = [$query];
+
+    if (CModule::IncludeModule('search'))
+    {
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/search/tools/language.php';
+
+        $arLang = CSearchLanguage::GuessLanguage($query);
+        if (is_array($arLang) && $arLang['from'] !== $arLang['to'])
+        {
+            $alt = CSearchLanguage::ConvertKeyboardLayout($query, $arLang['from'], $arLang['to']);
+            if ($alt && $alt !== $query)
+                $queries[] = $alt;
+        }
+    }
+
+    $mixed = polimerConvertKeyboardLayoutMixed($query);
+    if ($mixed !== $query)
+        $queries[] = $mixed;
+
+    $mixedChars = polimerConvertMixedLayoutChars($query);
+    if ($mixedChars !== $query)
+        $queries[] = $mixedChars;
+
+    if ($includeTypo)
+    {
+        if (preg_match('/[\s,]+/u', $query))
+            $queries = array_merge($queries, polimerBuildTokenTypoQueries($query));
+        else
+            $queries = array_merge($queries, polimerGenerateTypoQueries($query));
+    }
+
+    return array_values(array_unique(array_filter($queries)));
+}
+
+function polimerSearchCatalogByTokens($query, $iblockId = IBLOCK_CATALOG, $limit = 15, array $excludeIds = [])
+{
+    if (!CModule::IncludeModule('iblock'))
+        return [];
+
+    $tokens = preg_split('/[\s,]+/u', trim($query), -1, PREG_SPLIT_NO_EMPTY);
+    $tokens = array_values(array_filter($tokens, static function ($token) {
+        return mb_strlen($token) >= 2;
+    }));
+
+    if (empty($tokens))
+        return [];
+
+    $filter = [
+        'IBLOCK_ID' => (int)$iblockId,
+        'ACTIVE' => 'Y',
+        'ACTIVE_DATE' => 'Y',
+    ];
+
+    if (count($tokens) === 1)
+    {
+        $filter['?NAME'] = $tokens[0];
+    }
+    else
+    {
+        $subFilter = ['LOGIC' => 'AND'];
+        foreach ($tokens as $token)
+            $subFilter[] = ['?NAME' => $token];
+
+        $filter[] = $subFilter;
+    }
+
+    if (!empty($excludeIds))
+        $filter['!ID'] = $excludeIds;
+
+    $items = [];
+    $res = CIBlockElement::GetList(
+        ['SHOW_COUNTER' => 'DESC', 'NAME' => 'ASC'],
+        $filter,
+        false,
+        ['nTopCount' => max(1, (int)$limit)],
+        ['ID', 'IBLOCK_ID', 'NAME', 'DETAIL_PAGE_URL']
+    );
+
+    while ($row = $res->GetNext())
+    {
+        $items[] = [
+            'NAME' => $row['NAME'],
+            'URL' => $row['DETAIL_PAGE_URL'],
+            'MODULE_ID' => 'iblock',
+            'PARAM1' => '1c_catalog',
+            'PARAM2' => (int)$row['IBLOCK_ID'],
+            'ITEM_ID' => (int)$row['ID'],
+        ];
+    }
+
+    return $items;
+}
+
+function polimerEnhanceTitleSearchResult(array &$arResult, array $arParams)
+{
+    if (empty($arResult['query']) || !CModule::IncludeModule('search'))
+        return;
+
+    $existingIds = [];
+    $productCount = 0;
+
+    foreach ($arResult['CATEGORIES'] as &$category)
+    {
+        if (empty($category['ITEMS']) || !is_array($category['ITEMS']))
+            continue;
+
+        foreach ($category['ITEMS'] as $item)
+        {
+            if (!empty($item['TYPE']) && $item['TYPE'] === 'all')
+                continue;
+
+            if (!empty($item['ITEM_ID']) && substr((string)$item['ITEM_ID'], 0, 1) !== 'S')
+            {
+                $existingIds[] = (int)$item['ITEM_ID'];
+                $productCount++;
+            }
+        }
+    }
+    unset($category);
+
+    $topCount = (int)($arParams['TOP_COUNT'] ?? 15);
+    if ($topCount <= 0)
+        $topCount = 15;
+
+    if ($productCount >= $topCount)
+        return;
+
+    $categoryIndex = 0;
+    if (empty($arResult['CATEGORIES']))
+    {
+        $categoryTitle = trim($arParams['CATEGORY_0_TITLE'] ?? '');
+        if ($categoryTitle === '' && !empty($arParams['CATEGORY_0']))
+            $categoryTitle = is_array($arParams['CATEGORY_0']) ? implode(', ', $arParams['CATEGORY_0']) : $arParams['CATEGORY_0'];
+
+        $arResult['CATEGORIES'][$categoryIndex] = [
+            'TITLE' => htmlspecialcharsbx($categoryTitle),
+            'ITEMS' => [],
+        ];
+    }
+    else
+    {
+        $categoryKeys = array_keys($arResult['CATEGORIES']);
+        $categoryIndex = (int)$categoryKeys[0];
+    }
+
+    $originalQuery = trim((string)$arResult['query']);
+    $queries = polimerBuildSearchQueries($originalQuery, $productCount === 0);
+
+    foreach ($queries as $searchQuery)
+    {
+        if ($productCount >= $topCount)
+            break;
+
+        if (!isset($arResult['CATEGORIES'][$categoryIndex]))
+            break;
+
+        $beforeCount = $productCount;
+
+        $exFILTER = [
+            0 => CSearchParameters::ConvertParamsToFilter($arParams, 'CATEGORY_' . $categoryIndex),
+        ];
+        $exFILTER[0]['LOGIC'] = 'OR';
+
+        if (($arParams['CHECK_DATES'] ?? '') === 'Y')
+            $exFILTER['CHECK_DATES'] = 'Y';
+
+        $obTitle = new CSearchTitle;
+        $obTitle->setMinWordLength($_REQUEST['l'] ?? 2);
+
+        if (!$obTitle->Search($searchQuery, $topCount, $exFILTER, false, $arParams['ORDER'] ?? 'rank'))
+            continue;
+
+        while ($ar = $obTitle->Fetch())
+        {
+            $itemId = (int)$ar['ITEM_ID'];
+            if ($itemId <= 0 || in_array($itemId, $existingIds, true))
+                continue;
+
+            $arResult['CATEGORIES'][$categoryIndex]['ITEMS'][] = [
+                'NAME' => $ar['NAME'],
+                'URL' => htmlspecialcharsbx($ar['URL']),
+                'MODULE_ID' => $ar['MODULE_ID'],
+                'PARAM1' => $ar['PARAM1'],
+                'PARAM2' => $ar['PARAM2'],
+                'ITEM_ID' => $ar['ITEM_ID'],
+            ];
+
+            $existingIds[] = $itemId;
+            $productCount++;
+
+            if ($productCount >= $topCount)
+                break 2;
+        }
+
+        if ($beforeCount === 0 && $productCount > 0 && mb_strtolower($searchQuery) !== mb_strtolower($originalQuery))
+            $arResult['SEARCH_QUERY_CORRECTED'] = $searchQuery;
+    }
+
+    if ($productCount >= $topCount)
+        return;
+
+    foreach ($queries as $searchQuery)
+    {
+        if ($productCount >= $topCount)
+            break;
+
+        $beforeCount = $productCount;
+
+        $fallbackItems = polimerSearchCatalogByTokens(
+            $searchQuery,
+            IBLOCK_CATALOG,
+            $topCount - $productCount,
+            $existingIds
+        );
+
+        foreach ($fallbackItems as $item)
+        {
+            $itemId = (int)$item['ITEM_ID'];
+            if ($itemId <= 0 || in_array($itemId, $existingIds, true))
+                continue;
+
+            $arResult['CATEGORIES'][$categoryIndex]['ITEMS'][] = $item;
+            $existingIds[] = $itemId;
+            $productCount++;
+
+            if ($productCount >= $topCount)
+                break 2;
+        }
+
+        if ($beforeCount === 0 && $productCount > 0 && mb_strtolower($searchQuery) !== mb_strtolower($originalQuery))
+            $arResult['SEARCH_QUERY_CORRECTED'] = $searchQuery;
+    }
+}
+
 function getUrlProd($url){
     if($url){
         $code = explode('/',$url);

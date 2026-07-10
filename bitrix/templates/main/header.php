@@ -396,33 +396,6 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                             );?>
                         </div>
 
-                        <div class="f_phone">
-                            <?
-                            switch ($_COOKIE['city']) {
-                                case "Лиски":
-                                    $APPLICATION->IncludeFile("/include/phones/stickly/phone_lsk.php", Array(), Array(
-                                        "MODE"      => "html",
-                                        "NAME"      => "Редактирование включаемой области раздела",
-                                        "TEMPLATE"  => ""
-                                    ));
-                                    break;
-                                case "Старый Оскол":
-                                    $APPLICATION->IncludeFile("/include/phones/stickly/phone_osk.php", Array(), Array(
-                                        "MODE"      => "html",
-                                        "NAME"      => "Редактирование включаемой области раздела",
-                                        "TEMPLATE"  => ""
-                                    ));
-                                    break;
-                                default:
-                                    $APPLICATION->IncludeFile("/include/phones/stickly/phone_vrn.php", Array(), Array(
-                                        "MODE"      => "html",
-                                        "NAME"      => "Редактирование включаемой области раздела",
-                                        "TEMPLATE"  => ""
-                                    ));
-                            }
-                            ?>
-                        </div>
-
                         <div class="header__action">
 
                             <?$APPLICATION->IncludeComponent(
@@ -510,10 +483,38 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                             "SHOW_INPUT" => "Y",	// Показывать форму ввода поискового запроса
                             "SHOW_OTHERS" => "N",	// Показывать категорию "прочее"
                             "TOP_COUNT" => "15",	// Количество результатов в каждой категории
-                            "USE_LANGUAGE_GUESS" => "N",	// Включить автоопределение раскладки клавиатуры
+                            "USE_LANGUAGE_GUESS" => "Y",	// Включить автоопределение раскладки клавиатуры
                         ),
                             false
                         );?>
+
+                        <div class="header__aside">
+                            <div class="f_phone">
+                                <?
+                                switch ($_COOKIE['city']) {
+                                    case "Лиски":
+                                        $APPLICATION->IncludeFile("/include/phones/stickly/phone_lsk.php", Array(), Array(
+                                            "MODE"      => "html",
+                                            "NAME"      => "Редактирование включаемой области раздела",
+                                            "TEMPLATE"  => ""
+                                        ));
+                                        break;
+                                    case "Старый Оскол":
+                                        $APPLICATION->IncludeFile("/include/phones/stickly/phone_osk.php", Array(), Array(
+                                            "MODE"      => "html",
+                                            "NAME"      => "Редактирование включаемой области раздела",
+                                            "TEMPLATE"  => ""
+                                        ));
+                                        break;
+                                    default:
+                                        $APPLICATION->IncludeFile("/include/phones/stickly/phone_vrn.php", Array(), Array(
+                                            "MODE"      => "html",
+                                            "NAME"      => "Редактирование включаемой области раздела",
+                                            "TEMPLATE"  => ""
+                                        ));
+                                }
+                                ?>
+                            </div>
 
                         <a href="/personal/orders-list.php" class="header__account">
                             <i class="fa fa-user-o fa-lg" aria-hidden="true"></i> <span>Личный кабинет</span>
@@ -536,6 +537,8 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                         ),
                             false
                         );?>
+
+                        </div><!--end::header__aside-->
 
                     </div><!--end::wr-->
                 </div><!--end::header__bottom-->

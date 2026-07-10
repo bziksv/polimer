@@ -10,7 +10,9 @@
 /** @var string $templateFolder */
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
-$this->setFrameMode(true);?>
+$this->setFrameMode(true);
+$this->addExternalJS($templateFolder.'/script.js');
+?>
 <?
 $INPUT_ID = trim($arParams["~INPUT_ID"]);
 if(strlen($INPUT_ID) <= 0)
@@ -23,20 +25,15 @@ if(strlen($CONTAINER_ID) <= 0)
 $CONTAINER_ID = CUtil::JSEscape($CONTAINER_ID);
 
 if($arParams["SHOW_INPUT"] !== "N"):?>
-    <div class="header__search" id="<?echo $CONTAINER_ID?>">
+    <div class="header__search"
+         id="<?echo $CONTAINER_ID?>"
+         data-polimer-search="Y"
+         data-ajax-page="<?echo CUtil::JSEscape(POST_FORM_ACTION_URI)?>"
+         data-input-id="<?echo $INPUT_ID?>"
+         data-min-query-len="2">
         <form class="search" action="<?echo $arResult["FORM_ACTION"]?>">
             <input class="search__input input" id="<?echo $INPUT_ID?>" type="text" name="q" value="" size="15" maxlength="255" autocomplete="off" />
             <button name="s" type="submit" class="search__btn" value="<?=GetMessage("CT_BST_SEARCH_BUTTON");?>" ></button>
         </form>
     </div><!--end::header__search-->
 <?endif?>
-<script>
-	BX.ready(function(){
-		new JCTitleSearch({
-			'AJAX_PAGE' : '<?echo CUtil::JSEscape(POST_FORM_ACTION_URI)?>',
-			'CONTAINER_ID': '<?echo $CONTAINER_ID?>',
-			'INPUT_ID': '<?echo $INPUT_ID?>',
-			'MIN_QUERY_LEN': 2
-		});
-	});
-</script>
