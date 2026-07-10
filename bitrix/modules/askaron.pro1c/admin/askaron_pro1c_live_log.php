@@ -75,7 +75,7 @@ else
 
 		<?CPullWatch::Add($USER->GetId(), 'ASKARON_PRO1C_LIVE_LOG');?>	
 		<?
-			if (isset($_GET['TEST']) && $_GET['TEST'] == "Y")
+			if (isset($_GET['TEST']) && $_GET['TEST'] === "Y")
 			{				
 				CAskaronPro1c::TestLiveLog();
 				$APPLICATION->RestartBuffer();
@@ -139,7 +139,7 @@ else
 				<?else:?>
 					BX('askaron_pro1c_pull').innerHTML += '<pre><?=CUtil::addslashes( GetMessage( "askaron_pro1c_live_log_alert_message" ) )?></pre>';
 				<?endif?>					
-				BX.ajax({ url: '?TEST=Y&amp;lang=<?=LANG?>', method: 'GET'});
+				BX.ajax({ url: '?TEST=Y&lang=<?=LANG?>', method: 'GET'});
 			};
 
 			var askaron_pro1c_onPullEvent = function( command, params )

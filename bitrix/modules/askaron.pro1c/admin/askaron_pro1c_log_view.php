@@ -38,20 +38,11 @@ else
 		"COUNT_LINES" => 500,
 		//"FILTER_TEXT" => "",
 		"FILE_ABS_PATH" => $log_file_name,
-		"DOWNLOAD_URL" => "",
+		"DOWNLOAD_URL" => CAskaronPro1c::GetLogDownloadUrl($log_file_name),
 		"bFileExists" => $bFileExists,
 		"file_size" => $file_size,
 		"file_time" => $file_time,
 	);
-
-	if ( strpos($log_file_name, $_SERVER["DOCUMENT_ROOT"] ) === 0 )
-	{
-		$count_replace = 1;
-		$url = $log_file_name;
-		$url = str_replace($_SERVER["DOCUMENT_ROOT"], "", $url, $count_replace);
-		$url = str_replace("\\", "/", $url);
-		$arResult["DOWNLOAD_URL"] = $url;
-	}
 
 	$RIGHT=$APPLICATION->GetGroupRight("askaron.pro1c");
 	$RIGHT_W = ($RIGHT>="W");
@@ -66,10 +57,10 @@ else
 		if (
 			check_bitrix_sessid()
 				&&
-			$_REQUEST['askaron_pro1c_update'] == "Y"
+			isset($_REQUEST['askaron_pro1c_update']) && $_REQUEST['askaron_pro1c_update'] == "Y"
 		)
 		{
-			if ( intval( $_REQUEST["askaron_pro1c_count_lines"] ) > 0 )
+			if ( isset($_REQUEST["askaron_pro1c_count_lines"]) && intval( $_REQUEST["askaron_pro1c_count_lines"] ) > 0 )
 			{
 				$arResult["COUNT_LINES"] = intval( $_REQUEST["askaron_pro1c_count_lines"] );
 			}
@@ -80,7 +71,7 @@ else
 		if (
 			check_bitrix_sessid()
 				&&
-			$_REQUEST['askaron_pro1c_clear'] == "Y"
+			isset($_REQUEST['askaron_pro1c_clear']) && $_REQUEST['askaron_pro1c_clear'] == "Y"
 				&&
 			$RIGHT_W
 		)
@@ -167,7 +158,7 @@ else
 						<br>
 						<?=CFile::FormatSize( $arResult["file_size"] )?>,
 						<?=GetMessage("askaron_pro1c_changed");?> <?=$arResult["file_time"]?>,
-						<?if ( strlen( $arResult["DOWNLOAD_URL"] ) ):?>
+						<?if ( !empty($arResult["DOWNLOAD_URL"]) ):?>
 							<a target="_blank" href="<?=$arResult["DOWNLOAD_URL"]?>"><?=GetMessage("ASKARON_PRO1C_OTKRYTQ_V_NOVOY_VKLA")?></a>
 						<?endif?>
 
@@ -190,33 +181,18 @@ else
 					<td>
 						<input name="askaron_pro1c_count_lines" value="<?=$arResult["COUNT_LINES"]?>">
 						<?=GetMessage("ASKARON_PRO1C_STROK1")?>
-						<?$command = "cat ".escapeshellarg($arResult["FILE_ABS_PATH"])." | wc -l;"?>
-						<?echo `$command`?>
+						<?=intval(CAskaronPro1c::CountLogFileLines($arResult["FILE_ABS_PATH"]))?>
 					</td>
 				</tr>
 			</table>
 			<?=bitrix_sessid_post()?>
 		</form>
 		<?
-			$command = "";
-			//$command = 'tail -n '.$arResult["COUNT_LINES"].' '.$arResult["FILE_ABS_PATH"];
-//			if ( strlen( $arResult["FILTER_TEXT"] ) > 0 )
-//			{
-//				//escapeshellarg
-//				$command .= "cat ".escapeshellarg($arResult["FILE_ABS_PATH"])." | grep ".escapeshellarg($arResult["FILTER_TEXT"])." | tail -n ".$arResult["COUNT_LINES"];
-//			}
-//			else
-//			{
-//				$command = "tail -n ".$arResult["COUNT_LINES"]." ".escapeshellarg($arResult["FILE_ABS_PATH"]);
-//			}
-
-			$command = "tail -n ".$arResult["COUNT_LINES"]." ".escapeshellarg($arResult["FILE_ABS_PATH"]);
-
-			$showContent = `$command`;
+			$showContent = CAskaronPro1c::TailLogFile($arResult["FILE_ABS_PATH"], $arResult["COUNT_LINES"]);
 		?>
 		<div style="clear: both;">
 		<br>
-		<p style="color: green;"><?=htmlspecialcharsbx( $command )?></p>
+		<p style="color: green;"><?=GetMessage("ASKARON_PRO1C_POSLEDNIE")?> <?=(int)$arResult["COUNT_LINES"]?> <?=GetMessage("ASKARON_PRO1C_STROK1")?></p>
 
 		<div style='width: 100%; min-height: 200px; background-color: #FFF; border: 1px solid; padding: 5px; margin: 10px 0;'>
 

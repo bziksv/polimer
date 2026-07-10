@@ -865,6 +865,75 @@ class CAskaronPro1C
 		
 		return $result;
 	}
+
+	public static function GetLogDownloadUrl($logFileName)
+	{
+		$documentRoot = rtrim((string)$_SERVER["DOCUMENT_ROOT"], '/\\');
+		if ($documentRoot === '' || !is_string($logFileName) || strpos($logFileName, $documentRoot) !== 0)
+		{
+			return '';
+		}
+
+		return str_replace('\\', '/', substr($logFileName, strlen($documentRoot)));
+	}
+
+	public static function CountLogFileLines($filePath)
+	{
+		if (!is_string($filePath) || $filePath === '' || !is_readable($filePath))
+		{
+			return 0;
+		}
+
+		$lineCount = 0;
+		$handle = @fopen($filePath, 'rb');
+		if ($handle === false)
+		{
+			return 0;
+		}
+
+		while (!feof($handle))
+		{
+			$chunk = fread($handle, 8192);
+			if ($chunk === false)
+			{
+				break;
+			}
+			$lineCount += substr_count($chunk, "\n");
+		}
+
+		fclose($handle);
+
+		return $lineCount;
+	}
+
+	public static function TailLogFile($filePath, $lineCount)
+	{
+		$lineCount = max(1, (int)$lineCount);
+		if (!is_string($filePath) || $filePath === '' || !is_readable($filePath))
+		{
+			return '';
+		}
+
+		$buffer = array();
+		$handle = @fopen($filePath, 'rb');
+		if ($handle === false)
+		{
+			return '';
+		}
+
+		while (($line = fgets($handle)) !== false)
+		{
+			$buffer[] = rtrim($line, "\r\n");
+			if (count($buffer) > $lineCount)
+			{
+				array_shift($buffer);
+			}
+		}
+
+		fclose($handle);
+
+		return implode("\n", $buffer);
+	}
 	
 	
 	public static function GetCatalogInfo( $ID )
