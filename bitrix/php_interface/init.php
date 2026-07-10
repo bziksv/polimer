@@ -33,6 +33,33 @@ function checkProduct($id){
     return false;
 }
 
+function productMeasureUnit($productId, array $properties = [])
+{
+    $productId = (int)$productId;
+    if ($productId <= 0)
+        return 'шт';
+
+    if (!empty($properties['CML2_BASE_UNIT']['VALUE']))
+        return trim((string)$properties['CML2_BASE_UNIT']['VALUE']);
+
+    if (!CModule::IncludeModule('catalog'))
+        return 'шт';
+
+    $product = CCatalogProduct::GetByID($productId);
+    if (empty($product['MEASURE']))
+        return 'шт';
+
+    $measure = CCatalogMeasure::getList([], ['ID' => (int)$product['MEASURE']])->Fetch();
+    if ($measure)
+    {
+        $unit = trim((string)($measure['SYMBOL_RUS'] ?: $measure['MEASURE_TITLE'] ?: ''));
+        if ($unit !== '')
+            return $unit;
+    }
+
+    return 'шт';
+}
+
 function polimerGetProductAvailability($id)
 {
     $id = (int)$id;
@@ -1049,7 +1076,69 @@ function polimerBuildSearchQueries($query, $includeTypo = false)
     return array_values(array_unique(array_filter($queries)));
 }
 
-function polimerSearchCatalogByTokens($query, $iblockId = IBLOCK_CATALOG, $limit = 15, array $excludeIds = [])
+function polimerBuildCatalogTokenFilter(array $tokens, $iblockId = IBLOCK_CATALOG, $fullText = true)
+{
+    $filter = [
+        'IBLOCK_ID' => (int)$iblockId,
+        'ACTIVE' => 'Y',
+        'ACTIVE_DATE' => 'Y',
+    ];
+
+    if (empty($tokens))
+        return $filter;
+
+    $tokenFilters = [];
+    foreach ($tokens as $token)
+    {
+        if ($fullText)
+        {
+            $tokenFilters[] = [
+                'LOGIC' => 'OR',
+                ['?NAME' => $token],
+                ['?PREVIEW_TEXT' => $token],
+                ['?DETAIL_TEXT' => $token],
+            ];
+        }
+        else
+        {
+            $tokenFilters[] = ['?NAME' => $token];
+        }
+    }
+
+    if (count($tokenFilters) === 1)
+        $filter[] = $tokenFilters[0];
+    else
+        $filter[] = array_merge(['LOGIC' => 'AND'], $tokenFilters);
+
+    return $filter;
+}
+
+function polimerFetchCatalogElementIds(array $filter, $limit = 0)
+{
+    if (!CModule::IncludeModule('iblock'))
+        return [];
+
+    $navParams = ((int)$limit > 0) ? ['nTopCount' => (int)$limit] : false;
+    $ids = [];
+    $res = CIBlockElement::GetList(
+        ['SHOW_COUNTER' => 'DESC', 'NAME' => 'ASC'],
+        $filter,
+        false,
+        $navParams,
+        ['ID']
+    );
+
+    while ($row = $res->GetNext())
+    {
+        $id = (int)($row['ID'] ?? 0);
+        if ($id > 0)
+            $ids[] = $id;
+    }
+
+    return $ids;
+}
+
+function polimerSearchCatalogByTokens($query, $iblockId = IBLOCK_CATALOG, $limit = 15, array $excludeIds = [], $fullText = false)
 {
     if (!CModule::IncludeModule('iblock'))
         return [];
@@ -1062,34 +1151,18 @@ function polimerSearchCatalogByTokens($query, $iblockId = IBLOCK_CATALOG, $limit
     if (empty($tokens))
         return [];
 
-    $filter = [
-        'IBLOCK_ID' => (int)$iblockId,
-        'ACTIVE' => 'Y',
-        'ACTIVE_DATE' => 'Y',
-    ];
-
-    if (count($tokens) === 1)
-    {
-        $filter['?NAME'] = $tokens[0];
-    }
-    else
-    {
-        $subFilter = ['LOGIC' => 'AND'];
-        foreach ($tokens as $token)
-            $subFilter[] = ['?NAME' => $token];
-
-        $filter[] = $subFilter;
-    }
+    $filter = polimerBuildCatalogTokenFilter($tokens, $iblockId, $fullText);
 
     if (!empty($excludeIds))
         $filter['!ID'] = $excludeIds;
 
     $items = [];
+    $navParams = ((int)$limit > 0) ? ['nTopCount' => (int)$limit] : false;
     $res = CIBlockElement::GetList(
         ['SHOW_COUNTER' => 'DESC', 'NAME' => 'ASC'],
         $filter,
         false,
-        ['nTopCount' => max(1, (int)$limit)],
+        $navParams,
         ['ID', 'IBLOCK_ID', 'NAME', 'DETAIL_PAGE_URL']
     );
 
@@ -1106,6 +1179,318 @@ function polimerSearchCatalogByTokens($query, $iblockId = IBLOCK_CATALOG, $limit
     }
 
     return $items;
+}
+
+function polimerSearchCatalogAllIds($query, $iblockId = IBLOCK_CATALOG, $maxIds = 50000, $fullText = true)
+{
+    $query = trim((string)$query);
+    if ($query === '')
+        return [];
+
+    $seen = [];
+    $allIds = [];
+    $queries = polimerBuildSearchQueries($query, true);
+
+    foreach ($queries as $searchQuery)
+    {
+        if (count($allIds) >= $maxIds)
+            break;
+
+        $tokens = preg_split('/[\s,]+/u', trim($searchQuery), -1, PREG_SPLIT_NO_EMPTY);
+        $tokens = array_values(array_filter($tokens, static function ($token) {
+            return mb_strlen($token) >= 2;
+        }));
+
+        if (empty($tokens))
+            continue;
+
+        $filter = polimerBuildCatalogTokenFilter($tokens, $iblockId, $fullText);
+        $ids = polimerFetchCatalogElementIds($filter, 0);
+
+        foreach ($ids as $id)
+        {
+            if (isset($seen[$id]))
+                continue;
+
+            $seen[$id] = true;
+            $allIds[] = $id;
+
+            if (count($allIds) >= $maxIds)
+                break 2;
+        }
+    }
+
+    return $allIds;
+}
+
+function polimerSearchBitrixCatalogIds($query, array $arParams, $iblockId = IBLOCK_CATALOG, $maxIds = 50000)
+{
+    if (!CModule::IncludeModule('search'))
+        return [];
+
+    $query = trim((string)$query);
+    if ($query === '')
+        return [];
+
+    $exFILTER = CSearchParameters::ConvertParamsToFilter($arParams, 'arrFILTER');
+
+    $arFilter = [
+        'QUERY' => $query,
+        'SITE_ID' => SITE_ID,
+    ];
+
+    if (($arParams['CHECK_DATES'] ?? '') === 'Y')
+        $arFilter['CHECK_DATES'] = 'Y';
+
+    $obSearch = new CSearch();
+    $obSearch->limit = max(500, (int)$maxIds);
+    $obSearch->SetOptions([
+        'ERROR_ON_EMPTY_STEM' => ($arParams['RESTART'] ?? '') !== 'Y',
+        'NO_WORD_LOGIC' => isset($arParams['NO_WORD_LOGIC']) && $arParams['NO_WORD_LOGIC'] === 'Y',
+    ]);
+    $obSearch->Search($arFilter, ['CUSTOM_RANK' => 'DESC', 'RANK' => 'DESC', 'TITLE_RANK' => 'DESC'], $exFILTER);
+
+    if ($obSearch->errorno !== 0)
+        return [];
+
+    $ids = [];
+    while ($ar = $obSearch->GetNext())
+    {
+        if ((int)($ar['PARAM2'] ?? 0) !== (int)$iblockId)
+            continue;
+
+        $id = (int)($ar['ITEM_ID'] ?? 0);
+        if ($id > 0 && !in_array($id, $ids, true))
+            $ids[] = $id;
+
+        if (count($ids) >= $maxIds)
+            break;
+    }
+
+    return $ids;
+}
+
+function polimerEnhanceSearchPageResult(array &$arResult, array $arParams)
+{
+    $query = trim((string)($arResult['REQUEST']['~QUERY'] ?? $arResult['REQUEST']['QUERY'] ?? ''));
+    if ($query === '')
+        return;
+
+    $iblockId = IBLOCK_CATALOG;
+    $catalogIds = polimerSearchCatalogAllIds($query, $iblockId, 50000, true);
+    $bitrixIds = polimerSearchBitrixCatalogIds($query, $arParams, $iblockId, 50000);
+
+    $seen = array_fill_keys($catalogIds, true);
+    $allIds = $catalogIds;
+
+    foreach ($bitrixIds as $id)
+    {
+        if (!isset($seen[$id]))
+        {
+            $seen[$id] = true;
+            $allIds[] = $id;
+        }
+    }
+
+    if (empty($allIds))
+        return;
+
+    $arResult['POLIMER_PRODUCT_IDS'] = $allIds;
+    $arResult['ROWS_COUNT'] = count($allIds);
+    $arResult['SEARCH'] = array_map(static function ($id) use ($iblockId) {
+        return [
+            'ITEM_ID' => $id,
+            'ID' => $id,
+            'PARAM2' => $iblockId,
+        ];
+    }, $allIds);
+}
+
+function polimerSearchCatalogSections($query, $iblockId = IBLOCK_CATALOG, $maxSections = 500)
+{
+    $query = trim((string)$query);
+    if ($query === '' || !CModule::IncludeModule('iblock'))
+        return [];
+
+    $maxSections = max(1, (int)$maxSections);
+    $origTokens = preg_split('/[\s,]+/u', $query, -1, PREG_SPLIT_NO_EMPTY);
+    $origTokens = array_values(array_filter($origTokens, static function ($token) {
+        return mb_strlen($token) >= 2;
+    }));
+
+    if (empty($origTokens))
+        return [];
+
+    $queries = polimerBuildSearchQueries($query, false);
+    $found = [];
+    $seen = [];
+
+    foreach ($queries as $searchQuery)
+    {
+        if (count($found) >= $maxSections)
+            break;
+
+        $tokens = preg_split('/[\s,]+/u', trim($searchQuery), -1, PREG_SPLIT_NO_EMPTY);
+        $tokens = array_values(array_filter($tokens, static function ($token) {
+            return mb_strlen($token) >= 2;
+        }));
+
+        if (empty($tokens))
+            continue;
+
+        $filter = [
+            'IBLOCK_ID' => (int)$iblockId,
+            'ACTIVE' => 'Y',
+            'GLOBAL_ACTIVE' => 'Y',
+        ];
+
+        $tokenFilters = [];
+        foreach ($tokens as $token)
+            $tokenFilters[] = ['?NAME' => $token];
+
+        if (count($tokenFilters) === 1)
+            $filter[] = $tokenFilters[0];
+        else
+            $filter[] = array_merge(['LOGIC' => 'AND'], $tokenFilters);
+
+        $res = CIBlockSection::GetList(
+            ['NAME' => 'ASC'],
+            $filter,
+            false,
+            ['ID', 'NAME', 'SECTION_PAGE_URL', 'PICTURE', 'ELEMENT_CNT']
+        );
+
+        while ($row = $res->GetNext())
+        {
+            $id = (int)$row['ID'];
+            if (isset($seen[$id]))
+                continue;
+
+            $nameLower = mb_strtolower((string)$row['NAME']);
+            $matchesOriginal = false;
+            foreach ($origTokens as $token)
+            {
+                if (mb_strpos($nameLower, mb_strtolower($token)) !== false)
+                {
+                    $matchesOriginal = true;
+                    break;
+                }
+            }
+
+            if (!$matchesOriginal)
+                continue;
+
+            $seen[$id] = true;
+            $found[] = $row;
+
+            if (count($found) >= $maxSections)
+                break;
+        }
+    }
+
+    if (empty($found))
+        return [];
+
+    $queryLower = mb_strtolower($query);
+    usort($found, static function ($a, $b) use ($queryLower) {
+        $score = static function ($name) use ($queryLower) {
+            $nameLower = mb_strtolower((string)$name);
+            if ($nameLower === $queryLower)
+                return 0;
+            if (mb_strpos($nameLower, $queryLower) === 0)
+                return 1;
+            if (mb_strpos($nameLower, $queryLower) !== false)
+                return 2;
+
+            return 3;
+        };
+
+        $scoreA = $score($a['NAME']);
+        $scoreB = $score($b['NAME']);
+        if ($scoreA !== $scoreB)
+            return $scoreA <=> $scoreB;
+
+        return strcmp((string)$a['NAME'], (string)$b['NAME']);
+    });
+
+    return $found;
+}
+
+function polimerDisableCompositeForDynamicPages()
+{
+    $uri = (string)($_SERVER['REQUEST_URI'] ?? '');
+    if (
+        strpos($uri, '/search/') !== false
+        || (($_REQUEST['ajax_call'] ?? '') === 'y')
+    )
+    {
+        if (!defined('BX_COMPOSITE_DISABLE'))
+            define('BX_COMPOSITE_DISABLE', true);
+
+        if (class_exists('\Bitrix\Main\Composite\Helper'))
+            \Bitrix\Main\Composite\Helper::setEnabled(false);
+    }
+}
+
+function polimerBuildSearchPageNav($currentPage, $pageSize, $totalCount, $queryString)
+{
+    $pageSize = max(1, (int)$pageSize);
+    $totalCount = max(0, (int)$totalCount);
+    $pageCount = max(1, (int)ceil($totalCount / $pageSize));
+    $currentPage = max(1, min((int)$currentPage, $pageCount));
+
+    if ($pageCount <= 1)
+        return '';
+
+    $queryString = trim((string)$queryString);
+    $baseUrl = '/search/' . ($queryString !== '' ? '?' . $queryString : '');
+
+    $buildUrl = static function ($page) use ($baseUrl, $queryString) {
+        if ($page <= 1)
+            return $baseUrl;
+
+        $params = [];
+        if ($queryString !== '')
+            parse_str($queryString, $params);
+
+        $params['PAGEN_1'] = $page;
+
+        return '/search/?' . http_build_query($params);
+    };
+
+    $window = 5;
+    $startPage = max(1, $currentPage - (int)floor($window / 2));
+    $endPage = min($pageCount, $startPage + $window - 1);
+    $startPage = max(1, $endPage - $window + 1);
+
+    $somePage = [];
+    for ($page = $startPage; $page <= $endPage; $page++)
+        $somePage[$page] = $buildUrl($page);
+
+    $arResult = [
+        'NavShowAlways' => false,
+        'NavPageCount' => $pageCount,
+        'NAV' => [
+            'PAGE_NUMBER' => $currentPage,
+            'PAGE_COUNT' => $pageCount,
+            'START_PAGE' => $startPage,
+            'END_PAGE' => $endPage,
+            'URL' => [
+                'FIRST_PAGE' => $buildUrl($currentPage - 1),
+                'NEXT_PAGE' => $buildUrl($currentPage + 1),
+                'SOME_PAGE' => $somePage,
+            ],
+        ],
+    ];
+
+    $navTemplate = $_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/components/bitrix/system.pagenavigation/.default/template.php';
+    if (!is_file($navTemplate))
+        return '';
+
+    ob_start();
+    include $navTemplate;
+
+    return (string)ob_get_clean();
 }
 
 function polimerEnhanceTitleSearchResult(array &$arResult, array $arParams)
@@ -1273,6 +1658,8 @@ function getUrlProd($url){
 
 }
 
+AddEventHandler('main', 'OnProlog', 'polimerDisableCompositeForDynamicPages');
+
 AddEventHandler("main", "OnEpilog", "Redirect404");
 function Redirect404() {
     if(
@@ -1368,7 +1755,7 @@ function resizeImage($id, $w, $h){
         return $no_photo_path;
     }
 
-    return CFile::ResizeImageGet(
+    $resized = CFile::ResizeImageGet(
         $id,
         ["width" => $w, "height" => $h],
         BX_RESIZE_IMAGE_PROPORTIONAL,
@@ -1376,7 +1763,13 @@ function resizeImage($id, $w, $h){
         false,
         false,
         85
-    )['src'];
+    );
+
+    if (!empty($resized['src'])) {
+        return $resized['src'];
+    }
+
+    return CFile::GetPath($id) ?: $no_photo_path;
 }
 
 function isImageExists($fileId) {

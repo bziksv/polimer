@@ -130,6 +130,22 @@
         })(window,document,'https://cdn-ru.bitrix24.ru/b7243579/crm/site_button/loader_3_co14nv.js');
 </script>
 
+<?php require $_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/include/catalog_menu_switcher.php'; ?>
+
+<?php
+$catalogCardsCss = SITE_TEMPLATE_PATH . '/css/catalog-cards.css';
+$catalogCardsPath = $_SERVER['DOCUMENT_ROOT'] . $catalogCardsCss;
+$catalogCardsInlinePath = $_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/css/catalog-cards-inline.css';
+if (is_file($catalogCardsPath)) {
+    $catalogCardsUrl = $catalogCardsCss . '?v=' . filemtime($catalogCardsPath);
+    $catalogCardsHref = htmlspecialcharsbx($catalogCardsUrl);
+    echo '<link rel="stylesheet" href="' . $catalogCardsHref . '" id="catalog-cards-css">' . "\n";
+    if (is_file($catalogCardsInlinePath)) {
+        echo '<style id="catalog-cards-inline">' . "\n" . file_get_contents($catalogCardsInlinePath) . "\n" . '</style>' . "\n";
+    }
+    echo '<script>(function(d,u){function pin(){var id="catalog-cards-css",o=d.getElementById(id);if(o){o.parentNode.removeChild(o);}var l=d.createElement("link");l.id=id;l.rel="stylesheet";l.href=u;d.head.appendChild(l);}function run(){pin();setTimeout(pin,0);setTimeout(pin,300);}if(window.BX&&BX.ready){BX.ready(run);}else if(d.readyState==="loading"){d.addEventListener("DOMContentLoaded",run);}else{run();}window.addEventListener("load",run);})(document,' . json_encode($catalogCardsUrl) . ');</script>' . "\n";
+}
+?>
 
 	</body>
 </html>

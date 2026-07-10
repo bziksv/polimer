@@ -1,4 +1,6 @@
 <?
+define('BX_COMPOSITE_DISABLE', true);
+
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Поиск");
 ?>
@@ -11,7 +13,7 @@ $APPLICATION->SetTitle("Поиск");
 		"AJAX_OPTION_JUMP" => "N",
 		"AJAX_OPTION_STYLE" => "N",
 		"CACHE_TIME" => "3600",
-		"CACHE_TYPE" => "A",
+		"CACHE_TYPE" => "N",
 		"CHECK_DATES" => "Y",
 		"DEFAULT_SORT" => "rank",
 		"DISPLAY_BOTTOM_PAGER" => "Y",
@@ -21,7 +23,7 @@ $APPLICATION->SetTitle("Поиск");
 		"PAGER_SHOW_ALWAYS" => "N",
 		"PAGER_TEMPLATE" => "",
 		"PAGER_TITLE" => "Результаты поиска",
-		"PAGE_RESULT_COUNT" => "55",
+		"PAGE_RESULT_COUNT" => "200",
 		"RESTART" => "Y",
 		"SHOW_WHEN" => "N",
 		"SHOW_WHERE" => "N",

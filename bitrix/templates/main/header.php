@@ -54,7 +54,7 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 		Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/social-likes_classic.css');
 		Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/wickedpicker.min.css');
 		
-		Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/custom.css');
+		Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/custom.css?v=' . @filemtime($_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/css/custom.css'));
 
         Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/js/lightslider/css/lightslider.css');
         Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/js/lightGallery/css/lightgallery.css');
@@ -365,14 +365,17 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                         </a>
 
                         <div class="header__catalog cl">
-                            <?$APPLICATION->IncludeComponent(
+                            <?
+                            require $_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/include/catalog_menu_variant.php';
+
+                            $APPLICATION->IncludeComponent(
                                 "bitrix:catalog.section.list",
-                                "top-menu-catalog",
+                                $catalogMenuTemplate,
                                 array(
                                     "ADD_SECTIONS_CHAIN" => "Y",
                                     "CACHE_GROUPS" => "Y",
-                                    "CACHE_TIME" => "36000000",
-                                    "CACHE_TYPE" => "A",
+                                    "CACHE_TIME" => $catalogMenuShowSwitcher ? "0" : "36000000",
+                                    "CACHE_TYPE" => $catalogMenuShowSwitcher ? "N" : "A",
                                     "COUNT_ELEMENTS" => "Y",
                                     "IBLOCK_ID" => "21",
                                     "IBLOCK_TYPE" => "1c_catalog",
@@ -390,7 +393,7 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                                     "SHOW_PARENT_NAME" => "Y",
                                     "TOP_DEPTH" => "3",
                                     "VIEW_MODE" => "LINE",
-                                    "COMPONENT_TEMPLATE" => "top-menu-catalog"
+                                    "COMPONENT_TEMPLATE" => $catalogMenuTemplate
                                 ),
                                 false
                             );?>
@@ -482,7 +485,9 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                             "PAGE" => "#SITE_DIR#search/",	// Страница выдачи результатов поиска (доступен макрос #SITE_DIR#)
                             "SHOW_INPUT" => "Y",	// Показывать форму ввода поискового запроса
                             "SHOW_OTHERS" => "N",	// Показывать категорию "прочее"
-                            "TOP_COUNT" => "15",	// Количество результатов в каждой категории
+                            "TOP_COUNT" => "50",	// Количество результатов в каждой категории
+                            "CACHE_TYPE" => "N",
+                            "CACHE_TIME" => "0",
                             "USE_LANGUAGE_GUESS" => "Y",	// Включить автоопределение раскладки клавиатуры
                         ),
                             false
@@ -517,7 +522,8 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                             </div>
 
                         <a href="/personal/orders-list.php" class="header__account">
-                            <i class="fa fa-user-o fa-lg" aria-hidden="true"></i> <span>Личный кабинет</span>
+                            <i class="fa fa-user-o header__fa-icon" aria-hidden="true"></i>
+                            <span>Личный кабинет</span>
                         </a>
 
                         <?$APPLICATION->IncludeComponent("bitrix:sale.basket.basket.line", "basket.small", Array(

@@ -55,14 +55,21 @@ if ('' == $arParams['TEMPLATE_THEME'])
 	$arParams['TEMPLATE_THEME'] = 'blue';
 $arResult['NAV_PARAM']['TEMPLATE_THEME'] = $arParams['TEMPLATE_THEME'];
 
-$arResult['NAV_STRING'] = $arResult['NAV_RESULT']->GetPageNavStringEx(
-	$navComponentObject,
-	$arParams['PAGER_TITLE'],
-	$arParams['PAGER_TEMPLATE'],
-	$arParams['PAGER_SHOW_ALWAYS'],
-	$this->__component,
-	$arResult['NAV_PARAM']
-);
+if (!empty($arResult['NAV_RESULT']))
+{
+	$arResult['NAV_STRING'] = $arResult['NAV_RESULT']->GetPageNavStringEx(
+		$navComponentObject,
+		$arParams['PAGER_TITLE'],
+		$arParams['PAGER_TEMPLATE'],
+		$arParams['PAGER_SHOW_ALWAYS'],
+		$this->__component,
+		$arResult['NAV_PARAM']
+	);
+}
+else
+{
+	$arResult['NAV_STRING'] = '';
+}
 
 if ('Y' != $arParams['PRODUCT_DISPLAY_MODE'])
 	$arParams['PRODUCT_DISPLAY_MODE'] = 'N';

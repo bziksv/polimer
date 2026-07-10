@@ -272,8 +272,7 @@ if (!empty($arResult['ITEMS']))
 		"COMPONENT_TEMPLATE" => "products-viewed",
 		"SET_VIEWED_IN_COMPONENT" => "Y",
 		"PROPERTY_CODE_21" => array(
-			0 => "",
-			1 => "",
+			0 => "CML2_BASE_UNIT",
 		),
 		"CART_PROPERTIES_21" => array(
 			0 => "",

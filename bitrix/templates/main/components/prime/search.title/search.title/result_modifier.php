@@ -110,6 +110,18 @@ polimerFillSearchProductSpecs($arResult["SEARCH_PRODUCTS"], IBLOCK_CATALOG, 2);
 $arResult["SEARCH_SECTIONS"] = polimerBuildSearchSectionsFromProducts($arResult["SEARCH_PRODUCTS"], $noPhoto);
 $arResult["SEARCH_PRODUCTS"] = polimerSortSearchProductsByAvailabilityAndPrice($arResult["SEARCH_PRODUCTS"]);
 
+$searchQueryForTotal = trim((string)($arResult['SEARCH_QUERY_CORRECTED'] ?? $arResult['query'] ?? ''));
+if ($searchQueryForTotal !== '')
+{
+    $arResult['SEARCH_PRODUCTS_TOTAL'] = count(polimerSearchCatalogAllIds($searchQueryForTotal, IBLOCK_CATALOG, 50000, true));
+    if (!empty($arResult['SEARCH_ALL']) && $arResult['SEARCH_PRODUCTS_TOTAL'] > 0)
+        $arResult['SEARCH_ALL']['NAME'] = 'Все ' . $arResult['SEARCH_PRODUCTS_TOTAL'] . ' результатов';
+}
+else
+{
+    $arResult['SEARCH_PRODUCTS_TOTAL'] = count($arResult['SEARCH_PRODUCTS']);
+}
+
 foreach($arResult["SEARCH"] as $i=>$arItem)
 {
 	$file = false;

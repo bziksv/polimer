@@ -2,11 +2,12 @@
 
 <?php if (!$arResult['DISABLE_USE_BASKET']): ?>
 <a href="<?= $arParams['PATH_TO_BASKET'] ?>" class="header__cart cart">
-	<span class="cart__number">
-		<?= $arResult['TOTAL_QUANTITY'] ?>
+	<span class="header__cart-icon">
+		<i class="fa fa-shopping-basket header__fa-icon" aria-hidden="true"></i>
+		<span class="cart__number"><?= $arResult['TOTAL_QUANTITY'] ?></span>
 	</span>
     <?php if ($arResult['TOTAL_PRICE']): ?>
-        <span class="cart__sum"><span class="cart__sum--numbers"><?= $arResult['TOTAL_PRICE'] ?></span> </span>
+        <span class="cart__sum"><span class="cart__sum--numbers"><?= $arResult['TOTAL_PRICE'] ?></span></span>
     <?php endif; ?>
 </a>
 <?php endif; ?>

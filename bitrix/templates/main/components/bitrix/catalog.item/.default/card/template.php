@@ -99,7 +99,7 @@ $hasSlider = count($sliderImages) > 1;
 			<a href="<?=$arItem['DETAIL_PAGE_URL']?>" class="pic<?= $hasSlider ? ' has-slider' : '' ?>">
 			   <span class="pic-slides">
 				  <?php foreach ($sliderImages as $i => $src): ?>
-					  <img class="pic-slide<?= $i === 0 ? ' active' : '' ?>" src="<?=$src?>" alt="<?=$arItem['NAME']?>"<?= $i > 0 ? ' loading="lazy"' : '' ?>>
+					  <img class="pic-slide<?= $i === 0 ? ' active' : '' ?>" src="<?=$src?>" alt="<?=$arItem['NAME']?>" width="220" height="293"<?= $i > 0 ? ' loading="lazy"' : '' ?>>
 				  <?php endforeach; ?>
 			   </span>
 
@@ -117,11 +117,22 @@ $hasSlider = count($sliderImages) > 1;
 			</a>
 			
 			<a href="<?=$arItem['DETAIL_PAGE_URL']?>" class="title"><?=$arItem['NAME']?></a>
+
+			<div class="card-meta">
+			<?php if (!empty($arItem['PROPERTIES']['CML2_TRAITS']['VALUE'][2])): ?>
+			<span class="incode">Код товара: <?=htmlspecialcharsbx($arItem['PROPERTIES']['CML2_TRAITS']['VALUE'][2])?></span>
+			<?php else: ?>
+			<span class="incode incode--empty" aria-hidden="true"></span>
+			<?php endif; ?>
 			
 			<? if ($arItem['CATALOG_QUANTITY'] > 0): ?>
 				<div class="instock">Товар в наличии </div>
+			<? else: ?>
+				<div class="instock instock--empty" aria-hidden="true"></div>
 			<? endif; ?>
+			</div>
 			
+			<div class="card-footer">
 			<? if ($price && $price['BASE_PRICE'] > 0): ?>
 				<div class="cost">
 				<?php echo $PRINT_PRICE; ?> 
@@ -155,10 +166,7 @@ $hasSlider = count($sliderImages) > 1;
 			
 			<div class="outstock"></div>
 			<? endif; ?>
-
-			<?php if (!empty($arItem['PROPERTIES']['CML2_TRAITS']['VALUE'][2])): ?>
-			<span class="incode">Код товара: <?=htmlspecialcharsbx($arItem['PROPERTIES']['CML2_TRAITS']['VALUE'][2])?></span>
-			<?php endif; ?>
+			</div>
 
 		</div>
 	</div>

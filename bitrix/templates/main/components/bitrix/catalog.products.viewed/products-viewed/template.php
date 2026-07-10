@@ -141,7 +141,7 @@ $areaIds = array();
 					<a href="<?=$item['DETAIL_PAGE_URL']?>" class="name"><?=$item['NAME']?></a>
 					<div class="price">
                         <?if(price($item['ID'])):?>
-							<span><?=price($item['ID']);?></span> &#8381;/<?=$item['PROPERTIES']['CML2_BASE_UNIT']['VALUE'];?>
+							<span><?=price($item['ID']);?></span> &#8381;/<?=htmlspecialcharsbx(productMeasureUnit($item['ID'], $item['PROPERTIES'] ?? []));?>
                         <?else:?>
                             <span>&nbsp;</span>
                         <? endif;?>

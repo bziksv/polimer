@@ -89,7 +89,13 @@ $searchAllName = $arResult['SEARCH_ALL']['NAME'] ?: 'Все результаты
 			<div class="polimer-search-dropdown__products-head">
 				<div class="polimer-search-dropdown__heading polimer-search-dropdown__heading--products">
 					<span class="polimer-search-dropdown__heading-text">Товары</span>
-					<span class="polimer-search-dropdown__products-count" data-total="<?=count($products)?>"><?=count($products)?></span>
+					<?php
+					$shownProducts = count($products);
+					$totalProducts = (int)($arResult['SEARCH_PRODUCTS_TOTAL'] ?? $shownProducts);
+					?>
+					<span class="polimer-search-dropdown__products-count" data-total="<?=$totalProducts?>">
+						<?=$shownProducts?><?if($totalProducts > $shownProducts):?> из <?=$totalProducts?><?endif?>
+					</span>
 				</div>
 				<div class="polimer-search-dropdown__filter-bar" hidden>
 					<button type="button" class="polimer-search-dropdown__filter-chip">

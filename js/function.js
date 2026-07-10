@@ -251,3 +251,177 @@ $(function () {
     });
 });
 
+function polimerNormalizeCatalogPhoto(img) {
+    if (!img || img.tagName !== 'IMG') {
+        return;
+    }
+
+    if (img.src && img.src.indexOf('no_photo') !== -1) {
+        return;
+    }
+
+    var pic = img.closest('.pic');
+    if (!pic) {
+        return;
+    }
+
+    var apply = function () {
+        var nw = img.naturalWidth;
+        var nh = img.naturalHeight;
+        if (!nw || !nh) {
+            return;
+        }
+
+        var pad = 14;
+        var cw = pic.clientWidth;
+        var ch = pic.clientHeight;
+        if (!cw || !ch) {
+            return;
+        }
+
+        var uw = Math.max(1, cw - pad * 2);
+        var uh = Math.max(1, ch - pad * 2);
+        var targetW = uw * 0.86;
+        var maxH = uh * 0.92;
+        var scale = targetW / nw;
+        var dh = nh * scale;
+
+        if (dh > maxH) {
+            scale = maxH / nh;
+        }
+
+        var dw = nw * scale;
+        dh = nh * scale;
+
+        if (dw > uw) {
+            scale = uw / nw;
+            dw = uw;
+            dh = nh * scale;
+        }
+
+        img.classList.add('polimer-photo-fit');
+        img.style.width = Math.round(dw) + 'px';
+        img.style.height = Math.round(dh) + 'px';
+    };
+
+    if (img.complete && img.naturalWidth) {
+        apply();
+    } else {
+        img.addEventListener('load', apply, { once: true });
+    }
+}
+
+function polimerNormalizeCatalogPhotos(root) {
+    var scope = root || document;
+    var selector = '.products_roll .pic img.pic-slide, .products_roll .pic:not(.has-slider) img';
+
+    scope.querySelectorAll(selector).forEach(function (img) {
+        polimerNormalizeCatalogPhoto(img);
+    });
+}
+
+$(function () {
+    polimerNormalizeCatalogPhotos();
+    window.addEventListener('load', function () {
+        polimerNormalizeCatalogPhotos();
+    });
+    setTimeout(function () {
+        polimerNormalizeCatalogPhotos();
+    }, 300);
+});
+
+function polimerCloseAdd2CartPopups($exceptItem) {
+    $('.products_roll .pr_box .item.add2cart2').each(function () {
+        if ($exceptItem && $exceptItem.length && this === $exceptItem[0]) {
+            return;
+        }
+
+        var $item = $(this);
+        $item.removeClass('add2cart2');
+        $item.children('.hover').css({ transform: '', left: '', right: '', top: '' });
+    });
+}
+
+function polimerCenterAdd2CartPopup($item) {
+    var $hover = $item.children('.hover');
+    if (!$hover.length) {
+        return;
+    }
+
+    $hover.css({
+        left: '50%',
+        right: 'auto',
+        transform: 'translateX(-50%)'
+    });
+
+    window.requestAnimationFrame(function () {
+        var node = $hover[0];
+        if (!node) {
+            return;
+        }
+
+        var rect = node.getBoundingClientRect();
+        var pad = 10;
+        var shift = 0;
+
+        if (rect.left < pad) {
+            shift = pad - rect.left;
+        } else if (rect.right > window.innerWidth - pad) {
+            shift = (window.innerWidth - pad) - rect.right;
+        }
+
+        if (shift !== 0) {
+            $hover.css('transform', 'translateX(calc(-50% + ' + shift + 'px))');
+        }
+    });
+}
+
+$(function () {
+    if (!window.matchMedia('(min-width: 660px)').matches) {
+        return;
+    }
+
+    $(document).on('click', function (e) {
+        if ($(e.target).closest('.products_roll .pr_box .item .hover .inner .add2cart').length) {
+            return;
+        }
+        if ($(e.target).closest('.products_roll .pr_box .item.add2cart2 .hover').length) {
+            return;
+        }
+
+        polimerCloseAdd2CartPopups();
+    });
+
+    $(document).on('click', '.products_roll .pr_box .item .hover .inner .add2cart', function (e) {
+        if ($(e.target).closest('.txt2').length) {
+            return;
+        }
+
+        var $item = $(this).closest('.item');
+
+        if ($item.hasClass('add2cart2')) {
+            e.preventDefault();
+            return false;
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        polimerCloseAdd2CartPopups();
+        $item.addClass('add2cart2');
+
+        window.requestAnimationFrame(function () {
+            polimerCenterAdd2CartPopup($item);
+        });
+    });
+
+    $(document).on('click', '.products_roll .pr_box .item .hover .inner .close', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        var $item = $(this).closest('.item');
+        $item.removeClass('add2cart2');
+        $item.children('.hover').css({ transform: '', left: '', right: '', top: '' });
+    });
+});
+

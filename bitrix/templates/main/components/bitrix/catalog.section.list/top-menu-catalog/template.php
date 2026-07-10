@@ -14,10 +14,8 @@ $this->setFrameMode(true);
 ?>
 
 
-<a href="/catalog/" class="catalog__trigger">
-	<span class="i1"></span>
-	<span class="i2"></span>
-	<span class="i3"></span>
+<a href="/catalog/" class="catalog__trigger" aria-label="Каталог товаров">
+	<i class="fa fa-bars header__fa-icon" aria-hidden="true"></i>
 </a>
 
 <a href="/catalog/"  class="catalog__name">Каталог товаров</a>

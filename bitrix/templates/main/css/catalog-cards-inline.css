@@ -1,0 +1,426 @@
+/* inlined last — beats async BX.setCSSList */
+
+/* search page: categories grid + full-width content */
+.search-page-layout .ct__content {
+    float: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+.search-page-layout .product_top {
+    width: 100% !important;
+}
+.search-page-layout .catalog_top {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+.search-page-layout .catalog_top .item_c {
+    float: none !important;
+    flex: 0 0 140px !important;
+    width: 140px !important;
+    margin: 0 !important;
+}
+@media screen and (max-width: 659px) {
+    .search-page-layout .catalog_top {
+        justify-content: center !important;
+    }
+}
+
+/* header icons — inline last, beats template_styles left:20px on badge */
+header .header__bottom .header__cart:before {
+    display: none !important;
+    content: none !important;
+}
+header .header__bottom .header__cart .header__cart-icon .cart__number,
+header .header__bottom .header__cart .cart__number,
+header .cart__number {
+    position: absolute !important;
+    top: -4px !important;
+    right: -5px !important;
+    left: auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 15px !important;
+    height: 15px !important;
+    padding: 0 3px !important;
+    box-sizing: border-box !important;
+    line-height: 1 !important;
+    font-size: 9px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0 !important;
+    border-radius: 999px !important;
+    text-align: center !important;
+}
+
+/* header hover — inline last, beats fixed icon !important */
+header .header__bottom .header__catalog,
+header .header__bottom .header__account,
+header .header__bottom .header__cart {
+    transition: background-color .2s ease, color .2s ease !important;
+}
+header .header__bottom .header__catalog:hover {
+    background: #fff !important;
+    color: #0358a6 !important;
+}
+header .header__bottom .header__catalog:hover .catalog__name {
+    color: #0358a6 !important;
+}
+header .header__bottom .header__catalog:hover .catalog__trigger,
+header .header__bottom .header__catalog:hover .header__fa-icon {
+    color: #0358a6 !important;
+}
+header .header__bottom .header__account:hover,
+header .header__bottom .header__cart:hover {
+    color: #ffd400 !important;
+}
+header .header__bottom .header__account:hover .header__fa-icon,
+header .header__bottom .header__cart:hover .header__fa-icon,
+header .header__bottom .header__cart:hover .cart__sum,
+header .header__bottom .header__cart:hover .cart__sum--numbers {
+    color: #ffd400 !important;
+}
+header .header__bottom .header__cart:hover .cart__number {
+    background-color: #ffd400 !important;
+    color: #0358a6 !important;
+}
+header .header__bottom.fixed .header__catalog:hover {
+    background: #e8f3fc !important;
+    color: #0358a6 !important;
+}
+header .header__bottom.fixed .header__catalog:hover .catalog__name,
+header .header__bottom.fixed .header__catalog:hover .header__fa-icon {
+    color: #0358a6 !important;
+}
+header .header__bottom.fixed .header__account:hover,
+header .header__bottom.fixed .header__cart:hover,
+header .header__bottom.fixed .header__account:hover .header__fa-icon,
+header .header__bottom.fixed .header__cart:hover .header__fa-icon,
+header .header__bottom.fixed .header__cart:hover .cart__sum,
+header .header__bottom.fixed .header__cart:hover .cart__sum--numbers {
+    color: #ffd400 !important;
+}
+header .header__bottom.fixed .header__cart:hover .cart__number {
+    background-color: #ffd400 !important;
+    color: #0358a6 !important;
+}
+
+@media screen and (min-width: 660px) {
+.products_roll .pr_box .item {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 510px !important;
+    box-sizing: border-box !important;
+}
+.products_roll .pr_box .item .hover {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    width: 100% !important;
+}
+.products_roll .pr_box .item .hover .inner {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    min-height: 100% !important;
+    height: 100% !important;
+    width: 100% !important;
+    padding: 0 10px 0 !important;
+    box-sizing: border-box !important;
+}
+.products_roll .pr_box .item .hover .inner::after {
+    flex: 0 0 16px !important;
+    height: 16px !important;
+}
+.products_roll .pr_box .item .hover .inner .pic {
+    position: relative !important;
+    display: block !important;
+    width: calc(100% + 20px) !important;
+    margin: 0 -10px !important;
+    min-height: 293px !important;
+    max-height: 293px !important;
+    height: 293px !important;
+    flex: 0 0 293px !important;
+    overflow: hidden !important;
+    line-height: 0 !important;
+    font-size: 0 !important;
+    background: #f3f5f7 !important;
+    aspect-ratio: 220 / 293 !important;
+}
+.products_roll .pr_box .item .hover .inner .pic .pic-slides {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.products_roll .pr_box .item .hover .inner .pic .pic-slide,
+.products_roll .pr_box .item .hover .inner .pic img {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    display: block !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+}
+.products_roll .pr_box .item .hover .inner .pic img.polimer-photo-fit,
+.products_roll .pr_box .item .hover .inner .pic .pic-slide.polimer-photo-fit {
+    object-fit: contain !important;
+}
+.products_roll .pr_box .item .hover .inner .pic:not(.has-slider) .pic-slide {
+    opacity: 1 !important;
+}
+.products_roll .pr_box .item .hover .inner .pic.has-slider .pic-slide {
+    opacity: 0 !important;
+    transition: opacity .15s ease !important;
+}
+.products_roll .pr_box .item .hover .inner .pic.has-slider .pic-slide.active {
+    opacity: 1 !important;
+}
+.products_roll .pr_box .item .hover .inner .pic img[src*="no_photo"],
+.products_roll .pr_box .item .hover .inner .pic .pic-slide[src*="no_photo"] {
+    object-fit: contain !important;
+    width: 46% !important;
+    height: 46% !important;
+    max-width: 46% !important;
+    max-height: 46% !important;
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
+    opacity: .55 !important;
+}
+.products_roll .pr_box .item .hover .inner .title {
+    flex: 0 0 72px !important;
+    min-height: 72px !important;
+    max-height: 72px !important;
+    height: 72px !important;
+    overflow: hidden !important;
+}
+.products_roll .pr_box .item .hover .inner .card-meta {
+    flex: 0 0 54px !important;
+    min-height: 54px !important;
+    max-height: 54px !important;
+    height: 54px !important;
+}
+.products_roll .pr_box .item .hover .inner .card-footer {
+    margin-top: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+.products_roll .pr_box .item .hover .inner .card-footer .cost,
+.products_roll .pr_box .item .hover .inner .card-footer .noprice {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    bottom: auto !important;
+    margin-top: 0 !important;
+}
+.products_roll .pr_box .item .hover .inner .card-footer .add2cart,
+.products_roll .pr_box .item .hover .inner .card-footer .add2cartOrder {
+    position: relative !important;
+    display: block !important;
+    width: 160px !important;
+    height: 40px !important;
+    padding-left: 30px !important;
+    line-height: 40px !important;
+    top: auto !important;
+    left: auto !important;
+    bottom: auto !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+}
+.products_roll .pr_box .item .hover .inner .card-footer .add2cart:before,
+.products_roll .pr_box .item .hover .inner .card-footer .add2cartOrder:before {
+    position: absolute !important;
+    display: block !important;
+    content: '' !important;
+    width: 18px !important;
+    height: 15px !important;
+    left: 17px !important;
+    top: 50% !important;
+    margin-top: -7.5px !important;
+    background: url('/bitrix/templates/main/img/card/add2cart.png') no-repeat center / contain !important;
+}
+.products_roll .pr_box {
+    padding-bottom: 24px !important;
+}
+
+/* add2cart2 popup — must be last, beats template_styles + card layout above */
+.products_roll .pr_box .item.add2cart2 {
+    position: relative !important;
+    z-index: 300 !important;
+}
+.products_roll .pr_box .item.add2cart2:hover .hover,
+.products_roll .pr_box .item.add2cart2 .hover {
+    position: absolute !important;
+    left: 50% !important;
+    right: auto !important;
+    top: 0 !important;
+    transform: translateX(-50%) !important;
+    width: 252px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: none !important;
+    border-radius: 12px !important;
+    border-color: #0464bb !important;
+    overflow: hidden !important;
+    box-shadow: 0 14px 36px rgba(4, 100, 187, 0.24), 0 4px 14px rgba(0, 0, 0, 0.12) !important;
+    z-index: 301 !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    text-align: center !important;
+    position: relative !important;
+    padding: 14px 18px 24px !important;
+    min-height: 0 !important;
+    height: auto !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    top: auto !important;
+    left: auto !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner::after {
+    flex: 0 0 0 !important;
+    height: 0 !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .close {
+    display: block !important;
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    left: auto !important;
+    z-index: 5 !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .pic,
+.products_roll .pr_box .item.add2cart2 .hover .inner .compare,
+.products_roll .pr_box .item.add2cart2 .hover .inner .card-meta {
+    display: none !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .title {
+    flex: 0 0 auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    height: auto !important;
+    width: 100% !important;
+    margin: 24px 0 18px !important;
+    padding: 0 6px !important;
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+    text-align: center !important;
+    overflow: visible !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .card-footer {
+    margin-top: 0 !important;
+    padding-bottom: 0 !important;
+    gap: 16px !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .card-footer .cost,
+.products_roll .pr_box .item.add2cart2 .hover .inner .cost,
+.products_roll .pr_box .item.add2cart2 .hover .inner .cost-old,
+.products_roll .pr_box .item.add2cart2 .hover .inner .noprice {
+    position: static !important;
+    bottom: auto !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    margin: 0 !important;
+    text-align: center !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .quantity {
+    position: relative !important;
+    display: block !important;
+    top: auto !important;
+    left: auto !important;
+    margin: 0 auto !important;
+    width: 150px !important;
+    height: 34px !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .quantity:before,
+.products_roll .pr_box .item.add2cart2 .hover .inner .quantity:after {
+    display: none !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .cost_total {
+    position: static !important;
+    display: block !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 14px 0 4px !important;
+    border-top: 1px dashed #cfd8df !important;
+    font: 700 17px/1.3 'roboto', sans-serif !important;
+    text-align: center !important;
+    color: #333 !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .add2cart,
+.products_roll .pr_box .item.add2cart2 .hover .inner .card-footer .add2cart {
+    position: relative !important;
+    bottom: auto !important;
+    top: auto !important;
+    left: auto !important;
+    margin: 8px auto 0 !important;
+    margin-left: auto !important;
+    width: 100% !important;
+    max-width: 210px !important;
+    height: 50px !important;
+    padding: 0 16px 0 42px !important;
+    line-height: 50px !important;
+    border-radius: 10px !important;
+    background: #59bf26 !important;
+    box-sizing: border-box !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .add2cart .txt1 {
+    display: none !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .add2cart .txt2 {
+    display: block !important;
+    position: static !important;
+    height: auto !important;
+    bottom: auto !important;
+    padding: 0 !important;
+    line-height: 50px !important;
+    font: 600 15px/50px 'roboto', sans-serif !important;
+    text-align: center !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .add2cart:before {
+    width: 22px !important;
+    height: 18px !important;
+    top: 50% !important;
+    left: 16px !important;
+    margin: 0 !important;
+    transform: translateY(-50%) !important;
+}
+}
