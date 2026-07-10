@@ -56,12 +56,12 @@ $inCompare = inCompare($arItem['IBLOCK_ID'], $arItem['ID']);
 // собираем кадры hover-слайдера превью: основное фото + дополнительные
 $sliderImages = [];
 if (!empty($arItem['PREVIEW_PICTURE']['ID'])) {
-	$sliderImages[] = resizeImage($arItem['PREVIEW_PICTURE']['ID'], 220, 293);
+	$sliderImages[] = resizeCatalogCardImage($arItem['PREVIEW_PICTURE']['ID'], 220, 293);
 }
 
 if (!empty($arItem['PROPERTIES']['MORE_PHOTO']['VALUE']) && is_array($arItem['PROPERTIES']['MORE_PHOTO']['VALUE'])) {
 	foreach ($arItem['PROPERTIES']['MORE_PHOTO']['VALUE'] as $id) {
-		$src = resizeImage($id, 220, 293);
+		$src = resizeCatalogCardImage($id, 220, 293);
 		if ($src) {
 			$sliderImages[] = $src;
 		}

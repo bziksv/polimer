@@ -82,7 +82,12 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 		Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/jquery.bpopup.min.js');
 
 		Asset::getInstance()->addJs('/js/readmore.js');
-		Asset::getInstance()->addJs('/js/function.js');
+		$functionJsPath = $_SERVER['DOCUMENT_ROOT'] . '/js/function.js';
+		$functionJsUrl = '/js/function.js';
+		if (is_file($functionJsPath)) {
+			$functionJsUrl .= '?' . filemtime($functionJsPath);
+		}
+		Asset::getInstance()->addJs($functionJsUrl);
 		?>
 
 

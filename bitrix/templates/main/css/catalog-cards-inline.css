@@ -152,8 +152,8 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     overflow: hidden !important;
     line-height: 0 !important;
     font-size: 0 !important;
-    background: #f3f5f7 !important;
-    aspect-ratio: 220 / 293 !important;
+    background: #fff !important;
+    aspect-ratio: 3 / 4 !important;
 }
 .products_roll .pr_box .item .hover .inner .pic .pic-slides {
     position: absolute !important;
@@ -164,27 +164,36 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     overflow: hidden !important;
     margin: 0 !important;
     padding: 0 !important;
+    background: #fff !important;
 }
 .products_roll .pr_box .item .hover .inner .pic .pic-slide,
 .products_roll .pr_box .item .hover .inner .pic img {
     position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    width: auto !important;
-    height: auto !important;
-    max-width: none !important;
-    max-height: none !important;
+    inset: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     border: 0 !important;
     display: block !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    box-sizing: border-box !important;
+}
+.products_roll .pr_box .item .hover .inner .pic img.polimer-photo-contain,
+.products_roll .pr_box .item .hover .inner .pic .pic-slide.polimer-photo-contain {
     object-fit: contain !important;
     object-position: center center !important;
 }
-.products_roll .pr_box .item .hover .inner .pic img.polimer-photo-fit,
-.products_roll .pr_box .item .hover .inner .pic .pic-slide.polimer-photo-fit {
-    object-fit: contain !important;
+.products_roll .pr_box .item .hover .inner .pic img.polimer-photo-cover,
+.products_roll .pr_box .item .hover .inner .pic .pic-slide.polimer-photo-cover {
+    object-fit: cover !important;
+    object-position: center center !important;
 }
 .products_roll .pr_box .item .hover .inner .pic:not(.has-slider) .pic-slide {
     opacity: 1 !important;

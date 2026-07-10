@@ -1772,6 +1772,44 @@ function resizeImage($id, $w, $h){
     return CFile::GetPath($id) ?: $no_photo_path;
 }
 
+function resizeCatalogCardImage($id, $w, $h)
+{
+    $noPhotoPath = '/bitrix/templates/main/img/no_photo.png';
+
+    if (!isImageExists($id)) {
+        return $noPhotoPath;
+    }
+
+    $file = CFile::GetFileArray($id);
+    $frameAspect = $w / $h;
+    $origAspect = 0;
+
+    if (!empty($file['WIDTH']) && !empty($file['HEIGHT'])) {
+        $origAspect = (float)$file['WIDTH'] / (float)$file['HEIGHT'];
+    }
+
+    $resizeType = BX_RESIZE_IMAGE_PROPORTIONAL;
+    if ($origAspect > $frameAspect || ($origAspect >= 1 && $origAspect >= $frameAspect * 0.9)) {
+        $resizeType = BX_RESIZE_IMAGE_PROPORTIONAL_ALT;
+    }
+
+    $resized = CFile::ResizeImageGet(
+        $id,
+        ['width' => $w, 'height' => $h],
+        $resizeType,
+        true,
+        false,
+        false,
+        85
+    );
+
+    if (!empty($resized['src'])) {
+        return $resized['src'];
+    }
+
+    return CFile::GetPath($id) ?: $noPhotoPath;
+}
+
 function isImageExists($fileId) {
     if (!is_numeric($fileId) || empty($fileId)) {
         return false;
