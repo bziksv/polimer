@@ -30,7 +30,7 @@ else
 	if ($bFileExists)
 	{
 		$file_size = filesize( $log_file_name );
-		$file_time = ConvertTimeStamp( filemtime($log_file_name), FULL );
+		$file_time = ConvertTimeStamp( filemtime($log_file_name), "FULL" );
 	}
 
 

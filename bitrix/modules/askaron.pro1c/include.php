@@ -575,7 +575,7 @@ class CAskaronPro1C
 							'module_id' => 'askaron.pro1c',
 							'command' => 'live_log',
 							'params' => Array(
-								"TIME" => ConvertTimeStamp(false, FULL),
+								"TIME" => ConvertTimeStamp(false, "FULL"),
 								"URL" => $_SERVER["REQUEST_URI"],
 								"DATA" => $content_converted,
 							)
@@ -596,7 +596,7 @@ class CAskaronPro1C
 					'command' => 'live_log',
 					'params' => Array(
 						"URL" => "test",
-						"TIME" => ConvertTimeStamp(false, FULL),
+						"TIME" => ConvertTimeStamp(false, "FULL"),
 						"DATA" => GetMessage("askaron_pro1c_live_log_works")
 					)
 				)
@@ -756,7 +756,7 @@ class CAskaronPro1C
 		$timestamp = COption::GetOptionString( $module, $option_name );
 		if ( strlen( $timestamp ) > 0 )
 		{
-			$result = ConvertTimeStamp( $timestamp, FULL);				
+			$result = ConvertTimeStamp( $timestamp, "FULL");				
 		}
 		
 		if ( strlen( $result ) <= $default_value )
@@ -777,7 +777,7 @@ class CAskaronPro1C
 			$format = "YYYY-MM-DD HH:MI:SS";
 			if ($stmp = MakeTimeStamp($datetime, $format) )
 			{
-				$result = ConvertTimeStamp( $stmp, FULL);				
+				$result = ConvertTimeStamp( $stmp, "FULL");				
 			}
 		}
 		else
