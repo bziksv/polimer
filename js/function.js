@@ -592,6 +592,11 @@ $(function () {
     polimerInitViewedProductsSlider();
 });
 
+function polimerIsMobileFilterView()
+{
+	return window.matchMedia('(max-width: 1019px)').matches;
+}
+
 function polimerEnsureMobileFilterLayer() {
     var $leftbar = $('.ct__leftbar');
     var $mask = $('.ct__mask');
@@ -607,7 +612,7 @@ function polimerEnsureMobileFilterLayer() {
 }
 
 function polimerDockFilterResultBar() {
-    if (!window.matchMedia('(max-width: 659px)').matches) {
+    if (!polimerIsMobileFilterView()) {
         return;
     }
 
@@ -648,7 +653,7 @@ function polimerToggleMobileFilter() {
 }
 
 $(function () {
-    var mobileFilterMq = window.matchMedia('(max-width: 659px)');
+    var mobileFilterMq = window.matchMedia('(max-width: 1019px)');
 
     function isMobileFilterView() {
         return mobileFilterMq.matches;

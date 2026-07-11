@@ -1268,14 +1268,56 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         top: 0 !important;
         z-index: 301 !important;
         background: #fff !important;
+        height: auto !important;
+        min-height: 0 !important;
+        padding-top: 12px !important;
+        padding-bottom: 12px !important;
+        box-sizing: border-box !important;
     }
     header.is-scrolled .hmobile {
         box-shadow: 0 4px 15px rgba(4, 6, 4, 0.08) !important;
     }
     header .hmobile.hmobile--search-open {
         height: auto !important;
-        min-height: 80px !important;
+        min-height: 0 !important;
         overflow: visible !important;
+    }
+    header.polimer-header--mobile-search-open,
+    body.polimer-search-open header.polimer-header--mobile-search-open,
+    body.polimer-search-open header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        z-index: 303 !important;
+        background: #fff !important;
+    }
+    header.polimer-header--mobile-search-open .hmobile {
+        position: relative !important;
+        top: auto !important;
+    }
+    header .hmobile .hmobile__logo img {
+        display: block !important;
+        max-height: 36px !important;
+        width: auto !important;
+    }
+    header .hmobile .hmobile__phone .fa-2x,
+    header .hmobile .hmobile__phone .fa-phone {
+        font-size: 28px !important;
+        line-height: 1 !important;
+        color: #0464bb !important;
+    }
+    header .hmobile .hmobile__phone {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 28px !important;
+        height: 28px !important;
+        padding: 0 !important;
+        float: none !important;
+        text-decoration: none !important;
+        box-sizing: border-box !important;
     }
     header .hmobile .hmobile__cart {
         background-image: none !important;
@@ -1326,10 +1368,11 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     }
 }
 
-/* mobile/tablet header 380–1019px: иконка поиска там, где есть место */
-@media screen and (min-width: 380px) and (max-width: 1019px) {
+/* mobile header 380–767px: иконка поиска + раскрывающаяся панель */
+@media screen and (min-width: 380px) and (max-width: 767px) {
     header .hmobile .wr {
         display: flex !important;
+        flex-wrap: wrap !important;
         align-items: center !important;
         gap: 14px !important;
         padding-left: 16px !important;
@@ -1348,7 +1391,8 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         margin: 0 !important;
         flex: 0 0 auto !important;
     }
-    header .hmobile .hmobile__search {
+    header .hmobile .hmobile__search,
+    header .hmobile.hmobile--search-open .hmobile__search {
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -1369,6 +1413,8 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         color: #0464bb !important;
     }
     header .hmobile .hmobile__search-panel {
+        flex: 1 1 100% !important;
+        order: 10 !important;
         display: none !important;
         visibility: hidden !important;
         height: 0 !important;
@@ -1386,8 +1432,8 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         overflow: visible !important;
         pointer-events: auto !important;
         position: relative;
-        padding: 8px 16px 10px;
-        border-top: 1px solid #eef2f7;
+        padding: 0 0 10px !important;
+        border-top: none !important;
         background: #fff;
         box-sizing: border-box;
     }
@@ -1404,6 +1450,7 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         overflow: hidden !important;
         padding-left: 14px !important;
         padding-right: 44px !important;
+        border: 1px solid #e5e5e5 !important;
     }
     header .hmobile .hmobile__search-panel .header__search .search__input {
         width: 100% !important;
@@ -1412,6 +1459,33 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         font-size: 16px !important;
         box-sizing: border-box !important;
         background: transparent !important;
+    }
+    header .hmobile .hmobile__search-panel .header__search .search__close {
+        display: none !important;
+        position: absolute !important;
+        top: 50% !important;
+        right: 40px !important;
+        left: auto !important;
+        transform: translateY(-50%) !important;
+        width: 32px !important;
+        height: 32px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        background: none !important;
+        color: #7a8799 !important;
+        cursor: pointer !important;
+        align-items: center !important;
+        justify-content: center !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+    }
+    header .hmobile .hmobile__search-panel.is-open .header__search .search__close {
+        display: none !important;
+    }
+    header .hmobile .hmobile__search-panel .header__search .search__close .fa {
+        font-size: 18px !important;
+        line-height: 1 !important;
     }
     header .hmobile .hmobile__search-panel .header__search .search__btn {
         position: absolute !important;
@@ -1429,11 +1503,146 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     }
 }
 
-/* tablet mobile menu — 660–1019px: .wr was 1000px, float grid broke icons */
+/* tablet header 768–1019px: поиск в одной строке после лого */
+@media screen and (min-width: 768px) and (max-width: 1019px) {
+    header .hmobile .wr {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        box-sizing: border-box !important;
+    }
+    header .hmobile .hmobile__logo {
+        margin-right: 0 !important;
+        float: none !important;
+        flex: 0 0 auto !important;
+    }
+    header .hmobile .hmobile__search {
+        display: none !important;
+    }
+    header .hmobile .hmobile__search-panel {
+        display: block !important;
+        visibility: visible !important;
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        width: auto !important;
+        height: auto !important;
+        overflow: visible !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: 0 !important;
+        pointer-events: auto !important;
+    }
+    header .hmobile .hmobile__phone,
+    header .hmobile .hmobile__cart,
+    header .hmobile .menu__trigger {
+        float: none !important;
+        margin: 0 !important;
+        flex: 0 0 auto !important;
+    }
+    header .hmobile .menu__trigger {
+        display: inline-flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 28px !important;
+        height: 28px !important;
+        padding: 0 !important;
+        margin-top: 0 !important;
+        box-sizing: border-box !important;
+    }
+    header .hmobile .menu__trigger span {
+        width: 28px !important;
+        margin-bottom: 5px !important;
+    }
+    header .hmobile .menu__trigger span:last-child {
+        margin-bottom: 0 !important;
+    }
+    header .hmobile .hmobile__search-panel .header__search {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+    header .hmobile .hmobile__search-panel .header__search .search {
+        width: 100% !important;
+        height: 40px !important;
+        border-radius: 5px !important;
+        box-sizing: border-box !important;
+        position: relative !important;
+        overflow: hidden !important;
+        padding-left: 14px !important;
+        padding-right: 40px !important;
+        border: 1px solid #e5e5e5 !important;
+        background: #fff !important;
+    }
+    header .hmobile .hmobile__search-panel .header__search .search__input {
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        font-size: 15px !important;
+        box-sizing: border-box !important;
+        background: transparent !important;
+    }
+    header .hmobile .hmobile__search-panel .header__search .search__btn {
+        position: absolute !important;
+        top: 50% !important;
+        right: 4px !important;
+        left: auto !important;
+        transform: translateY(-50%) !important;
+        width: 32px !important;
+        height: 32px !important;
+        margin: 0 !important;
+        float: none !important;
+    }
+    header .hmobile .hmobile__search-panel .header__search .search__close {
+        display: none !important;
+        position: absolute !important;
+        top: 50% !important;
+        right: 36px !important;
+        left: auto !important;
+        transform: translateY(-50%) !important;
+        width: 32px !important;
+        height: 32px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        background: none !important;
+        color: #7a8799 !important;
+        cursor: pointer !important;
+        align-items: center !important;
+        justify-content: center !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+    }
+    body.polimer-search-open header .hmobile .hmobile__search-panel .header__search .search__close {
+        display: inline-flex !important;
+    }
+    body.polimer-search-open header .hmobile .hmobile__search-panel .header__search .search {
+        padding-right: 72px !important;
+        box-shadow: 0 0 0 2px rgba(4, 100, 187, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+    }
+    body.polimer-search-open header,
+    body.polimer-search-open header.polimer-header--mobile-search-open {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        z-index: 303 !important;
+        background: #fff !important;
+    }
+}
+
+/* tablet mobile menu — 660–1019px */
 @media screen and (min-width: 660px) and (max-width: 1019px) {
     header .mm__wrap {
-        padding-top: 100px !important;
+        padding-top: 64px !important;
     }
+}
+
+/* tablet mobile menu — 660–767px */
+@media screen and (min-width: 660px) and (max-width: 767px) {
     header .mm__wrap .wr {
         width: 100% !important;
         max-width: 100% !important;
@@ -1618,8 +1827,8 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     }
 }
 
-/* mobile catalog filter — fullscreen panel below sticky header */
-@media screen and (max-width: 659px) {
+/* mobile/tablet catalog filter — fullscreen panel below sticky header (≤1019px) */
+@media screen and (max-width: 1019px) {
     body.polimer-filter-open {
         overflow: hidden !important;
     }
@@ -1628,7 +1837,7 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     }
     .ct__leftbar {
         position: fixed !important;
-        top: 80px !important;
+        top: 64px !important;
         left: 0 !important;
         right: 0 !important;
         bottom: 0 !important;
@@ -1654,7 +1863,7 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         display: none !important;
     }
     .ct__leftbar.active {
-        top: 80px !important;
+        top: 64px !important;
         left: 0 !important;
         transform: none !important;
         pointer-events: auto !important;
@@ -1719,7 +1928,7 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     }
     .ct__mask {
         position: fixed !important;
-        top: 80px !important;
+        top: 64px !important;
         left: 0 !important;
         right: 0 !important;
         bottom: 0 !important;
@@ -1732,7 +1941,7 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         pointer-events: none !important;
     }
     .ct__mask.active {
-        top: 80px !important;
+        top: 64px !important;
         opacity: 1 !important;
         z-index: 990 !important;
         pointer-events: auto !important;
@@ -1743,11 +1952,94 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     .products_roll .pr_header .filter.change span:nth-child(2) {
         display: none !important;
     }
-    .products_roll .pr_header .filter {
+    .products_roll .pr_header .filter,
+    .products_roll .pr_header .filter.change {
         position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        float: left !important;
+        width: 50% !important;
+        max-width: none !important;
+        height: auto !important;
+        min-height: 40px !important;
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        margin: 0 !important;
+        padding: 10px 8px !important;
+        background: #0060bf !important;
+        border: 0 !important;
+        border-right: 1px solid #fff !important;
+        border-radius: 0 !important;
+        box-sizing: border-box !important;
+        font: 500 13px/20px 'roboto', sans-serif !important;
+        text-align: center !important;
+        color: #fff !important;
+        text-decoration: none !important;
         z-index: 2 !important;
         pointer-events: auto !important;
         cursor: pointer !important;
+        overflow: hidden !important;
+    }
+    .products_roll .pr_header .filter span {
+        display: block !important;
+        width: auto !important;
+        height: auto !important;
+        line-height: 20px !important;
+        float: none !important;
+    }
+    .products_roll .pr_header .filter span:nth-child(1) {
+        display: block !important;
+    }
+    .products_roll .pr_header .filter span:nth-child(2) {
+        display: none !important;
+    }
+    .products_roll .pr_header .filter.change span:nth-child(1) {
+        display: block !important;
+    }
+    .products_roll .pr_header .filter.change span:nth-child(2) {
+        display: none !important;
+    }
+    .products_roll .pr_header {
+        padding: 0 !important;
+        background: none !important;
+        border: 0 !important;
+        overflow: hidden !important;
+    }
+    .products_roll .pr_header .sort {
+        width: 50% !important;
+        float: right !important;
+        margin: 0 !important;
+    }
+    .products_roll .pr_header .sort .ui-selectmenu-button,
+    .products_roll .pr_header .sort #select_prh-button {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        min-height: 40px !important;
+        margin: 0 !important;
+        padding: 10px 8px !important;
+        background: #0060bf !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-sizing: border-box !important;
+        font: 500 13px/20px 'roboto', sans-serif !important;
+        text-align: center !important;
+        color: #fff !important;
+    }
+    .products_roll .pr_header .sort .ui-selectmenu-button .ui-selectmenu-text,
+    .products_roll .pr_header .sort #select_prh-button .ui-selectmenu-text {
+        margin-right: 0 !important;
+    }
+    .products_roll .pr_header .sort .ui-selectmenu-button .ui-selectmenu-icon,
+    .products_roll .pr_header .sort #select_prh-button .ui-selectmenu-icon,
+    .products_roll .pr_header .sort #select_prh-button .ui-icon {
+        display: none !important;
+    }
+    .products_roll .pr_header .quan {
+        display: none !important;
     }
     .ct__leftbar.active .cat.filter .cat-li {
         position: relative !important;
