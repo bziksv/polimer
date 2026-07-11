@@ -393,25 +393,32 @@
     .products_roll .pr_box .item .hover .inner .compare {
         grid-column: 2 !important;
         grid-row: 1 !important;
-        position: relative !important;
-        justify-self: end !important;
-        align-self: start !important;
-        display: block !important;
-        z-index: 5 !important;
-        padding: 2px 5px !important;
-        margin: 0 !important;
+        position: static !important;
+        display: flex !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+        width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
+        margin: 0 0 4px !important;
+        padding: 0 !important;
+        z-index: 1 !important;
+    }
+    .products_roll .pr_box .item .hover .inner .compare label {
+        display: inline-flex !important;
+        align-items: center !important;
+        margin: 0 !important;
     }
     .products_roll .pr_box .item .hover .inner .compare input[type="checkbox"] + span {
         font-size: 10px !important;
         line-height: 14px !important;
         padding-right: 16px !important;
+        white-space: nowrap !important;
     }
     .products_roll .pr_box .item .hover .inner .title {
         grid-column: 2 !important;
         grid-row: 2 !important;
-        position: relative !important;
+        position: static !important;
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
@@ -424,12 +431,13 @@
         -webkit-line-clamp: 3 !important;
         overflow: hidden !important;
         padding: 0 !important;
-        margin: 0 !important;
+        margin: 0 0 2px !important;
         font-size: 13px !important;
         line-height: 1.3 !important;
         text-align: left !important;
         color: #0464bb !important;
         background: transparent !important;
+        clear: both !important;
     }
     .products_roll .pr_box .item .hover .inner .card-meta {
         grid-column: 2 !important;
