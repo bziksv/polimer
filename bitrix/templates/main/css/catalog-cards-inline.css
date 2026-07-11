@@ -1603,6 +1603,79 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         pointer-events: auto !important;
         cursor: pointer !important;
     }
+    .ct__leftbar.active .cat.filter .cat-li {
+        position: relative !important;
+    }
+    .ct__leftbar.active .bx-filter-container-modef {
+        position: static !important;
+        display: block !important;
+        width: 100% !important;
+        min-height: 0 !important;
+    }
+    .ct__leftbar.active #modef,
+    .ct__leftbar.active .bx-filter .bx-filter-popup-result,
+    body.polimer-filter-open #modef.bx-filter-popup-result {
+        position: fixed !important;
+        left: 12px !important;
+        right: 12px !important;
+        bottom: 16px !important;
+        top: auto !important;
+        width: auto !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 12px 14px !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 6px 10px !important;
+        z-index: 1100 !important;
+        background: #fff !important;
+        border: 1px solid #c6dae7 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14) !important;
+        white-space: normal !important;
+        min-height: 0 !important;
+        line-height: 1.35 !important;
+        font-size: 13px !important;
+        color: #333 !important;
+        border-image: none !important;
+        -webkit-border-image: none !important;
+    }
+    .ct__leftbar.active .bx-filter-popup-result.left,
+    .ct__leftbar.active .bx-filter-popup-result.right {
+        left: 12px !important;
+        right: 12px !important;
+    }
+    .ct__leftbar.active .bx-filter-popup-result .arrow,
+    body.polimer-filter-open #modef .arrow {
+        display: none !important;
+    }
+    .ct__leftbar.active .bx-filter-popup-result br,
+    body.polimer-filter-open #modef br {
+        display: none !important;
+    }
+    .ct__leftbar.active .bx-filter-popup-result a,
+    body.polimer-filter-open #modef a {
+        display: inline-block !important;
+        flex: 0 0 auto !important;
+        margin: 0 !important;
+        padding: 8px 14px !important;
+        background: #0060bf !important;
+        color: #fff !important;
+        border-radius: 5px !important;
+        font: 500 13px/1.2 'roboto', sans-serif !important;
+        text-decoration: none !important;
+        white-space: nowrap !important;
+    }
+    .ct__leftbar.active .bx-filter-popup-result a:hover,
+    body.polimer-filter-open #modef a:hover {
+        color: #fff !important;
+        background: #0053a6 !important;
+    }
+    .ct__leftbar.active .cat.filter.open {
+        padding-bottom: 80px !important;
+    }
 }
 
 /* «Вы смотрели» — swipe affordance + card layout */
