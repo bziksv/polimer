@@ -1205,7 +1205,11 @@ function polimerSearchCatalogAllIds($query, $iblockId = IBLOCK_CATALOG, $maxIds 
             continue;
 
         $filter = polimerBuildCatalogTokenFilter($tokens, $iblockId, $fullText);
-        $ids = polimerFetchCatalogElementIds($filter, 0);
+        $remaining = $maxIds - count($allIds);
+        if ($remaining <= 0)
+            break;
+
+        $ids = polimerFetchCatalogElementIds($filter, $remaining);
 
         foreach ($ids as $id)
         {
@@ -1277,8 +1281,8 @@ function polimerEnhanceSearchPageResult(array &$arResult, array $arParams)
         return;
 
     $iblockId = IBLOCK_CATALOG;
-    $catalogIds = polimerSearchCatalogAllIds($query, $iblockId, 50000, true);
-    $bitrixIds = polimerSearchBitrixCatalogIds($query, $arParams, $iblockId, 50000);
+    $catalogIds = polimerSearchCatalogAllIds($query, $iblockId, 5000, true);
+    $bitrixIds = polimerSearchBitrixCatalogIds($query, $arParams, $iblockId, 5000);
 
     $seen = array_fill_keys($catalogIds, true);
     $allIds = $catalogIds;
@@ -1429,6 +1433,23 @@ function polimerDisableCompositeForDynamicPages()
 
         if (class_exists('\Bitrix\Main\Composite\Helper'))
             \Bitrix\Main\Composite\Helper::setEnabled(false);
+
+        polimerDisableSeometaBufferHandlerForSearch();
+    }
+}
+
+function polimerDisableSeometaBufferHandlerForSearch()
+{
+    if (!function_exists('GetModuleEvents') || !function_exists('RemoveEventHandler'))
+        return;
+
+    foreach (GetModuleEvents('main', 'OnEndBufferContent', true) as $key => $event)
+    {
+        if (($event['TO_MODULE_ID'] ?? '') !== 'sotbit.seometa')
+            continue;
+
+        if (($event['TO_METHOD'] ?? '') === 'ChangeContent')
+            RemoveEventHandler('main', 'OnEndBufferContent', $key);
     }
 }
 

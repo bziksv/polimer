@@ -1,5 +1,6 @@
 <?
 define('BX_COMPOSITE_DISABLE', true);
+@ini_set('memory_limit', '256M');
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Поиск");
