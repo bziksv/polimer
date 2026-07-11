@@ -265,7 +265,19 @@
         padding: 0 12px 14px !important;
     }
 
-    /* mobile product cards — compact grid layout */
+    .products_roll .pr_box .item,
+    .products_roll .pr_box .item .hover,
+    .products_roll .pr_box .item .hover .inner {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .products_roll .pr_box {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+    }
+
+    /* mobile product cards — photo left, info column right */
     .products_roll .pr_box .item {
         position: relative !important;
         float: none !important;
@@ -274,62 +286,67 @@
         height: auto !important;
         min-height: 0 !important;
         margin: 0 0 10px !important;
+        overflow: visible !important;
     }
     .products_roll .pr_box .item .hover {
         display: block !important;
         height: auto !important;
         width: 100% !important;
         min-height: 0 !important;
+        overflow: visible !important;
     }
     .products_roll .pr_box .item .hover .inner {
         position: relative !important;
         display: grid !important;
-        grid-template-columns: minmax(118px, 38%) 1fr;
-        grid-template-areas:
-            "title title"
-            "pic meta"
-            "pic price"
-            "qty cart";
-        gap: 6px 8px !important;
+        grid-template-columns: 110px minmax(0, 1fr) !important;
+        grid-template-rows: auto auto auto auto !important;
+        gap: 4px 8px !important;
+        align-items: start !important;
         width: 100% !important;
+        max-width: 100% !important;
         height: auto !important;
         min-height: 0 !important;
         padding: 8px !important;
+        margin: 0 !important;
+        left: auto !important;
+        top: auto !important;
         box-sizing: border-box !important;
-        overflow: visible !important;
+        overflow: hidden !important;
     }
     .products_roll .pr_box .item .hover .inner::after {
         display: none !important;
         height: 0 !important;
         flex: none !important;
     }
-    .products_roll .pr_box .item .hover .inner .compare {
-        grid-area: title !important;
-        position: relative !important;
-        justify-self: end !important;
-        align-self: start !important;
-        top: auto !important;
-        right: auto !important;
-        left: auto !important;
-        z-index: 5 !important;
-        padding: 2px 5px !important;
-        max-width: 82px !important;
-        margin: 0 !important;
+    .products_roll .pr_box .item .hover .inner .close {
+        display: none !important;
     }
-    .products_roll .pr_box .item .hover .inner .compare input[type="checkbox"] + span {
-        font-size: 10px !important;
-        line-height: 14px !important;
-        padding-right: 16px !important;
+    /* сброс legacy mobile absolute offsets из template_styles */
+    .products_roll .pr_box .item .hover .inner .compare,
+    .products_roll .pr_box .item .hover .inner .title,
+    .products_roll .pr_box .item .hover .inner .pic,
+    .products_roll .pr_box .item .hover .inner .card-meta,
+    .products_roll .pr_box .item .hover .inner .card-footer,
+    .products_roll .pr_box .item .hover .inner .cost,
+    .products_roll .pr_box .item .hover .inner .noprice,
+    .products_roll .pr_box .item .hover .inner .quantity,
+    .products_roll .pr_box .item .hover .inner .add2cart,
+    .products_roll .pr_box .item .hover .inner .add2cartOrder {
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        margin-left: 0 !important;
     }
     .products_roll .pr_box .item .hover .inner .pic {
-        grid-area: pic !important;
+        grid-column: 1 !important;
+        grid-row: 1 / span 4 !important;
+        align-self: stretch !important;
         position: relative !important;
-        left: auto !important;
-        top: auto !important;
         width: 100% !important;
-        height: 100% !important;
-        min-height: 164px !important;
-        max-height: none !important;
+        max-width: 110px !important;
+        height: auto !important;
+        min-height: 180px !important;
         margin: 0 !important;
         flex: none !important;
         display: block !important;
@@ -338,6 +355,7 @@
         border: 1px solid #e8edf2 !important;
         border-radius: 4px !important;
         box-sizing: border-box !important;
+        aspect-ratio: auto !important;
     }
     .products_roll .pr_box .item .hover .inner .pic .pic-slides {
         position: absolute !important;
@@ -356,7 +374,7 @@
         object-fit: contain !important;
         object-position: center center !important;
         transform: none !important;
-        padding: 4px !important;
+        padding: 2px !important;
         box-sizing: border-box !important;
     }
     .products_roll .pr_box .item .hover .inner .pic img.polimer-photo-scale-tall,
@@ -372,12 +390,31 @@
     .products_roll .pr_box .item .hover .inner .pic.has-slider .pic-dots {
         bottom: 4px !important;
     }
-    .products_roll .pr_box .item .hover .inner .title {
-        grid-area: title !important;
+    .products_roll .pr_box .item .hover .inner .compare {
+        grid-column: 2 !important;
+        grid-row: 1 !important;
         position: relative !important;
-        top: auto !important;
-        left: auto !important;
-        right: auto !important;
+        justify-self: end !important;
+        align-self: start !important;
+        display: block !important;
+        z-index: 5 !important;
+        padding: 2px 5px !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+    }
+    .products_roll .pr_box .item .hover .inner .compare input[type="checkbox"] + span {
+        font-size: 10px !important;
+        line-height: 14px !important;
+        padding-right: 16px !important;
+    }
+    .products_roll .pr_box .item .hover .inner .title {
+        grid-column: 2 !important;
+        grid-row: 2 !important;
+        position: relative !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
         height: auto !important;
         min-height: 0 !important;
         max-height: none !important;
@@ -386,18 +423,21 @@
         -webkit-box-orient: vertical !important;
         -webkit-line-clamp: 3 !important;
         overflow: hidden !important;
-        padding: 0 84px 0 0 !important;
+        padding: 0 !important;
         margin: 0 !important;
         font-size: 13px !important;
         line-height: 1.3 !important;
         text-align: left !important;
         color: #0464bb !important;
         background: transparent !important;
-        z-index: 1 !important;
     }
     .products_roll .pr_box .item .hover .inner .card-meta {
-        grid-area: meta !important;
+        grid-column: 2 !important;
+        grid-row: 3 !important;
         position: relative !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
         flex: none !important;
         min-height: 0 !important;
         max-height: none !important;
@@ -406,7 +446,6 @@
         padding: 0 !important;
         overflow: visible !important;
         display: block !important;
-        align-self: start !important;
     }
     .products_roll .pr_box .item .hover .inner .card-meta .incode {
         display: block !important;
@@ -420,26 +459,48 @@
         color: #666 !important;
         margin: 0 0 4px !important;
     }
+    .products_roll .pr_box .item .hover .inner .card-meta .incode--empty {
+        display: none !important;
+    }
     .products_roll .pr_box .item .hover .inner .card-meta .instock {
         display: block !important;
         text-align: left !important;
         font-size: 11px !important;
         line-height: 1.3 !important;
-        margin: 0 !important;
+        margin: 0 0 6px !important;
         padding-right: 0 !important;
+        min-height: 0 !important;
+    }
+    .products_roll .pr_box .item .hover .inner .card-meta .instock--empty {
+        display: none !important;
     }
     .products_roll .pr_box .item .hover .inner .card-meta .instock:after {
         right: auto !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer {
-        display: contents !important;
+        grid-column: 2 !important;
+        grid-row: 4 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        position: relative !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer .cost,
-    .products_roll .pr_box .item .hover .inner .card-footer .noprice {
-        grid-area: price !important;
+    .products_roll .pr_box .item .hover .inner .card-footer .noprice,
+    .products_roll .pr_box .item .hover .inner .cost,
+    .products_roll .pr_box .item .hover .inner .noprice {
         position: relative !important;
+        display: block !important;
         flex: none !important;
-        align-self: end !important;
+        order: 1 !important;
+        width: 100% !important;
+        max-width: 100% !important;
         min-width: 0 !important;
         margin: 0 !important;
         padding: 0 !important;
@@ -448,29 +509,37 @@
         line-height: 1.2 !important;
         font-weight: 700 !important;
         color: #222 !important;
-        white-space: normal !important;
-        overflow: visible !important;
-        text-overflow: unset !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer .cost-old {
         display: none !important;
     }
-    .products_roll .pr_box .item .hover .inner .card-footer .quantity {
-        grid-area: qty !important;
+    .products_roll .pr_box .item .hover .inner .card-footer .quantity,
+    .products_roll .pr_box .item .hover .inner .quantity {
         position: relative !important;
         display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
+        order: 2 !important;
         width: 100% !important;
-        height: 36px !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        height: 34px !important;
         margin: 0 !important;
-        gap: 3px !important;
+        gap: 4px !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer .quantity a {
         position: relative !important;
-        flex: 0 0 28px !important;
-        width: 28px !important;
-        height: 28px !important;
+        flex: 0 0 30px !important;
+        width: 30px !important;
+        height: 30px !important;
         font-size: 18px !important;
         top: auto !important;
         left: auto !important;
@@ -481,12 +550,12 @@
     }
     .products_roll .pr_box .item .hover .inner .card-footer .quantity a:before {
         position: absolute !important;
-        width: 24px !important;
-        height: 24px !important;
-        line-height: 24px !important;
+        width: 26px !important;
+        height: 26px !important;
+        line-height: 26px !important;
         left: 50% !important;
         top: 50% !important;
-        margin: -12px 0 0 -12px !important;
+        margin: -13px 0 0 -13px !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer .quantity input[type=text],
     .products_roll .pr_box .item .hover .inner .card-footer .quantity input[type=password] {
@@ -494,10 +563,10 @@
         flex: 1 1 auto !important;
         width: auto !important;
         min-width: 0 !important;
-        height: 28px !important;
+        height: 30px !important;
         margin: 0 !important;
         left: auto !important;
-        font-size: 13px !important;
+        font-size: 14px !important;
         padding: 2px !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer .quantity:before,
@@ -509,19 +578,29 @@
         display: none !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer .add2cart,
-    .products_roll .pr_box .item .hover .inner .card-footer .add2cartOrder {
-        grid-area: cart !important;
+    .products_roll .pr_box .item .hover .inner .card-footer .add2cartOrder,
+    .products_roll .pr_box .item .hover .inner .add2cart,
+    .products_roll .pr_box .item .hover .inner .add2cartOrder {
         position: relative !important;
         display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        order: 3 !important;
         width: 100% !important;
-        max-width: none !important;
-        height: 36px !important;
-        line-height: 36px !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        height: 38px !important;
+        line-height: 38px !important;
         margin: 0 !important;
-        padding: 0 10px 0 30px !important;
+        padding: 0 10px 0 32px !important;
         box-sizing: border-box !important;
         font-size: 13px !important;
         text-align: center !important;
+        align-self: stretch !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer .add2cart:before,
     .products_roll .pr_box .item .hover .inner .card-footer .add2cartOrder:before {
@@ -546,6 +625,12 @@
         height: auto !important;
         min-height: 0 !important;
         margin: 0 !important;
+    }
+    .products_roll .pr_box .item:hover .hover .inner {
+        height: auto !important;
+        padding: 8px !important;
+        left: auto !important;
+        top: auto !important;
     }
 }
 
