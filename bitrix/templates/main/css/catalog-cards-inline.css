@@ -196,6 +196,14 @@
         flex: 1 1 calc(33.333% - 14px) !important;
     }
 }
+
+.products_roll .add2cartOrder__label--short {
+    display: none;
+}
+.products_roll .add2cartOrder__label--full {
+    display: inline;
+}
+
 @media screen and (max-width: 659px) {
     html,
     body {
