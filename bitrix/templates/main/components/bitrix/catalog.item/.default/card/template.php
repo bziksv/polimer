@@ -162,7 +162,7 @@ $hasSlider = count($sliderImages) > 1;
 			<?else:?>
 			<div class="cost_total"><span></span></div>
 			
-			<a href="javascript:void(0)" class="add2cartOrder show-popup" data-id="order-product">Купить под заказ</a>
+			<a href="javascript:void(0)" class="add2cartOrder show-popup" data-id="order-product"><span class="add2cartOrder__label add2cartOrder__label--full">Купить под заказ</span><span class="add2cartOrder__label add2cartOrder__label--short">Под заказ</span></a>
 			
 			<div class="outstock"></div>
 			<? endif; ?>

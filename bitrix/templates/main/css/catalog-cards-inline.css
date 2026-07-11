@@ -271,6 +271,14 @@
         padding: 0 12px 14px !important;
     }
 
+    .products_roll .add2cartOrder__label--short {
+        display: none !important;
+    }
+
+    .products_roll .add2cartOrder__label--full {
+        display: inline !important;
+    }
+
     .products_roll .pr_box .item,
     .products_roll .pr_box .item .hover,
     .products_roll .pr_box .item .hover .inner {
@@ -666,22 +674,33 @@
         visibility: visible !important;
         opacity: 1 !important;
         order: 2 !important;
-        flex: 1 1 0 !important;
-        width: auto !important;
-        max-width: none !important;
+        flex: 1 1 100% !important;
+        width: 100% !important;
+        max-width: 100% !important;
         min-width: 0 !important;
-        height: 38px !important;
-        line-height: 38px !important;
+        height: 34px !important;
+        line-height: 34px !important;
         margin: 0 !important;
-        padding: 0 10px 0 32px !important;
+        padding: 0 8px 0 28px !important;
         box-sizing: border-box !important;
-        font-size: 13px !important;
+        font-size: 12px !important;
         text-align: center !important;
         align-self: auto !important;
         top: auto !important;
         left: auto !important;
         right: auto !important;
         bottom: auto !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+    .products_roll .pr_box .item .hover .inner .card-footer .add2cartOrder .add2cartOrder__label--short,
+    .products_roll .pr_box .item .hover .inner .add2cartOrder .add2cartOrder__label--short {
+        display: inline !important;
+    }
+    .products_roll .pr_box .item .hover .inner .card-footer .add2cartOrder .add2cartOrder__label--full,
+    .products_roll .pr_box .item .hover .inner .add2cartOrder .add2cartOrder__label--full {
+        display: none !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer .add2cart:before,
     .products_roll .pr_box .item .hover .inner .add2cart:before {
