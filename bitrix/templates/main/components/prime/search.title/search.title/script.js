@@ -818,12 +818,12 @@ function polimerInitTitleSearchContainers()
 
 function polimerIsTabletInlineSearch()
 {
-	return window.matchMedia('(min-width: 768px) and (max-width: 1019px)').matches;
+	return window.matchMedia('(min-width: 640px) and (max-width: 1019px)').matches;
 }
 
 function polimerIsMobileSearchIconMode()
 {
-	return window.matchMedia('(min-width: 380px) and (max-width: 767px)').matches;
+	return window.matchMedia('(min-width: 380px) and (max-width: 639px)').matches;
 }
 
 function polimerSyncMobileSearchMode()
@@ -867,6 +867,33 @@ function polimerSyncMobileSearchMode()
 
 	if (trigger)
 		trigger.removeAttribute('aria-hidden');
+
+	if (polimerIsMobileSearchIconMode())
+	{
+		panel.classList.remove('is-open');
+		BX.removeClass(hmobile, 'hmobile--search-open');
+
+		if (trigger)
+		{
+			trigger.setAttribute('aria-expanded', 'false');
+			trigger.setAttribute('aria-label', 'Поиск');
+		}
+
+		if (triggerIcon)
+		{
+			triggerIcon.classList.remove('fa-times');
+			triggerIcon.classList.add('fa-search');
+		}
+
+		polimerUnlockSearchHeader(true);
+	}
+	else if (panel.classList.contains('is-open'))
+	{
+		panel.classList.remove('is-open');
+		BX.removeClass(hmobile, 'hmobile--search-open');
+		polimerHideMobileSearchResults();
+		polimerUnlockSearchHeader(true);
+	}
 
 	if (!panel.classList.contains('is-open'))
 	{

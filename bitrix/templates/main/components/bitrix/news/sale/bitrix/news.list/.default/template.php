@@ -2,45 +2,67 @@
 /** @var array $arParams */
 /** @var array $arResult */
 /** @global CMain $APPLICATION */
-/** @global CUser $USER */
-/** @global CDatabase $DB */
 /** @var CBitrixComponentTemplate $this */
-/** @var string $templateName */
-/** @var string $templateFile */
-/** @var string $templateFolder */
-/** @var string $componentPath */
-/** @var CBitrixComponent $component */
+
 $this->setFrameMode(true);
+$this->addExternalCss($templateFolder.'/style.css');
 ?>
+<section class="sale-page">
+	<?if(!empty($arResult["ITEMS"])):?>
+	<div class="sale-page__grid">
+		<?foreach($arResult["ITEMS"] as $arItem):
+			if ($arItem["PROPERTIES"]["INACTIVE"]["VALUE"] == "Да") {
+				continue;
+			}
 
-<div class="products_roll sale">
-			
-	<div class="pr_box cl">
-		<?
-		foreach($arResult["ITEMS"] as $arItem): 
-		if ($arItem["PROPERTIES"]["INACTIVE"]["VALUE"] == "Да") {
-			continue;
-		}
+			$pictureId = (int)($arItem["PREVIEW_PICTURE"]["ID"] ?? 0);
+			if (!$pictureId) {
+				$pictureId = (int)($arItem["DETAIL_PICTURE"]["ID"] ?? 0);
+			}
+
+			$discount = $arItem["PROPERTIES"]["DISCOUTN_PERCENT"]["VALUE"]
+				?: $arItem["PROPERTIES"]["DISCOUNT_PERCENT"]["VALUE"];
 		?>
-		<a href="<?echo $arItem["DETAIL_PAGE_URL"]?>" class="item">
-			<div class="hover" style="background-image: url('<?=resizeImage($arItem['PREVIEW_PICTURE']['ID'], 220, 540)?>')">
-				<div class="inner">
-					<? if ($arItem["PROPERTIES"]["DISCOUTN_PERCENT"]["VALUE"]): ?>
-						<div class="discount">- <?echo $arItem["PROPERTIES"]["DISCOUTN_PERCENT"]["VALUE"]?> %</div>
-					<? endif; ?>
-					<div class="information">
-						<div class="duration">Срок акции с <?echo $arItem["DISPLAY_ACTIVE_FROM"]?></div>
-						<div class="name"><?echo $arItem["NAME"]?></div>
-					</div>				
-				</div>
+		<article class="sale-page__card">
+			<a href="<?=$arItem["DETAIL_PAGE_URL"]?>" class="sale-page__media">
+				<?if($pictureId):?>
+				<img src="<?=resizeImage($pictureId, 720, 405)?>"
+				     alt="<?=$arItem["NAME"]?>"
+				     loading="lazy"
+				     width="720"
+				     height="405">
+				<?else:?>
+				<span class="sale-page__media-placeholder" aria-hidden="true"></span>
+				<?endif;?>
+
+				<?if($discount):?>
+				<span class="sale-page__badge">− <?=$discount?> %</span>
+				<?endif;?>
+			</a>
+
+			<div class="sale-page__body">
+				<?if($arParams["DISPLAY_DATE"] != "N" && $arItem["DISPLAY_ACTIVE_FROM"]):?>
+				<p class="sale-page__date">Срок акции с <?=$arItem["DISPLAY_ACTIVE_FROM"]?></p>
+				<?endif;?>
+
+				<h2 class="sale-page__title">
+					<a href="<?=$arItem["DETAIL_PAGE_URL"]?>"><?=$arItem["NAME"]?></a>
+				</h2>
+
+				<?if($arParams["DISPLAY_PREVIEW_TEXT"] != "N" && $arItem["PREVIEW_TEXT"]):?>
+				<p class="sale-page__excerpt"><?=TruncateText(strip_tags($arItem["PREVIEW_TEXT"]), 120)?></p>
+				<?endif;?>
 			</div>
-		</a>
-		<?endforeach;?>			
+		</article>
+		<?endforeach;?>
 	</div>
-	
-	<?if($arParams["DISPLAY_BOTTOM_PAGER"]):?>
-		<br /><?=$arResult["NAV_STRING"]?>
+	<?else:?>
+	<p class="sale-page__empty">Сейчас нет активных акций.</p>
 	<?endif;?>
-</div>
 
-
+	<?if($arParams["DISPLAY_BOTTOM_PAGER"] && $arResult["NAV_STRING"]):?>
+	<div class="sale-page__pager">
+		<?=$arResult["NAV_STRING"]?>
+	</div>
+	<?endif;?>
+</section>

@@ -1,4 +1,13 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
+<?
+$orderableCount = count($arResult["ITEMS"]["AnDelCanBuy"]);
+$orderableQuantity = 0;
+foreach ($arResult["GRID"]["ROWS"] as $basketRow) {
+	if ($basketRow["DELAY"] !== "Y") {
+		$orderableQuantity += (float)$basketRow["QUANTITY"];
+	}
+}
+?>
 <?echo ShowError($arResult["ERROR_MESSAGE"]);
 if ($normalCount > 0)
 {?>
@@ -23,7 +32,7 @@ if ($normalCount > 0)
 			<div class="l-block">
 
 				<? foreach($arResult["GRID"]["ROWS"] as $k => $arItem): ?>
-				<div class="l-row cl">
+				<div class="l-row cl<?=($arItem["DELAY"] === "Y" ? " is-removed" : "")?>" data-basket-id="<?=$arItem["ID"]?>">
 					<div class="l-cell img"><span><img src="<?=$arItem['PREVIEW_PICTURE_SRC']?>" alt=""></span></div>
 					<div class="l-cell name">
 						<a href="<?=$arItem['DETAIL_PAGE_URL']?>" class="plink"><?=$arItem['NAME']?></a>
@@ -39,7 +48,14 @@ if ($normalCount > 0)
 						</div>
 					</div>
 					<div class="l-cell cost"><div class="txt ct">Стоимость</div><span><?=$arItem["SUM"]?></span></div>
-					<div class="l-cell del"><div class="txt dl">Удалить</div><a href="?basketAction=delete&id=<?=$arItem["ID"]?>"></a></div>
+					<div class="l-cell del"><div class="txt dl">Удалить</div><a href="javascript:void(0)" onclick="polimerRemoveBasketItem(<?=$arItem["ID"]?>); return false;"></a></div>
+					<div class="basket-item-removed-overlay" aria-hidden="true">
+						<div class="basket-item-removed-overlay__content">
+							<p class="basket-item-removed-overlay__title">Товар удалён</p>
+							<p class="basket-item-removed-overlay__hint">При оформлении дальше не попадёт. Если нужно вернуть обратно, нажмите кнопку ниже</p>
+							<button type="button" class="basket-item-removed-overlay__restore" onclick="polimerRestoreBasketItem(<?=$arItem["ID"]?>); return false;">Вернуть</button>
+						</div>
+					</div>
 				</div>
 				<? endforeach; ?>
 
@@ -49,7 +65,7 @@ if ($normalCount > 0)
 
 
 		<div class="options">
-			<a href="javascript:void(0)" onclick="deleteBasket()" class="clear_basket">Очистить корзину</a>
+			<a href="javascript:void(0)" onclick="return deleteBasket();" class="clear_basket">Очистить корзину</a>
 			<a href="/catalog/" class="continue_shopping">Продолжить покупки</a>
 			<div class="promo cl">
                 <span>Активировать промокод:</span>
@@ -58,7 +74,11 @@ if ($normalCount > 0)
             </div>
 
 			<a href="javascript:void(0)" class="checkout_wr show-popup" data-id="oneclickcart">Купить в один клик</a>
+			<?if ($orderableCount > 0):?>
 			<a href="<?=$arParams['PATH_TO_ORDER']?>" class="checkout">Оформить заказ</a>
+			<?else:?>
+			<span class="checkout checkout--disabled" title="Добавьте товары в заказ или верните удалённые позиции">Оформить заказ</span>
+			<?endif;?>
 			<div class="total">
 				<div class="t-row t-sale cl">
 					<div class="line"></div>
@@ -68,7 +88,7 @@ if ($normalCount > 0)
 				<div class="t-row cl t-quan">
 					<div class="line"></div>
 					<div class="name">Общее кол-во товаров:</div>
-					<div class="value"><span><?=array_sum(array_column($arResult["GRID"]["ROWS"], 'QUANTITY'))?></span> шт.</div>
+					<div class="value"><span><?=$orderableQuantity?></span> шт.</div>
 				</div>
 				<div class="t-row cl t-cost">
 					<div class="line"></div>

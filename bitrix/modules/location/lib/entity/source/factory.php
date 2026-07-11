@@ -4,7 +4,6 @@ namespace Bitrix\Location\Entity\Source;
 
 use Bitrix\Location\Entity\Source;
 use Bitrix\Location\Exception\RuntimeException;
-use Bitrix\Location\Source\Google\GoogleSource;
 use Bitrix\Location\Source\Osm\OsmSource;
 
 /**
@@ -17,6 +16,8 @@ final class Factory
 	public const GOOGLE_SOURCE_CODE = 'GOOGLE';
 	public const OSM_SOURCE_CODE = 'OSM';
 
+	private const GOOGLE_SOURCE_CLASS = 'Bitrix\\Location\\Source\\Google\\GoogleSource';
+
 	/**
 	 * @param string $code
 	 * @return Source
@@ -28,7 +29,9 @@ final class Factory
 		switch ($code)
 		{
 			case static::GOOGLE_SOURCE_CODE:
-				$class = GoogleSource::class;
+				$class = class_exists(static::GOOGLE_SOURCE_CLASS)
+					? static::GOOGLE_SOURCE_CLASS
+					: OsmSource::class;
 				break;
 			case static::OSM_SOURCE_CODE:
 				$class = OsmSource::class;

@@ -2,7 +2,7 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
 
 $APPLICATION->IncludeComponent("bitrix:sale.basket.basket.line", "basket.small.mobile", array(
-    "HIDE_ON_BASKET_PAGES" => "Y",    // Не показывать на страницах корзины и оформления заказа
+    "HIDE_ON_BASKET_PAGES" => "N",    // Не показывать на страницах корзины и оформления заказа
     "PATH_TO_BASKET" => SITE_DIR . "personal/cart/",    // Страница корзины
     "PATH_TO_ORDER" => SITE_DIR . "personal/order/",    // Страница оформления заказа
     "PATH_TO_PERSONAL" => SITE_DIR . "personal/",    // Страница персонального раздела
@@ -15,6 +15,7 @@ $APPLICATION->IncludeComponent("bitrix:sale.basket.basket.line", "basket.small.m
     "SHOW_PERSONAL_LINK" => "Y",    // Отображать персональный раздел
     "SHOW_PRODUCTS" => "Y",    // Показывать список товаров
     "SHOW_TOTAL_PRICE" => "Y",    // Показывать общую сумму по товарам
+    "SHOW_DELAY" => "N",    // Не учитывать отложенные (soft-delete) в виджете шапки
 ),
     false
 );

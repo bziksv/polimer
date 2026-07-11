@@ -159,16 +159,12 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 							);?>
 						</div>
 
-						<a href="tel:+74732502233" class="hmobile__phone">
-                            <i class="fa fa-phone fa-2x" aria-hidden="true"></i>
-                        </a>
-
 						<button type="button" class="hmobile__search" aria-label="Поиск" aria-expanded="false" aria-controls="hmobile-search-panel">
                             <i class="fa fa-search header__fa-icon" aria-hidden="true"></i>
                         </button>
 
 						<?php $APPLICATION->IncludeComponent("bitrix:sale.basket.basket.line", "basket.small.mobile", Array(
-							"HIDE_ON_BASKET_PAGES" => "Y",	// Не показывать на страницах корзины и оформления заказа
+							"HIDE_ON_BASKET_PAGES" => "N",
 							"PATH_TO_BASKET" => SITE_DIR."personal/cart/",	// Страница корзины
 							"PATH_TO_ORDER" => SITE_DIR."personal/order/",	// Страница оформления заказа
 							"PATH_TO_PERSONAL" => SITE_DIR."personal/",	// Страница персонального раздела
@@ -181,9 +177,14 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 							"SHOW_PERSONAL_LINK" => "Y",	// Отображать персональный раздел
 							"SHOW_PRODUCTS" => "Y",	// Показывать список товаров
 							"SHOW_TOTAL_PRICE" => "Y",	// Показывать общую сумму по товарам
+							"SHOW_DELAY" => "N",	// Не учитывать отложенные (soft-delete) в виджете шапки
 						),
 							false
 						);?>
+
+						<a href="tel:+74732502233" class="hmobile__phone">
+                            <i class="fa fa-phone fa-2x" aria-hidden="true"></i>
+                        </a>
 
                         <a class="menu__trigger">
                             <span class="i1"></span>
@@ -552,13 +553,8 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                                 ?>
                             </div>
 
-                        <a href="/personal/orders-list.php" class="header__account">
-                            <i class="fa fa-user-o header__fa-icon" aria-hidden="true"></i>
-                            <span>Личный кабинет</span>
-                        </a>
-
                         <?$APPLICATION->IncludeComponent("bitrix:sale.basket.basket.line", "basket.small", Array(
-                            "HIDE_ON_BASKET_PAGES" => "Y",	// Не показывать на страницах корзины и оформления заказа
+                            "HIDE_ON_BASKET_PAGES" => "N",
                             "PATH_TO_BASKET" => SITE_DIR."personal/cart/",	// Страница корзины
                             "PATH_TO_ORDER" => SITE_DIR."personal/order/",	// Страница оформления заказа
                             "PATH_TO_PERSONAL" => SITE_DIR."personal/",	// Страница персонального раздела
@@ -571,9 +567,15 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                             "SHOW_PERSONAL_LINK" => "Y",	// Отображать персональный раздел
                             "SHOW_PRODUCTS" => "Y",	// Показывать список товаров
                             "SHOW_TOTAL_PRICE" => "Y",	// Показывать общую сумму по товарам
+                            "SHOW_DELAY" => "N",	// Не учитывать отложенные (soft-delete) в виджете шапки
                         ),
                             false
                         );?>
+
+                        <a href="/personal/orders-list.php" class="header__account">
+                            <i class="fa fa-user-o header__fa-icon" aria-hidden="true"></i>
+                            <span>Личный кабинет</span>
+                        </a>
 
                         </div><!--end::header__aside-->
 

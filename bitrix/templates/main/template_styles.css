@@ -12300,7 +12300,7 @@ a.pickup-stores__item .desc {
     }
 
     .options {
-        height: 320px
+        height: auto
     }
 
     .options .clear_basket {
@@ -15254,15 +15254,11 @@ footer .footer__bottom .footer__studio a {
     }
 
     footer .footer__top .footer__col.col--1 {
-        width: 100%;
-        top: auto;
-        bottom: 105px
+        width: 100%
     }
 
     footer .footer__top .footer__col.col--2 {
-        width: 100%;
-        top: auto;
-        bottom: 255px
+        width: 100%
     }
 
     footer .footer__top .footer__col.col--2 .footer__list li {

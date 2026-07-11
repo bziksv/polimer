@@ -11280,7 +11280,7 @@ footer .footer__bottom .footer__studio a {
 @media screen and (max-width: 659px) {
   footer .footer__top {
     height: auto;
-    padding-bottom: 400px;
+    padding-bottom: 24px;
   }
   footer .footer__top .footer__col .footer__list.footer__list--50 {
     width: 100%;
@@ -11294,13 +11294,9 @@ footer .footer__bottom .footer__studio a {
   }
   footer .footer__top .footer__col.col--1 {
     width: 100%;
-    top: auto;
-    bottom: 105px;
   }
   footer .footer__top .footer__col.col--2 {
     width: 100%;
-    top: auto;
-    bottom: 255px;
   }
   footer .footer__top .footer__col.col--2 .footer__list li {
     width: 50%;

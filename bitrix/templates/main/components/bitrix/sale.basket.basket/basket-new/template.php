@@ -1,6 +1,6 @@
 <?if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 <?
-$normalCount = count($arResult["ITEMS"]["AnDelCanBuy"]);
+$normalCount = count($arResult["GRID"]["ROWS"]);
 if (strlen($arResult["ERROR_MESSAGE"]) <= 0)
 {
 	include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/basket_items.php");

@@ -5,9 +5,24 @@ function replaceBasket(url, $el)
         url: url,
         type: 'get',
         success: function (data) {
-            $el.replaceWith(data);
+            if (data && $.trim(data)) {
+                $el.replaceWith(data);
+            }
         }
     })
+}
+
+function UpdateHeaderBasket()
+{
+    var $desktopCart = $('header .header__bottom .header__cart');
+    var $mobileCart = $('header .hmobile .hmobile__cart');
+
+    if ($desktopCart.length) {
+        replaceBasket('/ajax/basket.php', $desktopCart);
+    }
+    if ($mobileCart.length) {
+        replaceBasket('/ajax/basket-mobile.php', $mobileCart);
+    }
 }
 
 function addToBasket2(idel, quantity,el) {
@@ -124,6 +139,7 @@ function UpdateBigBasket(){
             if(msg!="error")
             {
                 $(".page_content").html(msg);
+                UpdateHeaderBasket();
             }
             else
             {
@@ -133,23 +149,86 @@ function UpdateBigBasket(){
     });
 }
 
-function deleteBasket(){
+function polimerGetBasketRow(id) {
+    var $row = $('.basket .l-row[data-basket-id="' + id + '"]');
+    if (!$row.length) {
+        $row = $('.quantity#' + id).closest('.l-row');
+    }
+    return $row;
+}
+
+function polimerSetBasketItemDelay(id, delay) {
+    var $row = polimerGetBasketRow(id);
+
     $.ajax({
-        type: "GET",
-        url: "/ajax/delete_all_basket.php",
-        data:"",
-        success: function(msg){
-            if(msg!="error")
-            {
+        type: 'GET',
+        url: '/ajax/basket_delay.php',
+        data: { id: id, delay: delay },
+        success: function(msg) {
+            if (msg === 'success') {
+                UpdateHeaderBasket();
                 UpdateBigBasket();
+            } else {
+                if ($row.length) {
+                    $row.toggleClass('is-removed', delay !== 'Y');
+                }
+                alertify.error('Произошла ошибка. Попробуйте повторить запрос позже');
             }
-            else
-            {
-                alertify.error("Произошла ошибка. Попробуйте повторить запрос позже");
+        },
+        error: function() {
+            if ($row.length) {
+                $row.toggleClass('is-removed', delay !== 'Y');
+            }
+            alertify.error('Произошла ошибка. Попробуйте повторить запрос позже');
+        }
+    });
+}
+
+function polimerRemoveBasketItem(id) {
+    polimerGetBasketRow(id).addClass('is-removed');
+    polimerSetBasketItemDelay(id, 'Y');
+    return false;
+}
+
+function polimerRestoreBasketItem(id) {
+    polimerGetBasketRow(id).removeClass('is-removed');
+    polimerSetBasketItemDelay(id, 'N');
+    return false;
+}
+
+function deleteBasket() {
+    if (typeof alertify === 'undefined') {
+        if (window.confirm('Очистить корзину? Все товары будут удалены.')) {
+            polimerClearBasketConfirmed();
+        }
+        return false;
+    }
+
+    alertify.confirm(
+        'Очистить корзину',
+        'Вы уверены, что хотите удалить все товары из корзины?',
+        function() {
+            polimerClearBasketConfirmed();
+        },
+        function() {}
+    ).set('labels', { ok: 'Очистить', cancel: 'Отмена' }).set('defaultFocus', 'cancel');
+
+    return false;
+}
+
+function polimerClearBasketConfirmed() {
+    $.ajax({
+        type: 'GET',
+        url: '/ajax/delete_all_basket.php',
+        data: '',
+        success: function(msg) {
+            if (msg !== 'error') {
+                UpdateBigBasket();
+            } else {
+                alertify.error('Произошла ошибка. Попробуйте повторить запрос позже');
             }
         }
     });
-    return false;
 }
 
 $(function(){
