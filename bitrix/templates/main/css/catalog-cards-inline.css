@@ -169,15 +169,16 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
 .products_roll .pr_box .item .hover .inner .pic .pic-slide,
 .products_roll .pr_box .item .hover .inner .pic img {
     position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    right: auto !important;
-    bottom: auto !important;
-    transform: translate(-50%, -50%) !important;
-    width: auto !important;
-    height: auto !important;
-    max-width: calc(100% - 24px) !important;
-    max-height: calc(100% - 24px) !important;
+    inset: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     border: 0 !important;
@@ -188,8 +189,10 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
 }
 .products_roll .pr_box .item .hover .inner .pic img.polimer-photo-fit,
 .products_roll .pr_box .item .hover .inner .pic .pic-slide.polimer-photo-fit {
-    max-width: none !important;
-    max-height: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
 }
 .products_roll .pr_box .item .hover .inner .pic img.polimer-photo-contain,
 .products_roll .pr_box .item .hover .inner .pic .pic-slide.polimer-photo-contain {
