@@ -1467,30 +1467,32 @@ function polimerBuildSearchPageNav($currentPage, $pageSize, $totalCount, $queryS
     for ($page = $startPage; $page <= $endPage; $page++)
         $somePage[$page] = $buildUrl($page);
 
-    $arResult = [
-        'NavShowAlways' => false,
-        'NavPageCount' => $pageCount,
-        'NAV' => [
-            'PAGE_NUMBER' => $currentPage,
-            'PAGE_COUNT' => $pageCount,
-            'START_PAGE' => $startPage,
-            'END_PAGE' => $endPage,
-            'URL' => [
-                'FIRST_PAGE' => $buildUrl($currentPage - 1),
-                'NEXT_PAGE' => $buildUrl($currentPage + 1),
-                'SOME_PAGE' => $somePage,
-            ],
-        ],
-    ];
+    $html = '<div class="ns__paginator cl">';
+    $html .= '<div class="name">Страницы:</div>';
 
-    $navTemplate = $_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/components/bitrix/system.pagenavigation/.default/template.php';
-    if (!is_file($navTemplate))
-        return '';
+    if ($currentPage === 1)
+        $html .= '<a href="#" class="arrow left"><span></span><span></span></a>';
+    else
+        $html .= '<a href="' . htmlspecialcharsbx($buildUrl($currentPage - 1)) . '" class="arrow left aractive"><span></span><span></span></a>';
 
-    ob_start();
-    include $navTemplate;
+    $html .= '<div class="pages cl">';
+    for ($page = $startPage; $page <= $endPage; $page++)
+    {
+        if ($page === $currentPage)
+            $html .= '<a href="" class="page active">' . $page . '</a>';
+        else
+            $html .= '<a href="' . htmlspecialcharsbx($somePage[$page]) . '" class="page">' . $page . '</a>';
+    }
+    $html .= '</div>';
 
-    return (string)ob_get_clean();
+    if ($currentPage === $pageCount)
+        $html .= '<a href="#" class="arrow right"><span></span><span></span></a>';
+    else
+        $html .= '<a href="' . htmlspecialcharsbx($buildUrl($currentPage + 1)) . '" class="arrow right aractive"><span></span><span></span></a>';
+
+    $html .= '</div>';
+
+    return $html;
 }
 
 function polimerEnhanceTitleSearchResult(array &$arResult, array $arParams)
