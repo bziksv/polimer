@@ -1373,28 +1373,7 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     margin-bottom: 28px !important;
 }
 .viewed-products-block .viewed-products-slider .slick-dots {
-    display: block !important;
-    position: relative !important;
-    bottom: auto !important;
-    margin: 10px 0 0 !important;
-    padding: 0 !important;
-    text-align: center !important;
-}
-.viewed-products-block .viewed-products-slider .slick-dots li button {
-    width: auto !important;
-    min-width: 28px !important;
-    height: 28px !important;
-    margin-left: 8px !important;
-    padding: 0 8px !important;
-    border-radius: 14px !important;
-    text-indent: 0 !important;
-    font: 600 13px/28px 'roboto', sans-serif !important;
-    color: #666 !important;
-    background: #eef2f6 !important;
-}
-.viewed-products-block .viewed-products-slider .slick-dots li.slick-active button {
-    color: #fff !important;
-    background: #0464bb !important;
+    display: none !important;
 }
 .viewed-products-block .slider_product .product {
     display: flex !important;
@@ -1723,28 +1702,7 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     margin-bottom: 28px !important;
 }
 .viewed-products-block .viewed-products-slider .slick-dots {
-    display: block !important;
-    position: relative !important;
-    bottom: auto !important;
-    margin: 10px 0 0 !important;
-    padding: 0 !important;
-    text-align: center !important;
-}
-.viewed-products-block .viewed-products-slider .slick-dots li button {
-    width: auto !important;
-    min-width: 28px !important;
-    height: 28px !important;
-    margin-left: 8px !important;
-    padding: 0 8px !important;
-    border-radius: 14px !important;
-    text-indent: 0 !important;
-    font: 600 13px/28px 'roboto', sans-serif !important;
-    color: #666 !important;
-    background: #eef2f6 !important;
-}
-.viewed-products-block .viewed-products-slider .slick-dots li.slick-active button {
-    color: #fff !important;
-    background: #0464bb !important;
+    display: none !important;
 }
 .viewed-products-block .slider_product .product {
     display: flex !important;

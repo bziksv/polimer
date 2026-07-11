@@ -547,15 +547,12 @@ function polimerInitViewedProductsSlider() {
         slidesToShow: 4,
         slidesToScroll: 1,
         arrows: true,
-        dots: true,
+        dots: false,
         infinite: false,
         swipe: true,
         draggable: true,
         touchMove: true,
         touchThreshold: 8,
-        customPaging: function (slider, i) {
-            return $('<button type="button" />').text(i + 1);
-        },
         responsive: [
             {
                 breakpoint: 1319,
@@ -563,7 +560,7 @@ function polimerInitViewedProductsSlider() {
                     slidesToShow: 3,
                     slidesToScroll: 1,
                     arrows: true,
-                    dots: true
+                    dots: false
                 }
             },
             {
@@ -572,7 +569,7 @@ function polimerInitViewedProductsSlider() {
                     slidesToShow: 2,
                     slidesToScroll: 1,
                     arrows: true,
-                    dots: true
+                    dots: false
                 }
             },
             {
@@ -583,7 +580,7 @@ function polimerInitViewedProductsSlider() {
                     centerMode: true,
                     centerPadding: '36px',
                     arrows: true,
-                    dots: true,
+                    dots: false,
                     infinite: false
                 }
             }
