@@ -271,14 +271,6 @@
         padding: 0 12px 14px !important;
     }
 
-    .products_roll .add2cartOrder__label--short {
-        display: none !important;
-    }
-
-    .products_roll .add2cartOrder__label--full {
-        display: inline !important;
-    }
-
     .products_roll .pr_box .item,
     .products_roll .pr_box .item .hover,
     .products_roll .pr_box .item .hover .inner {
