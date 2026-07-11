@@ -1446,6 +1446,125 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     }
 }
 
+/* mobile catalog filter — fullscreen panel below sticky header */
+@media screen and (max-width: 659px) {
+    body.polimer-filter-open {
+        overflow: hidden !important;
+    }
+    .polimer-filter-mobile-head {
+        display: none !important;
+    }
+    .ct__leftbar {
+        position: fixed !important;
+        top: 80px !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        float: none !important;
+        z-index: 250 !important;
+        background: #fff !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        transform: translateX(-105%) !important;
+        transition: transform .32s ease !important;
+        box-sizing: border-box !important;
+    }
+    .ct__leftbar:before {
+        display: none !important;
+    }
+    .ct__leftbar.active {
+        top: 80px !important;
+        left: 0 !important;
+        transform: translateX(0) !important;
+    }
+    .ct__leftbar .cat:not(.filter),
+    .ct__leftbar .tag_menu,
+    .ct__leftbar .polimer-filter-mobile-head {
+        display: none !important;
+    }
+    .ct__leftbar.active .polimer-filter-mobile-head {
+        display: flex !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 3 !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 12px !important;
+        padding: 10px 12px 10px 16px !important;
+        background: #fff !important;
+        border-bottom: 1px solid #e8edf2 !important;
+        box-sizing: border-box !important;
+    }
+    .polimer-filter-mobile-head__title {
+        font: 700 16px/1.2 'roboto', sans-serif !important;
+        color: #333 !important;
+    }
+    .polimer-filter-close {
+        flex: 0 0 36px !important;
+        width: 36px !important;
+        height: 36px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 50% !important;
+        background: #f5f6f8 !important;
+        color: #666 !important;
+        font-size: 26px !important;
+        line-height: 34px !important;
+        text-align: center !important;
+        cursor: pointer !important;
+    }
+    .polimer-filter-close span {
+        display: block !important;
+        line-height: 34px !important;
+    }
+    .ct__leftbar.active .cat.filter,
+    .ct__leftbar.active .cat.filter.open {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 12px 20px !important;
+    }
+    .ct__leftbar.active .cat.filter > .name {
+        display: none !important;
+    }
+    .cat.filter.m-close.products_roll {
+        display: none !important;
+    }
+    .ct__content.active {
+        visibility: visible !important;
+        right: auto !important;
+    }
+    .ct__mask {
+        position: fixed !important;
+        top: 80px !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        margin: 0 !important;
+        background: rgba(0, 0, 0, 0.35) !important;
+        z-index: 240 !important;
+    }
+    .ct__mask.active {
+        top: 80px !important;
+        opacity: 1 !important;
+        z-index: 240 !important;
+    }
+    .products_roll .pr_header .filter.change span:nth-child(1) {
+        display: block !important;
+    }
+    .products_roll .pr_header .filter.change span:nth-child(2) {
+        display: none !important;
+    }
+}
+
 /* «Вы смотрели» — swipe affordance + card layout */
 .viewed-products-block {
     margin: 24px 0 36px !important;
@@ -1583,3 +1702,4 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         text-align: left !important;
     }
 }
+

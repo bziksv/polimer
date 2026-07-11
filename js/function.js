@@ -595,3 +595,72 @@ $(function () {
     polimerInitViewedProductsSlider();
 });
 
+function polimerCloseMobileFilter() {
+    $('.ct__leftbar').removeClass('active');
+    $('.ct__content').removeClass('active');
+    $('.products_roll .pr_header .filter, .filter').removeClass('change');
+    $('.ct__mask').removeClass('active');
+    $('body').removeClass('polimer-filter-open');
+}
+
+function polimerOpenMobileFilter() {
+    $('.ct__leftbar').addClass('active');
+    $('.ct__content').addClass('active');
+    $('.products_roll .pr_header .filter').addClass('change');
+    $('.ct__mask').addClass('active');
+    $('body').addClass('polimer-filter-open');
+}
+
+$(function () {
+    var $filterBtn = $('.products_roll .pr_header .filter');
+    var $leftbar = $('.ct__leftbar');
+    var $content = $('.ct__content');
+    var $mask = $('.ct__mask');
+    var mobileFilterMq = window.matchMedia('(max-width: 659px)');
+
+    function isMobileFilterView() {
+        return mobileFilterMq.matches;
+    }
+
+    $filterBtn.off('click').on('click.polimerMobileFilter', function (e) {
+        e.preventDefault();
+
+        if (isMobileFilterView()) {
+            if ($leftbar.hasClass('active')) {
+                polimerCloseMobileFilter();
+            } else {
+                polimerOpenMobileFilter();
+            }
+            return;
+        }
+
+        $leftbar.toggleClass('active');
+        $content.toggleClass('active');
+        $mask.toggleClass('active');
+        $filterBtn.toggleClass('change');
+    });
+
+    $mask.off('click').on('click.polimerMobileFilter', function () {
+        if (isMobileFilterView()) {
+            polimerCloseMobileFilter();
+            return;
+        }
+
+        $leftbar.removeClass('active');
+        $content.removeClass('active');
+        $('.filter').removeClass('change');
+        $mask.removeClass('active');
+    });
+
+    $(document).on('click.polimerMobileFilter', '.polimer-filter-close, .cat.filter.m-close .filter', function (e) {
+        e.preventDefault();
+        polimerCloseMobileFilter();
+    });
+
+    $(window).on('resize.polimerMobileFilter', function () {
+        if (!isMobileFilterView() && $leftbar.hasClass('active')) {
+            polimerCloseMobileFilter();
+        }
+    });
+});
+

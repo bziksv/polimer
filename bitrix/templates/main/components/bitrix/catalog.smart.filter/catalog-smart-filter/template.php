@@ -20,6 +20,11 @@ $templateData = array(
 $this->addExternalCss("/bitrix/css/main/font-awesome.css");
 ?>
 
+<div class="polimer-filter-mobile-head">
+	<span class="polimer-filter-mobile-head__title">Фильтр</span>
+	<button type="button" class="polimer-filter-close" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>
+</div>
+
 <div class="cat filter open">
 	<a href="#" class="name" onclick="return false"><div class="cube"><span></span><span></span></div>Фильтр</a>
 	<ul class="cat-ul">
