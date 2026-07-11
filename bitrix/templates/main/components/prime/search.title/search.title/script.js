@@ -826,6 +826,30 @@ function polimerIsMobileSearchIconMode()
 	return window.matchMedia('(min-width: 380px) and (max-width: 639px)').matches;
 }
 
+function polimerGetMobileSearchLayoutMode()
+{
+	if (polimerIsTabletInlineSearch())
+		return 'tablet';
+	if (polimerIsMobileSearchIconMode())
+		return 'mobile-icon';
+	return 'desktop';
+}
+
+function polimerResetMobileSearchTriggerClosed(trigger, triggerIcon)
+{
+	if (trigger)
+	{
+		trigger.setAttribute('aria-expanded', 'false');
+		trigger.setAttribute('aria-label', 'Поиск');
+	}
+
+	if (triggerIcon)
+	{
+		triggerIcon.classList.remove('fa-times');
+		triggerIcon.classList.add('fa-search');
+	}
+}
+
 function polimerSyncMobileSearchMode()
 {
 	var panel = document.getElementById('hmobile-search-panel');
@@ -836,7 +860,12 @@ function polimerSyncMobileSearchMode()
 	if (!panel || !hmobile)
 		return;
 
-	if (polimerIsTabletInlineSearch())
+	var mode = polimerGetMobileSearchLayoutMode();
+	var prevMode = window._polimerMobileSearchLayoutMode || null;
+	var modeChanged = prevMode !== null && prevMode !== mode;
+	window._polimerMobileSearchLayoutMode = mode;
+
+	if (mode === 'tablet')
 	{
 		panel.classList.add('is-inline');
 		panel.classList.add('is-open');
@@ -868,26 +897,21 @@ function polimerSyncMobileSearchMode()
 	if (trigger)
 		trigger.removeAttribute('aria-hidden');
 
-	if (polimerIsMobileSearchIconMode())
+	if (mode === 'mobile-icon')
 	{
-		panel.classList.remove('is-open');
-		BX.removeClass(hmobile, 'hmobile--search-open');
-
-		if (trigger)
+		// Do not close on every resize/keyboard scroll — only when layout mode actually changes.
+		if (modeChanged)
 		{
-			trigger.setAttribute('aria-expanded', 'false');
-			trigger.setAttribute('aria-label', 'Поиск');
+			panel.classList.remove('is-open');
+			BX.removeClass(hmobile, 'hmobile--search-open');
+			polimerResetMobileSearchTriggerClosed(trigger, triggerIcon);
+			polimerUnlockSearchHeader(true);
 		}
 
-		if (triggerIcon)
-		{
-			triggerIcon.classList.remove('fa-times');
-			triggerIcon.classList.add('fa-search');
-		}
-
-		polimerUnlockSearchHeader(true);
+		return;
 	}
-	else if (panel.classList.contains('is-open'))
+
+	if (panel.classList.contains('is-open'))
 	{
 		panel.classList.remove('is-open');
 		BX.removeClass(hmobile, 'hmobile--search-open');
@@ -898,18 +922,7 @@ function polimerSyncMobileSearchMode()
 	if (!panel.classList.contains('is-open'))
 	{
 		BX.removeClass(hmobile, 'hmobile--search-open');
-
-		if (trigger)
-		{
-			trigger.setAttribute('aria-expanded', 'false');
-			trigger.setAttribute('aria-label', 'Поиск');
-		}
-
-		if (triggerIcon)
-		{
-			triggerIcon.classList.remove('fa-times');
-			triggerIcon.classList.add('fa-search');
-		}
+		polimerResetMobileSearchTriggerClosed(trigger, triggerIcon);
 	}
 }
 
@@ -1197,6 +1210,7 @@ function polimerBindMobileSearchPanel()
 	{
 		BX.bind(trigger, 'click', function(e){
 			e.preventDefault();
+			e.stopPropagation();
 			if (!polimerIsMobileSearchIconMode())
 				return;
 
