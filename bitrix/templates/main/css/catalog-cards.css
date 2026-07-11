@@ -79,6 +79,10 @@
 .products_roll .pr_box .item .hover .inner .pic .pic-slide {
     position: absolute !important;
     inset: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
     display: block !important;
     width: 100% !important;
     height: 100% !important;
@@ -89,12 +93,28 @@
     border: 0 !important;
     object-fit: contain !important;
     object-position: center center !important;
+    transform: scale(1) !important;
+    transform-origin: center center !important;
 }
 
-.products_roll .pr_box .item .hover .inner .pic img.polimer-photo-fit,
-.products_roll .pr_box .item .hover .inner .pic .pic-slide.polimer-photo-fit {
-    width: 100% !important;
-    height: 100% !important;
+.products_roll .pr_box .item .hover .inner .pic img.polimer-photo-scale-tall,
+.products_roll .pr_box .item .hover .inner .pic .pic-slide.polimer-photo-scale-tall {
+    transform: scale(1.25) !important;
+}
+
+.products_roll .pr_box .item .hover .inner .pic img.polimer-photo-scale-mid,
+.products_roll .pr_box .item .hover .inner .pic .pic-slide.polimer-photo-scale-mid {
+    transform: scale(1.12) !important;
+}
+
+.products_roll .pr_box .item .hover .inner .pic img.polimer-photo-scale-wide,
+.products_roll .pr_box .item .hover .inner .pic .pic-slide.polimer-photo-scale-wide {
+    transform: scale(0.94) !important;
+}
+
+.products_roll .pr_box .item .hover .inner .pic img.polimer-photo-scale-compact,
+.products_roll .pr_box .item .hover .inner .pic .pic-slide.polimer-photo-scale-compact {
+    transform: scale(0.88) !important;
 }
 
 .products_roll .pr_box .item .hover .inner .pic:not(.has-slider) .pic-slide {

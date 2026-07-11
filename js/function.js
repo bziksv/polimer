@@ -255,6 +255,33 @@ $(function () {
     });
 });
 
+function polimerCatalogPhotoScaleClass(nw, nh, cw, ch) {
+    var fitScale = Math.min(cw / nw, ch / nh);
+    var widthFill = (nw * fitScale) / cw;
+    var heightFill = (nh * fitScale) / ch;
+
+    // Напольные / крупные: почти вся высота рамки (Lemax) — уменьшаем
+    if (heightFill >= 0.88 && widthFill >= 0.5) {
+        return 'polimer-photo-scale-compact';
+    }
+
+    // Узкий настенный котёл на всю высоту
+    if (heightFill >= 0.88 && widthFill < 0.5) {
+        return 'polimer-photo-scale-tall';
+    }
+
+    // Широкий низкий или мелкий в рамке (ZOTA) — увеличиваем
+    if (heightFill <= 0.7 || (widthFill >= 0.78 && heightFill <= 0.75)) {
+        return 'polimer-photo-scale-tall';
+    }
+
+    if (widthFill < 0.72 && heightFill < 0.72) {
+        return 'polimer-photo-scale-tall';
+    }
+
+    return 'polimer-photo-scale-mid';
+}
+
 function polimerNormalizeCatalogPhoto(img) {
     if (!img || img.tagName !== 'IMG') {
         return;
@@ -264,12 +291,46 @@ function polimerNormalizeCatalogPhoto(img) {
         return;
     }
 
-    img.classList.remove('polimer-photo-fit', 'polimer-photo-contain', 'polimer-photo-cover');
-    img.classList.add('polimer-photo-fit');
-    img.style.width = '';
-    img.style.height = '';
-    img.style.objectFit = '';
-    img.style.objectPosition = '';
+    var pic = img.closest('.pic');
+    if (!pic) {
+        return;
+    }
+
+    var apply = function () {
+        var nw = img.naturalWidth;
+        var nh = img.naturalHeight;
+        if (!nw || !nh) {
+            return;
+        }
+
+        var cw = pic.clientWidth;
+        var ch = pic.clientHeight;
+        if (!cw || !ch) {
+            return;
+        }
+
+        img.classList.remove(
+            'polimer-photo-fit',
+            'polimer-photo-contain',
+            'polimer-photo-cover',
+            'polimer-photo-scale-tall',
+            'polimer-photo-scale-mid',
+            'polimer-photo-scale-wide',
+            'polimer-photo-scale-compact'
+        );
+        img.classList.add(polimerCatalogPhotoScaleClass(nw, nh, cw, ch));
+        img.style.removeProperty('width');
+        img.style.removeProperty('height');
+        img.style.removeProperty('transform');
+        img.style.removeProperty('object-fit');
+        img.style.removeProperty('object-position');
+    };
+
+    if (img.complete && img.naturalWidth) {
+        apply();
+    } else {
+        img.addEventListener('load', apply, { once: true });
+    }
 }
 
 function polimerNormalizeCatalogPhotos(root) {
@@ -296,6 +357,14 @@ $(function () {
     setTimeout(function () {
         polimerNormalizeCatalogPhotos();
     }, 1200);
+
+    var resizeTimer = null;
+    window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+            polimerNormalizeCatalogPhotos();
+        }, 100);
+    });
 
     if (typeof MutationObserver !== 'undefined') {
         var normalizeTimer = null;
