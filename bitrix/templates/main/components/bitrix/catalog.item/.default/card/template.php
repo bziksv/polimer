@@ -155,7 +155,7 @@ $hasSlider = count($sliderImages) > 1;
 			
 			<div class="cost_total"><?php echo $PRINT_PRICE; ?></div>
 			
-			<a href="javascript:void(0)" class="add2cart">
+			<a href="javascript:void(0)" class="add2cart" title="В корзину">
 				<span class="txt1">В корзину</span>
 				<span class="txt2">Добавить в корзину</span>
 			</a>

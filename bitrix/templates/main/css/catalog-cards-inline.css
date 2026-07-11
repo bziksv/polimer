@@ -608,8 +608,31 @@
         display: none !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer .add2cart,
+    .products_roll .pr_box .item .hover .inner .add2cart {
+        position: relative !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        order: 2 !important;
+        flex: 0 0 38px !important;
+        width: 38px !important;
+        max-width: 38px !important;
+        min-width: 38px !important;
+        height: 38px !important;
+        line-height: 38px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+        font-size: 0 !important;
+        text-align: center !important;
+        align-self: auto !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        overflow: hidden !important;
+    }
     .products_roll .pr_box .item .hover .inner .card-footer .add2cartOrder,
-    .products_roll .pr_box .item .hover .inner .add2cart,
     .products_roll .pr_box .item .hover .inner .add2cartOrder {
         position: relative !important;
         display: block !important;
@@ -634,6 +657,13 @@
         bottom: auto !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer .add2cart:before,
+    .products_roll .pr_box .item .hover .inner .add2cart:before {
+        left: 50% !important;
+        right: auto !important;
+        width: 18px !important;
+        height: 15px !important;
+        margin: -7px 0 0 -9px !important;
+    }
     .products_roll .pr_box .item .hover .inner .card-footer .add2cartOrder:before {
         left: 10px !important;
         width: 16px !important;
@@ -644,7 +674,7 @@
         display: none !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer .add2cart .txt1 {
-        display: inline !important;
+        display: none !important;
     }
     .products_roll .pr_box .item:hover {
         width: 100% !important;
