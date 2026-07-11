@@ -304,7 +304,7 @@
     .products_roll .pr_box .item .hover .inner {
         position: relative !important;
         display: grid !important;
-        grid-template-columns: 110px minmax(0, 1fr) !important;
+        grid-template-columns: 140px minmax(0, 1fr) !important;
         grid-template-rows: auto auto auto auto !important;
         gap: 4px 8px !important;
         align-items: start !important;
@@ -350,7 +350,7 @@
         align-self: stretch !important;
         position: relative !important;
         width: 100% !important;
-        max-width: 110px !important;
+        max-width: 140px !important;
         height: auto !important;
         min-height: 250px !important;
         margin: 0 !important;
