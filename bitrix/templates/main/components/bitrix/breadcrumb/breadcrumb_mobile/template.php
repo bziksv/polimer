@@ -11,13 +11,13 @@ global $APPLICATION;
 if(empty($arResult))
 	return "";
 
-$strReturn = '<div class="breadcrumbs-mob">';
+$strReturn = '<nav class="breadcrumbs-mob" aria-label="Хлебные крошки">';
 
 $itemSize = count($arResult);
 for($index = 0; $index < $itemSize; $index++)
 {
 	$title = htmlspecialcharsex(preg_replace('#(~(.*?)~)#is', '', $arResult[$index]["TITLE"]));
-	$sep = ($index > 0 ? '<i class="bc-sep">/</i>' : '');
+	$sep = ($index > 0 ? '<span class="bc-sep" aria-hidden="true">/</span>' : '');
 
 	if($arResult[$index]["LINK"] <> "" && $index != $itemSize-1)
 	{
@@ -25,10 +25,10 @@ for($index = 0; $index < $itemSize; $index++)
 	}
 	else
 	{
-		$strReturn .= $sep.'<span>'.$title.'</span>';
+		$strReturn .= $sep.'<span class="bc-current">'.$title.'</span>';
 	}
 }
 
-$strReturn .= '</div><!--end::breadcrumbs-mob-->';
+$strReturn .= '</nav><!--end::breadcrumbs-mob-->';
 
 return $strReturn;

@@ -8199,10 +8199,32 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 			}
 		},
 
+		resetTotalBlockStickyState: function()
+		{
+			if (!this.totalInfoBlockNode || !this.totalGhostBlockNode)
+				return;
+
+			BX.removeClass(this.totalInfoBlockNode, 'bx-soa-cart-total-fixed');
+			BX.removeClass(this.totalInfoBlockNode, 'bx-soa-cart-total-bottom');
+			this.totalInfoBlockNode.style.width = '';
+			this.totalGhostBlockNode.style.paddingTop = 0;
+		},
+
+		isTotalBlockStickyDisabled: function()
+		{
+			return window.innerWidth <= 1019;
+		},
+
 		totalBlockScrollCheck: function()
 		{
 			if (!this.totalInfoBlockNode || !this.totalGhostBlockNode)
 				return;
+
+			if (this.isTotalBlockStickyDisabled())
+			{
+				this.resetTotalBlockStickyState();
+				return;
+			}
 
 			var scrollTop = BX.GetWindowScrollPos().scrollTop,
 				ghostTop = BX.pos(this.totalGhostBlockNode).top,
@@ -8233,6 +8255,12 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 		{
 			if (!this.totalInfoBlockNode || !this.totalGhostBlockNode)
 				return;
+
+			if (this.isTotalBlockStickyDisabled())
+			{
+				this.resetTotalBlockStickyState();
+				return;
+			}
 
 			if (BX.hasClass(this.totalInfoBlockNode, 'bx-soa-cart-total-fixed'))
 				this.totalInfoBlockNode.style.width = this.totalGhostBlockNode.offsetWidth + 'px';

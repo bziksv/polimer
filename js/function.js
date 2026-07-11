@@ -25,6 +25,50 @@ function UpdateHeaderBasket()
     }
 }
 
+function polimerMarkAdd2CartAdded(el)
+{
+    if (!el) {
+        return;
+    }
+
+    var $btn = $(el).closest('.add2cart');
+    if (!$btn.length && $(el).hasClass('add2cart')) {
+        $btn = $(el);
+    }
+    if (!$btn.length) {
+        return;
+    }
+
+    $btn.addClass('is-added');
+    $btn.attr('title', 'Добавлено');
+    $btn.attr('aria-label', 'Добавлено');
+
+    if ($btn.find('.txt1').length) {
+        $btn.find('.txt1').text('Добавлено');
+        $btn.find('.txt2').text('Добавлено');
+    } else {
+        $btn.text('Добавлено');
+    }
+}
+
+function polimerResetAdd2CartButton($btn)
+{
+    if (!$btn || !$btn.length) {
+        return;
+    }
+
+    $btn.removeClass('is-added');
+    $btn.attr('title', 'В корзину');
+    $btn.removeAttr('aria-label');
+
+    if ($btn.find('.txt1').length) {
+        $btn.find('.txt1').text('В корзину');
+        $btn.find('.txt2').text('Добавить в корзину');
+    } else {
+        $btn.text('В корзину');
+    }
+}
+
 function addToBasket2(idel, quantity,el) {
     let $href = "/ajax/add.php?id=" + idel;
 
@@ -33,8 +77,8 @@ function addToBasket2(idel, quantity,el) {
         type: 'get',
         success: function (data) {
             if (data === "Товар успешно добавлен в корзину") {
-                replaceBasket('/ajax/basket.php', $('.header__cart'));
-                replaceBasket('/ajax/basket-mobile.php', $('.hmobile__cart'));
+                UpdateHeaderBasket();
+                polimerMarkAdd2CartAdded(el);
                 alertify.success(data);
             } else {
                 alertify.error(data);
@@ -524,6 +568,20 @@ function polimerAdd2CartFromCard($add2cart, triggerEl) {
 
 $(function () {
     var isDesktopCatalog = window.matchMedia('(min-width: 1020px)');
+
+    $(document).on('input change', '.products_roll .pr_box .item .quantity input[name="quantity"]', function () {
+        var $btn = $(this).closest('.item').find('.add2cart.is-added').first();
+        if ($btn.length) {
+            polimerResetAdd2CartButton($btn);
+        }
+    });
+
+    $(document).on('click', '.products_roll .pr_box .item .quantity .plus, .products_roll .pr_box .item .quantity .minus', function () {
+        var $btn = $(this).closest('.item').find('.add2cart.is-added').first();
+        if ($btn.length) {
+            polimerResetAdd2CartButton($btn);
+        }
+    });
 
     if (!isDesktopCatalog.matches) {
         $(document).on('click', '.products_roll .pr_box .item .hover .inner .add2cart', function (e) {

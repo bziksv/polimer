@@ -17,7 +17,12 @@ $this->setFrameMode(true);
 <div class="product_top cl">
 
     <div class="catalog_top">
-        <? foreach($arResult['SECTIONS'] as &$arSection):?>
+        <? foreach($arResult['SECTIONS'] as &$arSection):
+            $sectionName = trim((string)$arSection['NAME']);
+            if ($sectionName === '') {
+                continue;
+            }
+        ?>
             <div class="item_c">
                 <a href="<?=$arSection['SECTION_PAGE_URL']?>">
                     <div class="img_c">

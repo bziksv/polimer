@@ -26,6 +26,7 @@ function PolimerTitleSearch(arParams)
 	this.inputTimer = null;
 	this.layoutTimer = null;
 	this.mouseOverResult = false;
+	this.suppressFocusLostDismiss = false;
 	this.lastPosition = null;
 	this.activeSectionIds = [];
 	this.sectionFilters = {};
@@ -317,6 +318,25 @@ function PolimerTitleSearch(arParams)
 		filterBar.innerHTML = html;
 	};
 
+	this.isMobileSearchLayout = function()
+	{
+		return window.matchMedia('(max-width: 1019px)').matches;
+	};
+
+	this.blurSearchInputKeepResults = function()
+	{
+		if (!_this.isMobileSearchLayout() || !_this.INPUT)
+			return;
+
+		_this.suppressFocusLostDismiss = true;
+		setTimeout(function() {
+			_this.suppressFocusLostDismiss = false;
+		}, 350);
+
+		try { _this.INPUT.blur({ preventScroll: true }); }
+		catch (e) { _this.INPUT.blur(); }
+	};
+
 	this.applySectionFilter = function(sectionIds, silent)
 	{
 		var dropdown = _this.RESULT.querySelector('.polimer-search-dropdown');
@@ -433,6 +453,7 @@ function PolimerTitleSearch(arParams)
 			_this.currentRow = -1;
 			_this.UnSelectAll();
 			_this.scheduleLayout();
+			_this.blurSearchInputKeepResults();
 		}
 	};
 
@@ -613,6 +634,9 @@ function PolimerTitleSearch(arParams)
 	this.onFocusLost = function()
 	{
 		setTimeout(function(){
+			if (_this.suppressFocusLostDismiss)
+				return;
+
 			if (_this.mouseOverResult || _this.RESULT.contains(document.activeElement))
 				return;
 

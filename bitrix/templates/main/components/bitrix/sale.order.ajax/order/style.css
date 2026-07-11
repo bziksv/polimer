@@ -1,4 +1,15 @@
 #custom-property-19 { background-color: #FFF; }
+
+/* bootstrap on checkout adds a:focus outline — keep header logo clean */
+header .hmobile__logo:focus,
+header .hmobile__logo:active,
+header .header__logo:focus,
+header .header__logo:active {
+    outline: none !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+}
+
 .bx-soa { padding-bottom:20px;}
 .bx-soa-section {
     border-radius: 2px;
@@ -1522,4 +1533,49 @@ label[data-bx-user-consent] a{
 }
 label[data-bx-user-consent] input{
     margin-top: 2px;
+}
+
+/* phone checkout — use full width, cancel double side gutters (.wr + bootstrap cols) */
+@media screen and (max-width: 639px) {
+    #bx-soa-order-form {
+        margin-left: -12px;
+        margin-right: -12px;
+        width: calc(100% + 24px);
+        max-width: calc(100% + 24px);
+        box-sizing: border-box;
+    }
+
+    #bx-soa-order.row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    #bx-soa-order > .col-sm-9,
+    #bx-soa-order > .col-sm-3,
+    #bx-soa-order > .bx-soa,
+    #bx-soa-total {
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+    }
+
+    #bx-soa-total-mobile {
+        padding-left: 6px !important;
+        padding-right: 6px !important;
+    }
+
+    .bx-soa-section-content,
+    .bx-soa-section-content.container-fluid {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+
+    .bx-soa-section-title-container {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+
+    .bx-soa-cart-total {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
 }

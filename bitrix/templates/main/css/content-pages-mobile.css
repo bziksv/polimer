@@ -32,6 +32,15 @@
 		width: auto !important;
 	}
 
+	header .hmobile .hmobile__logo:focus,
+	header .hmobile .hmobile__logo:active,
+	header .header__logo:focus,
+	header .header__logo:active {
+		outline: none !important;
+		box-shadow: none !important;
+		text-decoration: none !important;
+	}
+
 	header .hmobile .hmobile__phone {
 		display: inline-flex !important;
 	}
@@ -65,5 +74,39 @@
 	.sale-page__card:hover,
 	.articles-page__card:hover {
 		transform: none !important;
+	}
+}
+
+/* order checkout — disable sticky total block jitter on mobile */
+@media screen and (max-width: 1019px) {
+	#bx-soa-total .bx-soa-cart-total,
+	#bx-soa-total .bx-soa-cart-total.bx-soa-cart-total-fixed,
+	#bx-soa-total .bx-soa-cart-total.bx-soa-cart-total-bottom,
+	#bx-soa-total-mobile .bx-soa-cart-total,
+	#bx-soa-total-mobile .bx-soa-cart-total.bx-soa-cart-total-fixed,
+	#bx-soa-total-mobile .bx-soa-cart-total.bx-soa-cart-total-bottom {
+		position: static !important;
+		top: auto !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		opacity: 1 !important;
+		transition: none !important;
+		transform: none !important;
+		will-change: auto !important;
+	}
+
+	#bx-soa-total .bx-soa-cart-total-ghost {
+		display: none !important;
+		height: 0 !important;
+		padding-top: 0 !important;
+		margin: 0 !important;
+	}
+
+	#bx-soa-total {
+		position: static !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		padding-left: 0 !important;
+		padding-right: 0 !important;
 	}
 }
