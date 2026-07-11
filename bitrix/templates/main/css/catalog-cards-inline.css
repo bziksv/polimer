@@ -722,6 +722,38 @@
     .products_roll .pr_box .item .hover .inner .card-footer .add2cart .txt1 {
         display: none !important;
     }
+
+    /* 380px+ — enough room for qty + "В корзину" text */
+    @media screen and (min-width: 380px) {
+        .products_roll .pr_box .item .hover .inner .card-footer .quantity,
+        .products_roll .pr_box .item .hover .inner .quantity {
+            flex: 1 1 auto !important;
+            max-width: calc(100% - 118px) !important;
+        }
+        .products_roll .pr_box .item .hover .inner .card-footer .add2cart,
+        .products_roll .pr_box .item .hover .inner .add2cart {
+            flex: 0 0 auto !important;
+            width: auto !important;
+            max-width: none !important;
+            min-width: 108px !important;
+            padding: 0 10px 0 30px !important;
+            font-size: 12px !important;
+            line-height: 34px !important;
+            overflow: visible !important;
+        }
+        .products_roll .pr_box .item .hover .inner .card-footer .add2cart .txt1 {
+            display: inline !important;
+            font-size: 12px !important;
+            line-height: 34px !important;
+            white-space: nowrap !important;
+        }
+        .products_roll .pr_box .item .hover .inner .card-footer .add2cart:before,
+        .products_roll .pr_box .item .hover .inner .add2cart:before {
+            left: 10px !important;
+            margin: -7px 0 0 0 !important;
+        }
+    }
+
     .products_roll .pr_box .item:hover {
         width: 100% !important;
         height: auto !important;
