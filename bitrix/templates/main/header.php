@@ -137,9 +137,9 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                             <i class="fa fa-phone fa-2x" aria-hidden="true"></i>
                         </a>
 
-						<a href="/search/index.php" class="hmobile__search">
-                            <img src="/bitrix/templates/main/img/hmobile_search.png" alt="Поиск">
-                        </a>
+						<button type="button" class="hmobile__search" aria-label="Поиск" aria-expanded="false" aria-controls="hmobile-search-panel">
+                            <i class="fa fa-search header__fa-icon" aria-hidden="true"></i>
+                        </button>
 
 						<?php $APPLICATION->IncludeComponent("bitrix:sale.basket.basket.line", "basket.small.mobile", Array(
 							"HIDE_ON_BASKET_PAGES" => "Y",	// Не показывать на страницах корзины и оформления заказа
@@ -165,6 +165,32 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                             <span class="i3"></span>
                         </a>
 
+					</div>
+
+					<div class="hmobile__search-panel" id="hmobile-search-panel">
+						<?$APPLICATION->IncludeComponent("prime:search.title", "search.title", Array(
+							"CATEGORY_0" => array(
+								0 => "iblock_1c_catalog",
+							),
+							"CATEGORY_0_TITLE" => "Каталог",
+							"CATEGORY_0_iblock_1c_catalog" => array(
+								0 => "21",
+							),
+							"CHECK_DATES" => "N",
+							"CONTAINER_ID" => "title-search-mobile",
+							"INPUT_ID" => "title-search-input-mobile",
+							"NUM_CATEGORIES" => "1",
+							"ORDER" => "date",
+							"PAGE" => "#SITE_DIR#search/",
+							"SHOW_INPUT" => "Y",
+							"SHOW_OTHERS" => "N",
+							"TOP_COUNT" => "50",
+							"CACHE_TYPE" => "N",
+							"CACHE_TIME" => "0",
+							"USE_LANGUAGE_GUESS" => "Y",
+						),
+							false
+						);?>
 					</div>
 				</div>
                 <!--end::hmobile-->

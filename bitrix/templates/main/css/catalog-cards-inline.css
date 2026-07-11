@@ -1272,6 +1272,11 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     header.is-scrolled .hmobile {
         box-shadow: 0 4px 15px rgba(4, 6, 4, 0.08) !important;
     }
+    header .hmobile.hmobile--search-open {
+        height: auto !important;
+        min-height: 80px !important;
+        overflow: visible !important;
+    }
     header .hmobile .hmobile__cart {
         background-image: none !important;
         width: auto !important;
@@ -1311,6 +1316,116 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         background-color: #0464bb !important;
         color: #fff !important;
         border-radius: 999px !important;
+    }
+}
+
+@media screen and (max-width: 379px) {
+    header .hmobile .hmobile__search,
+    header .hmobile .hmobile__search-panel {
+        display: none !important;
+    }
+}
+
+/* mobile/tablet header 380–1019px: иконка поиска там, где есть место */
+@media screen and (min-width: 380px) and (max-width: 1019px) {
+    header .hmobile .wr {
+        display: flex !important;
+        align-items: center !important;
+        gap: 14px !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        box-sizing: border-box !important;
+    }
+    header .hmobile .hmobile__logo {
+        margin-right: auto !important;
+        float: none !important;
+    }
+    header .hmobile .hmobile__phone,
+    header .hmobile .hmobile__search,
+    header .hmobile .hmobile__cart,
+    header .hmobile .menu__trigger {
+        float: none !important;
+        margin: 0 !important;
+        flex: 0 0 auto !important;
+    }
+    header .hmobile .hmobile__search {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: auto !important;
+        height: auto !important;
+        min-width: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        background: none !important;
+        cursor: pointer !important;
+        color: #0464bb !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+    }
+    header .hmobile .hmobile__search .header__fa-icon {
+        font-size: 26px !important;
+        line-height: 1 !important;
+        color: #0464bb !important;
+    }
+    header .hmobile .hmobile__search-panel {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        overflow: hidden !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: 0 !important;
+        pointer-events: none !important;
+    }
+    header .hmobile .hmobile__search-panel.is-open {
+        display: block !important;
+        visibility: visible !important;
+        height: auto !important;
+        overflow: visible !important;
+        pointer-events: auto !important;
+        position: relative;
+        padding: 8px 16px 10px;
+        border-top: 1px solid #eef2f7;
+        background: #fff;
+        box-sizing: border-box;
+    }
+    header .hmobile .hmobile__search-panel .header__search {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+    header .hmobile .hmobile__search-panel .header__search .search {
+        width: 100% !important;
+        height: 44px !important;
+        border-radius: 8px !important;
+        box-sizing: border-box !important;
+        position: relative !important;
+        overflow: hidden !important;
+        padding-left: 14px !important;
+        padding-right: 44px !important;
+    }
+    header .hmobile .hmobile__search-panel .header__search .search__input {
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        font-size: 16px !important;
+        box-sizing: border-box !important;
+        background: transparent !important;
+    }
+    header .hmobile .hmobile__search-panel .header__search .search__btn {
+        position: absolute !important;
+        top: 50% !important;
+        right: 6px !important;
+        left: auto !important;
+        transform: translateY(-50%) !important;
+        width: 32px !important;
+        height: 32px !important;
+        margin: 0 !important;
+        float: none !important;
+    }
+    body.polimer-search-open header .hmobile .hmobile__search-panel .header__search .search {
+        box-shadow: 0 0 0 2px rgba(4, 100, 187, 0.15), 0 4px 16px rgba(0, 0, 0, 0.08) !important;
     }
 }
 

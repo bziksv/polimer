@@ -180,14 +180,33 @@ div.title-search-result.title-search-result--polimer {
 }
 
 .polimer-search-dropdown__section-filter.is-active,
-.polimer-search-item--section:has(.polimer-search-dropdown__section-filter.is-active) .polimer-search-dropdown__section-row {
+.polimer-search-item--section.is-filter-active .polimer-search-dropdown__section-row {
 	background: #fff;
 	box-shadow: inset 3px 0 0 #0358a6, 0 2px 8px rgba(3, 88, 166, 0.08);
 }
 
+.polimer-search-dropdown__section-check {
+	flex: 0 0 auto;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	background: #0358a6;
+	color: #fff;
+	font-size: 11px;
+	line-height: 1;
+}
+
+.polimer-search-dropdown__section-filter.is-active .polimer-search-dropdown__section-check,
+.polimer-search-item--section.is-filter-active .polimer-search-dropdown__section-check {
+	display: inline-flex;
+}
+
 .polimer-search-dropdown__section-filter.is-active .polimer-search-dropdown__name {
 	color: #0358a6;
-	font-weight: 500;
+	font-weight: 600;
 }
 
 .polimer-search-dropdown__filter-bar {
@@ -196,6 +215,13 @@ div.title-search-result.title-search-result--polimer {
 
 .polimer-search-dropdown__filter-bar[hidden] {
 	display: none !important;
+}
+
+.polimer-search-dropdown__filter-chips {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
 }
 
 .polimer-search-dropdown__filter-chip {
@@ -234,6 +260,16 @@ div.title-search-result.title-search-result--polimer {
 	background: rgba(3, 88, 166, 0.12);
 	font-size: 14px;
 	line-height: 1;
+}
+
+.polimer-search-dropdown__filter-reset {
+	border: 0;
+	background: transparent;
+	padding: 0;
+	color: #0358a6;
+	font: 500 12px/1.2 'roboto', sans-serif;
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 .polimer-search-dropdown__empty {
@@ -506,8 +542,57 @@ body.polimer-search-open header .header__search .search__input {
 		left: 0 !important;
 		width: 100% !important;
 		max-width: 100% !important;
-		padding: 0 10px;
+		padding: 0 16px;
 		box-sizing: border-box;
+	}
+
+	div.title-search-result.title-search-result--polimer.title-search-result--fill {
+		display: flex !important;
+		flex-direction: column;
+		overflow: hidden;
+		box-sizing: border-box;
+		padding-bottom: 0;
+	}
+
+	div.title-search-result.title-search-result--fill .polimer-search-dropdown {
+		display: flex;
+		flex-direction: column;
+		flex: 1 1 auto;
+		min-height: 0;
+		height: 100%;
+		max-height: 100%;
+		overflow: hidden;
+		border-top: none;
+		border-radius: 0 0 12px 12px;
+	}
+
+	div.title-search-result.title-search-result--fill .polimer-search-dropdown__cols {
+		flex: 1 1 auto;
+		min-height: 0;
+		overflow: hidden;
+	}
+
+	div.title-search-result.title-search-result--fill .polimer-search-dropdown__products {
+		display: flex;
+		flex-direction: column;
+		flex: 1 1 auto;
+		min-height: 0;
+		overflow: hidden;
+	}
+
+	div.title-search-result.title-search-result--fill .polimer-search-dropdown__products-head {
+		flex: 0 0 auto;
+	}
+
+	div.title-search-result.title-search-result--fill .polimer-search-dropdown__list--products {
+		flex: 1 1 auto;
+		min-height: 0;
+		max-height: none;
+		overflow-y: auto;
+	}
+
+	div.title-search-result.title-search-result--fill .polimer-search-dropdown__footer {
+		flex: 0 0 auto;
 	}
 
 	.polimer-search-dropdown__cols {
@@ -515,10 +600,14 @@ body.polimer-search-open header .header__search .search__input {
 	}
 
 	.polimer-search-dropdown__sections {
-		flex: none;
+		flex: 0 0 auto;
 		max-width: none;
 		border-right: none;
 		border-bottom: 1px solid #eef2f7;
+	}
+
+	.polimer-search-dropdown__sections .polimer-search-dropdown__list {
+		max-height: 240px;
 	}
 
 	.polimer-search-dropdown__list {
@@ -528,13 +617,13 @@ body.polimer-search-open header .header__search .search__input {
 
 @media screen and (max-width: 767px) {
 	.polimer-search-dropdown__heading {
-		padding-left: 14px;
-		padding-right: 14px;
+		padding-left: 16px;
+		padding-right: 16px;
 	}
 
 	.polimer-search-dropdown__list {
-		padding-left: 4px;
-		padding-right: 4px;
+		padding-left: 8px;
+		padding-right: 8px;
 	}
 
 	.polimer-search-dropdown__section-filter,
@@ -548,7 +637,17 @@ body.polimer-search-open header .header__search .search__input {
 	}
 
 	.polimer-search-dropdown__products-head {
-		padding-left: 14px;
-		padding-right: 14px;
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	.polimer-search-dropdown__correction {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	.polimer-search-dropdown__footer {
+		padding-left: 16px;
+		padding-right: 16px;
 	}
 }

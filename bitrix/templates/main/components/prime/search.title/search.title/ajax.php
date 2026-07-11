@@ -35,7 +35,7 @@ $searchAllName = $arResult['SEARCH_ALL']['NAME'] ?: 'Все результаты
 		<div class="polimer-search-dropdown__sections">
 			<div class="polimer-search-dropdown__heading">
 				<span class="polimer-search-dropdown__heading-text">Категории</span>
-				<span class="polimer-search-dropdown__hint">нажмите, чтобы отфильтровать</span>
+				<span class="polimer-search-dropdown__hint">можно выбрать несколько категорий</span>
 			</div>
 			<ul class="polimer-search-dropdown__list">
 				<?foreach($sections as $arSection):
@@ -64,6 +64,7 @@ $searchAllName = $arResult['SEARCH_ALL']['NAME'] ?: 'Все результаты
 							data-section-name="<?=$sectionName?>"
 							data-section-url="<?=htmlspecialcharsbx($sectionFilterUrl)?>"
 							title="Показать товары из «<?=$sectionName?>»">
+							<span class="polimer-search-dropdown__section-check" aria-hidden="true"><i class="fa fa-check"></i></span>
 							<span class="polimer-search-dropdown__thumb">
 								<img src="<?=$arSection['PICTURE']?>" alt="" width="48" height="48" loading="lazy">
 							</span>
@@ -97,12 +98,7 @@ $searchAllName = $arResult['SEARCH_ALL']['NAME'] ?: 'Все результаты
 						<?=$shownProducts?><?if($totalProducts > $shownProducts):?> из <?=$totalProducts?><?endif?>
 					</span>
 				</div>
-				<div class="polimer-search-dropdown__filter-bar" hidden>
-					<button type="button" class="polimer-search-dropdown__filter-chip">
-						<span class="polimer-search-dropdown__filter-chip-label"></span>
-						<span class="polimer-search-dropdown__filter-clear" title="Сбросить фильтр">&times;</span>
-					</button>
-				</div>
+				<div class="polimer-search-dropdown__filter-bar" hidden></div>
 			</div>
 			<ul class="polimer-search-dropdown__list polimer-search-dropdown__list--products">
 				<?foreach($products as $arItem):

@@ -27,8 +27,24 @@ function PolimerTitleSearch(arParams)
 	this.layoutTimer = null;
 	this.mouseOverResult = false;
 	this.lastPosition = null;
-	this.activeSectionId = null;
+	this.activeSectionIds = [];
 	this.sectionFilters = {};
+
+	this.normalizeSectionIds = function(sectionIds)
+	{
+		if (!sectionIds)
+			return [];
+
+		if (Array.isArray(sectionIds))
+			return sectionIds.map(String).filter(Boolean);
+
+		return [String(sectionIds)];
+	};
+
+	this.isMobileLayout = function()
+	{
+		return window.matchMedia('(max-width: 1319px)').matches;
+	};
 
 	this.getItems = function()
 	{
@@ -43,8 +59,15 @@ function PolimerTitleSearch(arParams)
 	this.getLayoutMetrics = function()
 	{
 		var headerBottom = document.querySelector('header .header__bottom');
+		var hmobile = document.querySelector('header .hmobile');
 		var pageContainer = document.querySelector('header .container') || document.querySelector('.container');
-		var anchor = (headerBottom && headerBottom.classList.contains('fixed')) ? headerBottom : _this.CONTAINER;
+		var anchor = _this.CONTAINER;
+
+		if (headerBottom && headerBottom.classList.contains('fixed'))
+			anchor = headerBottom;
+		else if (hmobile && window.matchMedia('(max-width: 1019px)').matches)
+			anchor = hmobile.classList.contains('hmobile--search-open') ? hmobile : _this.CONTAINER;
+
 		var anchorRect = anchor.getBoundingClientRect();
 		var containerRect = pageContainer ? pageContainer.getBoundingClientRect() : anchorRect;
 		var viewportWidth = document.documentElement.clientWidth || window.innerWidth;
@@ -58,8 +81,12 @@ function PolimerTitleSearch(arParams)
 			width = viewportWidth;
 		}
 
+		var topGap = 4;
+		if (hmobile && hmobile.classList.contains('hmobile--search-open') && window.matchMedia('(max-width: 1019px)').matches)
+			topGap = 0;
+
 		return {
-			top: Math.round(anchorRect.bottom + 4),
+			top: Math.round(anchorRect.bottom + topGap),
 			left: Math.round(left),
 			width: Math.round(width)
 		};
@@ -67,18 +94,43 @@ function PolimerTitleSearch(arParams)
 
 	this.applyPosition = function(metrics)
 	{
-		if (!_this.lastPosition
-			|| _this.lastPosition.top !== metrics.top
-			|| _this.lastPosition.left !== metrics.left
-			|| _this.lastPosition.width !== metrics.width)
+		var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+		var shouldFill = _this.isMobileLayout()
+			&& _this.RESULT.querySelector('.polimer-search-dropdown');
+		var fillHeight = shouldFill ? Math.max(220, viewportHeight - metrics.top - 4) : null;
+
+		if (_this.lastPosition
+			&& _this.lastPosition.top === metrics.top
+			&& _this.lastPosition.left === metrics.left
+			&& _this.lastPosition.width === metrics.width
+			&& _this.lastPosition.height === fillHeight)
+			return;
+
+		_this.RESULT.style.position = 'fixed';
+		_this.RESULT.style.top = metrics.top + 'px';
+		_this.RESULT.style.left = metrics.left + 'px';
+		_this.RESULT.style.width = metrics.width + 'px';
+		_this.RESULT.style.maxWidth = metrics.width + 'px';
+
+		if (shouldFill)
 		{
-			_this.RESULT.style.position = 'fixed';
-			_this.RESULT.style.top = metrics.top + 'px';
-			_this.RESULT.style.left = metrics.left + 'px';
-			_this.RESULT.style.width = metrics.width + 'px';
-			_this.RESULT.style.maxWidth = metrics.width + 'px';
-			_this.lastPosition = metrics;
+			_this.RESULT.style.height = fillHeight + 'px';
+			_this.RESULT.style.maxHeight = fillHeight + 'px';
+			BX.addClass(_this.RESULT, 'title-search-result--fill');
 		}
+		else
+		{
+			_this.RESULT.style.height = '';
+			_this.RESULT.style.maxHeight = '';
+			BX.removeClass(_this.RESULT, 'title-search-result--fill');
+		}
+
+		_this.lastPosition = {
+			top: metrics.top,
+			left: metrics.left,
+			width: metrics.width,
+			height: fillHeight
+		};
 	};
 
 	this.adjustResultNode = function()
@@ -144,7 +196,7 @@ function PolimerTitleSearch(arParams)
 		{
 			_this.currentRow = -1;
 			_this.items = [];
-			_this.activeSectionId = null;
+			_this.activeSectionIds = [];
 			return;
 		}
 
@@ -153,11 +205,11 @@ function PolimerTitleSearch(arParams)
 		_this.currentRow = -1;
 		_this.UnSelectAll();
 
-		var sectionToApply = restoreSectionId || null;
-		if (sectionToApply === null && _this.cache_key && _this.sectionFilters[_this.cache_key])
-			sectionToApply = _this.sectionFilters[_this.cache_key];
+		var sectionsToApply = _this.normalizeSectionIds(restoreSectionId);
+		if (!sectionsToApply.length && _this.cache_key && _this.sectionFilters[_this.cache_key])
+			sectionsToApply = _this.normalizeSectionIds(_this.sectionFilters[_this.cache_key]);
 
-		_this.applySectionFilter(sectionToApply, true);
+		_this.applySectionFilter(sectionsToApply, true);
 	};
 
 	this.escapeHtml = function(text)
@@ -177,35 +229,82 @@ function PolimerTitleSearch(arParams)
 		return Array.prototype.slice.call(_this.RESULT.querySelectorAll('.polimer-search-dropdown__section-filter'));
 	};
 
-	this.applySectionFilter = function(sectionId, silent)
+	this.renderFilterChips = function(dropdown, activeButtons)
+	{
+		var filterBar = dropdown.querySelector('.polimer-search-dropdown__filter-bar');
+		if (!filterBar)
+			return;
+
+		if (!activeButtons.length)
+		{
+			filterBar.hidden = true;
+			filterBar.innerHTML = '';
+			return;
+		}
+
+		var html = '<div class="polimer-search-dropdown__filter-chips">';
+		for (var i = 0; i < activeButtons.length; i++)
+		{
+			var button = activeButtons[i];
+			var sectionId = button.getAttribute('data-section-id') || '';
+			var sectionName = button.getAttribute('data-section-name') || '';
+			html += '<button type="button" class="polimer-search-dropdown__filter-chip" data-section-id="'
+				+ _this.escapeHtml(sectionId) + '">'
+				+ '<span class="polimer-search-dropdown__filter-chip-label">'
+				+ _this.escapeHtml(sectionName) + '</span>'
+				+ '<span class="polimer-search-dropdown__filter-clear" title="Убрать">&times;</span>'
+				+ '</button>';
+		}
+		html += '<button type="button" class="polimer-search-dropdown__filter-reset">Сбросить все</button>';
+		html += '</div>';
+		filterBar.hidden = false;
+		filterBar.innerHTML = html;
+	};
+
+	this.applySectionFilter = function(sectionIds, silent)
 	{
 		var dropdown = _this.RESULT.querySelector('.polimer-search-dropdown');
 		if (!dropdown)
 			return;
 
-		sectionId = sectionId ? String(sectionId) : null;
-		_this.activeSectionId = sectionId;
+		sectionIds = _this.normalizeSectionIds(sectionIds);
+		_this.activeSectionIds = sectionIds.slice();
 
 		if (_this.cache_key)
 		{
-			if (sectionId)
-				_this.sectionFilters[_this.cache_key] = sectionId;
+			if (sectionIds.length)
+				_this.sectionFilters[_this.cache_key] = sectionIds.slice();
 			else
 				delete _this.sectionFilters[_this.cache_key];
 		}
 
 		var filterButtons = _this.getSectionFilterButtons();
-		var activeButton = null;
+		var activeButtons = [];
 		for (var i = 0; i < filterButtons.length; i++)
 		{
 			var button = filterButtons[i];
-			var isActive = sectionId && button.getAttribute('data-section-id') === sectionId;
+			var buttonSectionId = button.getAttribute('data-section-id');
+			var isActive = sectionIds.indexOf(buttonSectionId) !== -1;
 			if (isActive)
+			{
 				BX.addClass(button, 'is-active');
+				activeButtons.push(button);
+			}
 			else
+			{
 				BX.removeClass(button, 'is-active');
-			if (isActive)
-				activeButton = button;
+			}
+		}
+
+		var sectionItems = dropdown.querySelectorAll('.polimer-search-item--section');
+		for (var s = 0; s < sectionItems.length; s++)
+		{
+			var sectionItem = sectionItems[s];
+			var itemSectionId = sectionItem.getAttribute('data-section-id');
+			if (sectionIds.indexOf(itemSectionId) !== -1)
+				BX.addClass(sectionItem, 'is-filter-active');
+			else
+				BX.removeClass(sectionItem, 'is-filter-active');
 		}
 
 		var productItems = dropdown.querySelectorAll('.polimer-search-item--product');
@@ -213,35 +312,21 @@ function PolimerTitleSearch(arParams)
 		for (var j = 0; j < productItems.length; j++)
 		{
 			var item = productItems[j];
-			var matches = !sectionId || item.getAttribute('data-section-id') === sectionId;
+			var matches = !sectionIds.length || sectionIds.indexOf(item.getAttribute('data-section-id')) !== -1;
 			item.style.display = matches ? '' : 'none';
 			if (matches)
 				visibleCount++;
 		}
 
-		var filterBar = dropdown.querySelector('.polimer-search-dropdown__filter-bar');
-		var filterLabel = dropdown.querySelector('.polimer-search-dropdown__filter-chip-label');
+		_this.renderFilterChips(dropdown, activeButtons);
+
 		var emptyState = dropdown.querySelector('.polimer-search-dropdown__empty');
 		var productsList = dropdown.querySelector('.polimer-search-dropdown__list--products');
 		var productsCount = dropdown.querySelector('.polimer-search-dropdown__products-count');
 
-		if (filterBar && filterLabel)
-		{
-			if (sectionId && activeButton)
-			{
-				filterBar.hidden = false;
-				filterLabel.textContent = activeButton.getAttribute('data-section-name') || '';
-			}
-			else
-			{
-				filterBar.hidden = true;
-				filterLabel.textContent = '';
-			}
-		}
-
 		if (emptyState && productsList)
 		{
-			var showEmpty = sectionId && visibleCount === 0;
+			var showEmpty = sectionIds.length && visibleCount === 0;
 			emptyState.hidden = !showEmpty;
 			productsList.style.display = showEmpty ? 'none' : '';
 		}
@@ -249,7 +334,12 @@ function PolimerTitleSearch(arParams)
 		if (productsCount)
 		{
 			var total = parseInt(productsCount.getAttribute('data-total'), 10) || productItems.length;
-			productsCount.textContent = sectionId ? visibleCount : total;
+			if (sectionIds.length)
+				productsCount.textContent = String(visibleCount);
+			else
+				productsCount.textContent = total > productItems.length
+					? (productItems.length + ' из ' + total)
+					: String(total);
 		}
 
 		var footerLink = dropdown.querySelector('.polimer-search-dropdown__all');
@@ -259,12 +349,19 @@ function PolimerTitleSearch(arParams)
 			var allLabel = footerLink.getAttribute('data-label-all') || 'Все результаты';
 			var query = dropdown.getAttribute('data-query') || _this.INPUT.value || '';
 
-			if (sectionId && activeButton)
+			if (activeButtons.length === 1)
 			{
-				var sectionUrl = activeButton.getAttribute('data-section-url') || allUrl;
-				var sectionName = activeButton.getAttribute('data-section-name') || '';
+				var singleButton = activeButtons[0];
+				var sectionUrl = singleButton.getAttribute('data-section-url') || allUrl;
+				var sectionName = singleButton.getAttribute('data-section-name') || '';
 				footerLink.href = sectionUrl;
 				footerLink.innerHTML = 'Все в «' + _this.escapeHtml(sectionName) + '»'
+					+ (query ? ' по запросу «' + _this.escapeHtml(query) + '»' : '');
+			}
+			else if (activeButtons.length > 1)
+			{
+				footerLink.href = allUrl;
+				footerLink.innerHTML = 'Показать все ' + visibleCount + ' товаров'
 					+ (query ? ' по запросу «' + _this.escapeHtml(query) + '»' : '');
 			}
 			else
@@ -285,11 +382,16 @@ function PolimerTitleSearch(arParams)
 
 	this.toggleSectionFilter = function(sectionId)
 	{
-		sectionId = sectionId ? String(sectionId) : null;
-		if (_this.activeSectionId === sectionId)
-			_this.applySectionFilter(null);
+		sectionId = String(sectionId);
+		var sectionIds = _this.activeSectionIds.slice();
+		var index = sectionIds.indexOf(sectionId);
+
+		if (index !== -1)
+			sectionIds.splice(index, 1);
 		else
-			_this.applySectionFilter(sectionId);
+			sectionIds.push(sectionId);
+
+		_this.applySectionFilter(sectionIds);
 	};
 
 	this.UnSelectAll = function()
@@ -395,7 +497,7 @@ function PolimerTitleSearch(arParams)
 		if (_this.INPUT.value != _this.oldValue && _this.INPUT.value != _this.startText)
 		{
 			_this.oldValue = _this.INPUT.value;
-			_this.activeSectionId = null;
+			_this.activeSectionIds = [];
 
 			if (_this.INPUT.value.length >= _this.arParams.MIN_QUERY_LEN)
 			{
@@ -582,8 +684,23 @@ function PolimerTitleSearch(arParams)
 				return;
 			}
 
-			var clearBtn = e.target.closest('.polimer-search-dropdown__filter-chip');
-			if (clearBtn)
+			var chipBtn = e.target.closest('.polimer-search-dropdown__filter-chip');
+			if (chipBtn)
+			{
+				e.preventDefault();
+				var chipSectionId = chipBtn.getAttribute('data-section-id');
+				if (chipSectionId)
+				{
+					var nextSectionIds = _this.activeSectionIds.filter(function(id) {
+						return id !== chipSectionId;
+					});
+					_this.applySectionFilter(nextSectionIds);
+				}
+				return;
+			}
+
+			var resetBtn = e.target.closest('.polimer-search-dropdown__filter-reset');
+			if (resetBtn)
 			{
 				e.preventDefault();
 				_this.applySectionFilter(null);
@@ -630,15 +747,139 @@ function PolimerTitleSearch(arParams)
 	BX.ready(function(){ _this.Init(); });
 }
 
-BX.ready(function(){
-	var container = document.querySelector('[data-polimer-search="Y"]');
-	if (!container)
+function polimerInitTitleSearchContainers()
+{
+	if (!window._polimerTitleSearchInstances)
+		window._polimerTitleSearchInstances = {};
+
+	document.querySelectorAll('[data-polimer-search="Y"]').forEach(function(container) {
+		if (!container.id || window._polimerTitleSearchInstances[container.id])
+			return;
+
+		window._polimerTitleSearchInstances[container.id] = new PolimerTitleSearch({
+			'AJAX_PAGE': container.getAttribute('data-ajax-page'),
+			'CONTAINER_ID': container.id,
+			'INPUT_ID': container.getAttribute('data-input-id'),
+			'MIN_QUERY_LEN': parseInt(container.getAttribute('data-min-query-len'), 10) || 2
+		});
+	});
+}
+
+function polimerCloseMobileSearchPanel()
+{
+	var panel = document.getElementById('hmobile-search-panel');
+	var trigger = document.querySelector('.hmobile__search');
+	var hmobile = document.querySelector('header .hmobile');
+	var input = document.getElementById('title-search-input-mobile');
+	var triggerIcon = trigger ? trigger.querySelector('.header__fa-icon') : null;
+
+	if (!panel)
 		return;
 
-	new PolimerTitleSearch({
-		'AJAX_PAGE': container.getAttribute('data-ajax-page'),
-		'CONTAINER_ID': container.id,
-		'INPUT_ID': container.getAttribute('data-input-id'),
-		'MIN_QUERY_LEN': parseInt(container.getAttribute('data-min-query-len'), 10) || 2
+	panel.classList.remove('is-open');
+
+	if (hmobile)
+		BX.removeClass(hmobile, 'hmobile--search-open');
+
+	if (trigger)
+	{
+		trigger.setAttribute('aria-expanded', 'false');
+		trigger.setAttribute('aria-label', 'Поиск');
+	}
+
+	if (triggerIcon)
+	{
+		triggerIcon.classList.remove('fa-times');
+		triggerIcon.classList.add('fa-search');
+	}
+
+	if (input)
+		input.blur();
+}
+
+function polimerOpenMobileSearchPanel()
+{
+	var panel = document.getElementById('hmobile-search-panel');
+	var trigger = document.querySelector('.hmobile__search');
+	var hmobile = document.querySelector('header .hmobile');
+	var input = document.getElementById('title-search-input-mobile');
+	var menuTrigger = document.querySelector('header .menu__trigger');
+	var triggerIcon = trigger ? trigger.querySelector('.header__fa-icon') : null;
+
+	if (!panel)
+		return;
+
+	if (menuTrigger && menuTrigger.classList.contains('close'))
+		menuTrigger.click();
+
+	panel.classList.add('is-open');
+
+	if (hmobile)
+		BX.addClass(hmobile, 'hmobile--search-open');
+
+	if (trigger)
+	{
+		trigger.setAttribute('aria-expanded', 'true');
+		trigger.setAttribute('aria-label', 'Закрыть поиск');
+	}
+
+	if (triggerIcon)
+	{
+		triggerIcon.classList.remove('fa-search');
+		triggerIcon.classList.add('fa-times');
+	}
+
+	if (input)
+	{
+		setTimeout(function(){
+			input.focus();
+			var container = document.getElementById('title-search-mobile');
+			if (container && typeof BX.onCustomEvent === 'function')
+				BX.onCustomEvent(container, 'OnNodeLayoutChange');
+		}, 0);
+	}
+}
+
+function polimerBindMobileSearchPanel()
+{
+	if (window._polimerMobileSearchBound)
+		return;
+
+	window._polimerMobileSearchBound = true;
+
+	var trigger = document.querySelector('.hmobile__search');
+
+	if (trigger)
+	{
+		BX.bind(trigger, 'click', function(e){
+			e.preventDefault();
+			if (!window.matchMedia('(min-width: 380px) and (max-width: 1019px)').matches)
+				return;
+
+			var panel = document.getElementById('hmobile-search-panel');
+			if (panel && panel.classList.contains('is-open'))
+				polimerCloseMobileSearchPanel();
+			else
+				polimerOpenMobileSearchPanel();
+		});
+	}
+
+	BX.bind(document, 'keydown', function(e){
+		if (!e || e.keyCode !== 27)
+			return;
+
+		var panel = document.getElementById('hmobile-search-panel');
+		if (panel && panel.classList.contains('is-open'))
+			polimerCloseMobileSearchPanel();
 	});
+
+	BX.bind(window, 'resize', BX.throttle(function(){
+		if (!window.matchMedia('(min-width: 380px) and (max-width: 1019px)').matches)
+			polimerCloseMobileSearchPanel();
+	}, 150));
+}
+
+BX.ready(function(){
+	polimerInitTitleSearchContainers();
+	polimerBindMobileSearchPanel();
 });
