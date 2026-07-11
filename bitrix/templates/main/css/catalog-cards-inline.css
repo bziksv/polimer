@@ -417,24 +417,50 @@
     }
     .products_roll .pr_box .item .hover .inner .compare label {
         display: inline-flex !important;
+        flex-direction: row-reverse !important;
         align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 5px !important;
         margin: 0 !important;
+        max-width: 100% !important;
     }
     .products_roll .pr_box .item .hover .inner .compare input[type="checkbox"] + span {
         position: relative !important;
+        display: inline-flex !important;
+        flex-direction: row-reverse !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 5px !important;
         font-size: 10px !important;
-        line-height: 14px !important;
-        padding-right: 18px !important;
+        line-height: 16px !important;
+        min-height: 16px !important;
+        padding-right: 0 !important;
         white-space: nowrap !important;
         text-shadow: none !important;
         color: #666 !important;
     }
+    .products_roll .pr_box .item .hover .inner .compare input[type="checkbox"] + span a {
+        display: inline !important;
+        font-size: 10px !important;
+        line-height: 16px !important;
+        color: #0464bb !important;
+        text-decoration: none !important;
+        white-space: nowrap !important;
+    }
     .products_roll .pr_box .item .hover .inner .compare input[type="checkbox"] + span::before {
-        right: 0 !important;
-        top: 50% !important;
-        margin-top: -9px !important;
+        position: relative !important;
+        right: auto !important;
+        top: auto !important;
+        left: auto !important;
+        flex: 0 0 16px !important;
         width: 16px !important;
         height: 16px !important;
+        margin: 0 !important;
+        background-size: 16px auto !important;
+        background-position: 0 0 !important;
+    }
+    .products_roll .pr_box .item .hover .inner .compare input[type="checkbox"]:checked + span::before {
+        background-position: 0 -17px !important;
     }
     .products_roll .pr_box .item .hover .inner .title {
         grid-column: 2 !important;
