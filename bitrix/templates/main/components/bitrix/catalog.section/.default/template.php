@@ -128,7 +128,7 @@ if (!empty($arResult['ITEMS']))
 						<? endforeach; ?>
 					</select>
 				</div>
-				<a href="#" class="filter" onclick="return false">
+				<a href="#" class="filter">
 					<span>Фильтр</span>
 					<span>Закрыть</span>
 				</a>
