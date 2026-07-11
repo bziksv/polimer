@@ -78,27 +78,27 @@
 .products_roll .pr_box .item .hover .inner .pic span img,
 .products_roll .pr_box .item .hover .inner .pic .pic-slide {
     position: absolute !important;
-    inset: 0 !important;
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
     display: block !important;
-    width: 100% !important;
-    height: 100% !important;
-    max-width: 100% !important;
-    max-height: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: calc(100% - 24px) !important;
+    max-height: calc(100% - 24px) !important;
     margin: 0 !important;
     padding: 0 !important;
     border: 0 !important;
-    object-fit: cover !important;
+    object-fit: contain !important;
     object-position: center center !important;
 }
 
-.products_roll .pr_box .item .hover .inner .pic img.polimer-photo-contain,
-.products_roll .pr_box .item .hover .inner .pic .pic-slide.polimer-photo-contain {
-    object-fit: contain !important;
-}
-
-.products_roll .pr_box .item .hover .inner .pic img.polimer-photo-cover,
-.products_roll .pr_box .item .hover .inner .pic .pic-slide.polimer-photo-cover {
-    object-fit: cover !important;
+.products_roll .pr_box .item .hover .inner .pic img.polimer-photo-fit,
+.products_roll .pr_box .item .hover .inner .pic .pic-slide.polimer-photo-fit {
+    max-width: none !important;
+    max-height: none !important;
 }
 
 .products_roll .pr_box .item .hover .inner .pic:not(.has-slider) .pic-slide {

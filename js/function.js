@@ -255,27 +255,17 @@ $(function () {
     });
 });
 
-function polimerCatalogPhotoShouldCover(nw, nh) {
-    var frameAspect = 3 / 4;
-    var imgAspect = nw / nh;
-
-    if (imgAspect >= frameAspect) {
-        return true;
-    }
-
-    if (nw >= nh) {
-        return true;
-    }
-
-    return false;
-}
-
 function polimerNormalizeCatalogPhoto(img) {
     if (!img || img.tagName !== 'IMG') {
         return;
     }
 
     if (img.src && img.src.indexOf('no_photo') !== -1) {
+        return;
+    }
+
+    var pic = img.closest('.pic');
+    if (!pic) {
         return;
     }
 
@@ -286,26 +276,43 @@ function polimerNormalizeCatalogPhoto(img) {
             return;
         }
 
-        img.classList.remove('polimer-photo-fit', 'polimer-photo-contain', 'polimer-photo-cover');
-        img.style.width = '';
-        img.style.height = '';
-        img.style.objectPosition = '';
-
-        if (polimerCatalogPhotoShouldCover(nw, nh)) {
-            img.classList.add('polimer-photo-cover');
-        } else {
-            img.classList.add('polimer-photo-contain');
+        var cw = pic.clientWidth;
+        var ch = pic.clientHeight;
+        if (!cw || !ch) {
+            return;
         }
+
+        var pad = 12;
+        var maxW = Math.max(1, cw - pad * 2);
+        var maxH = Math.max(1, ch - pad * 2);
+        var frameAspect = cw / ch;
+        var imgAspect = nw / nh;
+        var scale;
+
+        if (imgAspect >= frameAspect) {
+            scale = (maxW * 0.96) / nw;
+            if (nh * scale > maxH) {
+                scale = maxH / nh;
+            }
+        } else {
+            scale = (maxH * 0.96) / nh;
+            if (nw * scale > maxW) {
+                scale = maxW / nw;
+            }
+        }
+
+        img.classList.remove('polimer-photo-fit', 'polimer-photo-contain', 'polimer-photo-cover');
+        img.classList.add('polimer-photo-fit');
+        img.style.width = Math.round(nw * scale) + 'px';
+        img.style.height = Math.round(nh * scale) + 'px';
+        img.style.objectFit = 'contain';
+        img.style.objectPosition = 'center center';
     };
 
     if (img.complete && img.naturalWidth) {
         apply();
     } else {
         img.addEventListener('load', apply, { once: true });
-        img.addEventListener('error', function () {
-            img.classList.remove('polimer-photo-cover');
-            img.classList.add('polimer-photo-contain');
-        }, { once: true });
     }
 }
 
