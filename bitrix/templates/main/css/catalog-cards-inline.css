@@ -184,6 +184,41 @@
     text-align: center !important;
 }
 
+/* homepage categories 660–1319: единая grid-сетка без дыр между блоками по 8 */
+@media screen and (min-width: 660px) and (max-width: 1319px) {
+    .mp__categories .product_top {
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        padding: 8px 6px !important;
+        box-sizing: border-box !important;
+    }
+
+    .mp__categories .product_top .catalog_top:not(.toggle_product_no),
+    .mp__categories .product_top .catalog_top.toggle_product_no.is-visible {
+        display: contents !important;
+    }
+
+    .mp__categories .product_top .catalog_top.toggle_product_no:not(.is-visible) {
+        display: none !important;
+    }
+
+    .mp__categories .product_top .catalog_top .item_c {
+        float: none !important;
+        flex: none !important;
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        margin: 0 !important;
+        height: 200px !important;
+    }
+
+    .mp__categories .product_top .catalog_top .item_c a {
+        width: 100% !important;
+        height: 100% !important;
+    }
+}
+
 @media screen and (max-width: 1319px) {
     .search-page-layout .catalog_top .item_c,
     .product_top .catalog_top .item_c {
@@ -213,6 +248,8 @@
     .products_roll,
     .product_top,
     .ct__content,
+    .sale-page,
+    .articles-page,
     .footer {
         overflow-x: clip !important;
     }
@@ -227,7 +264,13 @@
     .page_content .row,
     .ct__content,
     .product_top,
-    .products_roll {
+    .products_roll,
+    .sale-page,
+    .sale-page__grid,
+    .sale-page__card,
+    .articles-page,
+    .articles-page__grid,
+    .articles-page__card {
         width: 100% !important;
         max-width: 100% !important;
         box-sizing: border-box !important;
@@ -1268,11 +1311,16 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         top: 0 !important;
         z-index: 301 !important;
         background: #fff !important;
+        display: flex !important;
+        align-items: center !important;
         height: auto !important;
         min-height: 0 !important;
-        padding-top: 12px !important;
-        padding-bottom: 12px !important;
+        padding-top: 14px !important;
+        padding-bottom: 14px !important;
         box-sizing: border-box !important;
+    }
+    header .hmobile > .wr {
+        width: 100% !important;
     }
     header.is-scrolled .hmobile {
         box-shadow: 0 4px 15px rgba(4, 6, 4, 0.08) !important;
@@ -1401,10 +1449,12 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
 /* mobile header 380–639px: иконка поиска + раскрывающаяся панель */
 @media screen and (min-width: 380px) and (max-width: 639px) {
     header .hmobile {
+        display: flex !important;
+        align-items: center !important;
         height: auto !important;
-        min-height: 65px !important;
-        padding-top: 12px !important;
-        padding-bottom: 12px !important;
+        min-height: 0 !important;
+        padding-top: 14px !important;
+        padding-bottom: 14px !important;
         box-sizing: border-box !important;
     }
     header .hmobile .menu__trigger {
@@ -1462,15 +1512,17 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        width: auto !important;
-        height: auto !important;
+        width: 28px !important;
+        height: 28px !important;
         min-width: 0 !important;
         padding: 0 !important;
+        margin: 0 !important;
         border: 0 !important;
         cursor: pointer !important;
         color: #0464bb !important;
         -webkit-appearance: none !important;
         appearance: none !important;
+        box-sizing: border-box !important;
     }
     header .hmobile.hmobile--search-open .hmobile__search {
         display: inline-flex !important;
@@ -1574,10 +1626,12 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
 /* tablet header 640–1019px: поиск в одной строке после лого */
 @media screen and (min-width: 640px) and (max-width: 1019px) {
     header .hmobile {
+        display: flex !important;
+        align-items: center !important;
         height: auto !important;
-        min-height: 65px !important;
-        padding-top: 12px !important;
-        padding-bottom: 12px !important;
+        min-height: 0 !important;
+        padding-top: 14px !important;
+        padding-bottom: 14px !important;
         box-sizing: border-box !important;
     }
     header .hmobile .wr {
@@ -3267,6 +3321,85 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         white-space: nowrap !important;
     }
 
+    /* header__main 1020–1319: calc + price in one row, slightly compact */
+    header .header__main .wr {
+        display: flex !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+        gap: 0 10px !important;
+    }
+
+    header .header__main .header__logo {
+        float: none !important;
+        flex: 0 0 auto !important;
+        margin: 0 8px 0 -2px !important;
+        padding-top: 0 !important;
+    }
+
+    header .header__main .header__logo img {
+        max-height: 42px !important;
+        width: auto !important;
+    }
+
+    header .header__main .header__phone {
+        float: none !important;
+        flex: 0 1 auto !important;
+        min-width: 0 !important;
+        margin: 0 8px 0 0 !important;
+        padding-top: 0 !important;
+        font-size: 1.35em !important;
+    }
+
+    header .header__main .header__timework {
+        float: none !important;
+        flex: 0 0 auto !important;
+        width: auto !important;
+        min-width: 108px !important;
+        margin: 0 auto 0 0 !important;
+        font-size: 0.78em !important;
+    }
+
+    header .header__main .header__timework:before {
+        left: -38px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        width: 28px !important;
+        height: 28px !important;
+    }
+
+    header .header__main .header__calculation,
+    header .header__main .header__price {
+        float: none !important;
+        flex: 0 0 auto !important;
+        margin: 0 !important;
+        padding-top: 0 !important;
+        padding-left: 34px !important;
+        font-size: 0.92em !important;
+        line-height: 1.15 !important;
+        white-space: nowrap !important;
+    }
+
+    header .header__main .header__calculation br {
+        display: none !important;
+    }
+
+    header .header__main .header__calculation:before,
+    header .header__main .header__price:before {
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        width: 28px !important;
+        height: 32px !important;
+    }
+
+    header .header__main .header__calculation:hover:before {
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+    }
+
+    header .header__main .header__price {
+        margin-left: 6px !important;
+    }
+
     /* desktop bar 1020–1319: search grows, but cart + account stay visible (cart before account) */
     header .header__bottom .wr {
         gap: 12px !important;
@@ -3281,8 +3414,7 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     }
 
     header .header__bottom .header__action {
-        flex: 0 0 auto !important;
-        margin: 0 !important;
+        display: none !important;
     }
 
     header .header__bottom #title-search,
@@ -3353,6 +3485,79 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
 
     header .header__bottom .header__account span {
         display: none !important;
+    }
+
+    header .header__bottom .header__phone-icon {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex: 0 0 auto !important;
+        width: 28px !important;
+        height: 28px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: 0 !important;
+        background: none !important;
+        color: #fff !important;
+        text-decoration: none !important;
+        cursor: pointer !important;
+        box-sizing: border-box !important;
+    }
+
+    header .header__bottom .header__phone-icon .header__fa-icon {
+        font-size: 22px !important;
+        line-height: 1 !important;
+    }
+
+    header .header__bottom.fixed .header__phone-icon {
+        color: #0358a6 !important;
+    }
+
+    header .header__bottom.fixed .header__phone-icon .header__fa-icon {
+        color: #0358a6 !important;
+    }
+
+    header .header__bottom.fixed .f_phone {
+        display: none !important;
+    }
+
+    /* homepage main tabs — 3 categories in one row at 1020–1319 */
+    .mp__categories .tabslist {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: stretch !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    .mp__categories .tabslist .maincategory {
+        float: none !important;
+        flex: 1 1 0 !important;
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        padding: 14px 8px 14px 88px !important;
+        height: 100px !important;
+        box-sizing: border-box !important;
+    }
+
+    .mp__categories .tabslist .maincategory.maincategory--2 {
+        margin: 0 !important;
+    }
+
+    .mp__categories .tabslist .maincategory .img {
+        left: 14px !important;
+        width: 68px !important;
+        height: 50px !important;
+        margin-top: -25px !important;
+    }
+
+    .mp__categories .tabslist .maincategory .name {
+        font-size: 0.95em !important;
+        line-height: 1.25 !important;
+        height: auto !important;
     }
 
     .basket .list .l-head,

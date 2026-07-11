@@ -4,8 +4,8 @@
 
 .sale-page__grid {
 	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 28px 24px;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 24px 20px;
 }
 
 .sale-page__card {
@@ -14,7 +14,7 @@
 	height: 100%;
 	background: #fff;
 	border: 1px solid #e8ecef;
-	border-radius: 12px;
+	border-radius: 10px;
 	overflow: hidden;
 	box-shadow: 0 2px 10px rgba(3, 88, 166, 0.06);
 	transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
@@ -29,35 +29,37 @@
 .sale-page__media {
 	display: block;
 	position: relative;
-	aspect-ratio: 16 / 9;
+	overflow: hidden;
 	background: #f4f7fa;
 	border-bottom: 1px solid #eef2f5;
+	line-height: 0;
 }
 
 .sale-page__media img {
-	width: 100%;
-	height: 100%;
-	object-fit: contain;
-	object-position: center center;
+	display: block;
+	width: 100% !important;
+	height: auto !important;
+	max-width: 100% !important;
+	vertical-align: top;
 }
 
 .sale-page__media-placeholder {
 	display: block;
 	width: 100%;
-	height: 100%;
+	aspect-ratio: 228 / 405;
 	background: linear-gradient(135deg, #eef3f8 0%, #f8fafc 100%);
 }
 
 .sale-page__badge {
 	position: absolute;
-	top: 14px;
-	left: 14px;
+	top: 10px;
+	left: 10px;
 	z-index: 2;
-	padding: 6px 10px;
+	padding: 5px 9px;
 	border-radius: 999px;
 	background: #e53935;
 	color: #fff;
-	font: 700 13px/1 'Open Sans', sans-serif;
+	font: 700 12px/1 'Open Sans', sans-serif;
 	letter-spacing: 0.02em;
 	box-shadow: 0 4px 12px rgba(229, 57, 53, 0.35);
 }
@@ -66,25 +68,18 @@
 	display: flex;
 	flex-direction: column;
 	flex: 1 1 auto;
-	padding: 18px 20px 20px;
-}
-
-.sale-page__date {
-	margin: 0 0 8px;
-	font: 500 12px/1.3 'Open Sans', sans-serif;
-	letter-spacing: 0.03em;
-	text-transform: uppercase;
-	color: #8a939c;
+	padding: 14px 16px 16px;
 }
 
 .sale-page__title {
 	margin: 0;
-	font: 600 20px/1.35 'Fira Sans', 'Open Sans', sans-serif;
+	font: 600 16px/1.35 'Fira Sans', 'Open Sans', sans-serif;
 }
 
 .sale-page__title a {
 	color: #0358a6;
 	text-decoration: none;
+	border-bottom: 0;
 	transition: color 0.2s ease;
 }
 
@@ -93,9 +88,13 @@
 }
 
 .sale-page__excerpt {
-	margin: 10px 0 0;
-	font: 400 14px/1.55 'Open Sans', sans-serif;
+	margin: 8px 0 0;
+	font: 400 13px/1.5 'Open Sans', sans-serif;
 	color: #5b6570;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
 }
 
 .sale-page__empty {
@@ -110,29 +109,34 @@
 	margin-top: 32px;
 }
 
-@media screen and (max-width: 1019px) {
+@media screen and (max-width: 1199px) {
 	.sale-page__grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 20px 16px;
-	}
-
-	.sale-page__title {
-		font-size: 18px;
 	}
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 1019px) {
+	.sale-page__title {
+		font-size: 15px;
+	}
+}
+
+@media screen and (max-width: 599px) {
+	.sale-page__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 16px 12px;
+	}
+}
+
+@media screen and (max-width: 479px) {
 	.sale-page__grid {
 		grid-template-columns: 1fr;
 		gap: 16px;
 	}
 
-	.sale-page__body {
-		padding: 14px 16px 16px;
-	}
-}
-
-@media screen and (min-width: 1320px) {
-	.sale-page__grid {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+	.sale-page {
+		padding-left: 0;
+		padding-right: 0;
 	}
 }

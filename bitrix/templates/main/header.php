@@ -56,6 +56,15 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 		
 		Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/custom.css?v=' . @filemtime($_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/css/custom.css'));
 
+		$catalogCardsInlinePath = $_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/css/catalog-cards-inline.css';
+		if (is_file($catalogCardsInlinePath)) {
+			Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . '/css/catalog-cards-inline.css?v=' . filemtime($catalogCardsInlinePath));
+		}
+		$contentPagesMobilePath = $_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/css/content-pages-mobile.css';
+		if (is_file($contentPagesMobilePath)) {
+			Asset::getInstance()->addCss(SITE_TEMPLATE_PATH . '/css/content-pages-mobile.css?v=' . filemtime($contentPagesMobilePath));
+		}
+
         Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/js/lightslider/css/lightslider.css');
         Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/js/lightGallery/css/lightgallery.css');
 
@@ -384,7 +393,7 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                                 ));
                         }
                         ?>
-						<a href="/calc/" class="header__calculation">Бесплатный<br>расчет</a>
+						<a href="/calc/" class="header__calculation">Бесплатный <br>расчет</a>
 						<a href="/price/" class="header__price">Прайс-листы</a>
 					</div><!--end::wr-->
 				</div><!--end::header__main-->
@@ -526,6 +535,21 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                         );?>
 
                         <div class="header__aside">
+                            <?php
+                            $headerPhoneTel = '+74732502233';
+                            switch ($_COOKIE['city'] ?? '') {
+                                case 'Лиски':
+                                    $headerPhoneTel = '+74739122082';
+                                    break;
+                                case 'Старый Оскол':
+                                    $headerPhoneTel = '+74725390911';
+                                    break;
+                            }
+                            ?>
+                            <a href="tel:<?=$headerPhoneTel?>" class="header__phone-icon" aria-label="Позвонить">
+                                <i class="fa fa-phone header__fa-icon" aria-hidden="true"></i>
+                            </a>
+
                             <div class="f_phone">
                                 <?
                                 switch ($_COOKIE['city']) {

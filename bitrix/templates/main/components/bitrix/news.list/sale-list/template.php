@@ -19,11 +19,11 @@ $this->addExternalCss($templateFolder.'/style.css');
 		<article class="sale-list__item">
 			<?if($pictureId):?>
 			<a href="<?=$arItem["DETAIL_PAGE_URL"]?>" class="sale-list__media">
-				<img src="<?=resizeImage($pictureId, 560, 315)?>"
+				<img src="<?=resizeImage($pictureId, 560, 1000)?>"
 				     alt="<?=$arItem["NAME"]?>"
 				     loading="lazy"
-				     width="560"
-				     height="315">
+				     width="280"
+				     height="500">
 			</a>
 			<?endif;?>
 

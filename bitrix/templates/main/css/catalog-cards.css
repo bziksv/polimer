@@ -384,6 +384,10 @@ header .header__bottom.fixed .header__cart:before {
     display: none !important;
 }
 
+header .header__bottom .header__phone-icon {
+    display: none !important;
+}
+
 header .header__bottom .header__aside-icon {
     display: none !important;
 }

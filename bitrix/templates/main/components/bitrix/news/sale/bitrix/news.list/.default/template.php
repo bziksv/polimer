@@ -26,11 +26,11 @@ $this->addExternalCss($templateFolder.'/style.css');
 		<article class="sale-page__card">
 			<a href="<?=$arItem["DETAIL_PAGE_URL"]?>" class="sale-page__media">
 				<?if($pictureId):?>
-				<img src="<?=resizeImage($pictureId, 720, 405)?>"
+				<img src="<?=resizeImage($pictureId, 280, 500)?>"
 				     alt="<?=$arItem["NAME"]?>"
 				     loading="lazy"
-				     width="720"
-				     height="405">
+				     width="280"
+				     height="500">
 				<?else:?>
 				<span class="sale-page__media-placeholder" aria-hidden="true"></span>
 				<?endif;?>
@@ -41,10 +41,6 @@ $this->addExternalCss($templateFolder.'/style.css');
 			</a>
 
 			<div class="sale-page__body">
-				<?if($arParams["DISPLAY_DATE"] != "N" && $arItem["DISPLAY_ACTIVE_FROM"]):?>
-				<p class="sale-page__date">Срок акции с <?=$arItem["DISPLAY_ACTIVE_FROM"]?></p>
-				<?endif;?>
-
 				<h2 class="sale-page__title">
 					<a href="<?=$arItem["DETAIL_PAGE_URL"]?>"><?=$arItem["NAME"]?></a>
 				</h2>

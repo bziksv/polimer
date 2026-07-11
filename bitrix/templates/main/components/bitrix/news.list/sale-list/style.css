@@ -26,15 +26,15 @@
 	overflow: hidden;
 	background: #f4f7fa;
 	border: 1px solid #eef2f5;
+	line-height: 0;
 }
 
 .sale-list__media img {
 	display: block;
-	width: 100%;
-	height: auto;
-	aspect-ratio: 16 / 9;
-	object-fit: contain;
-	object-position: center center;
+	width: 100% !important;
+	height: auto !important;
+	max-width: 100% !important;
+	vertical-align: top;
 }
 
 .sale-list__date {
