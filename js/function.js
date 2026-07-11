@@ -609,6 +609,21 @@ function polimerEnsureMobileFilterLayer() {
     }
 }
 
+function polimerDockFilterResultBar() {
+    if (!window.matchMedia('(max-width: 659px)').matches) {
+        return;
+    }
+
+    var modef = document.getElementById('modef');
+    if (!modef || !$('.ct__leftbar').hasClass('active')) {
+        return;
+    }
+
+    if (modef.parentElement !== document.body) {
+        document.body.appendChild(modef);
+    }
+}
+
 function polimerCloseMobileFilter() {
     $('.ct__leftbar').removeClass('active');
     $('.ct__content').removeClass('active');
@@ -624,6 +639,7 @@ function polimerOpenMobileFilter() {
     $('.products_roll .pr_header .filter').addClass('change');
     $('.ct__mask').addClass('active');
     $('body').addClass('polimer-filter-open');
+    polimerDockFilterResultBar();
 }
 
 function polimerToggleMobileFilter() {
@@ -671,5 +687,17 @@ $(function () {
             polimerCloseMobileFilter();
         }
     });
+
+    $(document).on('change.polimerMobileFilter', '.ct__leftbar .smartfilter input', function () {
+        setTimeout(polimerDockFilterResultBar, 0);
+        setTimeout(polimerDockFilterResultBar, 150);
+        setTimeout(polimerDockFilterResultBar, 500);
+    });
+
+    if (document.getElementById('modef')) {
+        new MutationObserver(function () {
+            polimerDockFilterResultBar();
+        }).observe(document.body, { childList: true, subtree: true });
+    }
 });
 

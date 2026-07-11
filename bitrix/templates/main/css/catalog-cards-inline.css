@@ -1517,8 +1517,9 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         overflow-x: hidden !important;
         overflow-y: auto !important;
         -webkit-overflow-scrolling: touch !important;
-        transform: translateX(-105%) !important;
-        transition: transform .32s ease !important;
+        left: -100% !important;
+        transform: none !important;
+        transition: left .32s ease !important;
         box-sizing: border-box !important;
         pointer-events: none !important;
         visibility: hidden !important;
@@ -1529,7 +1530,7 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     .ct__leftbar.active {
         top: 80px !important;
         left: 0 !important;
-        transform: translateX(0) !important;
+        transform: none !important;
         pointer-events: auto !important;
         visibility: visible !important;
     }
@@ -1631,9 +1632,8 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         width: 100% !important;
         min-height: 0 !important;
     }
-    .ct__leftbar.active #modef,
-    .ct__leftbar.active .bx-filter .bx-filter-popup-result,
-    body.polimer-filter-open #modef.bx-filter-popup-result {
+    body.polimer-filter-open #modef.bx-filter-popup-result,
+    body.polimer-filter-open .bx-filter #modef.bx-filter-popup-result {
         position: fixed !important;
         left: 12px !important;
         right: 12px !important;
@@ -1643,7 +1643,6 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         max-width: none !important;
         margin: 0 !important;
         padding: 12px 14px !important;
-        display: flex !important;
         flex-wrap: wrap !important;
         align-items: center !important;
         justify-content: space-between !important;
@@ -1660,6 +1659,14 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         color: #333 !important;
         border-image: none !important;
         -webkit-border-image: none !important;
+    }
+    body.polimer-filter-open #modef.bx-filter-popup-result[style*="inline"],
+    body.polimer-filter-open .bx-filter #modef.bx-filter-popup-result[style*="inline"] {
+        display: flex !important;
+    }
+    body.polimer-filter-open #modef.bx-filter-popup-result[style*="none"],
+    body.polimer-filter-open .bx-filter #modef.bx-filter-popup-result[style*="none"] {
+        display: none !important;
     }
     .ct__leftbar.active .bx-filter-popup-result.left,
     .ct__leftbar.active .bx-filter-popup-result.right {
