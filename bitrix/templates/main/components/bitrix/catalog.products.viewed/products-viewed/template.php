@@ -119,8 +119,10 @@ $containerName = 'catalog-products-viewed-container';
 if (!empty($arResult['ITEMS']) && !empty($arResult['ITEM_ROWS']))
 {
 	?>
+	<div class="viewed-products-block">
 	<div class="h2">Вы смотрели</div>
-	<div class="slider_product_show_all slider_product" id="mp__product__action">
+	<div class="viewed-products-hint">Листайте пальцем</div>
+	<div class="slider_product_show_all slider_product viewed-products-slider" id="mp__product__action">
 
 	<?
 $areaIds = array();
@@ -131,6 +133,8 @@ $areaIds = array();
 		$areaIds[$item['ID']] = $this->GetEditAreaId($uniqueId);
 		$this->AddEditAction($uniqueId, $item['EDIT_LINK'], $elementEdit);
 		$this->AddDeleteAction($uniqueId, $item['DELETE_LINK'], $elementDelete, $elementDeleteParams);
+        $productCode = $item['VIEWED_PRODUCT_CODE'] ?? '';
+        $inStock = !empty($item['VIEWED_IN_STOCK']);
 
 		?>
 			<div>
@@ -139,6 +143,16 @@ $areaIds = array();
 						<img src="<?=resizeImage($item['PREVIEW_PICTURE']['ID'], 150, 150)?>" alt="<?=$item['NAME']?>" class="img">
 					</a>
 					<a href="<?=$item['DETAIL_PAGE_URL']?>" class="name"><?=$item['NAME']?></a>
+                    <div class="product-meta">
+                        <?php if ($productCode !== ''): ?>
+                            <span class="incode">Код товара: <?=htmlspecialcharsbx($productCode)?></span>
+                        <?php endif; ?>
+                        <?php if ($inStock): ?>
+                            <span class="instock">Товар в наличии</span>
+                        <?php else: ?>
+                            <span class="instock instock--order">Под заказ</span>
+                        <?php endif; ?>
+                    </div>
 					<div class="price">
                         <?if(price($item['ID'])):?>
 							<span><?=price($item['ID']);?></span> &#8381;/<?=htmlspecialcharsbx(productMeasureUnit($item['ID'], $item['PROPERTIES'] ?? []));?>
@@ -147,10 +161,10 @@ $areaIds = array();
                         <? endif;?>
 					</div>
 
-                    <? if(checkProduct($item['ID'])): ?>
+                    <? if($inStock): ?>
 					<a href="javascript:void(0)" onclick="addToBasket2(<?=$item['ID']?>,1,this);" class="cart">В корзину</a>
 					<? else: ?>
-					<a href="javascript:void(0)" class="cart show-popup" data-id="order-product">под заказ</a>
+					<a href="javascript:void(0)" class="cart show-popup" data-id="order-product">Купить под заказ</a>
 					<? endif; ?>
 				</div>
 			</div>
@@ -159,6 +173,7 @@ $areaIds = array();
 
 	?>
 	</div><!-- end::slider_product -->
+	</div><!-- end::viewed-products-block -->
 	<?
 
 }

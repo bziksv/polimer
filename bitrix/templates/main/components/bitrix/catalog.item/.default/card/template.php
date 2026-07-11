@@ -156,8 +156,8 @@ $hasSlider = count($sliderImages) > 1;
 			<div class="cost_total"><?php echo $PRINT_PRICE; ?></div>
 			
 			<a href="javascript:void(0)" class="add2cart">
-				<span class="txt1" onclick="if(document.body.clientWidth < 659){addToBasket2(<?=$arItem['ID']?>, $('#count_<?=$arItem['ID']?> input').val(),this)};">В корзину</span>
-				<span class="txt2" onclick="addToBasket2(<?=$arItem['ID']?>, $('#count_<?=$arItem['ID']?> input').val(),this);">Добавить в корзину</span>
+				<span class="txt1">В корзину</span>
+				<span class="txt2">Добавить в корзину</span>
 			</a>
 			<?else:?>
 			<div class="cost_total"><span></span></div>

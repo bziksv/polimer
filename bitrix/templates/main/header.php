@@ -199,25 +199,25 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                                     <span class="name">Инженерная<br> сантехника</span>
                                 </a>
                             </li>
-                            <li class="maincategory maincategory--1 cl">
+                            <li class="maincategory maincategory--2 cl">
                                 <a href="/catalog/stroitelno_otdelochnye_materialy/">
                                     <span class="img"></span>
                                     <span class="name">Cтроительные<br> материалы</span>
                                 </a>
                             </li>
-                            <li class="maincategory maincategory--1 cl">
+                            <li class="maincategory maincategory--3 cl">
                                 <a href="/catalog/avtomatika/">
                                     <span class="img"></span>
                                     <span class="name">Ворота,<br> автоматика,<br> рольставни</span>
                                 </a>
                             </li>
-                            <li class="maincategory maincategory--1 cl">
+                            <li class="maincategory maincategory--2 cl">
                                 <a href="/sale/">
                                     <span class="img"></span>
                                     <span class="name">Акции</span>
                                 </a>
                             </li>
-                            <li class="maincategory maincategory--1 cl">
+                            <li class="maincategory maincategory--3 cl">
                                 <a href="/calc/">
                                     <span class="img"></span>
                                     <span class="name">Бесплатный расчет</span>
