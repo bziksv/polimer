@@ -167,9 +167,16 @@ $(function(){
         lessLink: '<a href="#" style="border-bottom:snow">Скрыть</a>'
     });
 
-    $('.category__show').click(function(){
-       var than = $(this);
-        than.parent().find('.toggle_product_no').slideToggle();
+    $('.category__show').off('click').on('click.polimerCategories', function(e) {
+        e.preventDefault();
+        var $btn = $(this);
+        var $hidden = $btn.closest('.tabitem').find('.toggle_product_no');
+        if (!$hidden.length) {
+            return false;
+        }
+        var expanding = !$hidden.first().hasClass('is-visible');
+        $hidden.toggleClass('is-visible', expanding);
+        $btn.text(expanding ? 'Скрыть' : 'Показать ещё категории');
         return false;
     });
 
@@ -470,6 +477,17 @@ $(function () {
         var $item = $(this).closest('.item');
         $item.removeClass('add2cart2');
         $item.children('.hover').css({ transform: '', left: '', right: '', top: '' });
+    });
+});
+
+$(function () {
+    $('.product_top .filter_top .header_f').off('click').on('click.polimerFilterTop', function () {
+        var $block = $(this).closest('.filter_top');
+        var $body = $block.find('.body_f').first();
+
+        $block.toggleClass('is-collapsed');
+        $body.stop(true, true).slideToggle(200);
+        return false;
     });
 });
 

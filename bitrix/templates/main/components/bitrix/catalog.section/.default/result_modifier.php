@@ -524,7 +524,7 @@ if(count($arParams['SECTION_USER_FIELDS'])){
                     $arProps = $ob->GetProperties();
                     $newCode = str_replace('UF_', 'ITEM_', $ibCode );
                     $arResult[$newCode][$arFields['ID']] = $arFields;
-                    $arResult[$newCode][$arFields['ID']]['PREVIEW_PICTURE'] = CFile::GetPath($arFields['PREVIEW_PICTURE']);
+                    $arResult[$newCode][$arFields['ID']]['PREVIEW_PICTURE'] = resizeImage($arFields['PREVIEW_PICTURE'], 200, 180);
                     $arResult[$newCode][$arFields['ID']]['PROP'] = $arProps;
                 }
             }

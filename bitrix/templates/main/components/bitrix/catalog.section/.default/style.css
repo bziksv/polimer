@@ -1,10 +1,19 @@
 .product_top .catalog_top{
-	margin-top: 10px;
-	margin-bottom: 10px;
+	margin-top: 12px;
+	margin-bottom: 22px;
 	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
-	gap: 10px;
+	gap: 14px;
+}
+
+.product_top .catalog_top .item_c {
+	float: none;
+	flex: 1 1 calc(20% - 14px);
+	min-width: 158px;
+	max-width: 228px;
+	width: auto;
+	height: auto;
 }
 
 @media screen and (max-width: 659px) {
