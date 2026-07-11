@@ -12,12 +12,7 @@
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
 ?>
-<div class="date">
-    <?if($arParams["DISPLAY_DATE"]!="N" && $arResult["DISPLAY_ACTIVE_FROM"]):?>
-        <?=$arResult["DISPLAY_ACTIVE_FROM"]?>
-    <?endif;?>
-</div>
-<h1 class="title"><?=$arResult['PROPERTIES']['DETALI_TITLE']['VALUE']?></h1>
+<h1 class="title"><?=$arResult['PROPERTIES']['DETALI_TITLE']['VALUE'] ?: $arResult['NAME']?></h1>
 <div class="txt">
     <a href="<?=$arParams['SECTION_URL']?>" class="back2allnews"><span></span><span></span>Назад к списку статей</a>
 
