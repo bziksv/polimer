@@ -606,24 +606,25 @@
     }
     .products_roll .pr_box .item .hover .inner .card-footer .quantity a:before {
         position: absolute !important;
-        width: 26px !important;
-        height: 26px !important;
-        line-height: 26px !important;
+        width: 22px !important;
+        height: 22px !important;
+        line-height: 22px !important;
         left: 50% !important;
         top: 50% !important;
-        margin: -13px 0 0 -13px !important;
+        margin: -11px 0 0 -11px !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer .quantity input[type=text],
     .products_roll .pr_box .item .hover .inner .card-footer .quantity input[type=password] {
         position: relative !important;
-        flex: 1 1 auto !important;
+        flex: 1 1 0 !important;
         width: auto !important;
         min-width: 0 !important;
-        height: 28px !important;
+        max-width: 36px !important;
+        height: 26px !important;
         margin: 0 !important;
         left: auto !important;
-        font-size: 13px !important;
-        padding: 2px !important;
+        font-size: 12px !important;
+        padding: 0 2px !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer .quantity:before,
     .products_roll .pr_box .item .hover .inner .card-footer .quantity:after {
@@ -640,12 +641,12 @@
         visibility: visible !important;
         opacity: 1 !important;
         order: 2 !important;
-        flex: 0 0 38px !important;
-        width: 38px !important;
-        max-width: 38px !important;
-        min-width: 38px !important;
-        height: 38px !important;
-        line-height: 38px !important;
+        flex: 0 0 34px !important;
+        width: 34px !important;
+        max-width: 34px !important;
+        min-width: 34px !important;
+        height: 34px !important;
+        line-height: 34px !important;
         margin: 0 !important;
         padding: 0 !important;
         box-sizing: border-box !important;
