@@ -69,30 +69,38 @@ $this->setFrameMode(true);
             ),
             $component
         );?>
-		
-		<br />
-		
-		<div class="h1">Товары по акции</div>
-		
-		<?php 
-		$IDs = [0];
-		
+
+		<?php
+		$productIds = [];
+
 		$res = CIBlockElement::GetByID($ElementID);
-		if ($obElement  = $res->GetNextElement()) {
+		if ($obElement = $res->GetNextElement()) {
 			$props = $obElement->GetProperties();
-			
-			if ($props["AKTSIYA_NA_SAYTE"]["VALUE"]) {
-				
-				$res = CIBlockElement::GetList([], ["IBLOCK_ID" => $arParams["CATALOG_IBLOCK_ID"], "PROPERTY_AKTSIYA_NA_SAYTE_VALUE" => $props["AKTSIYA_NA_SAYTE"]["VALUE"]], false, false, ["ID"]);
-				while ($arFields = $res->GetNext()) {	
-					$IDs[] = $arFields["ID"];
+
+			if (!empty($props["AKTSIYA_NA_SAYTE"]["VALUE"])) {
+				$res = CIBlockElement::GetList(
+					[],
+					[
+						"IBLOCK_ID" => $arParams["CATALOG_IBLOCK_ID"],
+						"PROPERTY_AKTSIYA_NA_SAYTE_VALUE" => $props["AKTSIYA_NA_SAYTE"]["VALUE"],
+						"ACTIVE" => "Y",
+					],
+					false,
+					false,
+					["ID"]
+				);
+				while ($arFields = $res->GetNext()) {
+					$productIds[] = (int)$arFields["ID"];
 				}
 			}
 		}
-		
-		$GLOBALS["arrFilter"] = ["ID" => $IDs];
-		
-		$APPLICATION->IncludeComponent(
+
+		if (!empty($productIds)):
+			$GLOBALS["arrFilter"] = ["ID" => $productIds];
+		?>
+		<br />
+		<div class="h1">Товары по акции</div>
+		<?$APPLICATION->IncludeComponent(
             "bitrix:catalog.section",
             "search",
             array(
@@ -106,8 +114,8 @@ $this->setFrameMode(true);
 				"PAGE_ELEMENT_COUNT" => $arParams["PAGE_ELEMENT_COUNT"],
             ),
             false
-        );
-		?>
+        );?>
+		<?endif;?>
     </div>
 
 
