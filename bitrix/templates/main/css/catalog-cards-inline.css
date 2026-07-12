@@ -3849,12 +3849,15 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         text-align: center !important;
     }
 
-    .pc__prod-gallery #imageGallery,
     .pc__prod-gallery .lSSlideOuter,
-    .pc__prod-gallery .lSSlideWrapper,
-    .pc__prod-gallery .lightSlider {
+    .pc__prod-gallery .lSSlideWrapper {
         width: 100% !important;
         max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .pc__prod-gallery #imageGallery,
+    .pc__prod-gallery .lightSlider {
         box-sizing: border-box !important;
     }
 
@@ -3862,8 +3865,9 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         overflow: hidden !important;
     }
 
+    .pc__prod-gallery .lightSlider > *,
     .pc__prod-gallery .lslide {
-        float: none !important;
+        float: left !important;
         box-sizing: border-box !important;
     }
 
@@ -3876,9 +3880,34 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     }
 
     .pc__prod-gallery .lSPager.lSGallery {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between !important;
+        align-items: stretch !important;
+        width: 100% !important;
         max-width: 100% !important;
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch;
+        overflow: visible !important;
+        transform: none !important;
+        box-sizing: border-box !important;
+    }
+
+    .pc__prod-gallery .lSPager.lSGallery li {
+        float: none !important;
+        flex: 1 1 25% !important;
+        width: 25% !important;
+        max-width: 25% !important;
+        padding: 4px !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    .pc__prod-gallery .lSPager.lSGallery li a,
+    .pc__prod-gallery .lSPager.lSGallery img {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        margin: 0 auto !important;
     }
 }
 

@@ -47,6 +47,11 @@ $menuVersions = array(
         'desc' => 'Боковая навигация по 3 разделам, карточки подкатегорий, счётчики товаров, аккуратная типографика.',
         'switch' => '?catalog_menu=v5',
     ),
+    'top-menu-catalog-v6' => array(
+        'title' => 'V6 — С фото',
+        'desc' => 'Светлое премиальное меню: миниатюры разделов слева, карточки подкатегорий с WebP-фото (из раздела или первого товара).',
+        'switch' => '?catalog_menu=v6',
+    ),
 );
 ?>
 
@@ -140,13 +145,20 @@ $menuVersions = array(
 .catalog-menu-preview__demo .catalog-menu-v5 .catalog-menu-v5__shell {
     max-height: 520px;
 }
+.catalog-menu-preview__demo .catalog-menu-v6.catalog-sections-menu {
+    width: 100%;
+    max-width: 100%;
+}
+.catalog-menu-preview__demo .catalog-menu-v6 .catalog-menu-v6__shell {
+    max-height: 520px;
+}
 </style>
 
 <div class="catalog-menu-preview">
     <h1>Варианты меню каталога</h1>
     <p class="catalog-menu-preview__intro">
         Текущее меню не удалено. Чтобы применить вариант на всём сайте, нажмите «Включить» или откройте
-        <code>?catalog_menu=v2</code> / <code>v3</code> / <code>v4</code> / <code>v5</code>. Вернуть оригинал: <code>?catalog_menu=default</code>.
+        <code>?catalog_menu=v2</code> / <code>v3</code> / <code>v4</code> / <code>v5</code> / <code>v6</code>. Вернуть оригинал: <code>?catalog_menu=default</code>.
     </p>
 
     <?php foreach ($menuVersions as $template => $meta): ?>

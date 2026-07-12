@@ -121,7 +121,6 @@ if (!empty($arResult['ITEMS']) && !empty($arResult['ITEM_ROWS']))
 	?>
 	<div class="viewed-products-block">
 	<div class="h2">Вы смотрели</div>
-	<div class="viewed-products-hint">Листайте пальцем</div>
 	<div class="slider_product_show_all slider_product viewed-products-slider" id="mp__product__action">
 
 	<?

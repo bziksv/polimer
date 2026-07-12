@@ -9,6 +9,7 @@ $catalogMenuAllowed = array(
     'top-menu-catalog-v3',
     'top-menu-catalog-v4',
     'top-menu-catalog-v5',
+    'top-menu-catalog-v6',
 );
 
 $catalogMenuVariants = array(
@@ -36,6 +37,11 @@ $catalogMenuVariants = array(
         'template' => 'top-menu-catalog-v5',
         'label' => 'V5',
         'title' => 'Продуманное',
+    ),
+    'v6' => array(
+        'template' => 'top-menu-catalog-v6',
+        'label' => 'V6',
+        'title' => 'С фото',
     ),
 );
 

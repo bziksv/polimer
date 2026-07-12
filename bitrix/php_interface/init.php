@@ -1800,6 +1800,183 @@ function resizeCatalogCardImage($id, $w, $h)
     return resizeImage($id, $w, $h);
 }
 
+function polimerMenuImageWebp($fileId, $w, $h, $quality = 82)
+{
+    static $memory = [];
+
+    $fileId = (int)$fileId;
+    $w = max(1, (int)$w);
+    $h = max(1, (int)$h);
+    $cacheKey = $fileId . 'x' . $w . 'x' . $h;
+
+    if (isset($memory[$cacheKey])) {
+        return $memory[$cacheKey];
+    }
+
+    $noPhoto = '/bitrix/templates/main/img/no_photo.png';
+    if (!isImageExists($fileId)) {
+        return $memory[$cacheKey] = $noPhoto;
+    }
+
+    $webpRel = '/upload/resize_cache/menu_webp/' . $w . '_' . $h . '/' . substr(md5($fileId . '_' . $w . '_' . $h), 0, 2) . '/' . md5($fileId . '_' . $w . '_' . $h) . '.webp';
+    $webpAbs = $_SERVER['DOCUMENT_ROOT'] . $webpRel;
+
+    if (is_file($webpAbs) && filesize($webpAbs) > 0) {
+        return $memory[$cacheKey] = $webpRel;
+    }
+
+    $resized = CFile::ResizeImageGet(
+        $fileId,
+        ['width' => $w, 'height' => $h],
+        BX_RESIZE_IMAGE_PROPORTIONAL,
+        true,
+        false,
+        false,
+        $quality
+    );
+
+    if (empty($resized['src'])) {
+        return $memory[$cacheKey] = $noPhoto;
+    }
+
+    $resizedAbs = $_SERVER['DOCUMENT_ROOT'] . $resized['src'];
+    if (!is_file($resizedAbs)) {
+        return $memory[$cacheKey] = $noPhoto;
+    }
+
+    if (!function_exists('imagewebp')) {
+        return $memory[$cacheKey] = $resized['src'];
+    }
+
+    $imageInfo = @getimagesize($resizedAbs);
+    if (!$imageInfo) {
+        return $memory[$cacheKey] = $resized['src'];
+    }
+
+    $sourceImage = null;
+    switch ($imageInfo[2]) {
+        case IMAGETYPE_JPEG:
+            $sourceImage = @imagecreatefromjpeg($resizedAbs);
+            break;
+        case IMAGETYPE_PNG:
+            $sourceImage = @imagecreatefrompng($resizedAbs);
+            break;
+        case IMAGETYPE_GIF:
+            $sourceImage = @imagecreatefromgif($resizedAbs);
+            break;
+        case IMAGETYPE_WEBP:
+            return $memory[$cacheKey] = $resized['src'];
+    }
+
+    if (!$sourceImage) {
+        return $memory[$cacheKey] = $resized['src'];
+    }
+
+    imagealphablending($sourceImage, true);
+    imagesavealpha($sourceImage, true);
+
+    $dir = dirname($webpAbs);
+    if (!is_dir($dir)) {
+        mkdir($dir, BX_DIR_PERMISSIONS, true);
+    }
+
+    if (@imagewebp($sourceImage, $webpAbs, $quality) && is_file($webpAbs) && filesize($webpAbs) > 0) {
+        @chmod($webpAbs, BX_FILE_PERMISSIONS);
+        imagedestroy($sourceImage);
+        return $memory[$cacheKey] = $webpRel;
+    }
+
+    imagedestroy($sourceImage);
+    return $memory[$cacheKey] = $resized['src'];
+}
+
+function polimerMenuResolveSectionImageId($sectionId, $iblockId, array &$productImageCache)
+{
+    static $sectionPictureCache = [];
+
+    $sectionId = (int)$sectionId;
+    $iblockId = (int)$iblockId;
+
+    if ($sectionId <= 0) {
+        return 0;
+    }
+
+    if (array_key_exists($sectionId, $sectionPictureCache)) {
+        return $sectionPictureCache[$sectionId];
+    }
+
+    if (CModule::IncludeModule('iblock')) {
+        $res = CIBlockSection::GetList(
+            [],
+            ['ID' => $sectionId, 'IBLOCK_ID' => $iblockId],
+            false,
+            ['ID', 'PICTURE']
+        );
+        if ($row = $res->Fetch()) {
+            if (!empty($row['PICTURE'])) {
+                return $sectionPictureCache[$sectionId] = (int)$row['PICTURE'];
+            }
+        }
+    }
+
+    if (!array_key_exists($sectionId, $productImageCache)) {
+        $pictureId = 0;
+        if (CModule::IncludeModule('iblock')) {
+            $elRes = CIBlockElement::GetList(
+                ['SORT' => 'ASC', 'ID' => 'ASC'],
+                [
+                    'IBLOCK_ID' => $iblockId,
+                    'SECTION_ID' => $sectionId,
+                    'INCLUDE_SUBSECTIONS' => 'Y',
+                    'ACTIVE' => 'Y',
+                    'ACTIVE_DATE' => 'Y',
+                ],
+                false,
+                ['nTopCount' => 1],
+                ['ID', 'PREVIEW_PICTURE', 'DETAIL_PICTURE']
+            );
+            if ($el = $elRes->Fetch()) {
+                $pictureId = (int)($el['PREVIEW_PICTURE'] ?: $el['DETAIL_PICTURE']);
+            }
+        }
+        $productImageCache[$sectionId] = $pictureId;
+    }
+
+    return $sectionPictureCache[$sectionId] = (int)$productImageCache[$sectionId];
+}
+
+function polimerMenuAttachSectionImages(array &$sections, $iblockId)
+{
+    $productImageCache = [];
+
+    foreach ($sections as &$section) {
+        $rootFileId = polimerMenuResolveSectionImageId((int)$section['ID'], $iblockId, $productImageCache);
+        $section['MENU_IMAGE'] = [
+            'SRC' => polimerMenuImageWebp($rootFileId, 56, 56),
+            'SRC_2X' => polimerMenuImageWebp($rootFileId, 112, 112),
+            'WIDTH' => 56,
+            'HEIGHT' => 56,
+        ];
+
+        if (empty($section['SECTION_1']) || !is_array($section['SECTION_1'])) {
+            continue;
+        }
+
+        foreach ($section['SECTION_1'] as &$sec2) {
+            $fileId = polimerMenuResolveSectionImageId((int)$sec2['ID'], $iblockId, $productImageCache);
+            $sec2['MENU_IMAGE'] = [
+                'SRC' => polimerMenuImageWebp($fileId, 128, 96),
+                'SRC_1X' => polimerMenuImageWebp($fileId, 128, 96),
+                'SRC_2X' => polimerMenuImageWebp($fileId, 256, 192),
+                'WIDTH' => 128,
+                'HEIGHT' => 96,
+            ];
+        }
+        unset($sec2);
+    }
+    unset($section);
+}
+
 function isImageExists($fileId) {
     if (!is_numeric($fileId) || empty($fileId)) {
         return false;
