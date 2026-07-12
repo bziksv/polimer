@@ -731,7 +731,7 @@ $(function () {
 
 function polimerIsMobileFilterView()
 {
-	return window.matchMedia('(max-width: 1019px)').matches;
+	return window.matchMedia('(max-width: 1319px)').matches;
 }
 
 function polimerEnsureMobileFilterLayer() {
@@ -790,7 +790,7 @@ function polimerToggleMobileFilter() {
 }
 
 $(function () {
-    var mobileFilterMq = window.matchMedia('(max-width: 1019px)');
+    var mobileFilterMq = window.matchMedia('(max-width: 1319px)');
 
     function isMobileFilterView() {
         return mobileFilterMq.matches;
