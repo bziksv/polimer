@@ -20,6 +20,18 @@ div.discount {
     font-family: 'Inter', 'Segoe UI', Roboto, system-ui, sans-serif;
 }
 
+.product-description {
+    font-family: 'Inter', 'Segoe UI', Roboto, system-ui, sans-serif;
+}
+
+.pc__tabs .t-content .tab.tab_des .product-description > .intro-title:first-child {
+    margin: 0 0 8px 0;
+}
+
+.pc__tabs .t-content .tab.tab_des .content > .product-description:first-child {
+    margin-top: 0;
+}
+
 .applications-title {
     font-size: 1.3rem;
     color: #033b5e;
