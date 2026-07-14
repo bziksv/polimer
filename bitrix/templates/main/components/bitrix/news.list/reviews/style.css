@@ -42,12 +42,58 @@
 .reviews-btn{
 	display: block;
 	background: url(/bitrix/templates/main/img/reviews.png) no-repeat;
+	background-size: 100% 100%;
 	height: 47px;
 	width: 460px;
+	max-width: 100%;
 	margin: 0 auto;
 }
 
 .clear {
 	clear: both;
 	display: block;
+}
+
+@media screen and (max-width: 659px) {
+	.reviews-btn {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 460 / 47;
+	}
+
+	.reviews_page {
+		padding: 15px;
+	}
+
+	.reviews_page .item {
+		overflow: hidden;
+	}
+
+	.reviews_page .item .author_block,
+	.reviews_page .item .text_block {
+		float: none;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.reviews_page .item .author_block {
+		padding: 20px;
+		border-right: none;
+		border-bottom: 1px solid #ccc;
+	}
+
+	.reviews_page .item .text_block {
+		padding: 20px;
+		word-wrap: break-word;
+		overflow-wrap: break-word;
+	}
+
+	.reviews_page .item .author_block .name {
+		float: none;
+		width: auto;
+	}
+
+	.reviews_page .item .author_block .about {
+		margin-top: 10px;
+	}
 }
