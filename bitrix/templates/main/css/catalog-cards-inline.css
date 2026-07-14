@@ -3521,7 +3521,12 @@ header .header__bottom.fixed {
     .basket .list .l-head {
         height: auto !important;
         min-height: 50px !important;
-        padding: 0 !important;
+        padding: 0 16px !important;
+    }
+
+    .basket .list .l-block .l-row {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
     }
 
     .basket .list .l-head .lh {
@@ -3535,6 +3540,7 @@ header .header__bottom.fixed {
 
     .basket .list .l-head .lh:nth-child(1) {
         grid-column: 1 / span 2 !important;
+        padding-left: 120px !important;
     }
 
     .basket .list .l-head .lh:nth-child(2) {
