@@ -116,6 +116,180 @@ class PolimerCatalogImageAudit
 		return implode("\n", array_slice($raw, -$lines));
 	}
 
+	public static function parseSectionFilterFromRequest(): array
+	{
+		$raw = $_GET['sections'] ?? $_GET['section'] ?? [];
+		if (!is_array($raw)) {
+			$raw = $raw !== '' ? [(string)$raw] : [];
+		}
+
+		return array_values(array_unique(array_filter(array_map('intval', $raw))));
+	}
+
+	public static function getSectionFilterOptions(): array
+	{
+		if (!CModule::IncludeModule('iblock')) {
+			return [];
+		}
+
+		static $cache = null;
+		if ($cache !== null) {
+			return $cache;
+		}
+
+		$sections = [];
+		$rs = CIBlockSection::GetList(
+			['LEFT_MARGIN' => 'ASC'],
+			['IBLOCK_ID' => self::IBLOCK_ID, 'ACTIVE' => 'Y', 'GLOBAL_ACTIVE' => 'Y'],
+			false,
+			['ID', 'NAME', 'DEPTH_LEVEL', 'IBLOCK_SECTION_ID']
+		);
+		while ($sec = $rs->GetNext()) {
+			$sections[] = [
+				'id' => (int)$sec['ID'],
+				'name' => (string)$sec['NAME'],
+				'depth' => (int)$sec['DEPTH_LEVEL'],
+				'parent_id' => (int)($sec['IBLOCK_SECTION_ID'] ?? 0),
+			];
+		}
+
+		$cache = $sections;
+
+		return $sections;
+	}
+
+	public static function getSectionNameMap(): array
+	{
+		$map = [];
+		foreach (self::getSectionFilterOptions() as $sec) {
+			$map[$sec['id']] = $sec['name'];
+		}
+
+		return $map;
+	}
+
+	public static function expandSectionFilterIds(array $selectedIds): array
+	{
+		if (!$selectedIds) {
+			return [];
+		}
+
+		$childrenByParent = [];
+		foreach (self::getSectionFilterOptions() as $sec) {
+			$childrenByParent[$sec['parent_id']][] = $sec['id'];
+		}
+
+		$expanded = [];
+		$queue = array_values(array_unique(array_map('intval', $selectedIds)));
+		while ($queue) {
+			$id = (int)array_shift($queue);
+			if (isset($expanded[$id])) {
+				continue;
+			}
+			$expanded[$id] = true;
+			foreach ($childrenByParent[$id] ?? [] as $childId) {
+				if (!isset($expanded[$childId])) {
+					$queue[] = $childId;
+				}
+			}
+		}
+
+		return array_map('intval', array_keys($expanded));
+	}
+
+	public static function loadSectionIdsForElements(array $elementIds): array
+	{
+		$elementIds = array_values(array_unique(array_filter(array_map('intval', $elementIds))));
+		if (!$elementIds || !CModule::IncludeModule('iblock')) {
+			return [];
+		}
+
+		$map = [];
+		foreach ($elementIds as $elementId) {
+			$map[$elementId] = [];
+		}
+
+		$connection = \Bitrix\Main\Application::getConnection();
+		foreach (array_chunk($elementIds, 500) as $chunk) {
+			$idsSql = implode(',', $chunk);
+			$res = $connection->query(
+				'SELECT IBLOCK_ELEMENT_ID, IBLOCK_SECTION_ID FROM b_iblock_section_element WHERE IBLOCK_ELEMENT_ID IN (' . $idsSql . ')'
+			);
+			while ($row = $res->fetch()) {
+				$elementId = (int)$row['IBLOCK_ELEMENT_ID'];
+				$sectionId = (int)$row['IBLOCK_SECTION_ID'];
+				$map[$elementId][$sectionId] = $sectionId;
+			}
+		}
+
+		foreach ($map as $elementId => $sectionIds) {
+			$map[$elementId] = array_values($sectionIds);
+		}
+
+		return $map;
+	}
+
+	public static function ensureItemSections(array &$items): void
+	{
+		if (!$items || (isset($items[0]['section_ids']) && is_array($items[0]['section_ids']))) {
+			return;
+		}
+
+		$sectionMap = self::loadSectionIdsForElements(array_column($items, 'id'));
+		$nameMap = self::getSectionNameMap();
+		foreach ($items as &$item) {
+			$ids = $sectionMap[(int)$item['id']] ?? [];
+			$item['section_ids'] = $ids;
+			$item['section_names'] = self::sectionNamesForIds($ids, $nameMap);
+		}
+		unset($item);
+	}
+
+	public static function itemMatchesSections(array $item, array $expandedSectionIds): bool
+	{
+		if (!$expandedSectionIds) {
+			return true;
+		}
+
+		$itemSections = $item['section_ids'] ?? [];
+		if (!$itemSections) {
+			return false;
+		}
+
+		return (bool)array_intersect($itemSections, $expandedSectionIds);
+	}
+
+	private static function sectionNamesForIds(array $sectionIds, array $nameMap): array
+	{
+		$names = [];
+		foreach ($sectionIds as $sectionId) {
+			$name = $nameMap[(int)$sectionId] ?? null;
+			if ($name !== null && $name !== '') {
+				$names[] = $name;
+			}
+		}
+
+		return $names;
+	}
+
+	private static function attachSectionsToItems(array $items): array
+	{
+		if (!$items) {
+			return $items;
+		}
+
+		$sectionMap = self::loadSectionIdsForElements(array_column($items, 'id'));
+		$nameMap = self::getSectionNameMap();
+		foreach ($items as &$item) {
+			$ids = $sectionMap[(int)$item['id']] ?? [];
+			$item['section_ids'] = $ids;
+			$item['section_names'] = self::sectionNamesForIds($ids, $nameMap);
+		}
+		unset($item);
+
+		return $items;
+	}
+
 	public static function isAllowed(): bool
 	{
 		global $USER;
@@ -229,6 +403,8 @@ class PolimerCatalogImageAudit
 			}
 			return strcmp($a['name'], $b['name']);
 		});
+
+		$items = self::attachSectionsToItems($items);
 
 		return [
 			'generated_at' => time(),

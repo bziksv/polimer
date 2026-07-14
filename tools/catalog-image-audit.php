@@ -19,6 +19,9 @@ $q = trim((string)($_GET['q'] ?? ''));
 $refresh = isset($_GET['refresh']) && $_GET['refresh'] === '1';
 $limit = max(1, min(500, (int)($_GET['limit'] ?? 200)));
 $offset = max(0, (int)($_GET['offset'] ?? 0));
+$selectedSections = PolimerCatalogImageAudit::parseSectionFilterFromRequest();
+$expandedSections = PolimerCatalogImageAudit::expandSectionFilterIds($selectedSections);
+$sectionOptions = PolimerCatalogImageAudit::getSectionFilterOptions();
 
 $building = PolimerCatalogImageAudit::isBuilding();
 $buildingStarted = false;
@@ -91,6 +94,7 @@ if (!$report) {
 }
 
 $items = $report['items'] ?? [];
+PolimerCatalogImageAudit::ensureItemSections($items);
 if ($minScore > 0) {
 	$items = array_values(array_filter($items, static function (array $row) use ($minScore): bool {
 		return (int)$row['score'] >= $minScore;
@@ -99,6 +103,11 @@ if ($minScore > 0) {
 if ($priority !== '') {
 	$items = array_values(array_filter($items, static function (array $row) use ($priority): bool {
 		return $row['priority'] === $priority;
+	}));
+}
+if ($expandedSections) {
+	$items = array_values(array_filter($items, static function (array $row) use ($expandedSections): bool {
+		return PolimerCatalogImageAudit::itemMatchesSections($row, $expandedSections);
 	}));
 }
 if ($q !== '') {
@@ -122,6 +131,7 @@ if ($format === 'json') {
 		'rules' => $report['rules'] ?? [],
 		'total_filtered' => $totalFiltered,
 		'min_score' => $minScore,
+		'sections' => $selectedSections,
 		'offset' => $offset,
 		'limit' => $limit,
 		'items' => $itemsPage,
@@ -134,6 +144,21 @@ $rules = $report['rules'] ?? [];
 $baseUrl = '/tools/catalog-image-audit.php';
 $refreshUrl = $baseUrl . '?refresh=1';
 $jsonUrl = $baseUrl . '?format=json';
+$buildAuditQuery = static function (array $extra = []) use ($priority, $q, $minScore, $limit, $selectedSections): string {
+	$params = array_filter([
+		'priority' => $priority,
+		'q' => $q,
+		'min_score' => $minScore,
+		'limit' => $limit,
+	], static function ($value): bool {
+		return $value !== '' && $value !== null;
+	});
+	if ($selectedSections) {
+		$params['sections'] = $selectedSections;
+	}
+
+	return http_build_query(array_merge($params, $extra));
+};
 $siteOrigin = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http')
 	. '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost:8084');
 
@@ -211,6 +236,29 @@ header('Content-Type: text/html; charset=utf-8');
 			gap: 6px;
 		}
 		.filter-field--wide { grid-column: 1 / -1; }
+		.filter-field--sections .section-search {
+			width: 100%;
+		}
+		.section-multi {
+			width: 100%;
+			min-height: 220px;
+			max-height: 320px;
+			padding: 8px;
+			font-size: 13px;
+			line-height: 1.35;
+		}
+		.section-multi option {
+			padding: 4px 0;
+			white-space: normal;
+		}
+		.section-multi option:checked {
+			background: linear-gradient(0deg, #dbeafe 0%, #dbeafe 100%);
+			color: #1e3a8a;
+		}
+		.section-selected-count {
+			font-size: 12px;
+			color: var(--muted);
+		}
 		.filter-label {
 			font-size: 13px;
 			font-weight: 600;
@@ -480,6 +528,26 @@ header('Content-Type: text/html; charset=utf-8');
 				<input type="text" name="q" value="<?=htmlspecialchars($q)?>" placeholder="Например: органайзер, 65674, FIT 65553, сайдинг">
 				<span class="filter-hint">Можно вбить часть названия, код товара или ID. Пример: <i>organayzer</i> или <i>44211</i>.</span>
 			</label>
+
+			<label class="filter-field filter-field--wide filter-field--sections">
+				<span class="filter-label">Категории</span>
+				<input type="search" id="sectionSearch" class="section-search" placeholder="Поиск по названию категории…">
+				<select name="sections[]" id="sectionSelect" class="section-multi" multiple size="12">
+					<?php foreach ($sectionOptions as $sec): ?>
+						<option value="<?=(int)$sec['id']?>" <?=in_array((int)$sec['id'], $selectedSections, true) ? 'selected' : ''?>>
+							<?=str_repeat('— ', max(0, (int)$sec['depth'] - 1))?><?=htmlspecialchars($sec['name'])?>
+						</option>
+					<?php endforeach; ?>
+				</select>
+				<span class="section-selected-count" id="sectionSelectedCount">
+					<?php if ($selectedSections): ?>
+						Выбрано категорий: <?=count($selectedSections)?> (с подкатегориями: <?=count($expandedSections)?>)
+					<?php else: ?>
+						Не выбрано — показываются все категории
+					<?php endif; ?>
+				</span>
+				<span class="filter-hint">Ctrl / Cmd + клик — несколько категорий. Выбранная ветка включает все подкатегории.</span>
+			</label>
 		</div>
 
 		<input type="hidden" name="limit" value="<?=$limit?>">
@@ -534,6 +602,9 @@ header('Content-Type: text/html; charset=utf-8');
 								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
 							</button>
 						</div>
+						<?php if (!empty($row['section_names'])): ?>
+							<div class="meta"><?=htmlspecialchars(implode(' · ', $row['section_names']))?></div>
+						<?php endif; ?>
 					</td>
 					<td class="col-metrics meta">
 						<?php if ($row['width'] && $row['height']): ?>
@@ -574,13 +645,7 @@ header('Content-Type: text/html; charset=utf-8');
 	<div class="pager">
 		Показано <?=$offset + 1?>–<?=min($offset + $limit, $totalFiltered)?> из <?=$totalFiltered?>
 		<?php if ($offset + $limit < $totalFiltered): ?>
-			· <a href="<?=htmlspecialchars($baseUrl . '?' . http_build_query(array_filter([
-				'priority' => $priority,
-				'q' => $q,
-				'min_score' => $minScore,
-				'limit' => $limit,
-				'offset' => $offset + $limit,
-			])))?>">Дальше</a>
+			· <a href="<?=htmlspecialchars($baseUrl . '?' . $buildAuditQuery(['offset' => $offset + $limit]))?>">Дальше</a>
 		<?php endif; ?>
 	</div>
 
@@ -660,6 +725,29 @@ header('Content-Type: text/html; charset=utf-8');
 		e.preventDefault();
 		copyText(btn.getAttribute('data-copy') || '', btn);
 	});
+
+	var sectionSearch = document.getElementById('sectionSearch');
+	var sectionSelect = document.getElementById('sectionSelect');
+	var sectionSelectedCount = document.getElementById('sectionSelectedCount');
+	if (sectionSearch && sectionSelect) {
+		sectionSearch.addEventListener('input', function () {
+			var q = this.value.toLowerCase().trim();
+			Array.prototype.forEach.call(sectionSelect.options, function (opt) {
+				opt.hidden = q !== '' && opt.text.toLowerCase().indexOf(q) === -1;
+			});
+		});
+	}
+	if (sectionSelect && sectionSelectedCount) {
+		var updateSectionCount = function () {
+			var count = Array.prototype.filter.call(sectionSelect.selectedOptions, function () {
+				return true;
+			}).length;
+			sectionSelectedCount.textContent = count
+				? ('Выбрано категорий: ' + count)
+				: 'Не выбрано — показываются все категории';
+		};
+		sectionSelect.addEventListener('change', updateSectionCount);
+	}
 })();
 </script>
 </body>
