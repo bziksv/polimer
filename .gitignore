@@ -4,6 +4,7 @@ upload
 upload/*
 bitrix/php_interface/*
 !/bitrix/php_interface/init.php
+!/bitrix/php_interface/polimer_catalog_image_audit.php
 bitrix/managed_cache/*
 bitrix/backup/*
 bitrix/cache/*
