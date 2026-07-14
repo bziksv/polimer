@@ -56,13 +56,9 @@ $APPLICATION->SetTitle("«Полимер» — главная страница 
    	<div class="tablist_content">
 
 		<? foreach($arrIdSection as $sect): ?>
-		<div class="tabitem">
-
-			<?
+		<?
 			$arFilter = array('IBLOCK_ID' => 21,"SECTION_ID" => $sect,'DEPTH_LEVEL' => 2,"ACTIVE" => "Y");
 			$rsSect = CIBlockSection::GetList(array('left_margin' => 'asc'),$arFilter);
-			$inc = 1;
-			$arrIdSection = array();
 			$arrSection = array();
 			while ($arSect = $rsSect->GetNext())
 			{
@@ -70,7 +66,9 @@ $APPLICATION->SetTitle("«Полимер» — главная страница 
 			}
 			$rows = ceil(count($arrSection)/8);
 			$section = array_chunk($arrSection,8);
-			?>
+			$hasMoreCategories = ($rows > 2);
+		?>
+		<div class="tabitem<?= $hasMoreCategories ? '' : ' tabitem--compact' ?>">
             <div class="product_top cl" style="padding:8px 2px;">
                 <? for($i = 0;$i < $rows;$i++):?>
                     <div class="catalog_top cl <?if($i >= 2):?>toggle_product_no<? endif; ?>">
@@ -87,7 +85,9 @@ $APPLICATION->SetTitle("«Полимер» — главная страница 
                     </div><!-- row cl category__line-->
                 <? endfor; ?>
             </div>
+			<? if ($hasMoreCategories): ?>
 			<a href="#" class="category__show">Показать ещё категории</a>
+			<? endif; ?>
 		</div><!-- end: tabitem -->
 		<? endforeach; ?>
 

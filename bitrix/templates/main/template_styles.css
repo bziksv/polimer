@@ -2195,7 +2195,7 @@ header .header__bottom.fixed .header__account span
 .mp__categories .tablist_content {
     border: 1px solid #ced5d9;
     text-align: center;
-    padding-bottom: 40px;
+    padding-bottom: 24px;
     margin-top: -1px
 }
 
@@ -2250,6 +2250,7 @@ header .header__bottom.fixed .header__account span
     border-radius: 5px;
     font-size: 1.142em;
     padding: 12px 55px;
+    margin-top: 8px;
     -moz-transition: all .3s ease;
     -o-transition: all .3s ease;
     -webkit-transition: all .3s ease;
