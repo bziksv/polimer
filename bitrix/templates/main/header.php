@@ -83,7 +83,12 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 		Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/swipe.js');
 
 
-		Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/common.min.js');
+		$commonJsPath = $_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/js/common.min.js';
+		$commonJsUrl = SITE_TEMPLATE_PATH . '/js/common.min.js';
+		if (is_file($commonJsPath)) {
+			$commonJsUrl .= '?' . filemtime($commonJsPath);
+		}
+		Asset::getInstance()->addJs($commonJsUrl);
 		Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/social-likes.min.js');
 		Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/wickedpicker.min.js');
 		Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/jquery.maskedinput.min.js');

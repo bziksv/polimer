@@ -76,7 +76,7 @@ $inCompare = inCompare($arResult['IBLOCK_ID'], $arResult['ID']);
            <? endif; ?>
        </div>
 
-       <div class="cl mb-40">
+       <div class="cl mb-40 pc__prod-meta">
            <div class="bb_col pc__mobile-below-gallery">
                <span>Код товара: <?=$arResult['PROPERTIES']['CML2_TRAITS']['VALUE'][2];?></span>
            </div>
@@ -369,6 +369,12 @@ $inCompare = inCompare($arResult['IBLOCK_ID'], $arResult['ID']);
             </div>
          </div>
       </div>
+      <?php if ($arResult['CODE'] === 'schetchik_gaza_schetpribor_sgmb_3_2_du_15'): ?>
+      <div class="product-description-note">
+          <p class="product-description-note__text">Обращаем ваше внимание, что технические характеристики товара могут быть изменены производителем без уведомления. Для уточнения актуальных характеристик или деталей комплектации свяжитесь с нашим менеджером. Напишите ему на электронную почту</p>
+          <a class="product-description-note__email" href="mailto:info@polimer-vrn.ru">info@polimer-vrn.ru</a>
+      </div>
+      <?php endif; ?>
    </div>
    <!--end::pc__prod-info-->
 

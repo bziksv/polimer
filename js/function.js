@@ -421,6 +421,15 @@ function polimerCatalogPhotoScaleClass(nw, nh, cw, ch) {
     var fitScale = Math.min(cw / nw, ch / nh);
     var widthFill = (nw * fitScale) / cw;
     var heightFill = (nh * fitScale) / ch;
+    var imageRatio = nw / nh;
+
+    // Горизонтальные: не увеличиваем — scale-tall обрезает края из-за overflow:hidden
+    if (imageRatio > 1.05) {
+        if (heightFill <= 0.5) {
+            return 'polimer-photo-scale-wide';
+        }
+        return 'polimer-photo-scale-mid';
+    }
 
     // Напольные / крупные: почти вся высота рамки (Lemax) — уменьшаем
     if (heightFill >= 0.88 && widthFill >= 0.5) {
@@ -558,31 +567,12 @@ function polimerCenterAdd2CartPopup($item) {
         return;
     }
 
+    /* full-card overlay: positioning is in catalog-cards-inline.css */
     $hover.css({
-        left: '50%',
-        right: 'auto',
-        transform: 'translateX(-50%)'
-    });
-
-    window.requestAnimationFrame(function () {
-        var node = $hover[0];
-        if (!node) {
-            return;
-        }
-
-        var rect = node.getBoundingClientRect();
-        var pad = 10;
-        var shift = 0;
-
-        if (rect.left < pad) {
-            shift = pad - rect.left;
-        } else if (rect.right > window.innerWidth - pad) {
-            shift = (window.innerWidth - pad) - rect.right;
-        }
-
-        if (shift !== 0) {
-            $hover.css('transform', 'translateX(calc(-50% + ' + shift + 'px))');
-        }
+        left: '',
+        right: '',
+        top: '',
+        transform: ''
     });
 }
 

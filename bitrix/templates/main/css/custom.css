@@ -117,6 +117,72 @@ div.discount {
     font-weight: 500;
 }
 
+.product-description-note {
+    font-family: 'Inter', 'Segoe UI', Roboto, system-ui, sans-serif;
+    margin-top: 28px;
+    padding: 16px 20px;
+    background: #f7fbfd;
+    border: 1px solid #d9ecf5;
+    border-left: 4px solid #009dc5;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: #1e2f3f;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+.product-description-note__text {
+    margin: 0;
+}
+
+.product-description-note__email {
+    display: inline-block;
+    margin-top: 4px;
+    color: #0362b6;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.product-description-note__email:hover {
+    color: #009dc5;
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 659px) {
+    .pc__prod-info > .product-description-note {
+        order: 3;
+        margin: 0;
+        padding: 16px 15px 20px;
+        background: #fff;
+        border: 0;
+        border-top: 1px solid #cdd2d6;
+        border-radius: 0;
+        font: 400 12px/18px 'roboto', sans-serif;
+        color: #414141;
+    }
+
+    .pc__prod-info > .product-description-note .product-description-note__text {
+        font: inherit;
+        line-height: inherit;
+        color: inherit;
+    }
+
+    .pc__prod-info > .product-description-note .product-description-note__email {
+        display: block;
+        margin-top: 8px;
+        font: 500 12px/18px 'roboto', sans-serif;
+        color: #0060bf;
+        word-break: break-all;
+    }
+
+    .description-footer-tags {
+        text-align: left;
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+}
+
 
 .features-title {
     font-family: 'Inter', 'Segoe UI', Roboto, system-ui, sans-serif;
@@ -235,4 +301,44 @@ div.discount {
 /* homepage categories: tighter bottom when no "show more" on active tab */
 .mp__categories .tablist_content.is-compact {
 	padding-bottom: 16px;
+}
+
+/* about: .at__blue-line full-bleed without horizontal page overflow */
+@media screen and (max-width: 1319px) {
+	.at__blue-line {
+		margin-left: 0 !important;
+		margin-right: 0 !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		box-sizing: border-box !important;
+		overflow: hidden;
+	}
+
+	.at__blue-line:before,
+	.at__blue-line:after {
+		display: none !important;
+		content: none !important;
+		width: 0 !important;
+	}
+}
+
+@media screen and (max-width: 1019px) {
+	.at__blue-line .title {
+		padding-right: 0 !important;
+	}
+
+	.at__blue-line .block-blue .col-blue {
+		padding-right: 0 !important;
+	}
+
+	.at__blue-line .block-blue .col-blue .txt:before {
+		display: none !important;
+	}
+
+	.at__block-about .col-about .at__video iframe {
+		width: 100% !important;
+		max-width: 100% !important;
+		height: auto !important;
+		aspect-ratio: 540 / 430;
+	}
 }

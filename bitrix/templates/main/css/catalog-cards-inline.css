@@ -245,8 +245,16 @@
 @media screen and (min-width: 1020px) and (max-width: 1319px) {
     .ct__content .product_top .catalog_top,
     .search-page-layout .product_top .catalog_top {
-        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-        gap: 10px !important;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
+        gap: 12px !important;
+    }
+}
+
+/* чуть шире — 4 карточки в ряд, без дыр */
+@media screen and (min-width: 1180px) and (max-width: 1319px) {
+    .products_roll .pr_box {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 14px 12px !important;
     }
 }
 
@@ -880,23 +888,45 @@
         display: none !important;
     }
 
-    /* 380px+ — enough room for qty + "В корзину" text */
+    /* 380–659 — qty + "В корзину" компактно, без растягивания кнопки */
     @media screen and (min-width: 380px) {
+        .products_roll .pr_box .item .hover .inner .card-footer {
+            gap: 8px !important;
+            justify-content: flex-start !important;
+        }
         .products_roll .pr_box .item .hover .inner .card-footer .quantity,
         .products_roll .pr_box .item .hover .inner .quantity {
-            flex: 1 1 auto !important;
-            max-width: calc(100% - 118px) !important;
+            flex: 0 0 91px !important;
+            width: 91px !important;
+            max-width: 91px !important;
+            min-width: 91px !important;
+            justify-content: center !important;
+            gap: 3px !important;
+        }
+        .products_roll .pr_box .item .hover .inner .card-footer .quantity input[type=text],
+        .products_roll .pr_box .item .hover .inner .card-footer .quantity input[type=password] {
+            flex: 0 0 34px !important;
+            width: 34px !important;
+            min-width: 34px !important;
+            max-width: 34px !important;
+            padding: 0 3px !important;
         }
         .products_roll .pr_box .item .hover .inner .card-footer .add2cart,
         .products_roll .pr_box .item .hover .inner .add2cart {
             flex: 0 0 auto !important;
             width: auto !important;
             max-width: none !important;
-            min-width: 108px !important;
-            padding: 0 10px 0 30px !important;
+            min-width: 0 !important;
+            padding: 0 10px 0 28px !important;
             font-size: 12px !important;
             line-height: 34px !important;
             overflow: visible !important;
+        }
+        .products_roll .pr_box .item .hover .inner .card-footer .add2cartOrder,
+        .products_roll .pr_box .item .hover .inner .add2cartOrder {
+            flex: 0 0 auto !important;
+            width: auto !important;
+            max-width: none !important;
         }
         .products_roll .pr_box .item .hover .inner .card-footer .add2cart .txt1 {
             display: inline !important;
@@ -1075,6 +1105,9 @@ header .header__bottom.fixed .header__cart:hover .cart__sum--numbers {
 header .header__bottom.fixed .header__cart:hover .cart__number {
     background-color: #ffd400 !important;
     color: #0358a6 !important;
+}
+header .header__bottom.fixed {
+    z-index: 300 !important;
 }
 
 @media screen and (min-width: 660px) {
@@ -1279,21 +1312,29 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     }
 }
 
-/* add2cart2 popup — must be last, beats template_styles + card layout above */
+/* add2cart2 popup — above neighbor cards, below sticky header (z-index 300+) */
+.products_roll .pr_box:has(.item.add2cart2) {
+    position: relative !important;
+    z-index: 20 !important;
+    overflow: visible !important;
+}
+.products_roll .pr_box:has(.item.add2cart2) .item:not(.add2cart2) {
+    z-index: 1 !important;
+}
 .products_roll .pr_box .item.add2cart2 {
     position: relative !important;
-    z-index: 300 !important;
+    z-index: 21 !important;
 }
 .products_roll .pr_box .item.add2cart2:hover .hover,
 .products_roll .pr_box .item.add2cart2 .hover {
     position: absolute !important;
-    left: 50% !important;
-    right: auto !important;
     top: 0 !important;
-    transform: translateX(-50%) !important;
-    width: 252px !important;
-    height: auto !important;
-    min-height: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
     max-height: none !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -1302,18 +1343,18 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     border-color: #0464bb !important;
     overflow: hidden !important;
     box-shadow: 0 14px 36px rgba(4, 100, 187, 0.24), 0 4px 14px rgba(0, 0, 0, 0.12) !important;
-    z-index: 301 !important;
+    z-index: 22 !important;
 }
 .products_roll .pr_box .item.add2cart2 .hover .inner {
     display: flex !important;
     flex-direction: column !important;
-    align-items: center !important;
+    align-items: stretch !important;
     justify-content: flex-start !important;
     text-align: center !important;
     position: relative !important;
-    padding: 14px 18px 24px !important;
-    min-height: 0 !important;
-    height: auto !important;
+    padding: 0 !important;
+    min-height: 100% !important;
+    height: 100% !important;
     width: 100% !important;
     box-sizing: border-box !important;
     top: auto !important;
@@ -1331,10 +1372,54 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     left: auto !important;
     z-index: 5 !important;
 }
-.products_roll .pr_box .item.add2cart2 .hover .inner .pic,
 .products_roll .pr_box .item.add2cart2 .hover .inner .compare,
 .products_roll .pr_box .item.add2cart2 .hover .inner .card-meta {
     display: none !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .pic {
+    display: block !important;
+    flex: 0 0 180px !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 180px !important;
+    max-height: 180px !important;
+    height: 180px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #fff !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    position: relative !important;
+    aspect-ratio: auto !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .pic .pic-slides {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .pic .pic-slide,
+.products_roll .pr_box .item.add2cart2 .hover .inner .pic img {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .pic .pic-dots,
+.products_roll .pr_box .item.add2cart2 .hover .inner .pic .discount {
+    display: none !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .pic.has-slider .pic-slide:not(.active) {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .pic.has-slider .pic-slide.active {
+    opacity: 1 !important;
 }
 .products_roll .pr_box .item.add2cart2 .hover .inner .title {
     flex: 0 0 auto !important;
@@ -1342,21 +1427,31 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     max-height: none !important;
     height: auto !important;
     width: 100% !important;
-    margin: 24px 0 18px !important;
-    padding: 0 6px !important;
+    margin: 0 !important;
+    padding: 10px 14px 8px !important;
     font-size: 14px !important;
     line-height: 1.35 !important;
     text-align: center !important;
     overflow: visible !important;
 }
 .products_roll .pr_box .item.add2cart2 .hover .inner .card-footer {
+    flex: 1 1 auto !important;
     margin-top: 0 !important;
-    padding-bottom: 0 !important;
-    gap: 16px !important;
+    padding: 0 14px 10px !important;
+    gap: 0 !important;
     width: 100% !important;
+    min-height: 0 !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+    justify-content: flex-start !important;
+    box-sizing: border-box !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .card-footer::before {
+    display: none !important;
+    content: none !important;
+    flex: none !important;
+    height: 0 !important;
 }
 .products_roll .pr_box .item.add2cart2 .hover .inner .card-footer .cost,
 .products_roll .pr_box .item.add2cart2 .hover .inner .cost,
@@ -1366,31 +1461,59 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     bottom: auto !important;
     top: auto !important;
     left: auto !important;
+    flex: 0 0 auto !important;
     width: 100% !important;
     margin: 0 !important;
     text-align: center !important;
+    font: 700 16px/1.3 'roboto', sans-serif !important;
 }
 .products_roll .pr_box .item.add2cart2 .hover .inner .quantity {
     position: relative !important;
     display: block !important;
     top: auto !important;
     left: auto !important;
-    margin: 0 auto !important;
+    right: auto !important;
+    flex: 0 0 34px !important;
     width: 150px !important;
+    max-width: 150px !important;
+    min-width: 150px !important;
     height: 34px !important;
+    margin: auto auto 0 !important; /* push ±+итог to vertical center */
 }
 .products_roll .pr_box .item.add2cart2 .hover .inner .quantity:before,
 .products_roll .pr_box .item.add2cart2 .hover .inner .quantity:after {
     display: none !important;
 }
+.products_roll .pr_box .item.add2cart2 .hover .inner .quantity a {
+    position: absolute !important;
+    top: 0 !important;
+    width: 30px !important;
+    height: 100% !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .quantity a.minus {
+    left: 0 !important;
+    right: auto !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .quantity a.plus {
+    right: 0 !important;
+    left: auto !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .quantity input[type=text],
+.products_roll .pr_box .item.add2cart2 .hover .inner .quantity input[type=password] {
+    position: absolute !important;
+    left: 50% !important;
+    width: 40px !important;
+    margin-left: -20px !important;
+}
 .products_roll .pr_box .item.add2cart2 .hover .inner .cost_total {
     position: static !important;
     display: block !important;
+    flex: 0 0 auto !important;
     top: auto !important;
     left: auto !important;
     width: 100% !important;
-    margin: 0 !important;
-    padding: 14px 0 4px !important;
+    margin: 16px 0 auto !important; /* equal space below block before green button */
+    padding: 14px 0 0 !important;
     border-top: 1px dashed #cfd8df !important;
     font: 700 17px/1.3 'roboto', sans-serif !important;
     text-align: center !important;
@@ -1402,16 +1525,19 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     bottom: auto !important;
     top: auto !important;
     left: auto !important;
-    margin: 8px auto 0 !important;
-    margin-left: auto !important;
+    flex: 0 0 70px !important;
     width: 100% !important;
-    max-width: 210px !important;
-    height: 50px !important;
-    padding: 0 16px 0 42px !important;
-    line-height: 50px !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    height: 70px !important;
+    margin: 0 !important;
+    padding: 36px 12px 0 !important;
+    line-height: 1.2 !important;
     border-radius: 10px !important;
     background: #59bf26 !important;
     box-sizing: border-box !important;
+    font-size: 14px !important;
+    align-self: stretch !important;
 }
 .products_roll .pr_box .item.add2cart2 .hover .inner .add2cart .txt1 {
     display: none !important;
@@ -1422,17 +1548,27 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     height: auto !important;
     bottom: auto !important;
     padding: 0 !important;
-    line-height: 50px !important;
-    font: 600 15px/50px 'roboto', sans-serif !important;
+    line-height: 1.2 !important;
+    font: 600 14px/1.2 'roboto', sans-serif !important;
     text-align: center !important;
 }
 .products_roll .pr_box .item.add2cart2 .hover .inner .add2cart:before {
     width: 22px !important;
     height: 18px !important;
-    top: 50% !important;
-    left: 16px !important;
-    margin: 0 !important;
-    transform: translateY(-50%) !important;
+    top: 14px !important;
+    left: 50% !important;
+    margin: 0 0 0 -11px !important;
+    transform: none !important;
+    background: url('/bitrix/templates/main/img/add2cart2.png') no-repeat center / contain !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .add2cart.is-added {
+    padding-top: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.products_roll .pr_box .item.add2cart2 .hover .inner .add2cart.is-added:before {
+    display: none !important;
 }
 }
 
@@ -2476,6 +2612,30 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     }
 }
 
+/* 768–1319: в синей плашке — «Сортировать по: …» + текущее значение */
+@media screen and (min-width: 768px) and (max-width: 1319px) {
+    .products_roll .pr_header .sort .ui-selectmenu-button,
+    .products_roll .pr_header .sort #select_prh-button {
+        gap: 0.3em !important;
+        font: 500 12px/18px 'roboto', sans-serif !important;
+        white-space: nowrap !important;
+        padding: 10px 6px !important;
+    }
+    .products_roll .pr_header .sort .ui-selectmenu-button::before,
+    .products_roll .pr_header .sort #select_prh-button::before {
+        content: "Сортировать по:";
+        color: #fff !important;
+        flex: 0 0 auto !important;
+    }
+    .products_roll .pr_header .sort .ui-selectmenu-button .ui-selectmenu-text,
+    .products_roll .pr_header .sort #select_prh-button .ui-selectmenu-text {
+        flex: 0 1 auto !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+    }
+}
+
 /* «Вы смотрели» — swipe affordance + card layout */
 .viewed-products-block {
     margin: 24px 0 36px !important;
@@ -3496,10 +3656,80 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
 }
 
 @media screen and (min-width: 1020px) and (max-width: 1319px) {
-    /* use more of viewport at 1020–1319 (was fixed 1000px with side margins) */
+    /* контейнер по центру на всю доступную ширину */
     .wr {
-        width: calc(100vw - 54px) !important;
-        max-width: 1180px !important;
+        width: calc(100% - 32px) !important;
+        max-width: 1260px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        box-sizing: border-box !important;
+    }
+
+    /*
+     * В этом диапазоне фильтр — оверлей (≤1319), сайдбар НЕ в потоке.
+     * Не резервируем 240px под leftbar и не делаем flex-ряд — иначе контент
+     * уезжает вбок / остаётся дыра.
+     */
+    .page_content .row.cl {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .page_content .row.cl::after,
+    .page_content .row.cl::before {
+        display: none !important;
+        content: none !important;
+    }
+
+    .ct__content {
+        float: none !important;
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 12px 0 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    .products_roll,
+    .product_top,
+    .viewed-products-block,
+    .related_articles {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 3 равные колонки — ровнее, чем 4 узкие в 1020–1179 */
+    .products_roll .pr_box {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 14px 12px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .products_roll .pr_box .item {
+        float: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        height: auto !important;
+        min-height: 480px !important;
+    }
+
+    .products_roll .pr_header {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .ct__content .product_top .catalog_top {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important;
+        gap: 12px !important;
+        width: 100% !important;
     }
 
     /* header__top bg must wrap tall menu (legacy height:78px caused white gap) */
@@ -3545,50 +3775,75 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         white-space: nowrap !important;
     }
 
-    /* header__main 1020–1319: calc + price in one row, slightly compact */
+    /* header__main 1020–1319: 5 блоков с равными промежутками по ширине */
+    header .header__main {
+        padding-top: 12px !important;
+        padding-bottom: 8px !important;
+    }
+
     header .header__main .wr {
         display: flex !important;
         align-items: center !important;
+        justify-content: space-between !important;
         flex-wrap: nowrap !important;
-        gap: 0 10px !important;
+        gap: 0 !important;
+        width: 100% !important;
     }
 
     header .header__main .header__logo {
         float: none !important;
         flex: 0 0 auto !important;
-        margin: 0 8px 0 -2px !important;
+        margin: 0 !important;
         padding-top: 0 !important;
     }
 
     header .header__main .header__logo img {
-        max-height: 42px !important;
+        max-height: 38px !important;
         width: auto !important;
     }
 
     header .header__main .header__phone {
         float: none !important;
-        flex: 0 1 auto !important;
+        flex: 0 0 auto !important;
         min-width: 0 !important;
-        margin: 0 8px 0 0 !important;
+        margin: 0 !important;
         padding-top: 0 !important;
-        font-size: 1.35em !important;
+        font-size: 1.08em !important;
+        line-height: 1.15 !important;
+    }
+
+    /* подписи «Инженерная сантехника» / «Строительные материалы» — только на широком */
+    header .header__main .header__phone table table tr:nth-child(2),
+    header .header__main .header__phone table table tr:nth-child(4) {
+        display: none !important;
+    }
+
+    header .header__main .header__phone table {
+        border-spacing: 0 1px !important;
+    }
+
+    header .header__main .header__phone table td {
+        padding: 0 3px 0 0 !important;
+        vertical-align: middle !important;
     }
 
     header .header__main .header__timework {
         float: none !important;
         flex: 0 0 auto !important;
         width: auto !important;
-        min-width: 108px !important;
-        margin: 0 auto 0 0 !important;
-        font-size: 0.78em !important;
+        min-width: 88px !important;
+        margin: 0 !important;
+        padding-left: 32px !important;
+        font-size: 0.72em !important;
+        position: relative !important;
     }
 
     header .header__main .header__timework:before {
-        left: -38px !important;
+        left: 0 !important;
         top: 50% !important;
         transform: translateY(-50%) !important;
-        width: 28px !important;
-        height: 28px !important;
+        width: 24px !important;
+        height: 24px !important;
     }
 
     header .header__main .header__calculation,
@@ -3597,10 +3852,14 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
         flex: 0 0 auto !important;
         margin: 0 !important;
         padding-top: 0 !important;
-        padding-left: 34px !important;
-        font-size: 0.92em !important;
+        padding-left: 28px !important;
+        font-size: 0.82em !important;
         line-height: 1.15 !important;
         white-space: nowrap !important;
+    }
+
+    header .header__main .header__calculation {
+        margin-left: 0 !important;
     }
 
     header .header__main .header__calculation br {
@@ -3621,7 +3880,15 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
     }
 
     header .header__main .header__price {
-        margin-left: 6px !important;
+        margin-left: 0 !important;
+    }
+
+    /* с ~1200 — подписи под телефонами */
+    @media screen and (min-width: 1200px) and (max-width: 1319px) {
+        header .header__main .header__phone table table tr:nth-child(2),
+        header .header__main .header__phone table table tr:nth-child(4) {
+            display: table-row !important;
+        }
     }
 
     /* desktop bar 1020–1319: search grows, but cart + account stay visible (cart before account) */
@@ -3850,6 +4117,77 @@ header .header__bottom.fixed .header__cart:hover .cart__number {
 
     footer .footer__bottom .footer__copyright {
         padding: 16px 0 20px !important;
+    }
+}
+
+/* product detail — код / скидка / доставка: без наезда, рамка по тексту */
+@media screen and (min-width: 660px) and (max-width: 900px) {
+    .pc__prod-info > .pc__prod-meta {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        gap: 8px 12px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .pc__prod-info > .pc__prod-meta::after {
+        display: none !important;
+        content: none !important;
+    }
+
+    .pc__prod-info > .pc__prod-meta .bb_col {
+        float: none !important;
+        display: block !important;
+        clear: none !important;
+        width: fit-content !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+    }
+
+    .pc__prod-info > .pc__prod-meta .bb_col span {
+        display: block !important;
+        width: fit-content !important;
+        max-width: 100% !important;
+    }
+
+    .pc__prod-info > .pc__prod-meta .bb_col span a {
+        display: inline-block !important;
+        width: fit-content !important;
+        max-width: 100% !important;
+        line-height: 1.35 !important;
+        box-sizing: border-box !important;
+        white-space: normal !important;
+    }
+
+    /* доставка — своя строка; компактная рамка, не баннер на всю ширину */
+    .pc__prod-info > .pc__prod-meta .bb_col:has(a.blue) {
+        flex: 0 0 100% !important;
+        width: auto !important;
+        max-width: 100% !important;
+    }
+
+    .pc__prod-info > .pc__prod-meta .bb_col:has(a.blue) span a.blue {
+        max-width: 340px !important;
+    }
+
+    .pc__prod-info > .pc__prod-meta .bb_col.right {
+        flex: 1 1 100% !important;
+        text-align: left !important;
+    }
+
+    /* меньше пустоты до фото */
+    .pc__prod-info > .cl.mb-40:has(.pc__prod-gallery) {
+        margin-bottom: 12px !important;
+        margin-top: 0 !important;
+    }
+
+    .pc__prod-gallery {
+        padding-top: 8px !important;
+        min-height: 0 !important;
+    }
+
+    .pc__prod-info > .cl:has(h1) {
+        margin-bottom: 8px !important;
     }
 }
 
