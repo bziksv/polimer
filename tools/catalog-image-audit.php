@@ -20,17 +20,74 @@ $refresh = isset($_GET['refresh']) && $_GET['refresh'] === '1';
 $limit = max(1, min(500, (int)($_GET['limit'] ?? 200)));
 $offset = max(0, (int)($_GET['offset'] ?? 0));
 
+$building = PolimerCatalogImageAudit::isBuilding();
+$buildingStarted = false;
+
 if ($refresh) {
-	set_time_limit(0);
-	$report = PolimerCatalogImageAudit::buildReport();
-	PolimerCatalogImageAudit::saveCache($report);
-} else {
-	$report = PolimerCatalogImageAudit::loadCache(true);
-	if (!$report) {
-		set_time_limit(0);
-		$report = PolimerCatalogImageAudit::buildReport();
-		PolimerCatalogImageAudit::saveCache($report);
+	$buildingStarted = PolimerCatalogImageAudit::startBackgroundBuild();
+	if ($buildingStarted) {
+		$building = true;
 	}
+}
+
+$report = PolimerCatalogImageAudit::loadCache(true);
+
+if (!$report) {
+	if ($format === 'json') {
+		header('Content-Type: application/json; charset=utf-8');
+		http_response_code($building ? 503 : 404);
+		echo json_encode([
+			'status' => $building ? 'building' : 'missing',
+			'message' => $building
+				? 'Отчёт собирается в фоне. Обновите страницу через 3–5 минут.'
+				: 'Кэш не найден. Откройте страницу с ?refresh=1 для запуска сборки.',
+			'building' => $building,
+			'log_tail' => PolimerCatalogImageAudit::getBuildLogTail(),
+		], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+		exit;
+	}
+
+	$baseUrl = '/tools/catalog-image-audit.php';
+	$refreshUrl = $baseUrl . '?refresh=1';
+	$logTail = PolimerCatalogImageAudit::getBuildLogTail();
+	header('Content-Type: text/html; charset=utf-8');
+	?>
+	<!doctype html>
+	<html lang="ru">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="refresh" content="15">
+		<title>Аудит картинок каталога</title>
+		<style>
+			body { margin: 0; font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f4f7fb; color: #1f2937; }
+			.wrap { max-width: 760px; margin: 40px auto; padding: 24px; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; }
+			h1 { margin: 0 0 12px; font-size: 24px; }
+			p { margin: 0 0 12px; }
+			a.btn { display: inline-block; margin-top: 8px; padding: 10px 16px; background: #056ac8; color: #fff; text-decoration: none; border-radius: 8px; }
+			pre { background: #111827; color: #e5e7eb; padding: 12px; border-radius: 8px; overflow: auto; font-size: 12px; white-space: pre-wrap; }
+			.note { color: #6b7280; }
+		</style>
+	</head>
+	<body>
+	<div class="wrap">
+		<h1>Аудит картинок каталога</h1>
+		<?php if ($building): ?>
+			<p><b>Отчёт собирается.</b> Это ~12&nbsp;000 товаров, занимает 3–5 минут. Страница обновится сама.</p>
+			<p class="note">504 больше не будет: сборка идёт в фоне через CLI, не через nginx.</p>
+		<?php else: ?>
+			<p>Кэш отчёта ещё не собран на этом сервере.</p>
+			<a class="btn" href="<?=htmlspecialchars($refreshUrl)?>">Запустить сборку</a>
+		<?php endif; ?>
+		<?php if ($logTail !== ''): ?>
+			<p class="note">Лог сборки:</p>
+			<pre><?=htmlspecialchars($logTail)?></pre>
+		<?php endif; ?>
+	</div>
+	</body>
+	</html>
+	<?php
+	exit;
 }
 
 $items = $report['items'] ?? [];
@@ -354,7 +411,16 @@ header('Content-Type: text/html; charset=utf-8');
 		Обновлено: <?=htmlspecialchars((string)($report['generated_at_human'] ?? '—'))?> ·
 		Проверено: <?=(int)($stats['checked'] ?? 0)?> товаров ·
 		Проблемных: <?=(int)($stats['issues'] ?? 0)?>
+		<?php if ($building): ?>
+			· <span style="color:#b45309">Идёт пересборка в фоне…</span>
+		<?php endif; ?>
 	</div>
+
+	<?php if ($buildingStarted): ?>
+	<div class="penguin-help" style="background:#fff7ed;border-color:#fdba74;">
+		<p style="margin:0">Запущена фоновая пересборка. Текущие данные — из кэша. Обновите страницу через 3–5 минут.</p>
+	</div>
+	<?php endif; ?>
 
 	<div class="penguin-help">
 		<h2>Что это за страница?</h2>

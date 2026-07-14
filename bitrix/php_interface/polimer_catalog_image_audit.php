@@ -18,11 +18,102 @@ class PolimerCatalogImageAudit
 	public const PRIORITY_LOW = 'low';
 
 	private const CACHE_REL = '/bitrix/cache/polimer/catalog_image_audit.json';
+	private const LOCK_REL = '/bitrix/cache/polimer/catalog_image_audit.lock';
+	private const BUILD_LOG_REL = '/bitrix/cache/polimer/catalog_image_audit_build.log';
+	private const BUILD_SCRIPT = '/tools/catalog-image-audit-build.php';
 	private const CACHE_TTL = 86400;
+	private const BUILD_LOCK_TTL = 7200;
 
 	public static function getCachePath(): string
 	{
 		return $_SERVER['DOCUMENT_ROOT'] . self::CACHE_REL;
+	}
+
+	public static function getLockPath(): string
+	{
+		return $_SERVER['DOCUMENT_ROOT'] . self::LOCK_REL;
+	}
+
+	public static function getBuildLogPath(): string
+	{
+		return $_SERVER['DOCUMENT_ROOT'] . self::BUILD_LOG_REL;
+	}
+
+	public static function isBuilding(): bool
+	{
+		$lock = self::getLockPath();
+		return is_file($lock) && (time() - (int)filemtime($lock)) < self::BUILD_LOCK_TTL;
+	}
+
+	public static function touchBuildLock(): void
+	{
+		$lock = self::getLockPath();
+		$dir = dirname($lock);
+		if (!is_dir($dir)) {
+			mkdir($dir, 0755, true);
+		}
+		touch($lock);
+	}
+
+	public static function clearBuildLock(): void
+	{
+		$lock = self::getLockPath();
+		if (is_file($lock)) {
+			@unlink($lock);
+		}
+	}
+
+	public static function resolvePhpBinary(): string
+	{
+		if (defined('PHP_BINARY') && PHP_BINARY !== '' && is_executable(PHP_BINARY)) {
+			return PHP_BINARY;
+		}
+
+		foreach (['/opt/php83/bin/php', '/opt/php82/bin/php', '/opt/php80/bin/php', '/opt/fphp/bin/php'] as $candidate) {
+			if (is_executable($candidate)) {
+				return $candidate;
+			}
+		}
+
+		return 'php';
+	}
+
+	public static function startBackgroundBuild(): bool
+	{
+		if (self::isBuilding()) {
+			return false;
+		}
+
+		self::touchBuildLock();
+
+		$php = self::resolvePhpBinary();
+		$script = $_SERVER['DOCUMENT_ROOT'] . self::BUILD_SCRIPT;
+		$log = self::getBuildLogPath();
+		$cmd = escapeshellarg($php)
+			. ' -d short_open_tag=On '
+			. escapeshellarg($script)
+			. ' >> '
+			. escapeshellarg($log)
+			. ' 2>&1 &';
+
+		exec($cmd);
+
+		return true;
+	}
+
+	public static function getBuildLogTail(int $lines = 8): string
+	{
+		$path = self::getBuildLogPath();
+		if (!is_file($path)) {
+			return '';
+		}
+
+		$raw = @file($path, FILE_IGNORE_NEW_LINES);
+		if (!is_array($raw)) {
+			return '';
+		}
+
+		return implode("\n", array_slice($raw, -$lines));
 	}
 
 	public static function isAllowed(): bool
