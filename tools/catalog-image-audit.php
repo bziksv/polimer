@@ -581,8 +581,18 @@ header('Content-Type: text/html; charset=utf-8');
 						</div>
 					</td>
 					<td class="col-preview">
+						<?php
+						$imageSrc = (string)($row['original_src'] ?: $row['preview_src'] ?? '');
+						$imageUrl = $imageSrc !== '' ? ($siteOrigin . $imageSrc) : '';
+						?>
 						<?php if (!empty($row['preview_src'])): ?>
-							<img class="thumb" src="<?=htmlspecialchars($row['preview_src'])?>" alt="">
+							<?php if ($imageSrc !== ''): ?>
+								<a href="<?=htmlspecialchars($imageSrc)?>" target="_blank" title="Открыть оригинал картинки">
+									<img class="thumb" src="<?=htmlspecialchars($row['preview_src'])?>" alt="">
+								</a>
+							<?php else: ?>
+								<img class="thumb" src="<?=htmlspecialchars($row['preview_src'])?>" alt="">
+							<?php endif; ?>
 						<?php endif; ?>
 					</td>
 					<td class="col-product">
@@ -635,6 +645,14 @@ header('Content-Type: text/html; charset=utf-8');
 								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
 							</button>
 						</div>
+						<?php if ($imageSrc !== ''): ?>
+						<div class="copy-line">
+							<div class="copy-line__text"><a href="<?=htmlspecialchars($imageSrc)?>" target="_blank">Картинка</a></div>
+							<button type="button" class="copy-btn" data-copy="<?=htmlspecialchars($imageUrl, ENT_QUOTES)?>" title="Копировать ссылку на картинку" aria-label="Копировать ссылку на картинку">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+							</button>
+						</div>
+						<?php endif; ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>
@@ -655,7 +673,7 @@ header('Content-Type: text/html; charset=utf-8');
 			<li><b>Превью</b> — как картинка выглядит в карточке каталога (рамка 3:4).</li>
 			<li><b>Метрики</b> — размер файла и насколько товар заполняет рамку. Чем меньше % — тем больше пустоты.</li>
 			<li><b>Проблемы</b> — что именно не так. «Горизонтальная обрезается» = нужно новое фото 1024×1536.</li>
-			<li><b>Карточка</b> — ссылка на товар на сайте. <b>Админка</b> — где заменить картинку в Bitrix.</li>
+			<li><b>Карточка</b> — товар на сайте. <b>Админка</b> — где заменить фото. <b>Картинка</b> — оригинал файла (можно ткнуть и посмотреть).</li>
 		</ul>
 		<p class="meta">Идеальная картинка: <b>1024×1536</b> (3:4), белый фон, товар занимает ~90% высоты, отступы 4–6% от краёв.</p>
 	</div>
