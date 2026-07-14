@@ -6,6 +6,44 @@ div.title-search-result.title-search-result--polimer {
 	z-index: 302;
 }
 
+header .header__search .search.is-loading .search__status {
+	display: flex;
+}
+
+header .header__search .search__status {
+	position: absolute;
+	top: 50%;
+	right: 38px;
+	z-index: 2;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	margin-top: -10px;
+	pointer-events: none;
+}
+
+header .header__search .search__spinner {
+	box-sizing: border-box;
+	width: 16px;
+	height: 16px;
+	border: 2px solid #d5e2ee;
+	border-top-color: #0060bf;
+	border-radius: 50%;
+	animation: polimer-search-spin 0.65s linear infinite;
+}
+
+header .header__search .search.is-loading .search__btn {
+	opacity: 0.35;
+}
+
+@keyframes polimer-search-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
 .polimer-search-dropdown {
 	background: #fff;
 	border: 1px solid #e3e8ef;

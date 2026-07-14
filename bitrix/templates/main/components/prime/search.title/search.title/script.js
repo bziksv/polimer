@@ -31,6 +31,27 @@ function PolimerTitleSearch(arParams)
 	this.activeSectionIds = [];
 	this.sectionFilters = {};
 	this.searchRequestId = 0;
+	this.SEARCH_FORM = null;
+	this.SEARCH_STATUS = null;
+
+	this.setSearchLoading = function(isLoading)
+	{
+		if (!_this.SEARCH_FORM)
+			return;
+
+		if (isLoading)
+		{
+			BX.addClass(_this.SEARCH_FORM, 'is-loading');
+			if (_this.SEARCH_STATUS)
+				_this.SEARCH_STATUS.hidden = false;
+		}
+		else
+		{
+			BX.removeClass(_this.SEARCH_FORM, 'is-loading');
+			if (_this.SEARCH_STATUS)
+				_this.SEARCH_STATUS.hidden = true;
+		}
+	};
 
 	this.isResultPanelVisible = function()
 	{
@@ -47,6 +68,7 @@ function PolimerTitleSearch(arParams)
 		_this.cache_key = null;
 		_this.currentRow = -1;
 		_this.activeSectionIds = [];
+		_this.setSearchLoading(false);
 
 		if (_this.RESULT)
 		{
@@ -580,6 +602,7 @@ function PolimerTitleSearch(arParams)
 
 				if (_this.cache[_this.cache_key] == null)
 				{
+					_this.setSearchLoading(true);
 					BX.ajax.post(
 						_this.arParams.AJAX_PAGE,
 						{
@@ -594,6 +617,7 @@ function PolimerTitleSearch(arParams)
 								return;
 
 							_this.cache[_this.cache_key] = result;
+							_this.setSearchLoading(false);
 							_this.ShowResult(result);
 							if (callback)
 								callback();
@@ -609,11 +633,16 @@ function PolimerTitleSearch(arParams)
 				}
 
 				_this.ShowResult(_this.cache[_this.cache_key]);
+				_this.setSearchLoading(false);
 			}
 			else
 			{
 				_this.dismissResults();
 			}
+		}
+		else
+		{
+			_this.setSearchLoading(false);
 		}
 
 		if (callback)
@@ -653,6 +682,17 @@ function PolimerTitleSearch(arParams)
 	this.onInput = function()
 	{
 		clearTimeout(_this.inputTimer);
+
+		if (_this.INPUT.value.length >= _this.arParams.MIN_QUERY_LEN
+			&& _this.INPUT.value !== _this.oldValue)
+		{
+			_this.setSearchLoading(true);
+		}
+		else if (_this.INPUT.value.length < _this.arParams.MIN_QUERY_LEN)
+		{
+			_this.setSearchLoading(false);
+		}
+
 		_this.inputTimer = setTimeout(function(){ _this.onChange(); }, 300);
 	};
 
@@ -734,6 +774,8 @@ function PolimerTitleSearch(arParams)
 
 		this.INPUT = document.getElementById(this.arParams.INPUT_ID);
 		this.startText = this.oldValue = this.INPUT.value;
+		this.SEARCH_FORM = this.CONTAINER.querySelector('.search');
+		this.SEARCH_STATUS = this.CONTAINER.querySelector('.search__status');
 
 		BX.bind(this.INPUT, 'focus', function(){ _this.onFocusGain(); });
 		BX.bind(this.INPUT, 'blur', function(){ _this.onFocusLost(); });

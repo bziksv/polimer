@@ -33,6 +33,9 @@ if($arParams["SHOW_INPUT"] !== "N"):?>
          data-min-query-len="2">
         <form class="search" action="<?echo $arResult["FORM_ACTION"]?>">
             <input class="search__input input" id="<?echo $INPUT_ID?>" type="text" name="q" value="" size="15" maxlength="255" autocomplete="off" />
+            <span class="search__status" aria-hidden="true" hidden>
+                <span class="search__spinner"></span>
+            </span>
             <button name="s" type="submit" class="search__btn" value="<?=GetMessage("CT_BST_SEARCH_BUTTON");?>" ></button>
         </form>
     </div><!--end::header__search-->
