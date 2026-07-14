@@ -130,8 +130,6 @@
         })(window,document,'https://cdn-ru.bitrix24.ru/b7243579/crm/site_button/loader_3_co14nv.js');
 </script>
 
-<?php require $_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/include/catalog_menu_switcher.php'; ?>
-
 <?php
 $catalogCardsCss = SITE_TEMPLATE_PATH . '/css/catalog-cards.css';
 $catalogCardsPath = $_SERVER['DOCUMENT_ROOT'] . $catalogCardsCss;

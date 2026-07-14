@@ -407,16 +407,14 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 
                         <div class="header__catalog cl">
                             <?
-                            require $_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/include/catalog_menu_variant.php';
-
                             $APPLICATION->IncludeComponent(
                                 "bitrix:catalog.section.list",
-                                $catalogMenuTemplate,
+                                "top-menu-catalog-v6",
                                 array(
                                     "ADD_SECTIONS_CHAIN" => "Y",
                                     "CACHE_GROUPS" => "Y",
-                                    "CACHE_TIME" => $catalogMenuShowSwitcher ? "0" : "36000000",
-                                    "CACHE_TYPE" => $catalogMenuShowSwitcher ? "N" : "A",
+                                    "CACHE_TIME" => "36000000",
+                                    "CACHE_TYPE" => "A",
                                     "COUNT_ELEMENTS" => "Y",
                                     "IBLOCK_ID" => "21",
                                     "IBLOCK_TYPE" => "1c_catalog",
@@ -434,7 +432,7 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
                                     "SHOW_PARENT_NAME" => "Y",
                                     "TOP_DEPTH" => "3",
                                     "VIEW_MODE" => "LINE",
-                                    "COMPONENT_TEMPLATE" => $catalogMenuTemplate
+                                    "COMPONENT_TEMPLATE" => "top-menu-catalog-v6"
                                 ),
                                 false
                             );?>
