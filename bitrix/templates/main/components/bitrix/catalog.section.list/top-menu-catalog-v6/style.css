@@ -114,11 +114,12 @@ header .header__catalog .catalog-menu-v6 .catalog-menu-v6__rail-thumb {
 
 header .header__catalog .catalog-menu-v6 .catalog-menu-v6__rail-thumb img {
     display: block;
+    width: 100%;
+    height: 100%;
     max-width: 100%;
     max-height: 100%;
-    width: auto;
-    height: auto;
     object-fit: contain;
+    object-position: center;
 }
 
 header .header__catalog .catalog-menu-v6 .catalog-menu-v6__rail-text {
@@ -322,11 +323,12 @@ header .header__catalog .catalog-menu-v6 .catalog-menu-v6__search-thumb {
 
 header .header__catalog .catalog-menu-v6 .catalog-menu-v6__search-thumb img {
     display: block;
+    width: 100%;
+    height: 100%;
     max-width: 100%;
     max-height: 100%;
-    width: auto;
-    height: auto;
     object-fit: contain;
+    object-position: center;
 }
 
 header .header__catalog .catalog-menu-v6 .catalog-menu-v6__search-body {
@@ -523,17 +525,18 @@ header .header__catalog .catalog-menu-v6 .catalog-menu-v6__col-thumb {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4px;
+    padding: 2px;
     box-sizing: border-box;
 }
 
 header .header__catalog .catalog-menu-v6 .catalog-menu-v6__col-thumb img {
     display: block;
+    width: 100%;
+    height: 100%;
     max-width: 100%;
     max-height: 100%;
-    width: auto;
-    height: auto;
     object-fit: contain;
+    object-position: center;
 }
 
 header .header__catalog .catalog-menu-v6 .catalog-menu-v6__col-title {
