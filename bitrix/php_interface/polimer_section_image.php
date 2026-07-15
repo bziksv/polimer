@@ -146,6 +146,20 @@ class PolimerSectionImageProcessor
 		$tol = self::FLOOD_TOLERANCE;
 		$bgMask = array_fill(0, $w * $h, false);
 
+		$cornerSamples = [[0, 0], [$w - 1, 0], [0, $h - 1], [$w - 1, $h - 1]];
+		$bgR = 0;
+		$bgG = 0;
+		$bgB = 0;
+		foreach ($cornerSamples as [$cx, $cy]) {
+			$rgba = imagecolorat($src, $cx, $cy);
+			$bgR += ($rgba >> 16) & 0xFF;
+			$bgG += ($rgba >> 8) & 0xFF;
+			$bgB += $rgba & 0xFF;
+		}
+		$bgR = (int)round($bgR / 4);
+		$bgG = (int)round($bgG / 4);
+		$bgB = (int)round($bgB / 4);
+
 		$seedPoints = [];
 		for ($x = 0; $x < $w; $x++) {
 			$seedPoints[] = [$x, 0];
@@ -167,7 +181,7 @@ class PolimerSectionImageProcessor
 			$sg = ($rgba >> 8) & 0xFF;
 			$sb = $rgba & 0xFF;
 
-			if (!self::isLikelyBackground($sr, $sg, $sb, $thr)) {
+			if (!self::isBackgroundLike($sr, $sg, $sb, $bgR, $bgG, $bgB, $thr, $tol)) {
 				continue;
 			}
 
@@ -192,8 +206,7 @@ class PolimerSectionImageProcessor
 					$ng = ($nrgba >> 8) & 0xFF;
 					$nb = $nrgba & 0xFF;
 
-					if (!self::isLikelyBackground($nr, $ng, $nb, $thr)
-						&& self::colorDistance($sr, $sg, $sb, $nr, $ng, $nb) > $tol) {
+					if (!self::isBackgroundLike($nr, $ng, $nb, $bgR, $bgG, $bgB, $thr, $tol)) {
 						continue;
 					}
 
@@ -213,7 +226,7 @@ class PolimerSectionImageProcessor
 				$a = ($rgba & 0x7F000000) >> 24;
 				$lightness = ($r + $g + $b) / 3;
 
-				if ($bgMask[$idx]) {
+				if ($bgMask[$idx] || self::matchesSampledBackground($r, $g, $b, $bgR, $bgG, $bgB, $tol + 6)) {
 					imagesetpixel($cut, $x, $y, $transparent);
 					continue;
 				}
@@ -231,6 +244,27 @@ class PolimerSectionImageProcessor
 		}
 
 		return $cut;
+	}
+
+	private static function matchesSampledBackground(int $r, int $g, int $b, int $bgR, int $bgG, int $bgB, int $tol): bool
+	{
+		if (self::colorDistance($r, $g, $b, $bgR, $bgG, $bgB) > $tol) {
+			return false;
+		}
+
+		$bgLightness = ($bgR + $bgG + $bgB) / 3;
+		$lightness = ($r + $g + $b) / 3;
+
+		return $lightness <= $bgLightness + 10;
+	}
+
+	private static function isBackgroundLike(int $r, int $g, int $b, int $bgR, int $bgG, int $bgB, int $thr, int $tol): bool
+	{
+		if (self::isLikelyBackground($r, $g, $b, $thr)) {
+			return true;
+		}
+
+		return self::colorDistance($r, $g, $b, $bgR, $bgG, $bgB) <= $tol;
 	}
 
 	private static function isLikelyBackground(int $r, int $g, int $b, int $thr): bool
