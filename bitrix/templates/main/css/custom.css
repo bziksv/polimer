@@ -198,12 +198,62 @@ div.discount {
     color: #1e2f3f;
     line-height: 1.7;
     font-size: 1rem;
-    padding-left: 20px;
-    margin-bottom: 28px;
+    list-style: none;
+    padding-left: 0;
+    margin: 0 0 28px;
 }
 
 .features-item {
     font-family: 'Inter', 'Segoe UI', Roboto, system-ui, sans-serif;
+    position: relative;
+    list-style-type: none;
+    padding-left: 28px;
+    margin: 10px 0;
+}
+
+/* маркер внутри пункта — не left:-30px из .tab_des (вылезает ≤659px) */
+.pc__tabs .t-content .tab.tab_des .product-description .features-list {
+    padding-left: 0;
+}
+
+.pc__tabs .t-content .tab.tab_des .product-description .features-item {
+    padding-left: 28px;
+}
+
+.pc__tabs .t-content .tab.tab_des .product-description .features-item:before {
+    left: 0 !important;
+    top: 2px;
+}
+
+/* ≤659: маркеры tab_des не уходят в минус (новые .features-* и старые ul с padding:0) */
+@media screen and (max-width: 659px) {
+    .pc__tabs .t-content .tab.tab_des .content ul {
+        padding-left: 0 !important;
+    }
+
+    .pc__tabs .t-content .tab.tab_des .content ul li {
+        position: relative;
+        padding-left: 26px;
+    }
+
+    .pc__tabs .t-content .tab.tab_des .content ul li:before {
+        left: 0 !important;
+        top: 1px;
+        width: 16px;
+        height: 16px;
+    }
+
+    .pc__tabs .t-content .tab.tab_des .product-description .features-item {
+        padding-left: 26px;
+        margin: 8px 0;
+    }
+
+    .pc__tabs .t-content .tab.tab_des .product-description .features-item:before {
+        left: 0 !important;
+        top: 1px;
+        width: 16px;
+        height: 16px;
+    }
 }
 
 .features-highlight {
