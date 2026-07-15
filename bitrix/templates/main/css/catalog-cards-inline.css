@@ -27,6 +27,27 @@
 }
 
 /* subcategory tiles on catalog section pages */
+.page_content:has(.row.cl > .ct__content) {
+    padding-top: 0 !important;
+}
+.page_content .row.cl > .ct__content {
+    margin-top: 30px !important;
+}
+.page_content .row.cl > .ct__content > .h1,
+.page_content .row.cl > .ct__content > h1 {
+    padding-top: 0 !important;
+}
+@media screen and (max-width: 1019px) {
+    .page_content .row.cl > .ct__content {
+        margin-top: 16px !important;
+    }
+}
+@media screen and (max-width: 659px) {
+    .page_content .row.cl > .ct__content {
+        margin-top: 8px !important;
+    }
+}
+
 .product_top {
     margin-bottom: 8px !important;
 }
