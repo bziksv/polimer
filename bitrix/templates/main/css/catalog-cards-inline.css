@@ -4421,7 +4421,7 @@ header .header__bottom.fixed {
         gap: 16px !important;
         width: 100% !important;
         max-width: 100% !important;
-        margin: 0 auto !important;
+        margin: 0 auto 12px !important;
         padding: 0 !important;
         float: none !important;
         box-sizing: border-box !important;
@@ -4442,8 +4442,17 @@ header .header__bottom.fixed {
         align-items: center !important;
         justify-content: center !important;
         text-align: center !important;
-        overflow: visible !important;
+        overflow: hidden !important;
         box-sizing: border-box !important;
+        /* рамка всегда одной толщины — без дёрганья на hover */
+        border: 5px solid transparent !important;
+        transition: box-shadow .15s linear, border-color .15s linear !important;
+    }
+
+    .mp__banners .wp__banner .banner__sale:hover {
+        border-color: #fff !important;
+        border-width: 5px !important;
+        box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.35) !important;
     }
 
     .mp__banners .wp__banner .banner__sale .banner__sale__img {
@@ -4510,6 +4519,20 @@ header .header__bottom.fixed {
         text-align: center !important;
         overflow: visible !important;
         box-sizing: border-box !important;
+        border: 1px solid #ced5d9 !important;
+        transition: border-color .15s ease, color .15s ease !important;
+    }
+
+    .mp__categories .tabslist .maincategory:hover {
+        border-color: #00a1f2 !important;
+        border-width: 1px !important;
+    }
+
+    .mp__categories .tabslist .maincategory.active,
+    .mp__categories .tabslist .maincategory:hover.active,
+    .mp__categories .tabslist .maincategory.active:hover {
+        border-color: #ced5d9 !important;
+        border-bottom-color: #fff !important;
     }
 
     .mp__categories .tabslist .maincategory.maincategory--2,
@@ -4539,6 +4562,14 @@ header .header__bottom.fixed {
         height: auto !important;
         text-align: center !important;
         word-break: break-word !important;
+    }
+
+    /* карточки подкатегорий: без absolute на hover — иначе соседние прыгают */
+    .mp__categories .product_top .catalog_top .item_c:hover a {
+        position: relative !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        z-index: 1 !important;
     }
 
     .mp__categories .product_top .catalog_top:not(.toggle_product_no),
