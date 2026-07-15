@@ -233,7 +233,55 @@ class PolimerSectionImageProcessor
 			}
 		}
 
+		self::stripGrayHalo($cut, $w, $h, $transparent);
+
 		return $cut;
+	}
+
+	private static function stripGrayHalo($im, int $w, int $h, $transparent): void
+	{
+		$changed = true;
+		while ($changed) {
+			$changed = false;
+			for ($y = 0; $y < $h; $y++) {
+				for ($x = 0; $x < $w; $x++) {
+					$rgba = imagecolorat($im, $x, $y);
+					if ((($rgba & 0x7F000000) >> 24) >= 120) {
+						continue;
+					}
+
+					$r = ($rgba >> 16) & 0xFF;
+					$g = ($rgba >> 8) & 0xFF;
+					$b = $rgba & 0xFF;
+					if (!self::isGrayHaloPixel($r, $g, $b)) {
+						continue;
+					}
+
+					foreach ([[$x - 1, $y], [$x + 1, $y], [$x, $y - 1], [$x, $y + 1]] as [$nx, $ny]) {
+						if ($nx < 0 || $ny < 0 || $nx >= $w || $ny >= $h) {
+							imagesetpixel($im, $x, $y, $transparent);
+							$changed = true;
+							break;
+						}
+
+						$nAlpha = (imagecolorat($im, $nx, $ny) & 0x7F000000) >> 24;
+						if ($nAlpha >= 120) {
+							imagesetpixel($im, $x, $y, $transparent);
+							$changed = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private static function isGrayHaloPixel(int $r, int $g, int $b): bool
+	{
+		$spread = max($r, $g, $b) - min($r, $g, $b);
+		$lightness = ($r + $g + $b) / 3;
+
+		return $spread <= 24 && $lightness >= 30 && $lightness <= 225;
 	}
 
 	private static function matchesSampledBackground(int $r, int $g, int $b, int $bgR, int $bgG, int $bgB, int $tol): bool
