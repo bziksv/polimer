@@ -711,7 +711,8 @@
         flex-direction: row !important;
         flex-wrap: wrap !important;
         align-items: center !important;
-        gap: 4px 6px !important;
+        justify-content: flex-start !important;
+        gap: 8px !important;
         width: 100% !important;
         max-width: 100% !important;
         min-width: 0 !important;
@@ -750,15 +751,15 @@
         position: relative !important;
         display: flex !important;
         align-items: center !important;
-        justify-content: space-between !important;
+        justify-content: center !important;
         order: 2 !important;
-        flex: 1 1 auto !important;
-        width: auto !important;
-        max-width: calc(100% - 40px) !important;
-        min-width: 0 !important;
+        flex: 0 0 91px !important;
+        width: 91px !important;
+        max-width: 91px !important;
+        min-width: 91px !important;
         height: 34px !important;
         margin: 0 !important;
-        gap: 2px !important;
+        gap: 3px !important;
         top: auto !important;
         left: auto !important;
         right: auto !important;
@@ -789,15 +790,15 @@
     .products_roll .pr_box .item .hover .inner .card-footer .quantity input[type=text],
     .products_roll .pr_box .item .hover .inner .card-footer .quantity input[type=password] {
         position: relative !important;
-        flex: 1 1 0 !important;
-        width: auto !important;
-        min-width: 0 !important;
-        max-width: 36px !important;
+        flex: 0 0 34px !important;
+        width: 34px !important;
+        min-width: 34px !important;
+        max-width: 34px !important;
         height: 26px !important;
         margin: 0 !important;
         left: auto !important;
         font-size: 12px !important;
-        padding: 0 2px !important;
+        padding: 0 3px !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer .quantity:before,
     .products_roll .pr_box .item .hover .inner .card-footer .quantity:after {
@@ -813,24 +814,24 @@
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
-        order: 2 !important;
-        flex: 0 0 34px !important;
-        width: 34px !important;
-        max-width: 34px !important;
-        min-width: 34px !important;
+        order: 3 !important;
+        flex: 1 1 100% !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
         height: 34px !important;
         line-height: 34px !important;
         margin: 0 !important;
-        padding: 0 !important;
+        padding: 0 10px 0 28px !important;
         box-sizing: border-box !important;
-        font-size: 0 !important;
+        font-size: 12px !important;
         text-align: center !important;
         align-self: auto !important;
         top: auto !important;
         left: auto !important;
         right: auto !important;
         bottom: auto !important;
-        overflow: hidden !important;
+        overflow: visible !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer .add2cartOrder,
     .products_roll .pr_box .item .hover .inner .add2cartOrder {
@@ -838,7 +839,7 @@
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
-        order: 2 !important;
+        order: 3 !important;
         flex: 1 1 100% !important;
         width: 100% !important;
         max-width: 100% !important;
@@ -869,11 +870,11 @@
     }
     .products_roll .pr_box .item .hover .inner .card-footer .add2cart:before,
     .products_roll .pr_box .item .hover .inner .add2cart:before {
-        left: 50% !important;
+        left: 10px !important;
         right: auto !important;
         width: 18px !important;
         height: 15px !important;
-        margin: -7px 0 0 -9px !important;
+        margin: -7px 0 0 0 !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer .add2cartOrder:before {
         left: 10px !important;
@@ -885,60 +886,10 @@
         display: none !important;
     }
     .products_roll .pr_box .item .hover .inner .card-footer .add2cart .txt1 {
-        display: none !important;
-    }
-
-    /* 380–659 — qty + "В корзину" компактно, без растягивания кнопки */
-    @media screen and (min-width: 380px) {
-        .products_roll .pr_box .item .hover .inner .card-footer {
-            gap: 8px !important;
-            justify-content: flex-start !important;
-        }
-        .products_roll .pr_box .item .hover .inner .card-footer .quantity,
-        .products_roll .pr_box .item .hover .inner .quantity {
-            flex: 0 0 91px !important;
-            width: 91px !important;
-            max-width: 91px !important;
-            min-width: 91px !important;
-            justify-content: center !important;
-            gap: 3px !important;
-        }
-        .products_roll .pr_box .item .hover .inner .card-footer .quantity input[type=text],
-        .products_roll .pr_box .item .hover .inner .card-footer .quantity input[type=password] {
-            flex: 0 0 34px !important;
-            width: 34px !important;
-            min-width: 34px !important;
-            max-width: 34px !important;
-            padding: 0 3px !important;
-        }
-        .products_roll .pr_box .item .hover .inner .card-footer .add2cart,
-        .products_roll .pr_box .item .hover .inner .add2cart {
-            flex: 0 0 auto !important;
-            width: auto !important;
-            max-width: none !important;
-            min-width: 0 !important;
-            padding: 0 10px 0 28px !important;
-            font-size: 12px !important;
-            line-height: 34px !important;
-            overflow: visible !important;
-        }
-        .products_roll .pr_box .item .hover .inner .card-footer .add2cartOrder,
-        .products_roll .pr_box .item .hover .inner .add2cartOrder {
-            flex: 0 0 auto !important;
-            width: auto !important;
-            max-width: none !important;
-        }
-        .products_roll .pr_box .item .hover .inner .card-footer .add2cart .txt1 {
-            display: inline !important;
-            font-size: 12px !important;
-            line-height: 34px !important;
-            white-space: nowrap !important;
-        }
-        .products_roll .pr_box .item .hover .inner .card-footer .add2cart:before,
-        .products_roll .pr_box .item .hover .inner .add2cart:before {
-            left: 10px !important;
-            margin: -7px 0 0 0 !important;
-        }
+        display: inline !important;
+        font-size: 12px !important;
+        line-height: 34px !important;
+        white-space: nowrap !important;
     }
 
     .products_roll .pr_box .item:hover {
