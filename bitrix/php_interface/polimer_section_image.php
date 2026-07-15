@@ -573,21 +573,22 @@ class PolimerSectionImageTool
 			}
 
 			$fileArray['name'] = 'section_' . $section['id'] . '.png';
-			$newFileId = (int)CFile::SaveFile($fileArray, 'iblock');
-
-			if ($newFileId <= 0) {
-				$failed[] = ['id' => $section['id'], 'reason' => 'save_file'];
-				continue;
-			}
+			$fileArray['MODULE_ID'] = 'iblock';
 
 			$oldPictureId = $section['picture_id'];
 			$bs = new CIBlockSection();
-			if (!$bs->Update($section['id'], ['PICTURE' => $newFileId])) {
+			if (!$bs->Update($section['id'], ['PICTURE' => $fileArray])) {
 				$failed[] = ['id' => $section['id'], 'reason' => 'section_update', 'error' => $bs->LAST_ERROR];
 				continue;
 			}
 
-			if ($oldPictureId > 0) {
+			$newPictureId = 0;
+			$updated = CIBlockSection::GetList([], ['ID' => $section['id'], 'IBLOCK_ID' => self::IBLOCK_ID], false, ['ID', 'PICTURE'])->Fetch();
+			if ($updated) {
+				$newPictureId = (int)($updated['PICTURE'] ?? 0);
+			}
+
+			if ($oldPictureId > 0 && $oldPictureId !== $newPictureId) {
 				CFile::Delete($oldPictureId);
 			}
 
@@ -596,8 +597,8 @@ class PolimerSectionImageTool
 			$applied[] = [
 				'id' => $section['id'],
 				'name' => $section['name'],
-				'new_picture_id' => $newFileId,
-				'path' => CFile::GetPath($newFileId),
+				'new_picture_id' => $newPictureId,
+				'path' => $newPictureId > 0 ? (string)CFile::GetPath($newPictureId) : '',
 			];
 		}
 
