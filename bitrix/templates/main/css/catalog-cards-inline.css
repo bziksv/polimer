@@ -2288,6 +2288,11 @@ header .header__bottom.fixed {
     }
 }
 
+/* mobile filter panel title — only inside open overlay ≤1319; hide on desktop */
+.polimer-filter-mobile-head {
+    display: none !important;
+}
+
 /* mobile/tablet catalog filter — fullscreen panel below sticky header (≤1319px) */
 @media screen and (max-width: 1319px) {
     body.polimer-filter-open {
