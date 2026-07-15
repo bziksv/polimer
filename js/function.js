@@ -417,6 +417,27 @@ $(function () {
     });
 });
 
+var polimerCatalogPhotoScaleByClass = {
+    'polimer-photo-scale-tall': 1.25,
+    'polimer-photo-scale-mid': 1.12,
+    'polimer-photo-scale-wide': 0.94,
+    'polimer-photo-scale-compact': 0.88
+};
+
+function polimerCatalogPhotoSafeScale(desiredScale, widthFill, heightFill) {
+    if (desiredScale <= 1) {
+        return desiredScale;
+    }
+
+    var maxFill = Math.max(widthFill, heightFill);
+    if (maxFill <= 0) {
+        return desiredScale;
+    }
+
+    var maxSafeScale = 0.99 / maxFill;
+    return Math.min(desiredScale, maxSafeScale);
+}
+
 function polimerCatalogPhotoScaleClass(nw, nh, cw, ch) {
     var fitScale = Math.min(cw / nw, ch / nh);
     var widthFill = (nw * fitScale) / cw;
@@ -480,6 +501,13 @@ function polimerNormalizeCatalogPhoto(img) {
             return;
         }
 
+        var fitScale = Math.min(cw / nw, ch / nh);
+        var widthFill = (nw * fitScale) / cw;
+        var heightFill = (nh * fitScale) / ch;
+        var scaleClass = polimerCatalogPhotoScaleClass(nw, nh, cw, ch);
+        var desiredScale = polimerCatalogPhotoScaleByClass[scaleClass] || 1;
+        var safeScale = polimerCatalogPhotoSafeScale(desiredScale, widthFill, heightFill);
+
         img.classList.remove(
             'polimer-photo-fit',
             'polimer-photo-contain',
@@ -489,12 +517,18 @@ function polimerNormalizeCatalogPhoto(img) {
             'polimer-photo-scale-wide',
             'polimer-photo-scale-compact'
         );
-        img.classList.add(polimerCatalogPhotoScaleClass(nw, nh, cw, ch));
+        img.classList.add(scaleClass);
         img.style.removeProperty('width');
         img.style.removeProperty('height');
         img.style.removeProperty('transform');
         img.style.removeProperty('object-fit');
         img.style.removeProperty('object-position');
+
+        if (safeScale < desiredScale) {
+            img.style.setProperty('--polimer-photo-scale', String(Math.round(safeScale * 1000) / 1000));
+        } else {
+            img.style.removeProperty('--polimer-photo-scale');
+        }
     };
 
     if (img.complete && img.naturalWidth) {
