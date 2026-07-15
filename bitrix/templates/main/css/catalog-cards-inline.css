@@ -184,11 +184,11 @@
     text-align: center !important;
 }
 
-/* homepage categories 660–1319: единая grid-сетка без дыр между блоками по 8 */
+/* homepage categories 660–1319: grid по строкам catalog_top (без display:contents — иначе дыры на стыке рядов) */
 @media screen and (min-width: 660px) and (max-width: 1319px) {
     .mp__categories .product_top {
-        display: grid !important;
-        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        display: flex !important;
+        flex-direction: column !important;
         gap: 8px !important;
         padding: 8px 6px !important;
         box-sizing: border-box !important;
@@ -196,7 +196,11 @@
 
     .mp__categories .product_top .catalog_top:not(.toggle_product_no),
     .mp__categories .product_top .catalog_top.toggle_product_no.is-visible {
-        display: contents !important;
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
 
     .mp__categories .product_top .catalog_top.toggle_product_no:not(.is-visible) {
@@ -4366,7 +4370,8 @@ header .header__bottom.fixed {
         max-width: 100% !important;
     }
 
-    .mp__categories .product_top {
+    .mp__categories .product_top .catalog_top:not(.toggle_product_no),
+    .mp__categories .product_top .catalog_top.toggle_product_no.is-visible {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     }
 
