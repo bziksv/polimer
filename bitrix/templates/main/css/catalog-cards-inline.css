@@ -4300,6 +4300,21 @@ header .header__bottom.fixed {
     }
 }
 
+/* ≤1019: mp__products между преимуществами и «О компании» — пустота min-height:520px */
+@media screen and (max-width: 1019px) {
+    .mp__products {
+        display: none !important;
+    }
+
+    .advantages {
+        margin-bottom: 28px !important;
+    }
+
+    .about-company-main {
+        margin-top: 20px !important;
+    }
+}
+
 /* tablet 660–1019: боковой скролл — slick-dots (left:410 + width:100%), legacy footer */
 @media screen and (min-width: 660px) and (max-width: 1019px) {
     html,
