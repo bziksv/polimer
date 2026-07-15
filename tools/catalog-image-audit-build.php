@@ -24,7 +24,7 @@ require $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_before.
 require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/php_interface/polimer_catalog_image_audit.php';
 
 set_time_limit(0);
-PolimerCatalogImageAudit::touchBuildLock();
+PolimerCatalogImageAudit::touchBuildLock(getmypid());
 
 $started = microtime(true);
 $log = static function (string $message) use ($started): void {

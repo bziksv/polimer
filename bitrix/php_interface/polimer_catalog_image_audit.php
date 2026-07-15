@@ -42,17 +42,34 @@ class PolimerCatalogImageAudit
 	public static function isBuilding(): bool
 	{
 		$lock = self::getLockPath();
-		return is_file($lock) && (time() - (int)filemtime($lock)) < self::BUILD_LOCK_TTL;
+		if (!is_file($lock)) {
+			return false;
+		}
+
+		$age = time() - (int)filemtime($lock);
+		if ($age >= self::BUILD_LOCK_TTL) {
+			self::clearBuildLock();
+			return false;
+		}
+
+		$pid = (int)trim((string)@file_get_contents($lock));
+		if ($pid > 0 && function_exists('posix_kill') && !@posix_kill($pid, 0)) {
+			// процесс уже умер — снимаем залипший lock
+			self::clearBuildLock();
+			return false;
+		}
+
+		return true;
 	}
 
-	public static function touchBuildLock(): void
+	public static function touchBuildLock(int $pid = 0): void
 	{
 		$lock = self::getLockPath();
 		$dir = dirname($lock);
 		if (!is_dir($dir)) {
 			mkdir($dir, 0755, true);
 		}
-		touch($lock);
+		file_put_contents($lock, $pid > 0 ? (string)$pid : '');
 	}
 
 	public static function clearBuildLock(): void
@@ -65,11 +82,25 @@ class PolimerCatalogImageAudit
 
 	public static function resolvePhpBinary(): string
 	{
-		if (defined('PHP_BINARY') && PHP_BINARY !== '' && is_executable(PHP_BINARY)) {
-			return PHP_BINARY;
+		// Нельзя брать PHP_BINARY из веб-SAPI: там часто php-cgi/php-fpm,
+		// и CLI-скрипт сразу падает с "CLI only", оставляя lock.
+		$candidates = [
+			'/opt/php83/bin/php',
+			'/opt/php82/bin/php',
+			'/opt/php80/bin/php',
+			'/opt/fphp/bin/php',
+			'/usr/bin/php',
+		];
+
+		if (PHP_SAPI === 'cli' && defined('PHP_BINARY') && PHP_BINARY !== '') {
+			$bin = PHP_BINARY;
+			$base = strtolower(basename($bin));
+			if (strpos($base, 'cgi') === false && strpos($base, 'fpm') === false && is_executable($bin)) {
+				array_unshift($candidates, $bin);
+			}
 		}
 
-		foreach (['/opt/php83/bin/php', '/opt/php82/bin/php', '/opt/php80/bin/php', '/opt/fphp/bin/php'] as $candidate) {
+		foreach ($candidates as $candidate) {
 			if (is_executable($candidate)) {
 				return $candidate;
 			}
@@ -84,19 +115,39 @@ class PolimerCatalogImageAudit
 			return false;
 		}
 
-		self::touchBuildLock();
-
 		$php = self::resolvePhpBinary();
 		$script = $_SERVER['DOCUMENT_ROOT'] . self::BUILD_SCRIPT;
 		$log = self::getBuildLogPath();
-		$cmd = escapeshellarg($php)
+		$dir = dirname($log);
+		if (!is_dir($dir)) {
+			mkdir($dir, 0755, true);
+		}
+
+		$line = sprintf(
+			"[%s] Queue build via %s\n",
+			date('Y-m-d H:i:s'),
+			$php
+		);
+		file_put_contents($log, $line, FILE_APPEND);
+
+		// nohup + явный CLI binary; PID пишем в lock
+		$cmd = 'nohup '
+			. escapeshellarg($php)
 			. ' -d short_open_tag=On '
 			. escapeshellarg($script)
 			. ' >> '
 			. escapeshellarg($log)
-			. ' 2>&1 &';
+			. ' 2>&1 & echo $!';
 
-		exec($cmd);
+		$output = [];
+		exec($cmd, $output);
+		$pid = (int)trim((string)($output[0] ?? ''));
+		if ($pid <= 0) {
+			file_put_contents($log, '[' . date('Y-m-d H:i:s') . "] Failed to spawn build process\n", FILE_APPEND);
+			return false;
+		}
+
+		self::touchBuildLock($pid);
 
 		return true;
 	}
