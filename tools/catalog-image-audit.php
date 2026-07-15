@@ -8,7 +8,11 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/bitrix/php_interface/polimer_catalog_
 
 if (!PolimerCatalogImageAudit::isAllowed()) {
 	header('HTTP/1.1 403 Forbidden');
-	echo 'Access denied';
+	header('Content-Type: text/html; charset=utf-8');
+	echo '<!doctype html><html lang="ru"><head><meta charset="utf-8"><title>Access denied</title></head><body>';
+	echo '<h1>Access denied</h1>';
+	echo '<p>' . htmlspecialchars(PolimerCatalogImageAudit::getAccessDeniedReason()) . '</p>';
+	echo '</body></html>';
 	exit;
 }
 

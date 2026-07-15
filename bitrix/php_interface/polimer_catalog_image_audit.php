@@ -368,17 +368,48 @@ class PolimerCatalogImageAudit
 			return true;
 		}
 
-		if (is_object($USER) && $USER->IsAdmin()) {
-			return true;
-		}
-
 		$token = (string)($_GET['token'] ?? $_POST['token'] ?? '');
 		$expected = (string)getenv('POLIMER_AUDIT_TOKEN');
 		if ($expected !== '' && hash_equals($expected, $token)) {
 			return true;
 		}
 
-		return false;
+		if (!is_object($USER) || !$USER->IsAuthorized()) {
+			return false;
+		}
+
+		if ($USER->IsAdmin()) {
+			return true;
+		}
+
+		return self::hasCatalogAuditRights();
+	}
+
+	public static function getAccessDeniedReason(): string
+	{
+		global $USER;
+
+		if (!is_object($USER) || !$USER->IsAuthorized()) {
+			return 'Вы не авторизованы на сайте. Откройте ссылку в том же браузере, где вы вошли в /bitrix/admin/.';
+		}
+
+		return 'Нет прав: нужна группа «Администраторы» или право редактирования каталога.';
+	}
+
+	private static function hasCatalogAuditRights(): bool
+	{
+		global $APPLICATION;
+
+		if (!CModule::IncludeModule('iblock')) {
+			return false;
+		}
+
+		$perm = CIBlock::GetPermission(self::IBLOCK_ID);
+		if (in_array($perm, ['W', 'X'], true)) {
+			return true;
+		}
+
+		return is_object($APPLICATION) && $APPLICATION->GetGroupRight('iblock') >= 'W';
 	}
 
 	public static function loadCache(bool $allowStale = true): ?array
