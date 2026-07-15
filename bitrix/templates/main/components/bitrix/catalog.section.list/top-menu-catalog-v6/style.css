@@ -102,13 +102,13 @@ header .header__catalog .catalog-menu-v6 .catalog-menu-v6__rail-thumb {
     height: 52px;
     border-radius: 12px;
     overflow: hidden;
-    background: #fff;
-    border: 1px solid #d9e6f2;
-    box-shadow: 0 2px 8px rgba(2, 61, 115, 0.06);
+    background: transparent;
+    border: none;
+    box-shadow: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4px;
+    padding: 2px;
     box-sizing: border-box;
 }
 
@@ -311,12 +311,12 @@ header .header__catalog .catalog-menu-v6 .catalog-menu-v6__search-thumb {
     height: 40px;
     border-radius: 8px;
     overflow: hidden;
-    background: #f3f8fc;
-    border: 1px solid #dde8f2;
+    background: transparent;
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 3px;
+    padding: 2px;
     box-sizing: border-box;
 }
 
@@ -518,12 +518,12 @@ header .header__catalog .catalog-menu-v6 .catalog-menu-v6__col-thumb {
     height: 54px;
     border-radius: 8px;
     overflow: hidden;
-    background: linear-gradient(135deg, #f3f8fc 0%, #e8f1f8 100%);
-    border: 1px solid #dde8f2;
+    background: transparent;
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4px;
+    padding: 2px;
     box-sizing: border-box;
 }
 

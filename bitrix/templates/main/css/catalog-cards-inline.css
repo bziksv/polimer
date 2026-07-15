@@ -76,7 +76,7 @@
     min-height: 168px !important;
     padding: 14px !important;
     box-sizing: border-box !important;
-    background: #fff !important;
+    background: transparent !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
