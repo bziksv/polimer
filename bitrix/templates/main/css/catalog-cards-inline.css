@@ -4295,3 +4295,127 @@ header .header__bottom.fixed {
         user-select: none !important;
     }
 }
+
+/* tablet 660–1019: боковой скролл — slick-dots (left:410 + width:100%), legacy footer */
+@media screen and (min-width: 660px) and (max-width: 1019px) {
+    html,
+    body {
+        max-width: 100% !important;
+    }
+
+    .container,
+    .page_content,
+    .mp__banners,
+    .mp__categories,
+    .mp__content,
+    .wr,
+    footer {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .wr {
+        width: 100% !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+
+    .page_content,
+    .mp__banners,
+    .mp__categories,
+    footer {
+        overflow-x: clip !important;
+    }
+
+    .mp__banners {
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .mp__banners .mp__slider {
+        width: 100% !important;
+        float: none !important;
+        overflow: hidden !important;
+    }
+
+    .mp__banners .mp__slider .slick-list {
+        overflow: hidden !important;
+    }
+
+    .mp__banners .mp__slider .slick-dots {
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+    }
+
+    .mp__banners .mp__slider .item {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        box-sizing: border-box !important;
+    }
+
+    .mp__banners .wp__banner {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .mp__categories .product_top {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    footer .footer__top {
+        height: auto !important;
+        min-height: 0 !important;
+        padding-bottom: 24px !important;
+    }
+
+    footer .footer__top .footer__col,
+    footer .footer__top .footer__col.col--1,
+    footer .footer__top .footer__col.col--2,
+    footer .footer__top .footer__col.col--3,
+    footer .footer__top .footer__col.col--4 {
+        position: static !important;
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        float: none !important;
+        width: 100% !important;
+        padding-top: 16px !important;
+        padding-bottom: 0 !important;
+    }
+
+    footer .footer__top .footer__col.col--1 {
+        padding-top: 24px !important;
+    }
+
+    footer .footer__top .footer__col .footer__logotext {
+        padding-right: 0 !important;
+    }
+
+    footer .footer__bottom {
+        position: relative !important;
+    }
+
+    footer .footer__bottom .footer__pay {
+        position: static !important;
+        top: auto !important;
+        left: auto !important;
+        width: auto !important;
+    }
+
+    footer .footer__bottom p {
+        margin: 12px 0 !important;
+    }
+
+    footer .footer__bottom .footer__copyright {
+        padding: 16px 0 20px !important;
+    }
+}
