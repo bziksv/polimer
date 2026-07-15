@@ -4370,12 +4370,12 @@ header .header__bottom.fixed {
         max-width: 100% !important;
     }
 
-    /* главные вкладки каталога: 2 + 1 на всю ширину */
+    /* главные вкладки каталога: 3 в один ряд */
     .mp__categories .tabslist {
         display: flex !important;
-        flex-wrap: wrap !important;
+        flex-wrap: nowrap !important;
         align-items: stretch !important;
-        gap: 8px !important;
+        gap: 6px !important;
         width: 100% !important;
         margin: 0 0 8px !important;
         padding: 0 !important;
@@ -4385,13 +4385,13 @@ header .header__bottom.fixed {
     .mp__categories .tabslist .maincategory {
         float: none !important;
         display: block !important;
-        flex: 1 1 calc(50% - 4px) !important;
+        flex: 1 1 0 !important;
         width: auto !important;
         min-width: 0 !important;
         max-width: none !important;
         height: auto !important;
         min-height: 100px !important;
-        padding: 14px 8px 14px 72px !important;
+        padding: 12px 6px 12px 52px !important;
         text-align: left !important;
         box-sizing: border-box !important;
     }
@@ -4401,24 +4401,21 @@ header .header__bottom.fixed {
         margin: 0 !important;
     }
 
-    .mp__categories .tabslist .maincategory.maincategory--3 {
-        flex: 1 1 100% !important;
-    }
-
     .mp__categories .tabslist .maincategory .img {
         top: 50% !important;
-        left: 10px !important;
+        left: 6px !important;
         margin-left: 0 !important;
-        margin-top: -25px !important;
-        width: 56px !important;
-        height: 42px !important;
+        margin-top: -20px !important;
+        width: 44px !important;
+        height: 40px !important;
     }
 
     .mp__categories .tabslist .maincategory .name {
-        font-size: 0.9em !important;
-        line-height: 1.25 !important;
+        font-size: 0.78em !important;
+        line-height: 1.2 !important;
         height: auto !important;
         text-align: left !important;
+        word-break: break-word !important;
     }
 
     .mp__categories .product_top .catalog_top:not(.toggle_product_no),
