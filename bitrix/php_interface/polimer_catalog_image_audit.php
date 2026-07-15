@@ -23,6 +23,24 @@ class PolimerCatalogImageAudit
 	private const BUILD_SCRIPT = '/tools/catalog-image-audit-build.php';
 	private const CACHE_TTL = 86400;
 	private const BUILD_LOCK_TTL = 7200;
+	private const DISPLAY_TIMEZONE = 'Europe/Moscow';
+
+	public static function formatDateTime(?int $timestamp = null): string
+	{
+		$dt = new DateTime('@' . ($timestamp ?? time()));
+		$dt->setTimezone(new DateTimeZone(self::DISPLAY_TIMEZONE));
+
+		return $dt->format('Y-m-d H:i:s');
+	}
+
+	private static function normalizeReportTimestamps(array $data): array
+	{
+		if (!empty($data['generated_at'])) {
+			$data['generated_at_human'] = self::formatDateTime((int)$data['generated_at']);
+		}
+
+		return $data;
+	}
 
 	public static function getCachePath(): string
 	{
@@ -125,7 +143,7 @@ class PolimerCatalogImageAudit
 
 		$line = sprintf(
 			"[%s] Queue build via %s\n",
-			date('Y-m-d H:i:s'),
+			self::formatDateTime(),
 			$php
 		);
 		file_put_contents($log, $line, FILE_APPEND);
@@ -143,7 +161,7 @@ class PolimerCatalogImageAudit
 		exec($cmd, $output);
 		$pid = (int)trim((string)($output[0] ?? ''));
 		if ($pid <= 0) {
-			file_put_contents($log, '[' . date('Y-m-d H:i:s') . "] Failed to spawn build process\n", FILE_APPEND);
+			file_put_contents($log, '[' . self::formatDateTime() . "] Failed to spawn build process\n", FILE_APPEND);
 			return false;
 		}
 
@@ -384,7 +402,7 @@ class PolimerCatalogImageAudit
 			return null;
 		}
 
-		return $data;
+		return self::normalizeReportTimestamps($data);
 	}
 
 	public static function saveCache(array $data): void
@@ -396,7 +414,7 @@ class PolimerCatalogImageAudit
 		}
 
 		$data['generated_at'] = time();
-		$data['generated_at_human'] = date('Y-m-d H:i:s');
+		$data['generated_at_human'] = self::formatDateTime($data['generated_at']);
 		file_put_contents($path, json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 	}
 
@@ -457,9 +475,11 @@ class PolimerCatalogImageAudit
 
 		$items = self::attachSectionsToItems($items);
 
+		$generatedAt = time();
+
 		return [
-			'generated_at' => time(),
-			'generated_at_human' => date('Y-m-d H:i:s'),
+			'generated_at' => $generatedAt,
+			'generated_at_human' => self::formatDateTime($generatedAt),
 			'stats' => $stats,
 			'items' => $items,
 			'rules' => self::getRulesDescription(),

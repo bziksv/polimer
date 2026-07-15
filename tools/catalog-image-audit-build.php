@@ -28,7 +28,7 @@ PolimerCatalogImageAudit::touchBuildLock(getmypid());
 
 $started = microtime(true);
 $log = static function (string $message): void {
-	$line = sprintf("[%s] %s\n", date('Y-m-d H:i:s'), $message);
+	$line = sprintf("[%s] %s\n", PolimerCatalogImageAudit::formatDateTime(), $message);
 	file_put_contents(PolimerCatalogImageAudit::getBuildLogPath(), $line, FILE_APPEND);
 	// В интерактивном терминале — ещё и на экран (но не при nohup >> log)
 	if (defined('STDOUT') && function_exists('posix_isatty') && @posix_isatty(STDOUT)) {

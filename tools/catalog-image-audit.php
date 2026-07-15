@@ -456,7 +456,7 @@ header('Content-Type: text/html; charset=utf-8');
 <div class="wrap">
 	<h1>Аудит картинок каталога</h1>
 	<div class="sub">
-		Обновлено: <?=htmlspecialchars((string)($report['generated_at_human'] ?? '—'))?> ·
+		Обновлено: <?=htmlspecialchars((string)($report['generated_at_human'] ?? '—'))?> (МСК) ·
 		Проверено: <?=(int)($stats['checked'] ?? 0)?> товаров ·
 		Проблемных: <?=(int)($stats['issues'] ?? 0)?>
 		<?php if ($building): ?>
