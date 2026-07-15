@@ -4370,6 +4370,57 @@ header .header__bottom.fixed {
         max-width: 100% !important;
     }
 
+    /* главные вкладки каталога: 2 + 1 на всю ширину */
+    .mp__categories .tabslist {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+        width: 100% !important;
+        margin: 0 0 8px !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    .mp__categories .tabslist .maincategory {
+        float: none !important;
+        display: block !important;
+        flex: 1 1 calc(50% - 4px) !important;
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        height: auto !important;
+        min-height: 100px !important;
+        padding: 14px 8px 14px 72px !important;
+        text-align: left !important;
+        box-sizing: border-box !important;
+    }
+
+    .mp__categories .tabslist .maincategory.maincategory--2,
+    .mp__categories .tabslist .maincategory.maincategory--3 {
+        margin: 0 !important;
+    }
+
+    .mp__categories .tabslist .maincategory.maincategory--3 {
+        flex: 1 1 100% !important;
+    }
+
+    .mp__categories .tabslist .maincategory .img {
+        top: 50% !important;
+        left: 10px !important;
+        margin-left: 0 !important;
+        margin-top: -25px !important;
+        width: 56px !important;
+        height: 42px !important;
+    }
+
+    .mp__categories .tabslist .maincategory .name {
+        font-size: 0.9em !important;
+        line-height: 1.25 !important;
+        height: auto !important;
+        text-align: left !important;
+    }
+
     .mp__categories .product_top .catalog_top:not(.toggle_product_no),
     .mp__categories .product_top .catalog_top.toggle_product_no.is-visible {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
