@@ -142,7 +142,6 @@ class PolimerSectionImageProcessor
 		imagefilledrectangle($cut, 0, 0, $w, $h, $transparent);
 
 		$thr = self::WHITE_THRESHOLD;
-		$soft = max(1, self::WHITE_SOFTNESS);
 		$tol = self::FLOOD_TOLERANCE;
 		$bgMask = array_fill(0, $w * $h, false);
 
@@ -223,22 +222,13 @@ class PolimerSectionImageProcessor
 				$r = ($rgba >> 16) & 0xFF;
 				$g = ($rgba >> 8) & 0xFF;
 				$b = $rgba & 0xFF;
-				$a = ($rgba & 0x7F000000) >> 24;
-				$lightness = ($r + $g + $b) / 3;
 
-				if ($bgMask[$idx] || self::matchesSampledBackground($r, $g, $b, $bgR, $bgG, $bgB, $tol + 6)) {
+				if ($bgMask[$idx] || self::matchesSampledBackground($r, $g, $b, $bgR, $bgG, $bgB, $tol + 6) || self::isLikelyBackground($r, $g, $b, $thr)) {
 					imagesetpixel($cut, $x, $y, $transparent);
 					continue;
 				}
 
-				if ($lightness >= $thr - $soft) {
-					$fade = (int)min(127, (($lightness - ($thr - $soft)) / $soft) * 127);
-					$col = imagecolorallocatealpha($cut, $r, $g, $b, $fade);
-					imagesetpixel($cut, $x, $y, $col);
-					continue;
-				}
-
-				$col = imagecolorallocatealpha($cut, $r, $g, $b, $a);
+				$col = imagecolorallocatealpha($cut, $r, $g, $b, 0);
 				imagesetpixel($cut, $x, $y, $col);
 			}
 		}
