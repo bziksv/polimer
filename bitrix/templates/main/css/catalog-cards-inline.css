@@ -4385,10 +4385,11 @@ header .header__bottom.fixed {
         flex-wrap: nowrap !important;
         justify-content: center !important;
         align-items: stretch !important;
-        gap: 10px !important;
+        gap: 16px !important;
         width: 100% !important;
         max-width: 100% !important;
         margin: 0 auto !important;
+        padding: 0 !important;
         float: none !important;
         box-sizing: border-box !important;
     }
