@@ -10,9 +10,10 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 class PolimerSectionImageProcessor
 {
 	public const CANVAS = 512;
-	public const PADDING_RATIO = 0.08;
-	public const WHITE_THRESHOLD = 248;
-	public const WHITE_SOFTNESS = 12;
+	public const PADDING_RATIO = 0.10;
+	public const WHITE_THRESHOLD = 242;
+	public const WHITE_SOFTNESS = 14;
+	public const FLOOD_TOLERANCE = 24;
 
 	public static function workDir(): string
 	{
@@ -72,7 +73,7 @@ class PolimerSectionImageProcessor
 		}
 	}
 
-	/** Убирает светлый фон, обрезает прозрачные поля, кладёт на квадратный холст. */
+	/** Убирает светлый фон (flood с краёв), обрезает прозрачные поля, кладёт на квадратный холст. */
 	public static function processFile(string $inputAbs, string $outputAbs): bool
 	{
 		$src = self::loadImage($inputAbs);
@@ -82,48 +83,12 @@ class PolimerSectionImageProcessor
 
 		$w = imagesx($src);
 		$h = imagesy($src);
-
-		$cut = imagecreatetruecolor($w, $h);
-		imagealphablending($cut, false);
-		imagesavealpha($cut, true);
-		$transparent = imagecolorallocatealpha($cut, 0, 0, 0, 127);
-		imagefilledrectangle($cut, 0, 0, $w, $h, $transparent);
-
-		$thr = self::WHITE_THRESHOLD;
-		$soft = max(1, self::WHITE_SOFTNESS);
-
-		for ($y = 0; $y < $h; $y++) {
-			for ($x = 0; $x < $w; $x++) {
-				$rgba = imagecolorat($src, $x, $y);
-				$r = ($rgba >> 16) & 0xFF;
-				$g = ($rgba >> 8) & 0xFF;
-				$b = $rgba & 0xFF;
-				$a = ($rgba & 0x7F000000) >> 24;
-
-				$minRgb = min($r, $g, $b);
-				$maxRgb = max($r, $g, $b);
-				$lightness = ($r + $g + $b) / 3;
-
-				$isBg = ($minRgb >= $thr) || ($maxRgb - $minRgb <= 8 && $lightness >= $thr - 15);
-
-				if ($isBg) {
-					imagesetpixel($cut, $x, $y, $transparent);
-					continue;
-				}
-
-				if ($lightness >= $thr - $soft) {
-					$fade = (int)min(127, (($lightness - ($thr - $soft)) / $soft) * 127);
-					$col = imagecolorallocatealpha($cut, $r, $g, $b, $fade);
-					imagesetpixel($cut, $x, $y, $col);
-					continue;
-				}
-
-				$col = imagecolorallocatealpha($cut, $r, $g, $b, $a);
-				imagesetpixel($cut, $x, $y, $col);
-			}
-		}
-
+		$cut = self::removeBackground($src, $w, $h);
 		imagedestroy($src);
+
+		if (!$cut) {
+			return false;
+		}
 
 		$bounds = self::alphaBounds($cut);
 		if (!$bounds) {
@@ -166,6 +131,120 @@ class PolimerSectionImageProcessor
 		imagedestroy($final);
 
 		return $ok && is_file($outputAbs) && filesize($outputAbs) > 0;
+	}
+
+	private static function removeBackground($src, int $w, int $h)
+	{
+		$cut = imagecreatetruecolor($w, $h);
+		imagealphablending($cut, false);
+		imagesavealpha($cut, true);
+		$transparent = imagecolorallocatealpha($cut, 0, 0, 0, 127);
+		imagefilledrectangle($cut, 0, 0, $w, $h, $transparent);
+
+		$thr = self::WHITE_THRESHOLD;
+		$soft = max(1, self::WHITE_SOFTNESS);
+		$tol = self::FLOOD_TOLERANCE;
+		$bgMask = array_fill(0, $w * $h, false);
+
+		$seedPoints = [];
+		for ($x = 0; $x < $w; $x++) {
+			$seedPoints[] = [$x, 0];
+			$seedPoints[] = [$x, $h - 1];
+		}
+		for ($y = 1; $y < $h - 1; $y++) {
+			$seedPoints[] = [0, $y];
+			$seedPoints[] = [$w - 1, $y];
+		}
+
+		foreach ($seedPoints as [$sx, $sy]) {
+			$idx = $sy * $w + $sx;
+			if ($bgMask[$idx]) {
+				continue;
+			}
+
+			$rgba = imagecolorat($src, $sx, $sy);
+			$sr = ($rgba >> 16) & 0xFF;
+			$sg = ($rgba >> 8) & 0xFF;
+			$sb = $rgba & 0xFF;
+
+			if (!self::isLikelyBackground($sr, $sg, $sb, $thr)) {
+				continue;
+			}
+
+			$queue = [[$sx, $sy]];
+			$bgMask[$idx] = true;
+
+			while ($queue) {
+				[$x, $y] = array_pop($queue);
+
+				foreach ([[$x - 1, $y], [$x + 1, $y], [$x, $y - 1], [$x, $y + 1]] as [$nx, $ny]) {
+					if ($nx < 0 || $ny < 0 || $nx >= $w || $ny >= $h) {
+						continue;
+					}
+
+					$nIdx = $ny * $w + $nx;
+					if ($bgMask[$nIdx]) {
+						continue;
+					}
+
+					$nrgba = imagecolorat($src, $nx, $ny);
+					$nr = ($nrgba >> 16) & 0xFF;
+					$ng = ($nrgba >> 8) & 0xFF;
+					$nb = $nrgba & 0xFF;
+
+					if (!self::isLikelyBackground($nr, $ng, $nb, $thr)
+						&& self::colorDistance($sr, $sg, $sb, $nr, $ng, $nb) > $tol) {
+						continue;
+					}
+
+					$bgMask[$nIdx] = true;
+					$queue[] = [$nx, $ny];
+				}
+			}
+		}
+
+		for ($y = 0; $y < $h; $y++) {
+			for ($x = 0; $x < $w; $x++) {
+				$idx = $y * $w + $x;
+				$rgba = imagecolorat($src, $x, $y);
+				$r = ($rgba >> 16) & 0xFF;
+				$g = ($rgba >> 8) & 0xFF;
+				$b = $rgba & 0xFF;
+				$a = ($rgba & 0x7F000000) >> 24;
+				$lightness = ($r + $g + $b) / 3;
+
+				if ($bgMask[$idx]) {
+					imagesetpixel($cut, $x, $y, $transparent);
+					continue;
+				}
+
+				if ($lightness >= $thr - $soft) {
+					$fade = (int)min(127, (($lightness - ($thr - $soft)) / $soft) * 127);
+					$col = imagecolorallocatealpha($cut, $r, $g, $b, $fade);
+					imagesetpixel($cut, $x, $y, $col);
+					continue;
+				}
+
+				$col = imagecolorallocatealpha($cut, $r, $g, $b, $a);
+				imagesetpixel($cut, $x, $y, $col);
+			}
+		}
+
+		return $cut;
+	}
+
+	private static function isLikelyBackground(int $r, int $g, int $b, int $thr): bool
+	{
+		$minRgb = min($r, $g, $b);
+		$maxRgb = max($r, $g, $b);
+		$lightness = ($r + $g + $b) / 3;
+
+		return ($minRgb >= $thr) || ($maxRgb - $minRgb <= 10 && $lightness >= $thr - 18);
+	}
+
+	private static function colorDistance(int $r1, int $g1, int $b1, int $r2, int $g2, int $b2): float
+	{
+		return sqrt(($r1 - $r2) ** 2 + ($g1 - $g2) ** 2 + ($b1 - $b2) ** 2);
 	}
 
 	private static function alphaBounds($im): ?array

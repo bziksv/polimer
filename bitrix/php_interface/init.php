@@ -1872,8 +1872,8 @@ function polimerMenuImageWebp($fileId, $w, $h, $quality = 82)
         return $memory[$cacheKey] = $resized['src'];
     }
 
-    imagealphablending($sourceImage, true);
     imagesavealpha($sourceImage, true);
+    imagealphablending($sourceImage, false);
 
     $dir = dirname($webpAbs);
     if (!is_dir($dir)) {
