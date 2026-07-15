@@ -390,6 +390,9 @@ class PolimerSectionImageTool
 			case 'apply':
 				self::out(self::actionApply($argTail), $isCli);
 				break;
+			case 'restore':
+				self::out(self::actionRestore($argTail), $isCli);
+				break;
 			case 'pipeline':
 				self::out(self::actionPipeline($argTail), $isCli);
 				break;
@@ -407,6 +410,7 @@ class PolimerSectionImageTool
 						'export [--ids=1,2] [--all] [--depth=2]',
 						'process [--ids=1,2] [--all]',
 						'apply [--ids=1,2] [--all] [--dry-run]',
+						'restore [--ids=1,2] [--all]',
 						'pipeline [--ids=1,2] [--depth=2] [--limit=10] [--dry-run]',
 					],
 				], $isCli);
@@ -675,6 +679,76 @@ class PolimerSectionImageTool
 		}
 
 		return ['applied' => count($applied), 'dry_run' => $dryRun, 'failed' => $failed, 'items' => $applied];
+	}
+
+	private static function actionRestore(array $args): array
+	{
+		$params = self::parseArgs($args);
+		$ids = self::parseIds($params);
+		$sources = glob(PolimerSectionImageProcessor::sourceDir() . '/*_source.*') ?: [];
+		$restored = [];
+		$failed = [];
+
+		foreach ($sources as $sourcePath) {
+			if (!preg_match('/\/(\d+)_source\./', $sourcePath, $match)) {
+				continue;
+			}
+
+			$sectionId = (int)$match[1];
+			if ($ids && !in_array($sectionId, $ids, true)) {
+				continue;
+			}
+
+			$section = CIBlockSection::GetList(
+				[],
+				['ID' => $sectionId, 'IBLOCK_ID' => self::IBLOCK_ID],
+				false,
+				['ID', 'NAME', 'PICTURE']
+			)->Fetch();
+
+			if (!$section) {
+				$failed[] = ['id' => $sectionId, 'reason' => 'no_section'];
+				continue;
+			}
+
+			$fileArray = CFile::MakeFileArray($sourcePath);
+			if (empty($fileArray['tmp_name'])) {
+				$failed[] = ['id' => $sectionId, 'reason' => 'make_file_array'];
+				continue;
+			}
+
+			$fileArray['MODULE_ID'] = 'iblock';
+			$oldPictureId = (int)($section['PICTURE'] ?? 0);
+			$bs = new CIBlockSection();
+			if (!$bs->Update($sectionId, ['PICTURE' => $fileArray])) {
+				$failed[] = ['id' => $sectionId, 'reason' => 'section_update', 'error' => $bs->LAST_ERROR];
+				continue;
+			}
+
+			$newPictureId = 0;
+			$updated = CIBlockSection::GetList([], ['ID' => $sectionId, 'IBLOCK_ID' => self::IBLOCK_ID], false, ['ID', 'PICTURE'])->Fetch();
+			if ($updated) {
+				$newPictureId = (int)($updated['PICTURE'] ?? 0);
+			}
+
+			if ($oldPictureId > 0 && $oldPictureId !== $newPictureId) {
+				CFile::Delete($oldPictureId);
+			}
+
+			$restored[] = [
+				'id' => $sectionId,
+				'name' => $section['NAME'],
+				'new_picture_id' => $newPictureId,
+				'path' => $newPictureId > 0 ? (string)CFile::GetPath($newPictureId) : '',
+				'source' => $sourcePath,
+			];
+		}
+
+		if ($restored) {
+			self::clearImageCaches();
+		}
+
+		return ['restored' => count($restored), 'failed' => $failed, 'items' => $restored];
 	}
 
 	private static function actionPipeline(array $args): array
