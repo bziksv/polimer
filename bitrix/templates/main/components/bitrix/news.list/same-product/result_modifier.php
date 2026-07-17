@@ -71,6 +71,35 @@ foreach($arResult["ITEMS"] as &$arItem){
 	if(!$arItem["PREVIEW_PICTURE"]["SRC"]){
 		$arItem["PREVIEW_PICTURE"]["SRC"] = $arEmptyPreview['SRC'];
 	}
+
+	$arItem['SIMILAR_PRODUCT_CODE'] = '';
+
+	if (!empty($arItem['PROPERTIES']['CML2_TRAITS']['VALUE'][2]))
+	{
+		$arItem['SIMILAR_PRODUCT_CODE'] = $arItem['PROPERTIES']['CML2_TRAITS']['VALUE'][2];
+	}
+	else
+	{
+		$rsProp = CIBlockElement::GetProperty(
+			(int)$arItem['IBLOCK_ID'],
+			(int)$arItem['ID'],
+			['sort' => 'asc'],
+			['CODE' => 'CML2_TRAITS']
+		);
+
+		$values = [];
+		while ($arProp = $rsProp->Fetch())
+		{
+			$values[] = $arProp['VALUE'];
+		}
+
+		if (!empty($values[2]))
+		{
+			$arItem['SIMILAR_PRODUCT_CODE'] = $values[2];
+		}
+	}
+
+	$arItem['SIMILAR_IN_STOCK'] = checkProduct($arItem['ID']);
 }
 unset($arItem);
 

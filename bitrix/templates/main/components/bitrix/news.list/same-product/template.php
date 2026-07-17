@@ -23,6 +23,16 @@ if($arResult["ITEMS"]):
 				<img src="<?=resizeImage($arItem["PREVIEW_PICTURE"]["ID"], 150, 150)?>" alt="<?=$arItem["NAME"]?>" class="img">
 			</a>
 			<a href="<?=$arItem["DETAIL_PAGE_URL"]?>" class="name"><?=$arItem["NAME"]?></a>
+            <div class="product-meta">
+                <?php if (!empty($arItem['SIMILAR_PRODUCT_CODE'])): ?>
+                    <span class="incode">Код товара: <?=htmlspecialcharsbx($arItem['SIMILAR_PRODUCT_CODE'])?></span>
+                <?php endif; ?>
+                <?php if (!empty($arItem['SIMILAR_IN_STOCK'])): ?>
+                    <span class="instock">Товар в наличии</span>
+                <?php else: ?>
+                    <span class="instock instock--order">Под заказ</span>
+                <?php endif; ?>
+            </div>
 			<div class="price">
                 <?if(price($arItem['ID'])):?>
 				<span><?=price($arItem['ID']);?></span> &#8381;/<?=$arItem['PROPERTIES']['CML2_BASE_UNIT']['VALUE'];?>
@@ -31,7 +41,7 @@ if($arResult["ITEMS"]):
                 <? endif; ?>
 			</div>
 
-            <? if(checkProduct($arItem['ID'])): ?>
+            <? if(!empty($arItem['SIMILAR_IN_STOCK'])): ?>
                 <a href="javascript:void(0)" onclick="addToBasket2(<?=$arItem['ID']?>,1,this);" class="cart">В корзину</a>
             <? else: ?>
                 <a href="javascript:void(0)" class="cart show-popup" data-id="order-product">под заказ</a>

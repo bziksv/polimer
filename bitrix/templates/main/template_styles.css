@@ -2470,21 +2470,45 @@ header .header__bottom.fixed .header__account span
 .slider_product .product .name {
     color: #0464bb;
     text-decoration: none;
-    margin: 15px 0;
+    margin: 12px 0 8px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
-    line-clamp: 4;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
     overflow: hidden;
     line-height: 1.35;
-    height: 5.4em;
-    min-height: 5.4em;
-    max-height: 5.4em;
-    flex: 0 0 5.4em
+    height: calc(1.35em * 3);
+    min-height: calc(1.35em * 3);
+    max-height: calc(1.35em * 3);
+    flex: 0 0 calc(1.35em * 3)
 }
 
 .slider_product .product .name:hover, .slider_product .product .name:active {
     color: #17c3e6
+}
+
+.slider_product .product .product-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0 0 10px;
+    flex-shrink: 0
+}
+
+.slider_product .product .product-meta .incode {
+    display: block;
+    font: 400 11px/1.35 'roboto', sans-serif;
+    color: #666
+}
+
+.slider_product .product .product-meta .instock {
+    display: block;
+    font: 400 11px/1.35 'roboto', sans-serif;
+    color: #00a600
+}
+
+.slider_product .product .product-meta .instock--order {
+    color: #0464bb
 }
 
 .slider_product .product .price {
@@ -3081,17 +3105,50 @@ header .header__bottom.fixed .header__account span
 
     .slider_product .product {
         text-align: center;
-        border: 0
+        border: 0;
+        align-items: center
     }
 
     .slider_product .product img {
         margin: auto
     }
 
+    .slider_product .product .name,
+    .slider_product .product .price,
+    .slider_product .product .product-meta {
+        text-align: center;
+        width: 100%
+    }
+
+    .slider_product .product .name {
+        height: calc(1.35em * 3);
+        min-height: calc(1.35em * 3);
+        max-height: calc(1.35em * 3);
+        flex: 0 0 calc(1.35em * 3);
+        margin: 12px 0 8px;
+        overflow: hidden;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        line-height: 1.35
+    }
+
+    .slider_product .product .product-meta {
+        align-items: center;
+        margin: 0 0 10px
+    }
+
+    .slider_product .product .price {
+        margin: 0 0 12px
+    }
+
     .slider_product .product .cart {
         width: 160px;
         background-position: 20px center;
-        font-size: 14px
+        font-size: 14px;
+        align-self: center;
+        margin-top: auto;
+        margin-left: auto;
+        margin-right: auto
     }
 
     .slider_product .product .cart:hover {
