@@ -39,25 +39,33 @@ foreach($arParams['PROPERTY_CODE'] as $code){
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] <> '' && (!isset($_POST["PARAMS_HASH"]) || $arResult["PARAMS_HASH"] === $_POST["PARAMS_HASH"]))
 {
 	$arResult["ERROR_MESSAGE"] = array();
-	if(check_bitrix_sessid())
-	{
+		if(check_bitrix_sessid())
+		{
+		$arResult["ERROR_FIELDS"] = array();
 
 		foreach($arPropertyField as $field){
 			if($field['IS_REQUIRED'] == "Y"){
 				if(strlen($_POST[$field['CODE']]) < 1)
+				{
 					$arResult["ERROR_MESSAGE"][] = GetMessage("FIELD_ERROR").': '.$field['NAME'];
+					$arResult["ERROR_FIELDS"][] = $field['CODE'];
+				}
 			}
 		}
 
-		if(isset($_POST['FIO']) && !preg_match('/[А-Яа-я\s]/',$_POST['FIO'])){
+		if(isset($_POST['FIO']) && strlen(trim((string)$_POST['FIO'])) > 0 && !preg_match('/[А-Яа-яЁё\s]/u',$_POST['FIO'])){
 			$arResult["ERROR_MESSAGE"][] = "Поле: ФИО только на кириллице";
+			$arResult["ERROR_FIELDS"][] = 'FIO';
 		}
 
 		if($arParams["USE_CAPTCHA"] == "Y")
 		{
 			$captcha_code = $_POST["g-recaptcha-response"];
 			if (!polimerVerifyGoogleRecaptcha($captcha_code))
+			{
 				$arResult["ERROR_MESSAGE"][] = GetMessage("MF_CAPTHCA_EMPTY");
+				$arResult["ERROR_FIELDS"][] = 'CAPTCHA';
+			}
 
 		}
 
@@ -128,6 +136,8 @@ elseif($_REQUEST["success"] == $arResult["PARAMS_HASH"])
 	$arResult["OK_MESSAGE"] = $arParams["OK_TEXT"];
 }
 $arResult['USER_FIELD'] = $arPropertyField;
+if (!isset($arResult['ERROR_FIELDS']) || !is_array($arResult['ERROR_FIELDS']))
+	$arResult['ERROR_FIELDS'] = array();
 
 
 if($arParams["USE_CAPTCHA"] == "Y")

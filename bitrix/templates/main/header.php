@@ -56,6 +56,7 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 		Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/wickedpicker.min.css');
 		
 		Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/custom.css?v=' . @filemtime($_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/css/custom.css'));
+		Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/feedback-forms.css?v=' . @filemtime($_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/css/feedback-forms.css'));
 
 		$catalogCardsInlinePath = $_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/css/catalog-cards-inline.css';
 		if (is_file($catalogCardsInlinePath)) {
@@ -90,6 +91,12 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 			$commonJsUrl .= '?' . filemtime($commonJsPath);
 		}
 		Asset::getInstance()->addJs($commonJsUrl);
+		$feedbackFormsJsPath = $_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/js/feedback-forms.js';
+		$feedbackFormsJsUrl = SITE_TEMPLATE_PATH . '/js/feedback-forms.js';
+		if (is_file($feedbackFormsJsPath)) {
+			$feedbackFormsJsUrl .= '?' . filemtime($feedbackFormsJsPath);
+		}
+		Asset::getInstance()->addJs($feedbackFormsJsUrl);
 		Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/social-likes.min.js');
 		Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/wickedpicker.min.js');
 		Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/jquery.maskedinput.min.js');
