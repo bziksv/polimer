@@ -884,7 +884,56 @@ function polimerFillSearchProductSpecs(array &$products, $iblockId = IBLOCK_CATA
     unset($product);
 }
 
-function polimerBuildSearchSectionsFromProducts(array $products, $noPhoto = '/bitrix/templates/main/img/no_photo.png')
+function polimerMapProductIdsToSectionIds(array $productIds, $iblockId = IBLOCK_CATALOG)
+{
+    $map = [];
+    $productIds = array_values(array_filter(array_map('intval', $productIds)));
+    if (empty($productIds) || !CModule::IncludeModule('iblock'))
+        return $map;
+
+    $res = CIBlockElement::GetList(
+        [],
+        ['ID' => $productIds, 'IBLOCK_ID' => (int)$iblockId],
+        false,
+        false,
+        ['ID', 'IBLOCK_SECTION_ID']
+    );
+
+    while ($row = $res->Fetch())
+    {
+        $id = (int)($row['ID'] ?? 0);
+        if ($id > 0)
+            $map[$id] = (int)($row['IBLOCK_SECTION_ID'] ?? 0);
+    }
+
+    return $map;
+}
+
+function polimerParseSearchSectionFilterIds($raw = null)
+{
+    if ($raw === null)
+        $raw = $_REQUEST['sid'] ?? null;
+
+    if ($raw === null || $raw === '')
+        return [];
+
+    if (is_array($raw))
+        $parts = $raw;
+    else
+        $parts = preg_split('/[,\s]+/', (string)$raw, -1, PREG_SPLIT_NO_EMPTY);
+
+    $ids = [];
+    foreach ($parts as $part)
+    {
+        $id = (int)$part;
+        if ($id > 0)
+            $ids[$id] = $id;
+    }
+
+    return array_values($ids);
+}
+
+function polimerBuildSearchSectionsFromProducts(array $products, $noPhoto = '/bitrix/templates/main/img/no_photo.png', $pictureSize = 48)
 {
     if (empty($products) || !CModule::IncludeModule('iblock'))
         return [];
@@ -900,6 +949,7 @@ function polimerBuildSearchSectionsFromProducts(array $products, $noPhoto = '/bi
     if (empty($counts))
         return [];
 
+    $pictureSize = max(24, (int)$pictureSize);
     $sections = [];
     $res = CIBlockSection::GetList(
         ['NAME' => 'ASC'],
@@ -917,7 +967,7 @@ function polimerBuildSearchSectionsFromProducts(array $products, $noPhoto = '/bi
         {
             $resized = CFile::ResizeImageGet(
                 $row['PICTURE'],
-                ['width' => 48, 'height' => 48],
+                ['width' => $pictureSize, 'height' => $pictureSize],
                 BX_RESIZE_IMAGE_EXACT,
                 true
             );

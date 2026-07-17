@@ -6,6 +6,7 @@ $productIds = !empty($arResult['POLIMER_PRODUCT_IDS'])
 
 $hasResults = !empty($productIds);
 $rowsCount = (int)($arResult['ROWS_COUNT'] ?? count($productIds));
+$rowsCountAll = (int)($arResult['ROWS_COUNT_ALL'] ?? $rowsCount);
 $pageSize = max(1, (int)($arParams['PAGE_RESULT_COUNT'] ?? 200));
 $currentPage = max(1, (int)($_REQUEST['PAGEN_1'] ?? 1));
 $pageCount = max(1, (int)ceil($rowsCount / $pageSize));
@@ -14,7 +15,33 @@ if ($currentPage > $pageCount)
     $currentPage = $pageCount;
 
 $pageIds = array_slice($productIds, ($currentPage - 1) * $pageSize, $pageSize);
-$searchQueryString = http_build_query(['q' => $arResult['REQUEST']['QUERY'] ?? '']);
+
+$searchQuery = (string)($arResult['REQUEST']['QUERY'] ?? '');
+$selectedSectionIds = array_values(array_map('intval', $arResult['SELECTED_SECTION_IDS'] ?? []));
+$selectedFlip = array_fill_keys($selectedSectionIds, true);
+
+$buildSearchUrl = static function (array $sectionIds, $page = 1) use ($searchQuery) {
+    $params = ['q' => $searchQuery, 's' => 'Поиск'];
+    $sectionIds = array_values(array_filter(array_map('intval', $sectionIds)));
+    if (!empty($sectionIds))
+        $params['sid'] = implode(',', $sectionIds);
+    if ((int)$page > 1)
+        $params['PAGEN_1'] = (int)$page;
+
+    return '/search/?' . http_build_query($params);
+};
+
+$searchQueryString = ltrim(parse_url($buildSearchUrl($selectedSectionIds, 1), PHP_URL_QUERY) ?: '', '?');
+$clearFilterUrl = $buildSearchUrl([]);
+$searchSections = $arResult['SECTIONS'] ?? [];
+$searchSectionsTotal = (int)($arResult['SECTIONS_COUNT'] ?? count($searchSections));
+$searchSectionsStep = 12;
+$selectedSectionNames = [];
+foreach ($searchSections as $section)
+{
+    if (isset($selectedFlip[(int)$section['ID']]))
+        $selectedSectionNames[] = (string)$section['NAME'];
+}
 ?>
 <style id="polimer-search-layout">
 .search-page-layout .ct__content {
@@ -23,60 +50,84 @@ $searchQueryString = http_build_query(['q' => $arResult['REQUEST']['QUERY'] ?? '
     max-width: 100% !important;
     box-sizing: border-box !important;
 }
-.search-page-layout .product_top {
-    width: 100% !important;
-    margin-bottom: 30px !important;
-}
-.search-page-layout .catalog_top {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    gap: 10px !important;
-    width: 100% !important;
-    margin: 0 !important;
-}
-.search-page-layout .catalog_top .item_c {
-    float: none !important;
-    flex: 0 0 140px !important;
-    width: 140px !important;
-    margin: 0 !important;
-}
-@media screen and (max-width: 659px) {
-    .search-page-layout .catalog_top {
-        justify-content: center !important;
-    }
-}
 </style>
 
 <div class="row cl search-page-layout">
 
     <div class="ct__content">
 
-        <?if($hasResults):?>
-            <div class="h1"><? $APPLICATION->ShowTitle(false, false); ?> "<?=htmlspecialcharsbx($arResult['REQUEST']['QUERY'])?>" найдено <?=$rowsCount;?> шт.</div>
+        <?if($hasResults || $rowsCountAll > 0):?>
+            <div class="h1">
+                <? $APPLICATION->ShowTitle(false, false); ?>
+                «<?=htmlspecialcharsbx($searchQuery)?>»
+                — найдено <?=$rowsCount;?> шт.<?if(!empty($selectedSectionIds) && $rowsCountAll > $rowsCount):?>
+                <span class="search-page-total-hint">из <?=$rowsCountAll?></span>
+                <?endif;?>
+            </div>
         <? else:?>
             <div class="h1"><? $APPLICATION->ShowTitle(false, false); ?></div>
         <?endif;?>
 
-        <?if(!empty($arResult['SECTIONS'])):?>
-            <?php
-            $searchSections = $arResult['SECTIONS'];
-            $searchSectionsTotal = (int)($arResult['SECTIONS_COUNT'] ?? count($searchSections));
-            $searchSectionsStep = 24;
-            ?>
-            <div class="h1">Категории<?= $searchSectionsTotal > 0 ? ' — ' . $searchSectionsTotal : '' ?></div>
+        <?if(!empty($searchSections)):?>
+            <section class="search-cat-filter" aria-label="Фильтр по категориям">
+                <div class="search-cat-filter__head">
+                    <div class="search-cat-filter__title-row">
+                        <h2 class="search-cat-filter__title">Категории</h2>
+                        <span class="search-cat-filter__count"><?=$searchSectionsTotal?></span>
+                    </div>
+                    <p class="search-cat-filter__hint">
+                        Нажмите на карточку — отфильтровать товары · стрелка — перейти в раздел каталога
+                    </p>
+                </div>
 
-            <div class="product_top cl search-sections">
+                <?if(!empty($selectedSectionIds)):?>
+                <div class="search-cat-filter__chips">
+                    <?foreach ($selectedSectionNames as $selectedName):?>
+                        <span class="search-cat-filter__chip"><?=htmlspecialcharsbx($selectedName)?></span>
+                    <?endforeach;?>
+                    <a class="search-cat-filter__reset" href="<?=htmlspecialcharsbx($clearFilterUrl)?>">Сбросить фильтр</a>
+                </div>
+                <?endif;?>
 
-                <div class="catalog_top cl" id="search-sections-grid">
-                    <?php foreach ($searchSections as $sectionIndex => $arSection): ?>
-                        <div class="item_c<?= $sectionIndex >= $searchSectionsStep ? ' search-sections__item--hidden' : '' ?>">
-                            <a href="<?=$arSection['SECTION_PAGE_URL']?>">
-                                <div class="img_c">
-                                    <img src="<?=resizeImage($arSection['PICTURE'], 140, 120);?>" alt="<?=htmlspecialcharsbx($arSection['NAME'])?>">
-                                </div>
-                                <div class="name_c"><?=htmlspecialcharsbx($arSection['NAME'])?></div>
-                            </a>
-                        </div>
+                <div class="search-cat-filter__grid" id="search-sections-grid">
+                    <?php foreach ($searchSections as $sectionIndex => $arSection):
+                        $sectionId = (int)$arSection['ID'];
+                        $isActive = isset($selectedFlip[$sectionId]);
+                        $nextIds = $selectedSectionIds;
+                        if ($isActive)
+                            $nextIds = array_values(array_filter($nextIds, static function ($id) use ($sectionId) {
+                                return (int)$id !== $sectionId;
+                            }));
+                        else
+                            $nextIds[] = $sectionId;
+
+                        $filterUrl = $buildSearchUrl($nextIds);
+                        $sectionName = (string)$arSection['NAME'];
+                        $sectionCount = (int)($arSection['COUNT'] ?? 0);
+                        $sectionUrl = (string)($arSection['URL'] ?? $arSection['SECTION_PAGE_URL'] ?? '#');
+                        $sectionPicture = (string)($arSection['PICTURE'] ?? '/bitrix/templates/main/img/no_photo.png');
+                        $hiddenClass = $sectionIndex >= $searchSectionsStep ? ' search-cat-card--hidden' : '';
+                    ?>
+                    <div class="search-cat-card<?= $isActive ? ' is-active' : '' ?><?=$hiddenClass?>">
+                        <a class="search-cat-card__filter"
+                            href="<?=htmlspecialcharsbx($filterUrl)?>"
+                            title="<?= $isActive ? 'Убрать фильтр' : 'Показать товары из «' . htmlspecialcharsbx($sectionName) . '»' ?>">
+                            <span class="search-cat-card__check" aria-hidden="true"><i class="fa fa-check"></i></span>
+                            <span class="search-cat-card__thumb">
+                                <img src="<?=htmlspecialcharsbx($sectionPicture)?>" alt="" width="72" height="72" loading="lazy">
+                            </span>
+                            <span class="search-cat-card__info">
+                                <span class="search-cat-card__name"><?=htmlspecialcharsbx($sectionName)?></span>
+                                <span class="search-cat-card__meta"><?=$sectionCount?> шт. по запросу</span>
+                            </span>
+                        </a>
+                        <a class="search-cat-card__go"
+                            href="<?=htmlspecialcharsbx($sectionUrl)?>"
+                            title="Перейти в раздел «<?=htmlspecialcharsbx($sectionName)?>»">
+                            <i class="fa fa-external-link" aria-hidden="true"></i>
+                            <span class="search-cat-card__go-text">В раздел</span>
+                        </a>
+                    </div>
                     <?php endforeach; ?>
                 </div>
 
@@ -86,15 +137,16 @@ $searchQueryString = http_build_query(['q' => $arResult['REQUEST']['QUERY'] ?? '
                             class="search-sections-more__btn"
                             id="search-sections-more-btn"
                             data-step="<?=$searchSectionsStep?>">
-                            Показать ещё
+                            Показать ещё категории
                         </button>
                     </div>
                 <?php endif; ?>
-
-            </div>
+            </section>
         <? endif; ?>
 
-        <div class="h1">Товары</div>
+        <div class="h1">Товары<?if(!empty($selectedSectionNames)):?>
+            <span class="search-page-filter-label">· <?=htmlspecialcharsbx(implode(', ', $selectedSectionNames))?></span>
+        <?endif;?></div>
 
         <?php
         if ($hasResults && !empty($pageIds))
@@ -131,6 +183,10 @@ $searchQueryString = http_build_query(['q' => $arResult['REQUEST']['QUERY'] ?? '
                 echo '</div></div>';
             }
         }
+        elseif (!empty($selectedSectionIds) && $rowsCountAll > 0)
+        {
+            ShowNote('В выбранных категориях нет товаров по этому запросу. <a href="' . htmlspecialcharsbx($clearFilterUrl) . '">Сбросить фильтр</a>');
+        }
         elseif (!$hasResults)
         {
             ShowNote(GetMessage('SEARCH_NOTHING_TO_FOUND'));
@@ -139,7 +195,7 @@ $searchQueryString = http_build_query(['q' => $arResult['REQUEST']['QUERY'] ?? '
     </div>
     <div class="ct__mask"></div>
 </div>
-<?php if (!empty($arResult['SECTIONS']) && ($arResult['SECTIONS_COUNT'] ?? 0) > 24): ?>
+<?php if ($searchSectionsTotal > $searchSectionsStep): ?>
 <script>
 (function () {
     var btn = document.getElementById('search-sections-more-btn');
@@ -147,16 +203,16 @@ $searchQueryString = http_build_query(['q' => $arResult['REQUEST']['QUERY'] ?? '
     if (!btn || !grid) return;
 
     btn.addEventListener('click', function () {
-        var step = parseInt(btn.getAttribute('data-step') || '24', 10);
-        var hidden = grid.querySelectorAll('.search-sections__item--hidden');
+        var step = parseInt(btn.getAttribute('data-step') || '12', 10);
+        var hidden = grid.querySelectorAll('.search-cat-card--hidden');
         var shown = 0;
 
         for (var i = 0; i < hidden.length && shown < step; i++) {
-            hidden[i].classList.remove('search-sections__item--hidden');
+            hidden[i].classList.remove('search-cat-card--hidden');
             shown++;
         }
 
-        if (!grid.querySelector('.search-sections__item--hidden'))
+        if (!grid.querySelector('.search-cat-card--hidden'))
             btn.parentNode.style.display = 'none';
     });
 })();
