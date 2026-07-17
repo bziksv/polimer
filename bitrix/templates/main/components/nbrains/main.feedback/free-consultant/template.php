@@ -103,7 +103,7 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
 
 			<?if($arParams["USE_CAPTCHA"] == "Y"):?>
 				<div class="mf-captcha">
-					<div class="g-recaptcha" data-sitekey="6LfZ8kgUAAAAAJWtIx1_4_pUvd1Xk_VfdMhpqT4P"></div>
+					<div class="g-recaptcha" data-sitekey="<?= htmlspecialcharsbx(POLIMER_RECAPTCHA_SITE_KEY) ?>"></div>
 				</div>
 			<?endif;?>
 

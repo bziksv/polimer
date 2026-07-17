@@ -1,6 +1,79 @@
 <?php
 define("IBLOCK_CATALOG", 21);
 
+/** Google reCAPTCHA v2 — Site Key (публичный). Secret — в recaptcha_secret.php (не в git). */
+define('POLIMER_RECAPTCHA_SITE_KEY', '6LfAz1YtAAAAAMPXRZUxo38fvpz__MlOHs7DBA41');
+
+$polimerRecaptchaSecretFile = __DIR__ . '/recaptcha_secret.php';
+if (is_file($polimerRecaptchaSecretFile))
+	require_once $polimerRecaptchaSecretFile;
+
+if (!defined('POLIMER_RECAPTCHA_SECRET_KEY'))
+	define('POLIMER_RECAPTCHA_SECRET_KEY', '');
+
+/**
+ * Проверка ответа Google reCAPTCHA через siteverify.
+ * Без Secret Key — только проверка, что токен не пустой (как раньше).
+ */
+function polimerVerifyGoogleRecaptcha($response, $remoteIp = null)
+{
+	$response = trim((string)$response);
+	if ($response === '')
+		return false;
+
+	$secret = trim((string)POLIMER_RECAPTCHA_SECRET_KEY);
+	if ($secret === '')
+		return true;
+
+	if ($remoteIp === null)
+		$remoteIp = (string)($_SERVER['REMOTE_ADDR'] ?? '');
+
+	$postFields = http_build_query([
+		'secret' => $secret,
+		'response' => $response,
+		'remoteip' => $remoteIp,
+	]);
+
+	$result = false;
+	if (function_exists('curl_init'))
+	{
+		$ch = curl_init('https://www.google.com/recaptcha/api/siteverify');
+		curl_setopt_array($ch, [
+			CURLOPT_POST => true,
+			CURLOPT_POSTFIELDS => $postFields,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_TIMEOUT => 5,
+			CURLOPT_CONNECTTIMEOUT => 3,
+		]);
+		$raw = curl_exec($ch);
+		curl_close($ch);
+		if (is_string($raw) && $raw !== '')
+		{
+			$data = json_decode($raw, true);
+			$result = !empty($data['success']);
+		}
+	}
+	else
+	{
+		$ctx = stream_context_create([
+			'http' => [
+				'method' => 'POST',
+				'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
+				'content' => $postFields,
+				'timeout' => 5,
+			],
+		]);
+		$raw = @file_get_contents('https://www.google.com/recaptcha/api/siteverify', false, $ctx);
+		if (is_string($raw) && $raw !== '')
+		{
+			$data = json_decode($raw, true);
+			$result = !empty($data['success']);
+		}
+	}
+
+	return $result;
+}
+
 function inCompare($IBLOCK_ID, $ID)
 {
     return isset($_SESSION["CATALOG_COMPARE_LIST"][$IBLOCK_ID]["ITEMS"][$ID]);

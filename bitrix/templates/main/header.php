@@ -18,6 +18,7 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 <html lang="ru">
 	<head>
         <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+		<script>window.POLIMER_RECAPTCHA_SITEKEY = <?= json_encode(POLIMER_RECAPTCHA_SITE_KEY, JSON_UNESCAPED_UNICODE) ?>;</script>
 
 		<title><?$APPLICATION->ShowTitle()?></title>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>

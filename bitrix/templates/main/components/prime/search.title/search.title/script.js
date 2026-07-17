@@ -738,7 +738,7 @@ function PolimerTitleSearch(arParams)
 			try
 			{
 				grecaptcha.render(jQuery('#' + popupId + ' .g-recaptcha').get(0), {
-					sitekey: '6LfZ8kgUAAAAAJWtIx1_4_pUvd1Xk_VfdMhpqT4P'
+					sitekey: (window.POLIMER_RECAPTCHA_SITEKEY || '6LfAz1YtAAAAAMPXRZUxo38fvpz__MlOHs7DBA41')
 				});
 			}
 			catch (error) {}

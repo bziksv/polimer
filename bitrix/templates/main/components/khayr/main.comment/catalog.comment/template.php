@@ -214,7 +214,7 @@ function KHAYR_MAIN_COMMENT_ShowTree($arItem, $arParams, $arResult)
                         <div class="cl_col">
                             <div class="value">
                                 <div class="mf-captcha">
-                                    <div class="g-recaptcha" id="KHAYR_MAIN_COMMENT_grecaptcha" data-sitekey="6LfZ8kgUAAAAAJWtIx1_4_pUvd1Xk_VfdMhpqT4P"></div>
+                                    <div class="g-recaptcha" id="KHAYR_MAIN_COMMENT_grecaptcha" data-sitekey="<?= htmlspecialcharsbx(POLIMER_RECAPTCHA_SITE_KEY) ?>"></div>
                                 </div>
                             </div>
                         </div>

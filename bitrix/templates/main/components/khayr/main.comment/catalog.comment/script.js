@@ -64,7 +64,7 @@ function KHAYR_MAIN_COMMENT_validate(_this, pagen)
         success: function(result) {
 			$("#KHAYR_MAIN_COMMENT_container").html(result);
 			grecaptcha.render(document.getElementById('KHAYR_MAIN_COMMENT_grecaptcha'), {
-				'sitekey' : '6LfZ8kgUAAAAAJWtIx1_4_pUvd1Xk_VfdMhpqT4P'
+				'sitekey' : (window.POLIMER_RECAPTCHA_SITEKEY || '6LfAz1YtAAAAAMPXRZUxo38fvpz__MlOHs7DBA41')
 			});
 			KHAYR_MAIN_COMMENT_ShowMessage();
 		},

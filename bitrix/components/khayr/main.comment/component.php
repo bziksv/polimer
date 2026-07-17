@@ -94,7 +94,7 @@ if (strlen($arResult["POST"]["ACTION"]) > 0)
 	if ($arParams["USE_CAPTCHA"])
 	{
         $captcha_code = $arResult["POST"]["g-recaptcha-response"];
-        if (empty($captcha_code))
+        if (!polimerVerifyGoogleRecaptcha($captcha_code))
             $errors[] = GetMessage("KHAYR_MAIN_COMMENT_CAPTHCA_EMPTY");
 
 	}

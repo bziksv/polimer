@@ -56,7 +56,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] <> '' && (!isset($_P
 		if($arParams["USE_CAPTCHA"] == "Y")
 		{
 			$captcha_code = $_POST["g-recaptcha-response"];
-			if (empty($captcha_code))
+			if (!polimerVerifyGoogleRecaptcha($captcha_code))
 				$arResult["ERROR_MESSAGE"][] = GetMessage("MF_CAPTHCA_EMPTY");
 
 		}
