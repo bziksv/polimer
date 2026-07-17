@@ -119,7 +119,7 @@ foreach ($searchSections as $section)
                             <span class="search-cat-card__info">
                                 <span class="search-cat-card__name"
                                     data-tip="<?=htmlspecialcharsbx($sectionName)?>"><span class="search-cat-card__name-text"><?=htmlspecialcharsbx($sectionName)?></span></span>
-                                <span class="search-cat-card__meta"><?=$sectionCount?> шт. по запросу</span>
+                                <span class="search-cat-card__meta"><?=$sectionCount?> шт.</span>
                             </span>
                         </a>
                         <a class="search-cat-card__go"
