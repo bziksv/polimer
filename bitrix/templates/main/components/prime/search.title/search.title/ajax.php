@@ -1,5 +1,52 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 
+/**
+ * Разрешаем только относительные и http(s) URL — режем javascript:/data: и пр.
+ */
+$polimerSearchSafeHref = static function ($url) {
+	$url = trim((string)$url);
+	if ($url === '')
+		return '#';
+
+	if (preg_match('#^(?:javascript|data|vbscript|file):#i', $url))
+		return '#';
+
+	if (preg_match('#^(?:/|https?://)#i', $url))
+		return $url;
+
+	return '#';
+};
+
+$polimerSearchSafeSrc = static function ($src) use ($polimerSearchSafeHref) {
+	$src = trim((string)$src);
+	if ($src === '')
+		return '/bitrix/templates/main/img/no_photo.png';
+
+	$safe = $polimerSearchSafeHref($src);
+	return $safe === '#' ? '/bitrix/templates/main/img/no_photo.png' : $safe;
+};
+
+/** Имя с подсветкой Bitrix (<b>): экранируем текст, оставляем только <b></b> */
+$polimerSearchSafeNameHtml = static function ($name) {
+	$parts = preg_split('#(</?b>)#iu', (string)$name, -1, PREG_SPLIT_DELIM_CAPTURE);
+	if ($parts === false)
+		return htmlspecialcharsbx((string)$name);
+
+	$html = '';
+	foreach ($parts as $part)
+	{
+		$lower = mb_strtolower($part);
+		if ($lower === '<b>')
+			$html .= '<b>';
+		elseif ($lower === '</b>')
+			$html .= '</b>';
+		else
+			$html .= htmlspecialcharsbx(strip_tags($part));
+	}
+
+	return $html;
+};
+
 $sections = $arResult['SEARCH_SECTIONS'] ?? array();
 $products = $arResult['SEARCH_PRODUCTS'] ?? array();
 $hasSections = !empty($sections);
@@ -21,16 +68,18 @@ if(!$hasSections && !$hasProducts)
 $correctedQuery = !empty($arResult['SEARCH_QUERY_CORRECTED'])
 	? htmlspecialcharsbx($arResult['SEARCH_QUERY_CORRECTED'])
 	: '';
-$searchAllUrl = $arResult['SEARCH_ALL']['URL'] ?? '';
-$searchAllName = !empty($arResult['SEARCH_ALL']['NAME']) ? $arResult['SEARCH_ALL']['NAME'] : 'Все результаты';
+$searchAllUrl = $polimerSearchSafeHref($arResult['SEARCH_ALL']['URL'] ?? '');
+$searchAllName = htmlspecialcharsbx(
+	!empty($arResult['SEARCH_ALL']['NAME']) ? $arResult['SEARCH_ALL']['NAME'] : 'Все результаты'
+);
 $rawQuery = trim((string)($arResult['SEARCH_QUERY_CORRECTED'] ?? $arResult['query'] ?? $_POST['q'] ?? ''));
-if ($searchAllUrl === '' && $rawQuery !== '')
+if (($searchAllUrl === '' || $searchAllUrl === '#') && $rawQuery !== '')
 {
-	$searchAllUrl = CHTTP::urlAddParams(
+	$searchAllUrl = $polimerSearchSafeHref(CHTTP::urlAddParams(
 		'/search/',
 		['q' => $rawQuery, 's' => 'Поиск'],
 		['encode' => true]
-	);
+	));
 }
 $shownProducts = count($products);
 ?>
@@ -54,17 +103,19 @@ $shownProducts = count($products);
 			<ul class="polimer-search-dropdown__list">
 				<?foreach($sections as $arSection):
 					$sectionId = (int)$arSection['ID'];
-					$sectionName = htmlspecialcharsbx($arSection['NAME']);
+					$sectionName = htmlspecialcharsbx($arSection['NAME'] ?? '');
 					$sectionCount = (int)$arSection['COUNT'];
 					$sectionMeta = $sectionCount . ' шт.';
+					$sectionUrl = $polimerSearchSafeHref($arSection['URL'] ?? '');
+					$sectionPicture = htmlspecialcharsbx($polimerSearchSafeSrc($arSection['PICTURE'] ?? ''));
 					$sectionFilterUrl = $searchAllUrl;
-					if ($sectionFilterUrl && $query)
+					if ($sectionFilterUrl && $sectionFilterUrl !== '#' && ($arResult['query'] ?? '') !== '')
 					{
-						$sectionFilterUrl = CHTTP::urlAddParams(
-							$arSection['URL'],
+						$sectionFilterUrl = $polimerSearchSafeHref(CHTTP::urlAddParams(
+							$arSection['URL'] ?? '',
 							['q' => $arResult['query'] ?? ''],
 							['encode' => true]
-						);
+						));
 					}
 				?>
 				<li class="polimer-search-item polimer-search-item--section" data-section-id="<?=$sectionId?>">
@@ -77,7 +128,7 @@ $shownProducts = count($products);
 							title="Показать товары из «<?=$sectionName?>»">
 							<span class="polimer-search-dropdown__section-check" aria-hidden="true"><i class="fa fa-check"></i></span>
 							<span class="polimer-search-dropdown__thumb">
-								<img src="<?=$arSection['PICTURE']?>" alt="" width="48" height="48" loading="lazy">
+								<img src="<?=$sectionPicture?>" alt="" width="48" height="48" loading="lazy">
 							</span>
 							<span class="polimer-search-dropdown__info">
 								<span class="polimer-search-dropdown__name"><?=$sectionName?></span>
@@ -85,7 +136,7 @@ $shownProducts = count($products);
 							</span>
 						</button>
 						<a class="polimer-search-dropdown__section-go"
-							href="<?=$arSection['URL']?>"
+							href="<?=htmlspecialcharsbx($sectionUrl)?>"
 							title="Перейти в раздел «<?=$sectionName?>»">
 							<i class="fa fa-external-link" aria-hidden="true"></i>
 						</a>
@@ -109,26 +160,34 @@ $shownProducts = count($products);
 			</div>
 			<ul class="polimer-search-dropdown__list polimer-search-dropdown__list--products">
 				<?foreach($products as $arItem):
-					$stockStatus = $arItem['STOCK_STATUS'] ?? (!empty($arItem['CAN_BUY']) ? 'available' : 'unavailable');
-					$productUrl = (string)($arItem['URL'] ?? '');
-					$productPath = $productUrl !== '' ? parse_url($productUrl, PHP_URL_PATH) : '';
+					$stockStatusRaw = (string)($arItem['STOCK_STATUS'] ?? (!empty($arItem['CAN_BUY']) ? 'available' : 'unavailable'));
+					$stockStatus = in_array($stockStatusRaw, ['available', 'order', 'unavailable'], true)
+						? $stockStatusRaw
+						: 'unavailable';
+					$productUrl = $polimerSearchSafeHref($arItem['URL'] ?? '');
+					$productPath = $productUrl !== '#' ? (string)(parse_url($productUrl, PHP_URL_PATH) ?: '') : '';
+					$productNameHtml = $polimerSearchSafeNameHtml($arItem['NAME'] ?? '');
+					$productNameAttr = htmlspecialcharsbx(strip_tags((string)($arItem['NAME'] ?? '')));
+					$productPicture = htmlspecialcharsbx($polimerSearchSafeSrc($arItem['PICTURE'] ?? ''));
+					// CurrencyFormat уже отдаёт безопасный HTML (₽ как &#8381;) — не экранируем повторно
+					$productPrice = (string)($arItem['FORMAT_INT'] ?? '');
 				?>
 				<li class="polimer-search-item polimer-search-item--product polimer-search-item--<?=htmlspecialcharsbx($stockStatus)?>"
 					data-section-id="<?=(int)$arItem['SECTION_ID']?>"
 					data-stock-status="<?=htmlspecialcharsbx($stockStatus)?>">
 					<div class="polimer-search-dropdown__product-row">
-						<a class="polimer-search-dropdown__product-link" href="<?=$arItem['URL']?>">
+						<a class="polimer-search-dropdown__product-link" href="<?=htmlspecialcharsbx($productUrl)?>">
 							<span class="polimer-search-dropdown__thumb">
-								<img src="<?=$arItem['PICTURE']?>" alt="" width="56" height="56" loading="lazy">
+								<img src="<?=$productPicture?>" alt="" width="56" height="56" loading="lazy">
 							</span>
 							<span class="polimer-search-dropdown__info">
-								<span class="polimer-search-dropdown__name"><?=$arItem['NAME']?></span>
+								<span class="polimer-search-dropdown__name"><?=$productNameHtml?></span>
 								<?if(!empty($arItem['SPECS'])):?>
 								<span class="polimer-search-dropdown__specs"><?=htmlspecialcharsbx($arItem['SPECS'])?></span>
 								<?endif?>
 								<span class="polimer-search-dropdown__meta-row">
-									<?if($arItem['FORMAT_INT']):?>
-									<span class="polimer-search-dropdown__price"><?=$arItem['FORMAT_INT']?></span>
+									<?if($productPrice !== ''):?>
+									<span class="polimer-search-dropdown__price"><?=$productPrice?></span>
 									<?endif?>
 									<?if($stockStatus === 'order'):?>
 									<span class="polimer-search-dropdown__stock polimer-search-dropdown__stock--order">Под заказ</span>
@@ -151,7 +210,7 @@ $shownProducts = count($products);
 								class="polimer-search-dropdown__action polimer-search-dropdown__action--order show-popup"
 								data-id="order-product"
 								data-product-url="<?=htmlspecialcharsbx($productPath)?>"
-								data-product-name="<?=htmlspecialcharsbx($arItem['NAME'])?>"
+								data-product-name="<?=$productNameAttr?>"
 								title="Под заказ">
 								<i class="fa fa-clock-o" aria-hidden="true"></i>
 							</button>
@@ -188,12 +247,12 @@ $shownProducts = count($products);
 		<?endif?>
 	</div>
 
-	<?if($searchAllUrl):?>
+	<?if($searchAllUrl && $searchAllUrl !== '#'):?>
 	<div class="polimer-search-dropdown__footer">
 		<a class="polimer-search-dropdown__all"
-			href="<?=$searchAllUrl?>"
+			href="<?=htmlspecialcharsbx($searchAllUrl)?>"
 			data-url-all="<?=htmlspecialcharsbx($searchAllUrl)?>"
-			data-label-all="<?=htmlspecialcharsbx($searchAllName)?>">
+			data-label-all="<?=$searchAllName?>">
 			<span class="polimer-search-dropdown__all-text"><?=$searchAllName?></span>
 			<?if($correctedQuery):?> по запросу «<?=$correctedQuery?>»<?elseif($query):?> по запросу «<?=$query?>»<?endif?>
 		</a>

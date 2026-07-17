@@ -111,19 +111,20 @@ foreach ($searchSections as $section)
                     <div class="search-cat-card<?= $isActive ? ' is-active' : '' ?><?=$hiddenClass?>">
                         <a class="search-cat-card__filter"
                             href="<?=htmlspecialcharsbx($filterUrl)?>"
-                            title="<?= $isActive ? 'Убрать фильтр' : 'Показать товары из «' . htmlspecialcharsbx($sectionName) . '»' ?>">
+                            aria-label="<?= $isActive ? 'Убрать фильтр' : 'Показать товары из «' . htmlspecialcharsbx($sectionName) . '»' ?>">
                             <span class="search-cat-card__check" aria-hidden="true"><i class="fa fa-check"></i></span>
                             <span class="search-cat-card__thumb">
                                 <img src="<?=htmlspecialcharsbx($sectionPicture)?>" alt="" width="72" height="72" loading="lazy">
                             </span>
                             <span class="search-cat-card__info">
-                                <span class="search-cat-card__name"><?=htmlspecialcharsbx($sectionName)?></span>
+                                <span class="search-cat-card__name"
+                                    data-tip="<?=htmlspecialcharsbx($sectionName)?>"><span class="search-cat-card__name-text"><?=htmlspecialcharsbx($sectionName)?></span></span>
                                 <span class="search-cat-card__meta"><?=$sectionCount?> шт. по запросу</span>
                             </span>
                         </a>
                         <a class="search-cat-card__go"
                             href="<?=htmlspecialcharsbx($sectionUrl)?>"
-                            title="Перейти в раздел «<?=htmlspecialcharsbx($sectionName)?>»">
+                            aria-label="Перейти в раздел «<?=htmlspecialcharsbx($sectionName)?>»">
                             <i class="fa fa-external-link" aria-hidden="true"></i>
                             <span class="search-cat-card__go-text">В раздел</span>
                         </a>
