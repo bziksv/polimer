@@ -515,6 +515,20 @@ foreach ($arResult['ITEMS'] as $key => $arItem){
 	$arResult['ITEMS'][$key]['NAME'] = preg_replace('#(~(.*?)~)#is', '', $arItem['NAME']);
 }
 
+// Сохраняем порядок ID с страницы поиска (релевантность), а не сортировку каталога
+if (!empty($GLOBALS['POLIMER_SEARCH_ID_ORDER']) && !empty($arResult['ITEMS']))
+{
+	$orderMap = [];
+	foreach ((array)$GLOBALS['POLIMER_SEARCH_ID_ORDER'] as $idx => $id)
+		$orderMap[(int)$id] = (int)$idx;
+
+	usort($arResult['ITEMS'], static function ($a, $b) use ($orderMap) {
+		$ia = $orderMap[(int)($a['ID'] ?? 0)] ?? PHP_INT_MAX;
+		$ib = $orderMap[(int)($b['ID'] ?? 0)] ?? PHP_INT_MAX;
+		return $ia <=> $ib;
+	});
+}
+
 if(count($arParams['SECTION_USER_FIELDS'])){
 
     foreach ($arParams['SECTION_USER_FIELDS'] as $ibCode){

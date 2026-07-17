@@ -100,6 +100,7 @@ $searchQueryString = http_build_query(['q' => $arResult['REQUEST']['QUERY'] ?? '
         if ($hasResults && !empty($pageIds))
         {
             $GLOBALS['arrFilter'] = ['ID' => $pageIds];
+            $GLOBALS['POLIMER_SEARCH_ID_ORDER'] = $pageIds;
 
             $APPLICATION->IncludeComponent(
                 'bitrix:catalog.section',
@@ -120,6 +121,8 @@ $searchQueryString = http_build_query(['q' => $arResult['REQUEST']['QUERY'] ?? '
                 ],
                 false
             );
+
+            unset($GLOBALS['POLIMER_SEARCH_ID_ORDER']);
 
             if (($arParams['DISPLAY_BOTTOM_PAGER'] ?? 'Y') === 'Y')
             {

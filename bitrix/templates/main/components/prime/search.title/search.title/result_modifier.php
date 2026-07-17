@@ -114,19 +114,15 @@ unset($arCategory);
 
 polimerFillSearchProductSpecs($arResult["SEARCH_PRODUCTS"], IBLOCK_CATALOG, 2);
 $arResult["SEARCH_SECTIONS"] = polimerBuildSearchSectionsFromProducts($arResult["SEARCH_PRODUCTS"], $noPhoto);
-$arResult["SEARCH_PRODUCTS"] = polimerSortSearchProductsByAvailabilityAndPrice($arResult["SEARCH_PRODUCTS"]);
+$arResult["SEARCH_PRODUCTS"] = polimerSortSearchProductsByAvailabilityAndPrice(
+	$arResult["SEARCH_PRODUCTS"],
+	trim((string)($arResult['SEARCH_QUERY_CORRECTED'] ?? $arResult['query'] ?? ''))
+);
 
-$searchQueryForTotal = trim((string)($arResult['SEARCH_QUERY_CORRECTED'] ?? $arResult['query'] ?? ''));
-if ($searchQueryForTotal !== '')
-{
-	$arResult['SEARCH_PRODUCTS_TOTAL'] = count(polimerSearchCatalogAllIds($searchQueryForTotal, IBLOCK_CATALOG, 50000, true));
-	if (!empty($arResult['SEARCH_ALL']) && $arResult['SEARCH_PRODUCTS_TOTAL'] > 0)
-		$arResult['SEARCH_ALL']['NAME'] = 'Все ' . $arResult['SEARCH_PRODUCTS_TOTAL'] . ' результатов';
-}
-else
-{
-	$arResult['SEARCH_PRODUCTS_TOTAL'] = count($arResult['SEARCH_PRODUCTS']);
-}
+// Без тяжёлого подсчёта всех совпадений — только то, что уже в выпадашке
+$arResult['SEARCH_PRODUCTS_TOTAL'] = count($arResult['SEARCH_PRODUCTS']);
+if (!empty($arResult['SEARCH_ALL']))
+	$arResult['SEARCH_ALL']['NAME'] = 'Все результаты';
 
 /* ICON-иконки модулей не используются в ajax-выпадашке — не тратим N запросов */
 if (($_REQUEST['ajax_call'] ?? '') !== 'y')

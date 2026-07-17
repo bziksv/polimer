@@ -224,7 +224,7 @@ function polimerGetSearchProductSortPrice(array $productItem)
     return $productPrice ? (float)$productPrice : PHP_FLOAT_MAX;
 }
 
-function polimerSortSearchProductsByAvailabilityAndPrice(array $products)
+function polimerSortSearchProductsByAvailabilityAndPrice(array $products, $query = '')
 {
     $availableProducts = [];
     $orderProducts = [];
@@ -242,18 +242,26 @@ function polimerSortSearchProductsByAvailabilityAndPrice(array $products)
             $unavailableProducts[] = $productItem;
     }
 
-    $sortByPrice = static function (array $left, array $right): int {
-        $priceCompare = polimerGetSearchProductSortPrice($left) <=> polimerGetSearchProductSortPrice($right);
+    $query = trim((string)$query);
+    $sortByRelevanceAndPrice = static function (array $left, array $right) use ($query): int {
+        if ($query !== '')
+        {
+            $relCompare = polimerScoreSearchNameRelevance($left['NAME'] ?? '', $query)
+                <=> polimerScoreSearchNameRelevance($right['NAME'] ?? '', $query);
+            if ($relCompare !== 0)
+                return $relCompare;
+        }
 
+        $priceCompare = polimerGetSearchProductSortPrice($left) <=> polimerGetSearchProductSortPrice($right);
         if ($priceCompare !== 0)
             return $priceCompare;
 
         return strcmp((string)($left['NAME'] ?? ''), (string)($right['NAME'] ?? ''));
     };
 
-    usort($availableProducts, $sortByPrice);
-    usort($orderProducts, $sortByPrice);
-    usort($unavailableProducts, $sortByPrice);
+    usort($availableProducts, $sortByRelevanceAndPrice);
+    usort($orderProducts, $sortByRelevanceAndPrice);
+    usort($unavailableProducts, $sortByRelevanceAndPrice);
 
     return array_merge($availableProducts, $orderProducts, $unavailableProducts);
 }
@@ -1365,6 +1373,90 @@ function polimerSearchCatalogByTokens($query, $iblockId = IBLOCK_CATALOG, $limit
     return $items;
 }
 
+/**
+ * Релевантность названия к запросу (меньше = лучше).
+ * 0 — точное совпадение, 1 — целое слово, 2 — начало слова,
+ * 3 — подстрока в имени, 4 — в имени нет (попал из текста/поиска).
+ */
+function polimerScoreSearchNameRelevance($name, $query)
+{
+    $nameLower = mb_strtolower(trim((string)$name));
+    $queryLower = mb_strtolower(trim((string)$query));
+    if ($queryLower === '' || $nameLower === '')
+        return 4;
+
+    if ($nameLower === $queryLower)
+        return 0;
+
+    $tokens = preg_split('/[\s,]+/u', $queryLower, -1, PREG_SPLIT_NO_EMPTY);
+    $tokens = array_values(array_filter($tokens, static function ($token) {
+        return mb_strlen($token) >= 2;
+    }));
+
+    if (empty($tokens))
+        return 4;
+
+    $worst = 0;
+    $anyInName = false;
+
+    foreach ($tokens as $token)
+    {
+        $tokenScore = 4;
+        if (mb_strpos($nameLower, $token) === false)
+        {
+            $worst = max($worst, $tokenScore);
+            continue;
+        }
+
+        $anyInName = true;
+        $quoted = preg_quote($token, '/');
+
+        if (preg_match('/(?:^|[^\p{L}\p{N}])' . $quoted . '(?:[^\p{L}\p{N}]|$)/u', $nameLower))
+            $tokenScore = 1;
+        elseif (preg_match('/(?:^|[^\p{L}\p{N}])' . $quoted . '/u', $nameLower))
+            $tokenScore = 2;
+        else
+            $tokenScore = 3;
+
+        $worst = max($worst, $tokenScore);
+    }
+
+    if (!$anyInName)
+        return 4;
+
+    return $worst;
+}
+
+function polimerRankCatalogIdsByQuery(array $ids, $query)
+{
+    $ids = array_values(array_filter(array_map('intval', $ids)));
+    if (empty($ids) || !CModule::IncludeModule('iblock'))
+        return $ids;
+
+    $names = [];
+    $res = CIBlockElement::GetList(
+        [],
+        ['ID' => $ids, 'IBLOCK_ID' => IBLOCK_CATALOG],
+        false,
+        false,
+        ['ID', 'NAME']
+    );
+    while ($row = $res->Fetch())
+        $names[(int)$row['ID']] = (string)$row['NAME'];
+
+    $orderIndex = array_flip($ids);
+    usort($ids, static function ($a, $b) use ($names, $query, $orderIndex) {
+        $scoreA = polimerScoreSearchNameRelevance($names[$a] ?? '', $query);
+        $scoreB = polimerScoreSearchNameRelevance($names[$b] ?? '', $query);
+        if ($scoreA !== $scoreB)
+            return $scoreA <=> $scoreB;
+
+        return ($orderIndex[$a] ?? 0) <=> ($orderIndex[$b] ?? 0);
+    });
+
+    return $ids;
+}
+
 function polimerSearchCatalogAllIds($query, $iblockId = IBLOCK_CATALOG, $maxIds = 50000, $fullText = true)
 {
     $query = trim((string)$query);
@@ -1465,16 +1557,21 @@ function polimerEnhanceSearchPageResult(array &$arResult, array $arParams)
         return;
 
     $iblockId = IBLOCK_CATALOG;
-    $catalogIds = polimerSearchCatalogAllIds($query, $iblockId, 5000, true);
+    // Сначала совпадения по названию, потом по тексту, потом модуль поиска Bitrix
+    $nameIds = polimerSearchCatalogAllIds($query, $iblockId, 5000, false);
+    $textIds = polimerSearchCatalogAllIds($query, $iblockId, 5000, true);
     $bitrixIds = polimerSearchBitrixCatalogIds($query, $arParams, $iblockId, 5000);
 
-    $seen = array_fill_keys($catalogIds, true);
-    $allIds = $catalogIds;
-
-    foreach ($bitrixIds as $id)
+    $seen = [];
+    $allIds = [];
+    foreach ([$nameIds, $bitrixIds, $textIds] as $idList)
     {
-        if (!isset($seen[$id]))
+        foreach ($idList as $id)
         {
+            $id = (int)$id;
+            if ($id <= 0 || isset($seen[$id]))
+                continue;
+
             $seen[$id] = true;
             $allIds[] = $id;
         }
@@ -1482,6 +1579,8 @@ function polimerEnhanceSearchPageResult(array &$arResult, array $arParams)
 
     if (empty($allIds))
         return;
+
+    $allIds = polimerRankCatalogIdsByQuery($allIds, $query);
 
     $arResult['POLIMER_PRODUCT_IDS'] = $allIds;
     $arResult['ROWS_COUNT'] = count($allIds);

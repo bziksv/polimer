@@ -33,7 +33,6 @@ if ($searchAllUrl === '' && $rawQuery !== '')
 	);
 }
 $shownProducts = count($products);
-$totalProducts = (int)($arResult['SEARCH_PRODUCTS_TOTAL'] ?? $shownProducts);
 ?>
 <div class="polimer-search-dropdown" data-query="<?=$query?>"<?if($correctedQuery):?> data-query-corrected="<?=$correctedQuery?>"<?endif?>>
 	<?if($correctedQuery && mb_strtolower($correctedQuery) !== mb_strtolower($query)):?>
@@ -57,10 +56,7 @@ $totalProducts = (int)($arResult['SEARCH_PRODUCTS_TOTAL'] ?? $shownProducts);
 					$sectionId = (int)$arSection['ID'];
 					$sectionName = htmlspecialcharsbx($arSection['NAME']);
 					$sectionCount = (int)$arSection['COUNT'];
-					$sectionTotal = (int)($arSection['TOTAL'] ?? 0);
 					$sectionMeta = $sectionCount . ' шт.';
-					if ($sectionTotal > $sectionCount)
-						$sectionMeta .= ' из ' . $sectionTotal;
 					$sectionFilterUrl = $searchAllUrl;
 					if ($sectionFilterUrl && $query)
 					{
@@ -105,8 +101,8 @@ $totalProducts = (int)($arResult['SEARCH_PRODUCTS_TOTAL'] ?? $shownProducts);
 			<div class="polimer-search-dropdown__products-head">
 				<div class="polimer-search-dropdown__heading polimer-search-dropdown__heading--products">
 					<span class="polimer-search-dropdown__heading-text">Товары</span>
-					<span class="polimer-search-dropdown__products-count" data-total="<?=$totalProducts?>">
-						<?=$shownProducts?><?if($totalProducts > $shownProducts):?> из <?=$totalProducts?><?endif?>
+					<span class="polimer-search-dropdown__products-count" data-total="<?=$shownProducts?>">
+						<?=$shownProducts?>
 					</span>
 				</div>
 				<div class="polimer-search-dropdown__filter-bar" hidden></div>

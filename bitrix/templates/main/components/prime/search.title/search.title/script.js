@@ -431,13 +431,8 @@ function PolimerTitleSearch(arParams)
 
 		if (productsCount)
 		{
-			var total = parseInt(productsCount.getAttribute('data-total'), 10) || productItems.length;
-			if (sectionIds.length)
-				productsCount.textContent = String(visibleCount);
-			else
-				productsCount.textContent = total > productItems.length
-					? (productItems.length + ' из ' + total)
-					: String(total);
+			productsCount.textContent = String(visibleCount || productItems.length);
+			productsCount.setAttribute('data-total', String(productItems.length));
 		}
 
 		var footerLink = dropdown.querySelector('.polimer-search-dropdown__all');
