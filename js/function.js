@@ -661,17 +661,13 @@ $(function () {
     });
 
     $(document).on('click', '.products_roll .pr_box .item .hover .inner .add2cart', function (e) {
-        if ($(e.target).closest('.txt2').length) {
+        var $item = $(this).closest('.item');
+
+        /* expanded popup: вся зелёная кнопка (не только текст .txt2) */
+        if ($item.hasClass('add2cart2')) {
             e.preventDefault();
             e.stopPropagation();
             polimerAdd2CartFromCard($(this), e.target);
-            return false;
-        }
-
-        var $item = $(this).closest('.item');
-
-        if ($item.hasClass('add2cart2')) {
-            e.preventDefault();
             return false;
         }
 
