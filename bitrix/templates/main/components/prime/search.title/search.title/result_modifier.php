@@ -49,62 +49,68 @@ $arResult["SEARCH_SECTIONS"] = array();
 $arResult["SEARCH_PRODUCTS"] = array();
 $arResult["SEARCH_ALL"] = null;
 
-foreach($arResult["CATEGORIES"] as $category_id => &$arCategory)
-{
-	$arFilterSection = array();
-	$productItems = array();
+$productIds = [];
 
-	foreach($arCategory["ITEMS"] as $i => $arItem)
+foreach ($arResult["CATEGORIES"] as $category_id => &$arCategory)
+{
+	foreach ($arCategory["ITEMS"] as $i => $arItem)
 	{
-		if($arItem['TYPE'] == "all")
+		if (($arItem['TYPE'] ?? '') === 'all')
 		{
 			$arResult["SEARCH_ALL"] = $arItem;
 			unset($arResult["CATEGORIES"][$category_id]["ITEMS"][$i]);
 			continue;
 		}
 
-		if(!isset($arItem["ITEM_ID"]))
+		if (!isset($arItem["ITEM_ID"]))
 			continue;
 
-		$arResult["SEARCH"][] = &$arResult["CATEGORIES"][$category_id]["ITEMS"][$i];
-		$productItems[] = &$arResult["CATEGORIES"][$category_id]["ITEMS"][$i];
-
-		$productPrice = price($arItem["ITEM_ID"]);
-		$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['PRICE_SORT'] = $productPrice ? (float)$productPrice : null;
-		$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['FORMAT_INT'] = $productPrice
-			? CurrencyFormat($productPrice, 'RUB')
-			: null;
-
-		$element = CIBlockElement::GetByID($arItem["ITEM_ID"])->GetNext();
-		if($element && $element['PREVIEW_PICTURE'])
-		{
-			$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['PICTURE'] = CFile::ResizeImageGet(
-				$element['PREVIEW_PICTURE'],
-				["width" => 56, "height" => 56],
-				BX_RESIZE_IMAGE_EXACT,
-				true
-			)['src'];
-		}
-		else
-		{
-			$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['PICTURE'] = $noPhoto;
-		}
+		$itemIdRaw = (string)$arItem["ITEM_ID"];
+		if ($itemIdRaw === '' || $itemIdRaw[0] === 'S' || $itemIdRaw[0] === 'G')
+			continue;
 
 		$productId = (int)$arItem["ITEM_ID"];
-		$iblockId = (int)$arItem["PARAM2"];
-		$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['ELEMENT_ID'] = $productId;
-		$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['SECTION_ID'] = $element ? (int)$element['IBLOCK_SECTION_ID'] : 0;
-		$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['IBLOCK_ID'] = $iblockId;
-		$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['STOCK_STATUS'] = polimerGetProductAvailability($productId);
-		$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['CAN_BUY'] = $arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['STOCK_STATUS'] === 'available';
-		$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['IN_COMPARE'] = inCompare($iblockId, $productId);
+		if ($productId <= 0)
+			continue;
 
-		$arFilterSection['IBLOCK_ID'] = $arItem["PARAM2"];
-		$arFilterSection['ID'][] = $arItem["ITEM_ID"];
+		$productIds[] = $productId;
+		$iblockId = (int)$arItem["PARAM2"];
+
+		$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['ELEMENT_ID'] = $productId;
+		$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['IBLOCK_ID'] = $iblockId;
+		$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['IN_COMPARE'] = inCompare($iblockId, $productId);
+	}
+}
+unset($arCategory);
+
+$batchData = polimerBatchLoadSearchProductData($productIds, $noPhoto);
+
+foreach ($arResult["CATEGORIES"] as $category_id => &$arCategory)
+{
+	$productItems = [];
+
+	foreach ($arCategory["ITEMS"] as $i => $arItem)
+	{
+		$productId = (int)($arItem['ELEMENT_ID'] ?? 0);
+		if ($productId <= 0)
+			continue;
+
+		$data = $batchData[$productId] ?? null;
+
+		$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['SECTION_ID'] = $data['SECTION_ID'] ?? 0;
+		$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['PICTURE'] = $data['PICTURE'] ?? $noPhoto;
+		$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['PRICE_SORT'] = $data['PRICE_SORT'] ?? null;
+		$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['FORMAT_INT'] = $data['FORMAT_INT'] ?? null;
+		$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['STOCK_STATUS'] = $data['STOCK_STATUS'] ?? 'unavailable';
+		$arResult["CATEGORIES"][$category_id]["ITEMS"][$i]['CAN_BUY'] = !empty($data['CAN_BUY']);
+
+		$arResult["SEARCH"][] = $arResult["CATEGORIES"][$category_id]["ITEMS"][$i];
+		$productItems[] = $arResult["CATEGORIES"][$category_id]["ITEMS"][$i];
 	}
 
-		$arResult["SEARCH_PRODUCTS"] = array_merge($arResult["SEARCH_PRODUCTS"], $productItems);
+	$arResult["SEARCH_PRODUCTS"] = array_merge($arResult["SEARCH_PRODUCTS"], $productItems);
 }
+unset($arCategory);
 
 polimerFillSearchProductSpecs($arResult["SEARCH_PRODUCTS"], IBLOCK_CATALOG, 2);
 $arResult["SEARCH_SECTIONS"] = polimerBuildSearchSectionsFromProducts($arResult["SEARCH_PRODUCTS"], $noPhoto);
@@ -113,15 +119,18 @@ $arResult["SEARCH_PRODUCTS"] = polimerSortSearchProductsByAvailabilityAndPrice($
 $searchQueryForTotal = trim((string)($arResult['SEARCH_QUERY_CORRECTED'] ?? $arResult['query'] ?? ''));
 if ($searchQueryForTotal !== '')
 {
-    $arResult['SEARCH_PRODUCTS_TOTAL'] = count(polimerSearchCatalogAllIds($searchQueryForTotal, IBLOCK_CATALOG, 50000, true));
-    if (!empty($arResult['SEARCH_ALL']) && $arResult['SEARCH_PRODUCTS_TOTAL'] > 0)
-        $arResult['SEARCH_ALL']['NAME'] = 'Все ' . $arResult['SEARCH_PRODUCTS_TOTAL'] . ' результатов';
+	$arResult['SEARCH_PRODUCTS_TOTAL'] = count(polimerSearchCatalogAllIds($searchQueryForTotal, IBLOCK_CATALOG, 50000, true));
+	if (!empty($arResult['SEARCH_ALL']) && $arResult['SEARCH_PRODUCTS_TOTAL'] > 0)
+		$arResult['SEARCH_ALL']['NAME'] = 'Все ' . $arResult['SEARCH_PRODUCTS_TOTAL'] . ' результатов';
 }
 else
 {
-    $arResult['SEARCH_PRODUCTS_TOTAL'] = count($arResult['SEARCH_PRODUCTS']);
+	$arResult['SEARCH_PRODUCTS_TOTAL'] = count($arResult['SEARCH_PRODUCTS']);
 }
 
+/* ICON-иконки модулей не используются в ajax-выпадашке — не тратим N запросов */
+if (($_REQUEST['ajax_call'] ?? '') !== 'y')
+{
 foreach($arResult["SEARCH"] as $i=>$arItem)
 {
 	$file = false;
@@ -183,7 +192,7 @@ foreach($arResult["SEARCH"] as $i=>$arItem)
 					}
 				}
 
-				if(!$file && preg_match("/\\.([a-z]+?)$/i", $arItem["TITLE"], $match))
+				if(!$file && preg_match("/\\.([a-z]+?)$/i", $arItem["TITLE"] ?? '', $match))
 				{
 					if(file_exists($abs_path."iblock_type_".strtolower($arIBlocks[$arItem["PARAM2"]]["IBLOCK_TYPE_ID"])."_".$match[1].".png"))
 						$file = "iblock_type_".strtolower($arIBlocks[$arItem["PARAM2"]]["IBLOCK_TYPE_ID"])."_".$match[1].".png";
@@ -191,7 +200,7 @@ foreach($arResult["SEARCH"] as $i=>$arItem)
 
 				if(!$file)
 				{
-					if(strlen($arIBlocks[$arItem["PARAM2"]]["CODE"]) && file_exists($abs_path."iblock_iblock_".strtolower($arIBlocks[$arItem["PARAM2"]]["CODE"]).".png"))
+					if(strlen($arIBlocks[$arItem["PARAM2"]]["CODE"] ?? '') && file_exists($abs_path."iblock_iblock_".strtolower($arIBlocks[$arItem["PARAM2"]]["CODE"]).".png"))
 						$file = "iblock_iblock_".strtolower($arIBlocks[$arItem["PARAM2"]]["CODE"]).".png";
 					elseif(file_exists($abs_path."iblock_iblock_".strtolower($arIBlocks[$arItem["PARAM2"]]["ID"]).".png"))
 						$file = "iblock_iblock_".strtolower($arIBlocks[$arItem["PARAM2"]]["ID"]).".png";
@@ -212,6 +221,7 @@ foreach($arResult["SEARCH"] as $i=>$arItem)
 		$file = file_exists($abs_path.$arItem["MODULE_ID"]."_default.png") ? $arItem["MODULE_ID"]."_default.png" : "default.png";
 
 	$arResult["SEARCH"][$i]["ICON"] = $image_path.$file;
+}
 }
 
 ?>

@@ -75,6 +75,141 @@ function polimerGetProductAvailability($id)
     return 'unavailable';
 }
 
+/**
+ * Батч-загрузка данных для выпадающего поиска: картинка, раздел, цена, наличие.
+ * Вместо N× (GetByID + GetBasePrice + GetByID catalog) — 2–3 запроса на всю пачку.
+ *
+ * @return array<int, array{SECTION_ID:int,PICTURE:string,PRICE_SORT:?float,FORMAT_INT:?string,STOCK_STATUS:string,CAN_BUY:bool}>
+ */
+function polimerBatchLoadSearchProductData(array $productIds, $noPhoto = '/bitrix/templates/main/img/no_photo.png')
+{
+    $productIds = array_values(array_unique(array_filter(array_map('intval', $productIds))));
+    $result = [];
+
+    if (empty($productIds))
+        return $result;
+
+    foreach ($productIds as $id)
+    {
+        $result[$id] = [
+            'SECTION_ID' => 0,
+            'PICTURE' => $noPhoto,
+            'PRICE_SORT' => null,
+            'FORMAT_INT' => null,
+            'STOCK_STATUS' => 'unavailable',
+            'CAN_BUY' => false,
+        ];
+    }
+
+    if (!CModule::IncludeModule('iblock'))
+        return $result;
+
+    $pictureIds = [];
+    $res = CIBlockElement::GetList(
+        [],
+        ['ID' => $productIds],
+        false,
+        false,
+        ['ID', 'IBLOCK_SECTION_ID', 'PREVIEW_PICTURE']
+    );
+
+    while ($row = $res->Fetch())
+    {
+        $id = (int)$row['ID'];
+        if (!isset($result[$id]))
+            continue;
+
+        $result[$id]['SECTION_ID'] = (int)$row['IBLOCK_SECTION_ID'];
+        $previewId = (int)$row['PREVIEW_PICTURE'];
+        if ($previewId > 0)
+            $pictureIds[$id] = $previewId;
+    }
+
+    foreach ($pictureIds as $id => $previewId)
+    {
+        $resized = CFile::ResizeImageGet(
+            $previewId,
+            ['width' => 56, 'height' => 56],
+            BX_RESIZE_IMAGE_EXACT,
+            true
+        );
+        if (!empty($resized['src']))
+            $result[$id]['PICTURE'] = $resized['src'];
+    }
+
+    $prices = [];
+    $quantities = [];
+
+    if (CModule::IncludeModule('catalog'))
+    {
+        $baseGroup = CCatalogGroup::GetBaseGroup();
+        $baseGroupId = (int)($baseGroup['ID'] ?? 0);
+
+        if ($baseGroupId > 0)
+        {
+            $priceRes = CPrice::GetList(
+                [],
+                [
+                    'PRODUCT_ID' => $productIds,
+                    'CATALOG_GROUP_ID' => $baseGroupId,
+                ],
+                false,
+                false,
+                ['PRODUCT_ID', 'PRICE']
+            );
+
+            while ($priceRow = $priceRes->Fetch())
+            {
+                $pid = (int)$priceRow['PRODUCT_ID'];
+                $priceVal = (float)$priceRow['PRICE'];
+                if ($priceVal > 0 && !isset($prices[$pid]))
+                    $prices[$pid] = $priceVal;
+            }
+        }
+
+        $productRes = CCatalogProduct::GetList(
+            [],
+            ['ID' => $productIds],
+            false,
+            false,
+            ['ID', 'QUANTITY']
+        );
+
+        while ($productRow = $productRes->Fetch())
+            $quantities[(int)$productRow['ID']] = (float)$productRow['QUANTITY'];
+    }
+
+    foreach ($productIds as $id)
+    {
+        $priceVal = $prices[$id] ?? null;
+        $qty = $quantities[$id] ?? 0;
+
+        if ($priceVal !== null && $priceVal > 0)
+        {
+            $result[$id]['PRICE_SORT'] = $priceVal;
+            $result[$id]['FORMAT_INT'] = CurrencyFormat($priceVal, 'RUB');
+        }
+
+        if ($qty > 0 && $priceVal !== null && $priceVal > 0)
+        {
+            $result[$id]['STOCK_STATUS'] = 'available';
+            $result[$id]['CAN_BUY'] = true;
+        }
+        elseif ($priceVal !== null && $priceVal > 0)
+        {
+            $result[$id]['STOCK_STATUS'] = 'order';
+            $result[$id]['CAN_BUY'] = false;
+        }
+        else
+        {
+            $result[$id]['STOCK_STATUS'] = 'unavailable';
+            $result[$id]['CAN_BUY'] = false;
+        }
+    }
+
+    return $result;
+}
+
 function polimerGetSearchProductSortPrice(array $productItem)
 {
     if (array_key_exists('PRICE_SORT', $productItem) && $productItem['PRICE_SORT'] !== null)
@@ -1036,6 +1171,55 @@ function polimerSuggestSearchCorrection($query, $iblockId = IBLOCK_CATALOG)
     return $corrected;
 }
 
+/**
+ * Ослабленные варианты запроса, если точное совпадение пустое:
+ * «счетчик горячей» → «счетчик», «горячей» и т.п.
+ */
+function polimerBuildRelaxedSearchQueries($query)
+{
+    $query = trim((string)$query);
+    if ($query === '')
+        return [];
+
+    $tokens = preg_split('/[\s,]+/u', $query, -1, PREG_SPLIT_NO_EMPTY);
+    $tokens = array_values(array_filter($tokens, static function ($token) {
+        return mb_strlen($token) >= 2;
+    }));
+
+    if (count($tokens) < 2)
+        return [];
+
+    $queries = [];
+
+    // убираем слова с конца: «а б в» → «а б», «а»
+    for ($len = count($tokens) - 1; $len >= 1; $len--)
+        $queries[] = implode(' ', array_slice($tokens, 0, $len));
+
+    // убираем слова с начала: «а б в» → «б в», «в»
+    for ($start = 1; $start < count($tokens); $start++)
+        $queries[] = implode(' ', array_slice($tokens, $start));
+
+    // отдельные токены — сначала более длинные
+    $byLength = $tokens;
+    usort($byLength, static function ($left, $right) {
+        return mb_strlen($right) <=> mb_strlen($left);
+    });
+    foreach ($byLength as $token)
+        $queries[] = $token;
+
+    $unique = [];
+    $originalLower = mb_strtolower($query);
+    foreach ($queries as $candidate)
+    {
+        $candidate = trim((string)$candidate);
+        if ($candidate === '' || mb_strtolower($candidate) === $originalLower)
+            continue;
+        $unique[$candidate] = true;
+    }
+
+    return array_keys($unique);
+}
+
 function polimerBuildSearchQueries($query, $includeTypo = false)
 {
     $query = trim((string)$query);
@@ -1569,7 +1753,8 @@ function polimerEnhanceTitleSearchResult(array &$arResult, array $arParams)
     }
 
     $originalQuery = trim((string)$arResult['query']);
-    $queries = polimerBuildSearchQueries($originalQuery, $productCount === 0);
+    // Сначала без опечаток — быстрее; typo — только если всё ещё пусто
+    $queries = polimerBuildSearchQueries($originalQuery, false);
 
     foreach ($queries as $searchQuery)
     {
@@ -1654,6 +1839,127 @@ function polimerEnhanceTitleSearchResult(array &$arResult, array $arParams)
 
         if ($beforeCount === 0 && $productCount > 0 && mb_strtolower($searchQuery) !== mb_strtolower($originalQuery))
             $arResult['SEARCH_QUERY_CORRECTED'] = $searchQuery;
+    }
+
+    // Если точных совпадений нет — ближайшие по укороченному запросу
+    if ($productCount > 0)
+        return;
+
+    foreach (polimerBuildRelaxedSearchQueries($originalQuery) as $relaxedQuery)
+    {
+        if ($productCount >= $topCount)
+            break;
+
+        $beforeCount = $productCount;
+
+        $exFILTER = [
+            0 => CSearchParameters::ConvertParamsToFilter($arParams, 'CATEGORY_' . $categoryIndex),
+        ];
+        $exFILTER[0]['LOGIC'] = 'OR';
+        if (($arParams['CHECK_DATES'] ?? '') === 'Y')
+            $exFILTER['CHECK_DATES'] = 'Y';
+
+        $obTitle = new CSearchTitle;
+        $obTitle->setMinWordLength($_REQUEST['l'] ?? 2);
+
+        if ($obTitle->Search($relaxedQuery, $topCount, $exFILTER, false, $arParams['ORDER'] ?? 'rank'))
+        {
+            while ($ar = $obTitle->Fetch())
+            {
+                $itemId = (int)$ar['ITEM_ID'];
+                if ($itemId <= 0 || in_array($itemId, $existingIds, true))
+                    continue;
+
+                $arResult['CATEGORIES'][$categoryIndex]['ITEMS'][] = [
+                    'NAME' => $ar['NAME'],
+                    'URL' => htmlspecialcharsbx($ar['URL']),
+                    'MODULE_ID' => $ar['MODULE_ID'],
+                    'PARAM1' => $ar['PARAM1'],
+                    'PARAM2' => $ar['PARAM2'],
+                    'ITEM_ID' => $ar['ITEM_ID'],
+                ];
+
+                $existingIds[] = $itemId;
+                $productCount++;
+
+                if ($productCount >= $topCount)
+                    break;
+            }
+        }
+
+        if ($productCount < $topCount)
+        {
+            $fallbackItems = polimerSearchCatalogByTokens(
+                $relaxedQuery,
+                IBLOCK_CATALOG,
+                $topCount - $productCount,
+                $existingIds
+            );
+
+            foreach ($fallbackItems as $item)
+            {
+                $itemId = (int)$item['ITEM_ID'];
+                if ($itemId <= 0 || in_array($itemId, $existingIds, true))
+                    continue;
+
+                $arResult['CATEGORIES'][$categoryIndex]['ITEMS'][] = $item;
+                $existingIds[] = $itemId;
+                $productCount++;
+
+                if ($productCount >= $topCount)
+                    break;
+            }
+        }
+
+        if ($beforeCount === 0 && $productCount > 0)
+        {
+            $arResult['SEARCH_QUERY_CORRECTED'] = $relaxedQuery;
+            $arResult['SEARCH_QUERY_RELAXED'] = true;
+            break;
+        }
+    }
+
+    // Опечатки — только если ближайшие тоже не нашлись
+    if ($productCount > 0)
+        return;
+
+    $typoQueries = polimerBuildSearchQueries($originalQuery, true);
+    foreach ($typoQueries as $searchQuery)
+    {
+        if ($productCount >= $topCount)
+            break;
+
+        if (mb_strtolower($searchQuery) === mb_strtolower($originalQuery))
+            continue;
+
+        $beforeCount = $productCount;
+
+        $fallbackItems = polimerSearchCatalogByTokens(
+            $searchQuery,
+            IBLOCK_CATALOG,
+            $topCount - $productCount,
+            $existingIds
+        );
+
+        foreach ($fallbackItems as $item)
+        {
+            $itemId = (int)$item['ITEM_ID'];
+            if ($itemId <= 0 || in_array($itemId, $existingIds, true))
+                continue;
+
+            $arResult['CATEGORIES'][$categoryIndex]['ITEMS'][] = $item;
+            $existingIds[] = $itemId;
+            $productCount++;
+
+            if ($productCount >= $topCount)
+                break 2;
+        }
+
+        if ($beforeCount === 0 && $productCount > 0)
+        {
+            $arResult['SEARCH_QUERY_CORRECTED'] = $searchQuery;
+            break;
+        }
     }
 }
 

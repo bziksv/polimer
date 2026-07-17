@@ -22,12 +22,27 @@ $correctedQuery = !empty($arResult['SEARCH_QUERY_CORRECTED'])
 	? htmlspecialcharsbx($arResult['SEARCH_QUERY_CORRECTED'])
 	: '';
 $searchAllUrl = $arResult['SEARCH_ALL']['URL'] ?? '';
-$searchAllName = $arResult['SEARCH_ALL']['NAME'] ?: 'Все результаты';
+$searchAllName = !empty($arResult['SEARCH_ALL']['NAME']) ? $arResult['SEARCH_ALL']['NAME'] : 'Все результаты';
+$rawQuery = trim((string)($arResult['SEARCH_QUERY_CORRECTED'] ?? $arResult['query'] ?? $_POST['q'] ?? ''));
+if ($searchAllUrl === '' && $rawQuery !== '')
+{
+	$searchAllUrl = CHTTP::urlAddParams(
+		'/search/',
+		['q' => $rawQuery, 's' => 'Поиск'],
+		['encode' => true]
+	);
+}
+$shownProducts = count($products);
+$totalProducts = (int)($arResult['SEARCH_PRODUCTS_TOTAL'] ?? $shownProducts);
 ?>
 <div class="polimer-search-dropdown" data-query="<?=$query?>"<?if($correctedQuery):?> data-query-corrected="<?=$correctedQuery?>"<?endif?>>
 	<?if($correctedQuery && mb_strtolower($correctedQuery) !== mb_strtolower($query)):?>
 	<div class="polimer-search-dropdown__correction">
+		<?if(!empty($arResult['SEARCH_QUERY_RELAXED'])):?>
+		Точных совпадений по «<?=$query?>» нет. Показаны ближайшие результаты по «<?=$correctedQuery?>»
+		<?else:?>
 		Исправлено: показаны результаты по запросу «<?=$correctedQuery?>»
+		<?endif?>
 	</div>
 	<?endif?>
 	<div class="polimer-search-dropdown__cols<?=(!$hasSections || !$hasProducts) ? ' polimer-search-dropdown__cols--single' : ''?>">
@@ -90,10 +105,6 @@ $searchAllName = $arResult['SEARCH_ALL']['NAME'] ?: 'Все результаты
 			<div class="polimer-search-dropdown__products-head">
 				<div class="polimer-search-dropdown__heading polimer-search-dropdown__heading--products">
 					<span class="polimer-search-dropdown__heading-text">Товары</span>
-					<?php
-					$shownProducts = count($products);
-					$totalProducts = (int)($arResult['SEARCH_PRODUCTS_TOTAL'] ?? $shownProducts);
-					?>
 					<span class="polimer-search-dropdown__products-count" data-total="<?=$totalProducts?>">
 						<?=$shownProducts?><?if($totalProducts > $shownProducts):?> из <?=$totalProducts?><?endif?>
 					</span>
