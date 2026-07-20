@@ -21,9 +21,26 @@ $arrPropertyCode = array();
 ?>
 
 <div class="compare-page cl">
+	<?php if (!empty($arResult['COMPARE_SECTIONS']) && count($arResult['COMPARE_SECTIONS']) > 1): ?>
+	<nav class="compare-cats" aria-label="Категории сравнения">
+		<div class="compare-cats__track">
+			<?php foreach ($arResult['COMPARE_SECTIONS'] as $sect):
+				$isActive = ((int)$sect['ID'] === (int)$arResult['COMPARE_SECTION_ID']);
+			?>
+			<a class="compare-cats__tab<?= $isActive ? ' is-active' : '' ?>"
+			   href="<?= $sect['URL'] ?>"
+			   <?= $isActive ? 'aria-current="page"' : '' ?>>
+				<span class="compare-cats__name"><?= htmlspecialcharsbx($sect['NAME']) ?></span>
+				<span class="compare-cats__count"><?= (int)$sect['COUNT'] ?></span>
+			</a>
+			<?php endforeach; ?>
+		</div>
+	</nav>
+	<?php endif; ?>
+
     <div class="action-btn">
-        <a class="sortbutton<? echo (!$arResult["DIFFERENT"] ? ' current' : ''); ?>" href="<? echo $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=N'; ?>" rel="nofollow"><?=GetMessage("CATALOG_ALL_CHARACTERISTICS")?></a>
-        <a class="sortbutton<? echo ($arResult["DIFFERENT"] ? ' current' : ''); ?>" href="<? echo $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=Y'; ?>" rel="nofollow"><?=GetMessage("CATALOG_ONLY_DIFFERENT")?></a>
+        <a class="sortbutton<? echo (!$arResult["DIFFERENT"] ? ' current' : ''); ?>" href="<? echo $arResult['COMPARE_URL_DIFFERENT_N']; ?>" rel="nofollow"><?=GetMessage("CATALOG_ALL_CHARACTERISTICS")?></a>
+        <a class="sortbutton<? echo ($arResult["DIFFERENT"] ? ' current' : ''); ?>" href="<? echo $arResult['COMPARE_URL_DIFFERENT_Y']; ?>" rel="nofollow"><?=GetMessage("CATALOG_ONLY_DIFFERENT")?></a>
     </div>
 
     <div class="compare-scroll-wrap">
@@ -70,9 +87,14 @@ $arrPropertyCode = array();
 		<div class="compare-items cl">
 			<div class="items">
 
-				<?foreach($arResult["ITEMS"] as $arElement):?>
+				<?foreach($arResult["ITEMS"] as $arElement):
+					$delUrl = '?action=DELETE_FROM_COMPARE_LIST&id='.(int)$arElement['ID'];
+					if (!empty($arResult['COMPARE_SECTIONS']) && count($arResult['COMPARE_SECTIONS']) > 1)
+					{
+						$delUrl .= '&csid='.(int)$arResult['COMPARE_SECTION_ID'];
+					}
+				?>
 				<div class="item">
-					<a href="?action=DELETE_FROM_COMPARE_LIST&id=<?=$arElement['ID']?>" class="delete"></a>
 					<div class="info">
 						<div class="img">
 							<a href="#"><img src="<?=$arElement['PREVIEW_PICTURE']['SRC']?>" style="max-height: 170px;" alt="<?=$arElement["NAME"]?>" /></a>
@@ -92,7 +114,10 @@ $arrPropertyCode = array();
 						<div class="val"><?=(is_array($arElement["DISPLAY_PROPERTIES"][$arrPropertyCode[$i]]["DISPLAY_VALUE"])? implode("/ ", $arElement["DISPLAY_PROPERTIES"][$arrPropertyCode[$i]]["DISPLAY_VALUE"]): $arElement["DISPLAY_PROPERTIES"][$arrPropertyCode[$i]]["DISPLAY_VALUE"])?></div>
 						<? endfor; ?>
 
-						<div class="val"><a class="add2basket" href="javascript:void(0)" onclick="addToBasket2(<?=$arElement['ID']?>, 1);">&nbsp;</a></div>
+						<div class="val val--actions">
+							<a class="add2basket" href="javascript:void(0)" onclick="addToBasket2(<?=$arElement['ID']?>, 1);">&nbsp;</a>
+							<a href="<?=$delUrl?>" class="delete" title="Удалить из сравнения" aria-label="Удалить из сравнения">&times;</a>
+						</div>
 					</div>
 				</div>
 				<? endforeach; ?>
@@ -107,7 +132,9 @@ $arrPropertyCode = array();
 	<!--end::compare-scroll-wrap-->
 
     <div class="action-btn">
-        <a href="?action=DELETE_FROM_COMPARE_LIST&id=0" style="border-color: red;color: red;">Удалить все товары из сравнения</a>
+        <a href="?action=DELETE_FROM_COMPARE_LIST&id=0"
+           class="compare-clear-all"
+           style="border-color: red;color: red;">Удалить все товары из сравнения</a>
     </div>
 </div>
 <!--end::compare-page-->
@@ -116,11 +143,25 @@ $arrPropertyCode = array();
 
 
 <script type="text/javascript">
-	var height = [];
-	$('.compare-page .values .val').each(function(el,v){
-		height[el] = $(v).height();
-	});
-	$('.compare-page .values .val').height(Math.max.apply(null, height));
+	(function(){
+		// Выравниваем высоты шапки ↔ значения товаров
+		var $headerCells = $('.compare-page .params-name .values > .val');
+		var $itemRows = $('.compare-page .compare-items .item .values');
+		if ($headerCells.length && $itemRows.length) {
+			var colCount = $headerCells.length;
+			for (var c = 0; c < colCount; c++) {
+				var maxH = $headerCells.eq(c).outerHeight() || 0;
+				$itemRows.each(function(){
+					var $cell = $(this).children('.val').eq(c);
+					if ($cell.length) maxH = Math.max(maxH, $cell.outerHeight());
+				});
+				$headerCells.eq(c).height(maxH);
+				$itemRows.each(function(){
+					$(this).children('.val').eq(c).height(maxH);
+				});
+			}
+		}
+	})();
 
 	var CatalogCompareObj = new BX.Iblock.Catalog.CompareClass("bx_catalog_compare_block");
 
@@ -130,19 +171,40 @@ $arrPropertyCode = array();
 		var nextBtn = wrap && wrap.querySelector('.compare-scroll-next');
 		if (!wrap || !inn) return;
 
+		function pinned(){
+			return inn.querySelectorAll('.compare-items .item .info');
+		}
+
+		function isMobile(){
+			return window.matchMedia('(max-width: 1019px)').matches;
+		}
+
+		function updatePin(){
+			var x = isMobile() ? inn.scrollLeft : 0;
+			var tx = x ? ('translate3d(' + x + 'px,0,0)') : '';
+			pinned().forEach(function(el){
+				el.style.transform = tx;
+			});
+		}
+
 		function updateHint(){
-			if (!window.matchMedia('(max-width: 1019px)').matches) {
+			if (!isMobile()) {
 				wrap.classList.add('is-hint-hidden');
+				wrap.classList.remove('is-scrolled', 'is-scrolled-end');
+				updatePin();
 				return;
 			}
 			var maxScroll = inn.scrollWidth - inn.clientWidth;
 			if (maxScroll <= 8) {
 				wrap.classList.add('is-hint-hidden');
+				wrap.classList.remove('is-scrolled', 'is-scrolled-end');
+				updatePin();
 				return;
 			}
 			wrap.classList.remove('is-hint-hidden');
 			wrap.classList.toggle('is-scrolled', inn.scrollLeft > 12);
 			wrap.classList.toggle('is-scrolled-end', inn.scrollLeft >= maxScroll - 8);
+			updatePin();
 		}
 
 		if (nextBtn) {
@@ -156,4 +218,33 @@ $arrPropertyCode = array();
 		window.addEventListener('resize', updateHint);
 		setTimeout(updateHint, 50);
 	})();
+
+	$(document).on('click', '.compare-clear-all', function(e){
+		e.preventDefault();
+		var url = this.getAttribute('href');
+		if (!url) return;
+
+		var go = function(){ window.location.href = url; };
+
+		if (typeof alertify !== 'undefined' && typeof alertify.confirm === 'function') {
+			try {
+				var dlg = alertify.confirm(
+					'Подтверждение',
+					'Удалить все товары из сравнения?',
+					go,
+					function(){}
+				);
+				if (dlg && typeof dlg.set === 'function') {
+					dlg.set('labels', {ok: 'Удалить', cancel: 'Отмена'});
+				}
+			} catch (err) {
+				if (window.confirm('Удалить все товары из сравнения?')) go();
+			}
+			return;
+		}
+
+		if (window.confirm('Удалить все товары из сравнения?')) {
+			go();
+		}
+	});
 </script>

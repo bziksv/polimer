@@ -18,12 +18,113 @@
     color: #0464bb;
 }
 
+.compare-cats{
+    margin: 0 0 14px;
+    border-bottom: 1px solid #e3e7eb;
+}
+
+.compare-cats__track{
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding: 0 0 1px;
+}
+
+.compare-cats__tab{
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 10px 12px 12px;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -1px;
+    color: #555;
+    font: 500 14px/1.2 'roboto', sans-serif;
+    text-decoration: none;
+    white-space: nowrap;
+    background: transparent;
+}
+
+.compare-cats__tab:hover{
+    color: #0464bb;
+}
+
+.compare-cats__tab.is-active{
+    color: #111;
+    border-bottom-color: #111;
+}
+
+.compare-cats__count{
+    color: #888;
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.compare-cats__tab.is-active .compare-cats__count{
+    color: #555;
+}
+
+.compare-cats__name{
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Крестик в конце ряда — после корзины */
+.compare-page .compare-items .item .val--actions{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-width: 100px;
+}
+
+.compare-page .compare-items .item .val--actions .add2basket{
+    margin: 0;
+    flex: 0 0 auto;
+}
+
+.compare-page .compare-items .item .val--actions .delete{
+    position: static !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    top: auto !important;
+    right: auto !important;
+    left: auto !important;
+    z-index: 5;
+    width: 32px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    border: 0;
+    background: transparent !important;
+    color: #888;
+    font: 400 28px/1 Arial, sans-serif;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.compare-page .compare-items .item .val--actions .delete:hover{
+    color: #0464bb;
+    background: transparent !important;
+}
+
 .compare-scroll-hint,
 .compare-scroll-next{
     display: none;
 }
 
 @media screen and (max-width: 1019px){
+    .compare-cats__name{
+        max-width: 140px;
+    }
+
     .compare-page .action-btn a{
         width: 100%;
         display: block;
@@ -113,21 +214,107 @@
         opacity: 0;
     }
 
-    /* Чуть уже колонки — справа виден край следующей характеристики */
+    .compare-page .compare-items{
+        overflow: visible !important;
+    }
+
+    /* Отступ шапки под колонку названия (без белого compare-pin) */
+    .compare-page .params-name .values{
+        margin-left: 168px !important;
+        transition: margin-left .15s ease;
+    }
+
+    .compare-page .values .val{
+        width: 150px !important;
+    }
+
     .compare-page .compare-items .items .item .info{
+        position: relative;
+        z-index: 16;
         width: 168px !important;
+        max-width: 168px;
+        background: #fff;
+        box-sizing: border-box;
+        will-change: transform;
+        transition: width .15s ease, max-width .15s ease;
+    }
+
+    .compare-page .compare-items .items .item:nth-child(2n) .info{
+        background: #f5f6f8;
     }
 
     .compare-page .compare-items .items .item .info .name{
         width: 118px !important;
     }
 
-    .compare-page .params-name .values{
-        margin-left: 171px !important;
+    .compare-page .compare-items .items .item .val--actions{
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        min-width: 100px !important;
+        width: auto !important;
+        position: relative;
     }
 
-    .compare-page .values .val{
-        width: 150px !important;
+    .compare-page .compare-items .items .item .val--actions .add2basket{
+        margin: 0 !important;
+        flex: 0 0 auto;
+    }
+
+    .compare-page .compare-items .items .item .val--actions .delete{
+        position: static !important;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        top: auto !important;
+        right: auto !important;
+        left: auto !important;
+        z-index: 5;
+        width: 36px !important;
+        height: 36px !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+        background: transparent !important;
+        color: #888 !important;
+        font: 400 30px/1 Arial, sans-serif !important;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    /* При скролле вправо — только название, без картинки */
+    .compare-scroll-wrap.is-scrolled .compare-page .params-name .values{
+        margin-left: 112px !important;
+    }
+
+    .compare-scroll-wrap.is-scrolled .compare-items .items .item .info{
+        width: 112px !important;
+        max-width: 112px !important;
+        text-align: left !important;
+        padding: 4px 4px 4px 6px !important;
+        box-shadow: 4px 0 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .compare-scroll-wrap.is-scrolled .compare-items .items .item .info .img{
+        display: none !important;
+    }
+
+    .compare-scroll-wrap.is-scrolled .compare-items .items .item .info .name{
+        width: auto !important;
+        max-width: none !important;
+        min-height: 0 !important;
+        padding-right: 0;
+        margin: 0 !important;
+        box-sizing: border-box;
+        font-size: 12px !important;
+        line-height: 1.25 !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        white-space: normal !important;
+        text-align: left !important;
+        vertical-align: top !important;
     }
 }
 

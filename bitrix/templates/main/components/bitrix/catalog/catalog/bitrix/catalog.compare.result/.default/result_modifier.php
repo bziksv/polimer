@@ -145,4 +145,111 @@ if ($existShow || $existDelete)
 	}
 	Collection::sortByColumn($arResult['ALL_OFFER_PROPERTIES'], array('SORT' => SORT_ASC, 'ID' => SORT_ASC));
 }
+
+// --- Вкладки по разделам каталога (как у Ситилинка) ---
+$arResult['COMPARE_SECTIONS'] = array();
+$arResult['COMPARE_SECTION_ID'] = 0;
+$arResult['COMPARE_URL_DIFFERENT_N'] = $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=N';
+$arResult['COMPARE_URL_DIFFERENT_Y'] = $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=Y';
+
+if (!empty($arResult['ITEMS']) && \Bitrix\Main\Loader::includeModule('iblock'))
+{
+	$sectionCounts = array();
+	foreach ($arResult['ITEMS'] as $arItem)
+	{
+		$sid = (int)($arItem['IBLOCK_SECTION_ID'] ?? 0);
+		if (!isset($sectionCounts[$sid]))
+		{
+			$sectionCounts[$sid] = 0;
+		}
+		$sectionCounts[$sid]++;
+	}
+
+	$sectionNames = array();
+	$idsToLoad = array_filter(array_keys($sectionCounts));
+	if ($idsToLoad)
+	{
+		$rsSect = CIBlockSection::GetList(
+			array('LEFT_MARGIN' => 'ASC'),
+			array('ID' => $idsToLoad, 'CHECK_PERMISSIONS' => 'N'),
+			false,
+			array('ID', 'NAME')
+		);
+		while ($sect = $rsSect->Fetch())
+		{
+			$sectionNames[(int)$sect['ID']] = $sect['NAME'];
+		}
+	}
+
+	$sections = array();
+	foreach ($sectionCounts as $sid => $cnt)
+	{
+		$sid = (int)$sid;
+		$sections[$sid] = array(
+			'ID' => $sid,
+			'NAME' => ($sid > 0 && isset($sectionNames[$sid])) ? $sectionNames[$sid] : 'Без раздела',
+			'COUNT' => (int)$cnt,
+		);
+	}
+
+	$requestSid = isset($_REQUEST['csid']) ? (int)$_REQUEST['csid'] : -1;
+	if ($requestSid >= 0 && isset($sections[$requestSid]))
+	{
+		$arResult['COMPARE_SECTION_ID'] = $requestSid;
+	}
+	elseif (count($sections) > 0)
+	{
+		$first = reset($sections);
+		$arResult['COMPARE_SECTION_ID'] = (int)$first['ID'];
+	}
+
+	$baseUrl = $arResult['~COMPARE_URL_TEMPLATE'] ?? '';
+	$different = !empty($arResult['DIFFERENT']) ? 'Y' : 'N';
+	foreach ($sections as $sid => &$sect)
+	{
+		$sect['URL'] = htmlspecialcharsbx($baseUrl.'DIFFERENT='.$different.'&csid='.$sid);
+	}
+	unset($sect);
+
+	$arResult['COMPARE_SECTIONS'] = array_values($sections);
+
+	if (count($sections) > 1)
+	{
+		$activeSid = (int)$arResult['COMPARE_SECTION_ID'];
+		$filtered = array();
+		foreach ($arResult['ITEMS'] as $arItem)
+		{
+			if ((int)($arItem['IBLOCK_SECTION_ID'] ?? 0) === $activeSid)
+			{
+				$filtered[] = $arItem;
+			}
+		}
+		$arResult['ITEMS'] = $filtered;
+
+		if (!empty($arResult['SHOW_PROPERTIES']))
+		{
+			foreach ($arResult['SHOW_PROPERTIES'] as $code => $arProp)
+			{
+				$hasValue = false;
+				foreach ($arResult['ITEMS'] as $arItem)
+				{
+					$val = $arItem['DISPLAY_PROPERTIES'][$code]['VALUE'] ?? null;
+					if ($val !== null && $val !== '' && $val !== array())
+					{
+						$hasValue = true;
+						break;
+					}
+				}
+				if (!$hasValue)
+				{
+					unset($arResult['SHOW_PROPERTIES'][$code]);
+				}
+			}
+		}
+	}
+
+	$csidSuffix = '&csid='.(int)$arResult['COMPARE_SECTION_ID'];
+	$arResult['COMPARE_URL_DIFFERENT_N'] = $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=N'.$csidSuffix;
+	$arResult['COMPARE_URL_DIFFERENT_Y'] = $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=Y'.$csidSuffix;
+}
 ?>
