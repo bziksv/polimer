@@ -389,16 +389,19 @@
     .compare-page .compare-items .items .item .info{
         position: relative;
         z-index: 16;
-        display: inline-block !important;
+        display: inline-flex !important;
+        align-items: center !important;
         vertical-align: top !important;
         width: 156px !important;
         min-width: 156px !important;
         max-width: 156px !important;
         box-sizing: border-box !important;
+        padding: 6px 8px 6px 10px !important;
         background: #fff;
         will-change: transform;
         text-align: left !important;
         white-space: nowrap !important;
+        gap: 6px;
     }
 
     .compare-page .compare-items .items .item:nth-child(2n) .info{
@@ -406,26 +409,40 @@
     }
 
     .compare-page .compare-items .items .item .info .img{
-        width: 40px !important;
-        display: inline-block !important;
+        width: 36px !important;
+        flex: 0 0 36px !important;
+        display: block !important;
         vertical-align: middle !important;
     }
 
     .compare-page .compare-items .items .item .info .img img{
         width: 36px !important;
         height: auto !important;
+        display: block;
     }
 
     .compare-page .compare-items .items .item .info .name{
-        display: inline-block !important;
+        display: block !important;
         vertical-align: middle !important;
-        width: 100px !important;
-        max-width: 100px !important;
+        flex: 1 1 auto !important;
+        width: auto !important;
+        max-width: none !important;
+        min-width: 0 !important;
         min-height: 0 !important;
+        padding: 2px 0 !important;
         white-space: normal !important;
         text-align: left !important;
         font-size: 12px !important;
-        line-height: 1.25 !important;
+        line-height: 1.3 !important;
+        overflow: hidden;
+    }
+
+    .compare-page .compare-items .items .item .info .name a{
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+        word-break: break-word;
     }
 
     .compare-page .compare-items .items .item .values .val.val--actions{
@@ -486,13 +503,13 @@
     }
 
     .compare-scroll-wrap.is-scrolled .compare-items .items .item .info .name{
-        width: 140px !important;
-        max-width: 140px !important;
-        display: -webkit-box !important;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        white-space: normal !important;
+        width: auto !important;
+        max-width: none !important;
+        flex: 1 1 auto !important;
+    }
+
+    .compare-scroll-wrap.is-scrolled .compare-items .items .item .info .name a{
+        -webkit-line-clamp: 4;
     }
 }
 
