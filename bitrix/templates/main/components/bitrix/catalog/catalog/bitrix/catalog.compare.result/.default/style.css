@@ -75,20 +75,22 @@
 }
 
 /* Крестик в конце ряда — после корзины */
-.compare-page .compare-items .item .val--actions{
-    display: flex;
+.compare-page .compare-items .item .values .val.val--actions{
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
     gap: 12px;
     min-width: 100px;
 }
 
-.compare-page .compare-items .item .val--actions .add2basket{
+.compare-page .compare-items .item .values .val.val--actions .add2basket{
     margin: 0;
     flex: 0 0 auto;
 }
 
-.compare-page .compare-items .item .val--actions .delete{
+.compare-page .compare-items .item .values .val.val--actions .delete{
     position: static !important;
     display: inline-flex !important;
     align-items: center;
@@ -110,7 +112,7 @@
     touch-action: manipulation;
 }
 
-.compare-page .compare-items .item .val--actions .delete:hover{
+.compare-page .compare-items .item .values .val.val--actions .delete:hover{
     color: #0464bb;
     background: transparent !important;
 }
@@ -288,38 +290,44 @@
         line-height: 1.25 !important;
     }
 
-    .compare-page .compare-items .items .item .val--actions{
+    .compare-page .compare-items .items .item .values .val.val--actions{
         display: inline-flex !important;
-        align-items: center;
-        justify-content: center;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        justify-content: center !important;
         gap: 8px;
         width: 132px !important;
         min-width: 132px !important;
         max-width: 132px !important;
         box-sizing: border-box !important;
+        vertical-align: middle !important;
     }
 
-    .compare-page .compare-items .items .item .val--actions .add2basket{
+    .compare-page .compare-items .items .item .values .val.val--actions .add2basket{
+        display: block !important;
         margin: 0 !important;
-        flex: 0 0 auto;
+        flex: 0 0 36px !important;
         width: 36px !important;
         height: 36px !important;
     }
 
-    .compare-page .compare-items .items .item .val--actions .delete{
+    .compare-page .compare-items .items .item .values .val.val--actions .delete{
         position: static !important;
         display: inline-flex !important;
-        align-items: center;
-        justify-content: center;
+        align-items: center !important;
+        justify-content: center !important;
         top: auto !important;
         right: auto !important;
         left: auto !important;
+        flex: 0 0 32px !important;
         width: 32px !important;
         height: 32px !important;
         padding: 0 !important;
         background: transparent !important;
         color: #888 !important;
         font: 400 28px/1 Arial, sans-serif !important;
+        line-height: 1 !important;
     }
 
     /* При скролле — только название, ширина колонки НЕ меняется (иначе съезд сетки) */
