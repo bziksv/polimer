@@ -18,11 +18,120 @@
     color: #0464bb;
 }
 
+.compare-scroll-hint,
+.compare-scroll-next{
+    display: none;
+}
+
 @media screen and (max-width: 1019px){
     .compare-page .action-btn a{
         width: 100%;
         display: block;
         text-align: center;
     }
+
+    .compare-scroll-wrap{
+        position: relative;
+    }
+
+    .compare-scroll-viewport{
+        position: relative;
+    }
+
+    .compare-scroll-hint{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin: 0 0 12px;
+        padding: 11px 14px;
+        background: #eef5fc;
+        border: 1px solid #c5daf0;
+        border-radius: 4px;
+        color: #0464bb;
+        font: 500 13px/1.35 'roboto', sans-serif;
+    }
+
+    .compare-scroll-hint::after{
+        content: "→";
+        flex: 0 0 auto;
+        font-size: 20px;
+        line-height: 1;
+        animation: compare-hint-nudge 1.15s ease-in-out infinite;
+    }
+
+    .compare-scroll-next{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 50%;
+        right: 6px;
+        z-index: 25;
+        width: 36px;
+        height: 36px;
+        margin-top: -18px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: #0464bb;
+        color: #fff;
+        font-size: 20px;
+        line-height: 1;
+        box-shadow: 0 2px 8px rgba(4, 100, 187, 0.35);
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        animation: compare-hint-nudge 1.15s ease-in-out infinite;
+    }
+
+    .compare-scroll-wrap.is-hint-hidden .compare-scroll-hint,
+    .compare-scroll-wrap.is-scrolled .compare-scroll-hint{
+        display: none;
+    }
+
+    .compare-scroll-wrap.is-hint-hidden .compare-scroll-next,
+    .compare-scroll-wrap.is-scrolled-end .compare-scroll-next{
+        display: none;
+    }
+
+    .compare-scroll-viewport::after{
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 48px;
+        pointer-events: none;
+        z-index: 20;
+        background: linear-gradient(to right, rgba(255,255,255,0), #fff 55%);
+        opacity: 1;
+        transition: opacity .2s ease;
+    }
+
+    .compare-scroll-wrap.is-hint-hidden .compare-scroll-viewport::after,
+    .compare-scroll-wrap.is-scrolled-end .compare-scroll-viewport::after{
+        opacity: 0;
+    }
+
+    /* Чуть уже колонки — справа виден край следующей характеристики */
+    .compare-page .compare-items .items .item .info{
+        width: 168px !important;
+    }
+
+    .compare-page .compare-items .items .item .info .name{
+        width: 118px !important;
+    }
+
+    .compare-page .params-name .values{
+        margin-left: 171px !important;
+    }
+
+    .compare-page .values .val{
+        width: 150px !important;
+    }
 }
 
+@keyframes compare-hint-nudge{
+    0%, 100%{ transform: translateX(0); }
+    50%{ transform: translateX(5px); }
+}

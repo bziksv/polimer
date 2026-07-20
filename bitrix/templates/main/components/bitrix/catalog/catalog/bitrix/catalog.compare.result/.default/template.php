@@ -26,6 +26,10 @@ $arrPropertyCode = array();
         <a class="sortbutton<? echo ($arResult["DIFFERENT"] ? ' current' : ''); ?>" href="<? echo $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=Y'; ?>" rel="nofollow"><?=GetMessage("CATALOG_ONLY_DIFFERENT")?></a>
     </div>
 
+    <div class="compare-scroll-wrap">
+	<p class="compare-scroll-hint">Листайте вправо, чтобы увидеть характеристики</p>
+	<div class="compare-scroll-viewport">
+	<button type="button" class="compare-scroll-next" aria-label="Показать характеристики">→</button>
 	<div class="inn">
 		<div class="params-name">
 			<div class="values">
@@ -97,6 +101,10 @@ $arrPropertyCode = array();
 		</div><!--end::compare-items-->
 	</div>
     <!--end::inn-->
+	</div>
+	<!--end::compare-scroll-viewport-->
+	</div>
+	<!--end::compare-scroll-wrap-->
 
     <div class="action-btn">
         <a href="?action=DELETE_FROM_COMPARE_LIST&id=0" style="border-color: red;color: red;">Удалить все товары из сравнения</a>
@@ -115,4 +123,37 @@ $arrPropertyCode = array();
 	$('.compare-page .values .val').height(Math.max.apply(null, height));
 
 	var CatalogCompareObj = new BX.Iblock.Catalog.CompareClass("bx_catalog_compare_block");
+
+	(function(){
+		var wrap = document.querySelector('.compare-scroll-wrap');
+		var inn = wrap && wrap.querySelector('.inn');
+		var nextBtn = wrap && wrap.querySelector('.compare-scroll-next');
+		if (!wrap || !inn) return;
+
+		function updateHint(){
+			if (!window.matchMedia('(max-width: 1019px)').matches) {
+				wrap.classList.add('is-hint-hidden');
+				return;
+			}
+			var maxScroll = inn.scrollWidth - inn.clientWidth;
+			if (maxScroll <= 8) {
+				wrap.classList.add('is-hint-hidden');
+				return;
+			}
+			wrap.classList.remove('is-hint-hidden');
+			wrap.classList.toggle('is-scrolled', inn.scrollLeft > 12);
+			wrap.classList.toggle('is-scrolled-end', inn.scrollLeft >= maxScroll - 8);
+		}
+
+		if (nextBtn) {
+			nextBtn.addEventListener('click', function(e){
+				e.preventDefault();
+				inn.scrollBy({ left: Math.min(220, inn.clientWidth * 0.7), behavior: 'smooth' });
+			});
+		}
+
+		inn.addEventListener('scroll', updateHint, {passive: true});
+		window.addEventListener('resize', updateHint);
+		setTimeout(updateHint, 50);
+	})();
 </script>

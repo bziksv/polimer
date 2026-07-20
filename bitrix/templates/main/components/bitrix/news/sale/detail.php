@@ -121,6 +121,10 @@ $this->setFrameMode(true);
 
     <div class="nd__rightbar">
 
+        <?
+		// В «Другие акции» не показывать текущую
+		$GLOBALS["arrOtherSalesFilter"] = $ElementID ? ["!ID" => (int)$ElementID] : [];
+		?>
         <?$APPLICATION->IncludeComponent("bitrix:news.list", "sale-list", Array(
             "ACTIVE_DATE_FORMAT" => "j F Y",
             "ADD_SECTIONS_CHAIN" => "N",	// Включать раздел в цепочку навигации
@@ -129,7 +133,7 @@ $this->setFrameMode(true);
             "AJAX_OPTION_HISTORY" => "N",	// Включить эмуляцию навигации браузера
             "AJAX_OPTION_JUMP" => "N",	// Включить прокрутку к началу компонента
             "AJAX_OPTION_STYLE" => "Y",	// Включить подгрузку стилей
-            "CACHE_FILTER" => "N",	// Кешировать при установленном фильтре
+            "CACHE_FILTER" => "Y",	// Кешировать при установленном фильтре
             "CACHE_GROUPS" => "Y",	// Учитывать права доступа
             "CACHE_TIME" => "36000000",	// Время кеширования (сек.)
             "CACHE_TYPE" => "A",	// Тип кеширования
@@ -145,7 +149,7 @@ $this->setFrameMode(true);
                 0 => "DETAIL_PICTURE",
                 1 => "",
             ),
-            "FILTER_NAME" => "",	// Фильтр
+            "FILTER_NAME" => "arrOtherSalesFilter",	// Фильтр
             "HIDE_LINK_WHEN_NO_DETAIL" => "N",	// Скрывать ссылку, если нет детального описания
             "IBLOCK_ID" => $arParams["IBLOCK_ID"],	// Код информационного блока
             "IBLOCK_TYPE" => "news",	// Тип информационного блока (используется только для проверки)
