@@ -161,17 +161,18 @@
         animation: compare-hint-nudge 1.15s ease-in-out infinite;
     }
 
+    /* Стрелка по центру таблицы (учитываем transform в анимации) */
     .compare-scroll-next{
         display: flex;
         align-items: center;
         justify-content: center;
         position: absolute;
         top: 50%;
-        right: 6px;
+        right: 8px;
         z-index: 25;
-        width: 36px;
-        height: 36px;
-        margin-top: -18px;
+        width: 40px;
+        height: 40px;
+        margin: 0;
         padding: 0;
         border: 0;
         border-radius: 50%;
@@ -182,6 +183,7 @@
         box-shadow: 0 2px 8px rgba(4, 100, 187, 0.35);
         cursor: pointer;
         -webkit-tap-highlight-color: transparent;
+        transform: translateY(-50%);
         animation: compare-hint-nudge 1.15s ease-in-out infinite;
     }
 
@@ -201,10 +203,10 @@
         top: 0;
         right: 0;
         bottom: 0;
-        width: 48px;
+        width: 40px;
         pointer-events: none;
         z-index: 20;
-        background: linear-gradient(to right, rgba(255,255,255,0), #fff 55%);
+        background: linear-gradient(to right, rgba(255,255,255,0), #fff 70%);
         opacity: 1;
         transition: opacity .2s ease;
     }
@@ -218,48 +220,89 @@
         overflow: visible !important;
     }
 
-    /* Отступ шапки под колонку названия (без белого compare-pin) */
-    .compare-page .params-name .values{
-        margin-left: 168px !important;
-        transition: margin-left .15s ease;
+    /*
+     * Единая сетка колонок: одинаковая ширина и padding у шапки и значений,
+     * иначе «Цена/Вес» уезжают относительно цифр.
+     */
+    .compare-page .values .val,
+    .compare-page .params-name .values .val,
+    .compare-page .compare-items .items .item .values .val{
+        display: inline-block !important;
+        vertical-align: top !important;
+        width: 132px !important;
+        min-width: 132px !important;
+        max-width: 132px !important;
+        box-sizing: border-box !important;
+        padding: 12px 8px !important;
+        margin: 0 !important;
+        text-align: center !important;
+        white-space: normal !important;
     }
 
-    .compare-page .values .val{
-        width: 150px !important;
+    .compare-page .params-name .values{
+        margin: 0 0 0 156px !important;
+        padding: 0 !important;
+        white-space: nowrap !important;
     }
 
     .compare-page .compare-items .items .item .info{
         position: relative;
         z-index: 16;
-        width: 168px !important;
-        max-width: 168px;
+        display: inline-block !important;
+        vertical-align: top !important;
+        width: 156px !important;
+        min-width: 156px !important;
+        max-width: 156px !important;
+        box-sizing: border-box !important;
         background: #fff;
-        box-sizing: border-box;
         will-change: transform;
-        transition: width .15s ease, max-width .15s ease;
+        text-align: left !important;
+        white-space: nowrap !important;
     }
 
     .compare-page .compare-items .items .item:nth-child(2n) .info{
         background: #f5f6f8;
     }
 
+    .compare-page .compare-items .items .item .info .img{
+        width: 40px !important;
+        display: inline-block !important;
+        vertical-align: middle !important;
+    }
+
+    .compare-page .compare-items .items .item .info .img img{
+        width: 36px !important;
+        height: auto !important;
+    }
+
     .compare-page .compare-items .items .item .info .name{
-        width: 118px !important;
+        display: inline-block !important;
+        vertical-align: middle !important;
+        width: 100px !important;
+        max-width: 100px !important;
+        min-height: 0 !important;
+        white-space: normal !important;
+        text-align: left !important;
+        font-size: 12px !important;
+        line-height: 1.25 !important;
     }
 
     .compare-page .compare-items .items .item .val--actions{
         display: inline-flex !important;
         align-items: center;
         justify-content: center;
-        gap: 12px;
-        min-width: 100px !important;
-        width: auto !important;
-        position: relative;
+        gap: 8px;
+        width: 132px !important;
+        min-width: 132px !important;
+        max-width: 132px !important;
+        box-sizing: border-box !important;
     }
 
     .compare-page .compare-items .items .item .val--actions .add2basket{
         margin: 0 !important;
         flex: 0 0 auto;
+        width: 36px !important;
+        height: 36px !important;
     }
 
     .compare-page .compare-items .items .item .val--actions .delete{
@@ -270,28 +313,16 @@
         top: auto !important;
         right: auto !important;
         left: auto !important;
-        z-index: 5;
-        width: 36px !important;
-        height: 36px !important;
+        width: 32px !important;
+        height: 32px !important;
         padding: 0 !important;
-        box-sizing: border-box !important;
         background: transparent !important;
         color: #888 !important;
-        font: 400 30px/1 Arial, sans-serif !important;
-        -webkit-tap-highlight-color: transparent;
-        touch-action: manipulation;
+        font: 400 28px/1 Arial, sans-serif !important;
     }
 
-    /* При скролле вправо — только название, без картинки */
-    .compare-scroll-wrap.is-scrolled .compare-page .params-name .values{
-        margin-left: 112px !important;
-    }
-
+    /* При скролле — только название, ширина колонки НЕ меняется (иначе съезд сетки) */
     .compare-scroll-wrap.is-scrolled .compare-items .items .item .info{
-        width: 112px !important;
-        max-width: 112px !important;
-        text-align: left !important;
-        padding: 4px 4px 4px 6px !important;
         box-shadow: 4px 0 10px rgba(0, 0, 0, 0.08);
     }
 
@@ -300,25 +331,17 @@
     }
 
     .compare-scroll-wrap.is-scrolled .compare-items .items .item .info .name{
-        width: auto !important;
-        max-width: none !important;
-        min-height: 0 !important;
-        padding-right: 0;
-        margin: 0 !important;
-        box-sizing: border-box;
-        font-size: 12px !important;
-        line-height: 1.25 !important;
+        width: 140px !important;
+        max-width: 140px !important;
         display: -webkit-box !important;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
         white-space: normal !important;
-        text-align: left !important;
-        vertical-align: top !important;
     }
 }
 
 @keyframes compare-hint-nudge{
-    0%, 100%{ transform: translateX(0); }
-    50%{ transform: translateX(5px); }
+    0%, 100%{ transform: translateY(-50%) translateX(0); }
+    50%{ transform: translateY(-50%) translateX(5px); }
 }
