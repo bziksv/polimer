@@ -248,6 +248,12 @@ if (!empty($arResult['ITEMS']) && \Bitrix\Main\Loader::includeModule('iblock'))
 		}
 	}
 
+	// Служебные / маркетплейс-свойства не показываем в сравнении
+	if (!empty($arResult['SHOW_PROPERTIES']) && function_exists('polimerFilterPublicCatalogProps'))
+	{
+		$arResult['SHOW_PROPERTIES'] = polimerFilterPublicCatalogProps($arResult['SHOW_PROPERTIES']);
+	}
+
 	$csidSuffix = '&csid='.(int)$arResult['COMPARE_SECTION_ID'];
 	$arResult['COMPARE_URL_DIFFERENT_N'] = $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=N'.$csidSuffix;
 	$arResult['COMPARE_URL_DIFFERENT_Y'] = $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=Y'.$csidSuffix;

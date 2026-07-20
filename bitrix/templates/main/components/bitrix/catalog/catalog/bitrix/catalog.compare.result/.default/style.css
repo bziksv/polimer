@@ -161,13 +161,13 @@
         animation: compare-hint-nudge 1.15s ease-in-out infinite;
     }
 
-    /* Стрелка по центру таблицы (учитываем transform в анимации) */
+    /* Стрелка справа от viewport; вертикаль — центр блока товаров (JS) */
     .compare-scroll-next{
         display: flex;
         align-items: center;
         justify-content: center;
         position: absolute;
-        top: 50%;
+        top: 0;
         right: 8px;
         z-index: 25;
         width: 40px;
@@ -185,6 +185,7 @@
         -webkit-tap-highlight-color: transparent;
         transform: translateY(-50%);
         animation: compare-hint-nudge 1.15s ease-in-out infinite;
+        will-change: transform;
     }
 
     .compare-scroll-wrap.is-hint-hidden .compare-scroll-hint,

@@ -1,6 +1,8 @@
 <?php
 define("IBLOCK_CATALOG", 21);
 
+require_once __DIR__ . '/polimer_catalog_props.php';
+
 /** Google reCAPTCHA v2 — Site Key (публичный). Secret — в recaptcha_secret.php (не в git). */
 define('POLIMER_RECAPTCHA_SITE_KEY', '6LfAz1YtAAAAAMPXRZUxo38fvpz__MlOHs7DBA41');
 

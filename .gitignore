@@ -4,6 +4,7 @@ upload
 upload/*
 bitrix/php_interface/*
 !/bitrix/php_interface/init.php
+!/bitrix/php_interface/polimer_catalog_props.php
 !/bitrix/php_interface/polimer_catalog_image_audit.php
 !/bitrix/php_interface/polimer_section_image.php
 !/bitrix/php_interface/recaptcha_secret.php.example

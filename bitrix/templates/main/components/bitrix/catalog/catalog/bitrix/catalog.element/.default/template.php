@@ -248,25 +248,21 @@ $inCompare = inCompare($arResult['IBLOCK_ID'], $arResult['ID']);
                    <?php endif; ?>
 
                    <?php
-                   $arShowProp = $arResult['PROPERTIES'];
-
-                   $remove = array_keys($arResult['DISPLAY_PROPERTIES']);
-                   $remove[] = 'MORE_PHOTO';
-                   $remove[] = 'FILES';
-
-                   // removed properties from show
-                   foreach ($remove as $prop) {
-                       unset($arShowProp[$prop]);
-                   }
+                   // Все заполненные свойства, кроме служебных/маркетплейс (см. polimer_catalog_props.php)
+                   $arShowProp = function_exists('polimerFilterPublicCatalogProps')
+                       ? polimerFilterPublicCatalogProps($arResult['PROPERTIES'] ?? array())
+                       : ($arResult['PROPERTIES'] ?? array());
 
                    foreach ($arShowProp as $prop) {
-                       $value = is_array($prop['VALUE']) ? implode(", ", $prop['VALUE']) : $prop['VALUE'];
+                       $value = function_exists('polimerFormatPublicPropValue')
+                           ? polimerFormatPublicPropValue($prop)
+                           : (is_array($prop['VALUE']) ? implode(', ', $prop['VALUE']) : (string)$prop['VALUE']);
 
-                       if ($value):
+                       if ($value !== ''):
                            ?>
                            <div class="line cl">
-                               <div class="prop"><?=$prop['NAME'];?></div>
-                               <div class="val"><?=is_array($prop['VALUE']) ? implode(", ", $prop['VALUE']) : $prop['VALUE'];?></div>
+                               <div class="prop"><?=htmlspecialcharsbx($prop['NAME']);?></div>
+                               <div class="val"><?=htmlspecialcharsbx($value);?></div>
                            </div>
                        <?
                        endif;

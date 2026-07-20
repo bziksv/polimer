@@ -168,7 +168,9 @@ $arrPropertyCode = array();
 	(function(){
 		var wrap = document.querySelector('.compare-scroll-wrap');
 		var inn = wrap && wrap.querySelector('.inn');
+		var viewport = wrap && wrap.querySelector('.compare-scroll-viewport');
 		var nextBtn = wrap && wrap.querySelector('.compare-scroll-next');
+		var itemsBlock = wrap && wrap.querySelector('.compare-items');
 		if (!wrap || !inn) return;
 
 		function pinned(){
@@ -177,6 +179,18 @@ $arrPropertyCode = array();
 
 		function isMobile(){
 			return window.matchMedia('(max-width: 1019px)').matches;
+		}
+
+		/** Центр стрелки по блоку товаров, без шапки «Цена / Вес …» */
+		function positionNextBtn(){
+			if (!nextBtn || !viewport || !itemsBlock || !isMobile()) {
+				if (nextBtn) nextBtn.style.top = '';
+				return;
+			}
+			var vRect = viewport.getBoundingClientRect();
+			var iRect = itemsBlock.getBoundingClientRect();
+			var top = (iRect.top - vRect.top) + (iRect.height / 2);
+			nextBtn.style.top = Math.round(top) + 'px';
 		}
 
 		function updatePin(){
@@ -192,6 +206,7 @@ $arrPropertyCode = array();
 				wrap.classList.add('is-hint-hidden');
 				wrap.classList.remove('is-scrolled', 'is-scrolled-end');
 				updatePin();
+				positionNextBtn();
 				return;
 			}
 			var maxScroll = inn.scrollWidth - inn.clientWidth;
@@ -199,12 +214,14 @@ $arrPropertyCode = array();
 				wrap.classList.add('is-hint-hidden');
 				wrap.classList.remove('is-scrolled', 'is-scrolled-end');
 				updatePin();
+				positionNextBtn();
 				return;
 			}
 			wrap.classList.remove('is-hint-hidden');
 			wrap.classList.toggle('is-scrolled', inn.scrollLeft > 12);
 			wrap.classList.toggle('is-scrolled-end', inn.scrollLeft >= maxScroll - 8);
 			updatePin();
+			positionNextBtn();
 		}
 
 		if (nextBtn) {
@@ -216,7 +233,11 @@ $arrPropertyCode = array();
 
 		inn.addEventListener('scroll', updateHint, {passive: true});
 		window.addEventListener('resize', updateHint);
+		if (window.ResizeObserver && itemsBlock) {
+			new ResizeObserver(positionNextBtn).observe(itemsBlock);
+		}
 		setTimeout(updateHint, 50);
+		setTimeout(positionNextBtn, 300);
 	})();
 
 	$(document).on('click', '.compare-clear-all', function(e){
