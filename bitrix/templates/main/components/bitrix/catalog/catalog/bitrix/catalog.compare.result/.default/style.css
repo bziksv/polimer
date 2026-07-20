@@ -368,8 +368,10 @@
     .compare-page .values .val,
     .compare-page .params-name .values .val,
     .compare-page .compare-items .items .item .values .val{
-        display: inline-block !important;
-        vertical-align: top !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        vertical-align: middle !important;
         width: 132px !important;
         min-width: 132px !important;
         max-width: 132px !important;
@@ -386,17 +388,35 @@
         white-space: nowrap !important;
     }
 
+    .compare-page .compare-items .items .item{
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: stretch !important;
+        width: auto !important;
+        white-space: nowrap !important;
+    }
+
+    .compare-page .compare-items .items .item .values{
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        align-items: stretch !important;
+        vertical-align: middle !important;
+    }
+
     .compare-page .compare-items .items .item .info{
         position: relative;
         z-index: 16;
-        display: inline-flex !important;
+        display: flex !important;
+        flex: 0 0 156px !important;
         align-items: center !important;
-        vertical-align: top !important;
+        align-self: stretch !important;
         width: 156px !important;
         min-width: 156px !important;
         max-width: 156px !important;
         box-sizing: border-box !important;
-        padding: 6px 8px 6px 10px !important;
+        padding: 8px 8px 8px 10px !important;
         background: #fff;
         will-change: transform;
         text-align: left !important;
@@ -412,7 +432,6 @@
         width: 36px !important;
         flex: 0 0 36px !important;
         display: block !important;
-        vertical-align: middle !important;
     }
 
     .compare-page .compare-items .items .item .info .img img{
@@ -423,13 +442,13 @@
 
     .compare-page .compare-items .items .item .info .name{
         display: block !important;
-        vertical-align: middle !important;
         flex: 1 1 auto !important;
         width: auto !important;
         max-width: none !important;
         min-width: 0 !important;
         min-height: 0 !important;
-        padding: 2px 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
         white-space: normal !important;
         text-align: left !important;
         font-size: 12px !important;
@@ -443,6 +462,7 @@
         -webkit-line-clamp: 3;
         overflow: hidden;
         word-break: break-word;
+        border: 0;
     }
 
     .compare-page .compare-items .items .item .values .val.val--actions{
