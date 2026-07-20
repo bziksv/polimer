@@ -163,31 +163,40 @@
         animation: compare-hint-nudge 1.15s ease-in-out infinite;
     }
 
-    /* Стрелка справа от viewport; вертикаль — центр блока товаров (JS) */
+    /* Стрелка справа; вертикаль — центр блока товаров (JS). Иконка — SVG по центру круга. */
     .compare-scroll-next{
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         position: absolute;
         top: 0;
         right: 8px;
         z-index: 25;
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
         margin: 0;
         padding: 0;
         border: 0;
         border-radius: 50%;
         background: #0464bb;
         color: #fff;
-        font-size: 20px;
-        line-height: 1;
+        font-size: 0;
+        line-height: 0;
         box-shadow: 0 2px 8px rgba(4, 100, 187, 0.35);
         cursor: pointer;
         -webkit-tap-highlight-color: transparent;
         transform: translateY(-50%);
-        animation: compare-hint-nudge 1.15s ease-in-out infinite;
+        animation: none;
         will-change: transform;
+    }
+
+    .compare-scroll-next__ico{
+        display: block;
+        width: 18px;
+        height: 18px;
+        margin: 0;
+        flex: 0 0 auto;
+        pointer-events: none;
     }
 
     .compare-scroll-wrap.is-hint-hidden .compare-scroll-hint,

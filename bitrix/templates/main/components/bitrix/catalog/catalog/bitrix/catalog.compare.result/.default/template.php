@@ -46,7 +46,11 @@ $arrPropertyCode = array();
     <div class="compare-scroll-wrap">
 	<p class="compare-scroll-hint">Листайте вправо, чтобы увидеть характеристики</p>
 	<div class="compare-scroll-viewport">
-	<button type="button" class="compare-scroll-next" aria-label="Показать характеристики">→</button>
+	<button type="button" class="compare-scroll-next" aria-label="Показать характеристики">
+		<svg class="compare-scroll-next__ico" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+			<path fill="currentColor" d="M6.3 3.2a1 1 0 0 1 1.4 0l5.1 5.1a1 1 0 0 1 0 1.4l-5.1 5.1a1 1 0 1 1-1.4-1.4L10.6 9 6.3 4.6a1 1 0 0 1 0-1.4z"/>
+		</svg>
+	</button>
 	<div class="inn">
 		<div class="params-name">
 			<div class="values">
