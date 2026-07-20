@@ -14873,16 +14873,19 @@ a.pickup-stores__item .desc {
 
 .compare-page .compare-items .item .delete {
     border: 0;
-    background: url(img/compare-close-ico.jpg) left top no-repeat transparent;
+    background: url(img/compare-close-ico.jpg) center center no-repeat transparent;
     position: absolute;
-    right: 10px;
-    top: 10px;
-    width: 12px;
-    height: 12px
+    right: 4px;
+    top: 4px;
+    width: 28px;
+    height: 28px;
+    z-index: 40;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation
 }
 
 .compare-page .compare-items .item .delete:hover {
-    background-position: left bottom
+    background-position: center bottom
 }
 
 .compare-page .compare-items .item .img {
@@ -14921,9 +14924,10 @@ a.pickup-stores__item .desc {
     }
 
     .compare-page .inn {
-        overflow-x: scroll;
+        overflow-x: auto;
         overflow-y: hidden;
-        touch-action: pan-y
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x pan-y
     }
 
     .compare-page .params-name {
@@ -14973,6 +14977,10 @@ a.pickup-stores__item .desc {
 
     .compare-page .compare-items .items .item .delete {
         top: 32%;
+        right: 0;
+        width: 36px;
+        height: 36px;
+        z-index: 40;
     }
 
     .compare-page .compare-items .items .item .values {
