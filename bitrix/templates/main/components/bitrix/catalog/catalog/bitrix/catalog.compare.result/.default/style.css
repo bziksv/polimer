@@ -81,13 +81,16 @@
     flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 8px;
     min-width: 100px;
 }
 
 .compare-page .compare-items .item .values .val.val--actions .add2basket{
-    margin: 0;
-    flex: 0 0 auto;
+    margin: 0 !important;
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
 }
 
 .compare-page .compare-items .item .values .val.val--actions .delete{
@@ -99,22 +102,148 @@
     right: auto !important;
     left: auto !important;
     z-index: 5;
-    width: 32px !important;
-    height: 32px !important;
+    flex: 0 0 40px;
+    width: 40px !important;
+    height: 40px !important;
     padding: 0 !important;
     box-sizing: border-box !important;
-    border: 0;
-    background: transparent !important;
-    color: #888;
-    font: 400 28px/1 Arial, sans-serif;
+    border: 1px solid #ced5d9 !important;
+    border-radius: 6px;
+    background: #fff !important;
+    color: #6b7280;
+    font: 400 14px/1 Arial, sans-serif;
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    transition: border-color .15s ease, color .15s ease, background .15s ease;
+}
+
+.compare-page .compare-items .item .values .val.val--actions .delete svg{
+    display: block;
+    width: 14px;
+    height: 14px;
 }
 
 .compare-page .compare-items .item .values .val.val--actions .delete:hover{
     color: #0464bb;
-    background: transparent !important;
+    border-color: #0464bb !important;
+    background: #f3f8fd !important;
+}
+
+/* Desktop: ровная шапка карточек + ячейки */
+@media screen and (min-width: 1020px){
+    .compare-scroll-hint,
+    .compare-scroll-next{
+        display: none !important;
+    }
+
+    .compare-page .compare-items .item{
+        width: 220px;
+        padding-bottom: 16px;
+        box-sizing: border-box;
+    }
+
+    .compare-page .compare-items .item .info{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        height: 268px;
+        padding: 8px 10px 0;
+        box-sizing: border-box;
+    }
+
+    .compare-page .compare-items .item .info .img{
+        flex: 0 0 160px;
+        width: 160px;
+        height: 160px;
+        margin: 0 auto 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .compare-page .compare-items .item .info .img a{
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    .compare-page .compare-items .item .info .img img{
+        max-width: 100%;
+        max-height: 160px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+    }
+
+    .compare-page .compare-items .item .info .name{
+        flex: 0 0 72px;
+        width: 100%;
+        height: 72px;
+        min-height: 72px !important;
+        margin: 0;
+        overflow: hidden;
+        font: 400 13px/1.35 'roboto', sans-serif;
+    }
+
+    .compare-page .compare-items .item .info .name a{
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-height: 72px;
+        border: 0;
+    }
+
+    .compare-page .params-name{
+        width: 240px;
+    }
+
+    .compare-page .params-name .values{
+        margin-top: 268px !important;
+        padding-bottom: 16px !important;
+    }
+
+    .compare-page .compare-items{
+        margin-left: 240px;
+    }
+
+    .compare-page .values .val,
+    .compare-page .params-name .values .val,
+    .compare-page .compare-items .item .values .val{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 52px;
+        padding: 10px 12px;
+        box-sizing: border-box;
+        font: 400 13px/1.35 'roboto', sans-serif;
+        white-space: normal;
+    }
+
+    .compare-page .params-name .values .val{
+        justify-content: flex-end;
+        text-align: right;
+        padding-right: 16px;
+        color: #555;
+        font-weight: 500;
+    }
+
+    .compare-page .params-name .values .val.basket{
+        height: auto;
+        min-height: 64px;
+    }
+
+    .compare-page .compare-items .item .values .val.val--actions{
+        display: flex !important;
+        min-height: 64px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
 }
 
 .compare-scroll-hint,
@@ -319,6 +448,7 @@
         flex: 0 0 36px !important;
         width: 36px !important;
         height: 36px !important;
+        border-radius: 6px !important;
     }
 
     .compare-page .compare-items .items .item .values .val.val--actions .delete{
@@ -329,14 +459,21 @@
         top: auto !important;
         right: auto !important;
         left: auto !important;
-        flex: 0 0 32px !important;
-        width: 32px !important;
-        height: 32px !important;
+        flex: 0 0 36px !important;
+        width: 36px !important;
+        height: 36px !important;
         padding: 0 !important;
-        background: transparent !important;
-        color: #888 !important;
-        font: 400 28px/1 Arial, sans-serif !important;
+        border: 1px solid #ced5d9 !important;
+        border-radius: 6px !important;
+        background: #fff !important;
+        color: #6b7280 !important;
+        font: 400 14px/1 Arial, sans-serif !important;
         line-height: 1 !important;
+    }
+
+    .compare-page .compare-items .items .item .values .val.val--actions .delete svg{
+        width: 12px;
+        height: 12px;
     }
 
     /* При скролле — только название, ширина колонки НЕ меняется (иначе съезд сетки) */

@@ -101,9 +101,9 @@ $arrPropertyCode = array();
 				<div class="item">
 					<div class="info">
 						<div class="img">
-							<a href="#"><img src="<?=$arElement['PREVIEW_PICTURE']['SRC']?>" style="max-height: 170px;" alt="<?=$arElement["NAME"]?>" /></a>
+							<a href="<?=$arElement['DETAIL_PAGE_URL']?>"><img src="<?=$arElement['PREVIEW_PICTURE']['SRC']?>" alt="<?=htmlspecialcharsbx($arElement["NAME"])?>" /></a>
 						</div>
-						<div class="name" style="min-height: 80px">
+						<div class="name">
 							<a href="<?=$arElement['DETAIL_PAGE_URL']?>"><?=$arElement["NAME"]?></a>
 						</div>
 					</div>
@@ -119,8 +119,10 @@ $arrPropertyCode = array();
 						<? endfor; ?>
 
 						<div class="val val--actions">
-							<a class="add2basket" href="javascript:void(0)" onclick="addToBasket2(<?=$arElement['ID']?>, 1);">&nbsp;</a>
-							<a href="<?=$delUrl?>" class="delete" title="Удалить из сравнения" aria-label="Удалить из сравнения">&times;</a>
+							<a class="add2basket" href="javascript:void(0)" onclick="addToBasket2(<?=$arElement['ID']?>, 1);" title="В корзину" aria-label="В корзину">&nbsp;</a>
+							<a href="<?=$delUrl?>" class="delete" title="Удалить из сравнения" aria-label="Удалить из сравнения">
+								<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path fill="currentColor" d="M2.1 2.1a1 1 0 0 1 1.4 0L7 5.6l3.5-3.5a1 1 0 1 1 1.4 1.4L8.4 7l3.5 3.5a1 1 0 1 1-1.4 1.4L7 8.4l-3.5 3.5a1 1 0 1 1-1.4-1.4L5.6 7 2.1 3.5a1 1 0 0 1 0-1.4z"/></svg>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -148,10 +150,17 @@ $arrPropertyCode = array();
 
 <script type="text/javascript">
 	(function(){
-		// Выравниваем высоты шапки ↔ значения товаров
-		var $headerCells = $('.compare-page .params-name .values > .val');
-		var $itemRows = $('.compare-page .compare-items .item .values');
-		if ($headerCells.length && $itemRows.length) {
+		// Выравниваем высоты шапки ↔ значения товаров (и после загрузки картинок)
+		function equalizeCompareRows(){
+			var $headerCells = $('.compare-page .params-name .values > .val');
+			var $itemRows = $('.compare-page .compare-items .item .values');
+			if (!$headerCells.length || !$itemRows.length) return;
+
+			$headerCells.css('height', '');
+			$itemRows.each(function(){
+				$(this).children('.val').css('height', '');
+			});
+
 			var colCount = $headerCells.length;
 			for (var c = 0; c < colCount; c++) {
 				var maxH = $headerCells.eq(c).outerHeight() || 0;
@@ -165,6 +174,10 @@ $arrPropertyCode = array();
 				});
 			}
 		}
+
+		equalizeCompareRows();
+		$(window).on('load resize', equalizeCompareRows);
+		$('.compare-page .compare-items .item .info img').on('load', equalizeCompareRows);
 	})();
 
 	var CatalogCompareObj = new BX.Iblock.Catalog.CompareClass("bx_catalog_compare_block");
