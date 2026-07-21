@@ -10742,9 +10742,44 @@ a.pickup-stores__item .desc {
     color: #333
 }
 
+.pc__tabs .t-content .tab.tab_nal .tab-row .tab-cell:nth-child(1) .store-place{
+    display: block;
+    margin: 0 0 6px;
+}
+
+.pc__tabs .t-content .tab.tab_nal .tab-row .tab-cell:nth-child(1) .store-place__name{
+    display: inline;
+    font-weight: 400;
+    color: #333;
+}
+
+.pc__tabs .t-content .tab.tab_nal .tab-row .tab-cell:nth-child(1) .store-place__addr{
+    display: inline;
+    margin-left: 4px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: #e8f2fb;
+    color: #0464bb;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: normal;
+}
+
+.pc__tabs .t-content .tab.tab_nal .tab-row .tab-cell:nth-child(1) .store-place__phone,
+.pc__tabs .t-content .tab.tab_nal .tab-row .tab-cell:nth-child(1) span.store-place__phone {
+    display: block;
+    font-weight: 700;
+    color: #0464bb;
+}
+
 .pc__tabs .t-content .tab.tab_nal .tab-row .tab-cell:nth-child(1) span {
     display: block;
     font-weight: 700
+}
+
+.pc__tabs .t-content .tab.tab_nal .tab-row .tab-cell:nth-child(1) .store-place span {
+    display: inline;
+    font-weight: inherit;
 }
 
 .pc__tabs .t-content .tab.tab_nal .tab-row .tab-cell:nth-child(1) a {
@@ -11586,6 +11621,27 @@ a.pickup-stores__item .desc {
 
     .pc__tabs .t-content .tab.m_active.tab_nal .content .tab-row .tab-cell:nth-child(1) span {
         font-weight: 400
+    }
+
+    .pc__tabs .t-content .tab.m_active.tab_nal .content .tab-row .tab-cell:nth-child(1) .store-place{
+        margin-bottom: 4px;
+    }
+
+    .pc__tabs .t-content .tab.m_active.tab_nal .content .tab-row .tab-cell:nth-child(1) span.store-place__addr{
+        display: inline-block;
+        margin: 4px 0 0;
+        margin-left: 0;
+        padding: 3px 8px;
+        border-radius: 3px;
+        background: #e8f2fb;
+        color: #0464bb;
+        font-weight: 600;
+    }
+
+    .pc__tabs .t-content .tab.m_active.tab_nal .content .tab-row .tab-cell:nth-child(1) span.store-place__phone{
+        display: block;
+        font-weight: 700;
+        color: #0464bb;
     }
 
     .pc__tabs .t-content .tab.m_active.tab_nal .content .tab-row .tab-cell:nth-child(2) {

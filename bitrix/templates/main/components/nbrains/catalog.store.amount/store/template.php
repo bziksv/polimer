@@ -11,6 +11,30 @@
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
+
+if (!function_exists('polimerRenderStorePlaceCell'))
+{
+	function polimerRenderStorePlaceCell(array $arProperty)
+	{
+		$name = (string)($arProperty['STORE_NAME'] ?? $arProperty['TITLE'] ?? '');
+		$address = (string)($arProperty['STORE_ADDRESS'] ?? $arProperty['ADDRESS'] ?? '');
+		$phone = (string)($arProperty['PHONE'] ?? '');
+		$email = (string)($arProperty['EMAIL'] ?? '');
+		?>
+		<div class="store-place">
+			<span class="store-place__name"><?=htmlspecialcharsbx($name)?></span><?php
+			if ($address !== ''): ?>
+				<span class="store-place__addr"><?=htmlspecialcharsbx($address)?></span><?php
+			endif; ?>
+		</div>
+		<?php if ($phone !== ''): ?>
+			<span class="store-place__phone"><?=htmlspecialcharsbx($phone)?></span>
+		<?php endif; ?>
+		<?php if ($email !== ''): ?>
+			email:<a href="mailto:<?=htmlspecialcharsbx($email)?>"><?=htmlspecialcharsbx($email)?></a>
+		<?php endif;
+	}
+}
 ?>
 
 	<div class="tab-row cl head">
@@ -25,7 +49,8 @@ $this->setFrameMode(true);
 	<? if($arProperty["AMOUNT"] && $arParams['CATALOG_QUANTITY']): ?>
 	<div class="tab-row cl">
 		<div class="tab-cell">
-			 <?=$arProperty["TITLE"]?><span><?=$arProperty["PHONE"]?></span><?if($arProperty["EMAIL"]):?>email:<a href="#"><?=$arProperty["EMAIL"]?></a><? endif; ?></div>
+			 <?php polimerRenderStorePlaceCell($arProperty); ?>
+		</div>
 		<div class="tab-cell">
 			<div class="mtn">Наличие</div>
 
@@ -72,7 +97,8 @@ $this->setFrameMode(true);
 		<?if(!$arParams['CATALOG_QUANTITY']):?>
 		<div class="tab-row cl">
 			<div class="tab-cell">
-				<?=$arProperty["TITLE"]?><span><?=$arProperty["PHONE"]?></span><?if($arProperty["EMAIL"]):?>email:<a href="#"><?=$arProperty["EMAIL"]?></a><? endif; ?></div>
+				<?php polimerRenderStorePlaceCell($arProperty); ?>
+			</div>
 			<div class="tab-cell">
 				<div class="mtn">Наличие</div>
 

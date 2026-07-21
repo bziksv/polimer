@@ -238,6 +238,7 @@ if ($this->startResultCache())
 				'ID' => $prop["ID"],
 				'URL' => $storeURL,
 				'TITLE' => $storeName,
+				'ADDRESS' => (isset($prop["ADDRESS"]) && $prop["ADDRESS"] != '') ? $prop["ADDRESS"] : null,
 				'PHONE' => $storePhone,
 				'SCHEDULE' => $storeSchedule,
 				'IMAGE_ID' => $storeImageId,
