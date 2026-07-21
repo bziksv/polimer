@@ -91,7 +91,7 @@ $formatPropValue = static function (array $arElement, $code) {
 				$isActive = ((int)$sect['ID'] === (int)$arResult['COMPARE_SECTION_ID']);
 			?>
 			<a class="cmp-cats__tab<?= $isActive ? ' is-active' : '' ?>"
-			   href="<?= $sect['URL'] ?>"
+			   href="<?= htmlspecialcharsbx($sect['URL']) ?>"
 			   <?= $isActive ? 'aria-current="page"' : '' ?>>
 				<span class="cmp-cats__name"><?= htmlspecialcharsbx($sect['NAME']) ?></span>
 				<span class="cmp-cats__count"><?= (int)$sect['COUNT'] ?></span>
@@ -124,60 +124,83 @@ $formatPropValue = static function (array $arElement, $code) {
 		<p class="cmp-empty">Список сравниваемых товаров пуст.</p>
 	<?php else: ?>
 
-	<div class="cmp-scroll">
-		<div class="cmp-grid">
-			<div class="cmp-head">
-				<div class="cmp-head__label" aria-hidden="true"></div>
-				<?php foreach ($items as $arElement):
-					$delUrl = '?action=DELETE_FROM_COMPARE_LIST&id='.(int)$arElement['ID'].$csidSuffix;
-					$imgSrc = $arElement['PREVIEW_PICTURE']['SRC'] ?? ($arElement['DETAIL_PICTURE']['SRC'] ?? '');
-					$priceText = $formatPrice($arElement['ID']);
-				?>
-				<div class="cmp-card">
-					<a class="cmp-card__remove" href="<?= htmlspecialcharsbx($delUrl) ?>" title="Удалить из сравнения" aria-label="Удалить из сравнения">
-						<svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path fill="currentColor" d="M2.1 2.1a1 1 0 0 1 1.4 0L7 5.6l3.5-3.5a1 1 0 1 1 1.4 1.4L8.4 7l3.5 3.5a1 1 0 1 1-1.4 1.4L7 8.4l-3.5 3.5a1 1 0 1 1-1.4-1.4L5.6 7 2.1 3.5a1 1 0 0 1 0-1.4z"/></svg>
-					</a>
-					<a class="cmp-card__img" href="<?= htmlspecialcharsbx($arElement['DETAIL_PAGE_URL']) ?>">
-						<?php if ($imgSrc): ?>
-							<img src="<?= htmlspecialcharsbx($imgSrc) ?>" alt="<?= htmlspecialcharsbx($arElement['NAME']) ?>">
-						<?php endif; ?>
-					</a>
-					<a class="cmp-card__name" href="<?= htmlspecialcharsbx($arElement['DETAIL_PAGE_URL']) ?>"><?= htmlspecialcharsbx($arElement['NAME']) ?></a>
-					<div class="cmp-card__buy">
-						<?php if ($priceText !== ''): ?>
-							<div class="cmp-card__price"><?= htmlspecialcharsbx($priceText) ?></div>
-						<?php endif; ?>
-						<button type="button" class="cmp-card__cart" onclick="addToBasket2(<?= (int)$arElement['ID'] ?>, 1);" title="В корзину" aria-label="В корзину">
-							<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM7.2 14h9.8c.8 0 1.5-.5 1.7-1.2L21 6H6.2L5.3 3H2v2h2l3.6 7.6L6.2 15c-.2.4-.2.8 0 1.2.3.5.9.8 1.5.8H19v-2H7.4l.8-1.5z"/></svg>
-						</button>
+	<div class="cmp-board" data-cmp-board>
+		<p class="cmp-scroll-hint">Листайте вправо, чтобы увидеть характеристики</p>
+		<div class="cmp-pin-head">
+			<div class="cmp-freeze">
+				<div class="cmp-freeze__rail cmp-freeze__rail--head" aria-hidden="true"></div>
+				<div class="cmp-hscroll" data-cmp-hscroll="head">
+					<div class="cmp-products">
+						<?php foreach ($items as $arElement):
+							$delUrl = '?action=DELETE_FROM_COMPARE_LIST&id='.(int)$arElement['ID'].$csidSuffix;
+							$imgSrc = $arElement['PREVIEW_PICTURE']['SRC'] ?? ($arElement['DETAIL_PICTURE']['SRC'] ?? '');
+							$priceText = $formatPrice($arElement['ID']);
+						?>
+						<div class="cmp-card">
+							<a class="cmp-card__remove" href="<?= htmlspecialcharsbx($delUrl) ?>" title="Удалить из сравнения" aria-label="Удалить из сравнения">
+								<svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true" focusable="false"><path fill="currentColor" d="M2.1 2.1a1 1 0 0 1 1.4 0L7 5.6l3.5-3.5a1 1 0 1 1 1.4 1.4L8.4 7l3.5 3.5a1 1 0 1 1-1.4 1.4L7 8.4l-3.5 3.5a1 1 0 1 1-1.4-1.4L5.6 7 2.1 3.5a1 1 0 0 1 0-1.4z"/></svg>
+							</a>
+							<a class="cmp-card__img" href="<?= htmlspecialcharsbx($arElement['DETAIL_PAGE_URL']) ?>">
+								<?php if ($imgSrc): ?>
+									<img src="<?= htmlspecialcharsbx($imgSrc) ?>" alt="<?= htmlspecialcharsbx($arElement['NAME']) ?>">
+								<?php endif; ?>
+							</a>
+							<a class="cmp-card__name" href="<?= htmlspecialcharsbx($arElement['DETAIL_PAGE_URL']) ?>"><?= htmlspecialcharsbx($arElement['NAME']) ?></a>
+							<?php if ($priceText !== ''): ?>
+								<div class="cmp-card__price"><?= htmlspecialcharsbx($priceText) ?></div>
+							<?php endif; ?>
+							<?php if (empty($showProps)): ?>
+								<button type="button" class="cmp-card__cart" onclick="addToBasket2(<?= (int)$arElement['ID'] ?>, 1);" title="В корзину" aria-label="В корзину"></button>
+							<?php endif; ?>
+						</div>
+						<?php endforeach; ?>
 					</div>
 				</div>
-				<?php endforeach; ?>
 			</div>
+		</div>
 
-			<?php if (!empty($showProps)): ?>
+		<?php if (!empty($showProps)): ?>
+		<div class="cmp-pin-body">
 			<section class="cmp-section is-open">
 				<button type="button" class="cmp-section__toggle" aria-expanded="true">
 					<span>Характеристики</span>
 					<svg class="cmp-section__chev" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M4.2 6.2a1 1 0 0 1 1.4 0L8 8.6l2.4-2.4a1 1 0 1 1 1.4 1.4l-3.1 3.1a1 1 0 0 1-1.4 0L4.2 7.6a1 1 0 0 1 0-1.4z"/></svg>
 				</button>
 				<div class="cmp-section__body">
-					<?php $rowIndex = 0; foreach ($showProps as $code => $arProperty): ?>
-					<div class="cmp-row<?= ($rowIndex % 2 === 1) ? ' is-alt' : '' ?>">
-						<div class="cmp-row__label"><?= htmlspecialcharsbx($arProperty['NAME']) ?></div>
-						<?php foreach ($items as $arElement):
-							$val = $formatPropValue($arElement, $code);
-						?>
-						<div class="cmp-row__val"><?= $val !== '' ? htmlspecialcharsbx($val) : '—' ?></div>
-						<?php endforeach; ?>
+					<div class="cmp-freeze">
+						<div class="cmp-freeze__rail">
+							<?php $rowIndex = 0; foreach ($showProps as $code => $arProperty): ?>
+							<div class="cmp-rail-row<?= ($rowIndex % 2 === 1) ? ' is-alt' : '' ?>" data-cmp-row="<?= $rowIndex ?>">
+								<?= htmlspecialcharsbx($arProperty['NAME']) ?>
+							</div>
+							<?php $rowIndex++; endforeach; ?>
+							<div class="cmp-rail-row cmp-rail-row--cart" data-cmp-row="<?= $rowIndex ?>">В корзину</div>
+						</div>
+						<div class="cmp-hscroll" data-cmp-hscroll="body">
+							<?php $rowIndex = 0; foreach ($showProps as $code => $arProperty): ?>
+							<div class="cmp-vals-row<?= ($rowIndex % 2 === 1) ? ' is-alt' : '' ?>" data-cmp-row="<?= $rowIndex ?>">
+								<?php foreach ($items as $arElement):
+									$val = $formatPropValue($arElement, $code);
+								?>
+								<div class="cmp-row__val"><?= $val !== '' ? htmlspecialcharsbx($val) : '—' ?></div>
+								<?php endforeach; ?>
+							</div>
+							<?php $rowIndex++; endforeach; ?>
+							<div class="cmp-vals-row cmp-vals-row--cart" data-cmp-row="<?= $rowIndex ?>">
+								<?php foreach ($items as $arElement): ?>
+								<div class="cmp-row__val cmp-row__val--cart">
+									<button type="button" class="cmp-card__cart" onclick="addToBasket2(<?= (int)$arElement['ID'] ?>, 1);" title="В корзину" aria-label="В корзину"></button>
+								</div>
+								<?php endforeach; ?>
+							</div>
+						</div>
 					</div>
-					<?php $rowIndex++; endforeach; ?>
 				</div>
 			</section>
-			<?php else: ?>
-			<p class="cmp-empty">Нет характеристик для сравнения.</p>
-			<?php endif; ?>
 		</div>
+		<?php else: ?>
+		<p class="cmp-empty">Нет характеристик для сравнения.</p>
+		<?php endif; ?>
 	</div>
 
 	<?php endif; ?>
@@ -188,17 +211,75 @@ $formatPropValue = static function (array $arElement, $code) {
 	var root = document.getElementById('bx_catalog_compare_block');
 	if (!root) return;
 
-	var head = root.querySelector('.cmp-head');
-	if (head) {
-		var stickyTop = parseFloat(window.getComputedStyle(head).top) || 64;
+	var pinHead = root.querySelector('.cmp-pin-head');
+	var board = root.querySelector('[data-cmp-board]');
+	var headScroll = root.querySelector('[data-cmp-hscroll="head"]');
+	var bodyScroll = root.querySelector('[data-cmp-hscroll="body"]');
+	var syncing = false;
+
+	function syncScroll(from, to){
+		if (!from || !to || syncing) return;
+		if (to.scrollLeft === from.scrollLeft) return;
+		syncing = true;
+		to.scrollLeft = from.scrollLeft;
+		window.requestAnimationFrame(function(){ syncing = false; });
+	}
+
+	function updateScrollHint(){
+		if (!board || !headScroll) return;
+		if (!window.matchMedia('(max-width: 1019px)').matches) {
+			board.classList.add('is-hint-hidden');
+			return;
+		}
+		var maxScroll = headScroll.scrollWidth - headScroll.clientWidth;
+		if (maxScroll <= 8) {
+			board.classList.add('is-hint-hidden');
+			return;
+		}
+		board.classList.remove('is-hint-hidden');
+		board.classList.toggle('is-scrolled', headScroll.scrollLeft > 12);
+	}
+
+	if (headScroll && bodyScroll) {
+		headScroll.addEventListener('scroll', function(){
+			syncScroll(headScroll, bodyScroll);
+			updateScrollHint();
+		}, {passive: true});
+		bodyScroll.addEventListener('scroll', function(){
+			syncScroll(bodyScroll, headScroll);
+			updateScrollHint();
+		}, {passive: true});
+		updateScrollHint();
+		window.addEventListener('resize', updateScrollHint);
+	}
+
+	function syncRowHeights(){
+		var rails = root.querySelectorAll('.cmp-rail-row[data-cmp-row]');
+		var vals = root.querySelectorAll('.cmp-vals-row[data-cmp-row]');
+		if (!rails.length || rails.length !== vals.length) return;
+		for (var i = 0; i < rails.length; i++) {
+			rails[i].style.minHeight = '';
+			vals[i].style.minHeight = '';
+		}
+		for (var j = 0; j < rails.length; j++) {
+			var h = Math.max(rails[j].offsetHeight, vals[j].offsetHeight);
+			rails[j].style.minHeight = h + 'px';
+			vals[j].style.minHeight = h + 'px';
+		}
+	}
+
+	syncRowHeights();
+	window.addEventListener('resize', syncRowHeights);
+
+	if (pinHead) {
+		var stickyTop = parseFloat(window.getComputedStyle(pinHead).top) || 64;
 		var onScroll = function(){
-			var y = head.getBoundingClientRect().top;
-			// порог = sticky top; размеры карточек не меняем
+			var y = pinHead.getBoundingClientRect().top;
 			root.classList.toggle('is-stuck', y <= stickyTop + 1);
 		};
 		window.addEventListener('scroll', onScroll, {passive: true});
 		window.addEventListener('resize', function(){
-			stickyTop = parseFloat(window.getComputedStyle(head).top) || 64;
+			stickyTop = parseFloat(window.getComputedStyle(pinHead).top) || 64;
 			onScroll();
 		});
 		onScroll();
@@ -210,6 +291,9 @@ $formatPropValue = static function (array $arElement, $code) {
 			if (!section) return;
 			var open = section.classList.toggle('is-open');
 			btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+			if (open) {
+				window.requestAnimationFrame(syncRowHeights);
+			}
 		});
 	});
 

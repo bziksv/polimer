@@ -149,8 +149,11 @@ if ($existShow || $existDelete)
 // --- Вкладки по разделам каталога (как у Ситилинка) ---
 $arResult['COMPARE_SECTIONS'] = array();
 $arResult['COMPARE_SECTION_ID'] = 0;
-$arResult['COMPARE_URL_DIFFERENT_N'] = $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=N';
-$arResult['COMPARE_URL_DIFFERENT_Y'] = $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=Y';
+
+// Чистые URL режимов (без текущего мусора в query и без двойного htmlspecialchars)
+$comparePage = $APPLICATION->GetCurPage();
+$arResult['COMPARE_URL_DIFFERENT_N'] = $comparePage.'?DIFFERENT=N';
+$arResult['COMPARE_URL_DIFFERENT_Y'] = $comparePage.'?DIFFERENT=Y';
 
 if (!empty($arResult['ITEMS']) && \Bitrix\Main\Loader::includeModule('iblock'))
 {
@@ -203,11 +206,11 @@ if (!empty($arResult['ITEMS']) && \Bitrix\Main\Loader::includeModule('iblock'))
 		$arResult['COMPARE_SECTION_ID'] = (int)$first['ID'];
 	}
 
-	$baseUrl = $arResult['~COMPARE_URL_TEMPLATE'] ?? '';
 	$different = !empty($arResult['DIFFERENT']) ? 'Y' : 'N';
 	foreach ($sections as $sid => &$sect)
 	{
-		$sect['URL'] = htmlspecialcharsbx($baseUrl.'DIFFERENT='.$different.'&csid='.$sid);
+		// без htmlspecialchars — экранируем в шаблоне
+		$sect['URL'] = $comparePage.'?DIFFERENT='.$different.'&csid='.$sid;
 	}
 	unset($sect);
 
@@ -254,8 +257,9 @@ if (!empty($arResult['ITEMS']) && \Bitrix\Main\Loader::includeModule('iblock'))
 		$arResult['SHOW_PROPERTIES'] = polimerFilterPublicCatalogProps($arResult['SHOW_PROPERTIES']);
 	}
 
-	$csidSuffix = '&csid='.(int)$arResult['COMPARE_SECTION_ID'];
-	$arResult['COMPARE_URL_DIFFERENT_N'] = $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=N'.$csidSuffix;
-	$arResult['COMPARE_URL_DIFFERENT_Y'] = $arResult['COMPARE_URL_TEMPLATE'].'DIFFERENT=Y'.$csidSuffix;
+	$csid = (int)$arResult['COMPARE_SECTION_ID'];
+	$csidSuffix = $csid > 0 ? '&csid='.$csid : '';
+	$arResult['COMPARE_URL_DIFFERENT_N'] = $comparePage.'?DIFFERENT=N'.$csidSuffix;
+	$arResult['COMPARE_URL_DIFFERENT_Y'] = $comparePage.'?DIFFERENT=Y'.$csidSuffix;
 }
 ?>
