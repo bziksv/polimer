@@ -188,6 +188,22 @@
 	z-index: 3;
 	background: #fff;
 	box-shadow: 4px 0 12px rgba(15, 23, 42, 0.06);
+	overflow: hidden;
+}
+
+.cmp-rail-row{
+	display: flex;
+	align-items: flex-start;
+	padding: 14px 12px;
+	color: var(--cmp-muted);
+	font: 500 13px/1.4 'roboto', sans-serif;
+	background: #fff;
+	min-width: 0;
+	max-width: 100%;
+	box-sizing: border-box;
+	overflow-wrap: anywhere;
+	word-break: break-word;
+	hyphens: auto;
 }
 
 .cmp-hscroll{
@@ -371,15 +387,6 @@
 .cmp-vals-row{
 	border-bottom: 1px solid var(--cmp-line);
 	box-sizing: border-box;
-}
-
-.cmp-rail-row{
-	display: flex;
-	align-items: flex-start;
-	padding: 14px 12px;
-	color: var(--cmp-muted);
-	font: 500 13px/1.4 'roboto', sans-serif;
-	background: #fff;
 }
 
 .cmp-rail-row.is-alt{
