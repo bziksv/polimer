@@ -1,539 +1,417 @@
-.compare-page .action-btn{
-    margin: 10px 0;
-}
-.compare-page .action-btn a{
-    border: 1px solid #ced5d9;
-    padding: 5px 10px;
-    line-height: 26px;
-    background: #fff;
-    border-radius: 3px;
-    color: #333;
-    font-size: 12px;
-    margin-right: 4px;
-    margin-bottom: 10px;
-}
+/* Сравнение товаров — визуал в духе Ситилинка (цвета Полимер) */
 
-.compare-page .action-btn a.current{
-    border-color: #0464bb;
-    color: #0464bb;
+.cmp{
+	--cmp-blue: #0464bb;
+	--cmp-blue-hover: #0358a6;
+	--cmp-line: #e8ecf0;
+	--cmp-muted: #6b7280;
+	--cmp-label-w: 220px;
+	--cmp-col-min: 180px;
+	--cmp-n: 1;
+	position: relative;
+	margin: 0 0 40px;
+	color: #1a1a1a;
+	font: 400 14px/1.4 'roboto', sans-serif;
 }
 
-.compare-cats{
-    margin: 0 0 14px;
-    border-bottom: 1px solid #e3e7eb;
+.cmp__title{
+	margin: 0 0 18px;
+	font: 700 28px/1.2 'roboto', sans-serif;
+	color: #111;
 }
 
-.compare-cats__track{
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 4px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    padding: 0 0 1px;
+/* Категории */
+.cmp-cats{
+	margin: 0 0 16px;
+	border-bottom: 1px solid var(--cmp-line);
 }
 
-.compare-cats__tab{
-    flex: 0 0 auto;
-    display: inline-flex;
-    align-items: baseline;
-    gap: 6px;
-    padding: 10px 12px 12px;
-    border: 0;
-    border-bottom: 3px solid transparent;
-    margin-bottom: -1px;
-    color: #555;
-    font: 500 14px/1.2 'roboto', sans-serif;
-    text-decoration: none;
-    white-space: nowrap;
-    background: transparent;
+.cmp-cats__track{
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 4px;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: thin;
+	padding: 0 0 1px;
 }
 
-.compare-cats__tab:hover{
-    color: #0464bb;
+.cmp-cats__tab{
+	flex: 0 0 auto;
+	display: inline-flex;
+	align-items: baseline;
+	gap: 6px;
+	padding: 10px 12px 12px;
+	border: 0;
+	border-bottom: 3px solid transparent;
+	margin-bottom: -1px;
+	color: #555;
+	font: 500 14px/1.2 'roboto', sans-serif;
+	text-decoration: none;
+	white-space: nowrap;
+	background: transparent;
 }
 
-.compare-cats__tab.is-active{
-    color: #111;
-    border-bottom-color: #111;
+.cmp-cats__tab:hover{ color: var(--cmp-blue); }
+.cmp-cats__tab.is-active{
+	color: #111;
+	border-bottom-color: #111;
+}
+.cmp-cats__count{
+	color: #888;
+	font-weight: 400;
+	font-size: 13px;
 }
 
-.compare-cats__count{
-    color: #888;
-    font-weight: 400;
-    font-size: 13px;
+/* Тулбар */
+.cmp-toolbar{
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin: 0 0 20px;
 }
 
-.compare-cats__tab.is-active .compare-cats__count{
-    color: #555;
+.cmp-toolbar__modes{
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 8px;
 }
 
-.compare-cats__name{
-    max-width: 180px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.cmp-mode{
+	display: inline-flex;
+	align-items: center;
+	padding: 8px 14px;
+	border: 1px solid #d5dbe3;
+	border-radius: 6px;
+	background: #fff;
+	color: #333;
+	font: 500 13px/1.2 'roboto', sans-serif;
+	text-decoration: none;
 }
 
-/* Крестик в конце ряда — после корзины */
-.compare-page .compare-items .item .values .val.val--actions{
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    min-width: 100px;
+.cmp-mode:hover{
+	border-color: var(--cmp-blue);
+	color: var(--cmp-blue);
 }
 
-.compare-page .compare-items .item .values .val.val--actions .add2basket{
-    margin: 0 !important;
-    flex: 0 0 40px;
-    width: 40px;
-    height: 40px;
-    border-radius: 6px;
+.cmp-mode.is-active{
+	border-color: var(--cmp-blue);
+	color: var(--cmp-blue);
+	box-shadow: inset 0 0 0 1px var(--cmp-blue);
 }
 
-.compare-page .compare-items .item .values .val.val--actions .delete{
-    position: static !important;
-    display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
-    top: auto !important;
-    right: auto !important;
-    left: auto !important;
-    z-index: 5;
-    flex: 0 0 40px;
-    width: 40px !important;
-    height: 40px !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
-    border: 1px solid #ced5d9 !important;
-    border-radius: 6px;
-    background: #fff !important;
-    color: #6b7280;
-    font: 400 14px/1 Arial, sans-serif;
-    text-decoration: none;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    transition: border-color .15s ease, color .15s ease, background .15s ease;
+.cmp-clear{
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 4px;
+	color: var(--cmp-muted);
+	font: 500 13px/1.2 'roboto', sans-serif;
+	text-decoration: none;
 }
 
-.compare-page .compare-items .item .values .val.val--actions .delete svg{
-    display: block;
-    width: 14px;
-    height: 14px;
+.cmp-clear:hover{ color: #c0392b; }
+
+.cmp-empty{
+	margin: 24px 0;
+	color: var(--cmp-muted);
 }
 
-.compare-page .compare-items .item .values .val.val--actions .delete:hover{
-    color: #0464bb;
-    border-color: #0464bb !important;
-    background: #f3f8fd !important;
+/* Горизонтальный скролл таблицы */
+.cmp-scroll{
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	margin: 0 -4px;
+	padding: 0 4px;
 }
 
-/* Desktop: ровная шапка карточек + ячейки */
-@media screen and (min-width: 1020px){
-    .compare-scroll-hint,
-    .compare-scroll-next{
-        display: none !important;
-    }
-
-    .compare-page .compare-items .item{
-        width: 220px;
-        padding-bottom: 16px;
-        box-sizing: border-box;
-    }
-
-    .compare-page .compare-items .item .info{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        height: 268px;
-        padding: 8px 10px 0;
-        box-sizing: border-box;
-    }
-
-    .compare-page .compare-items .item .info .img{
-        flex: 0 0 160px;
-        width: 160px;
-        height: 160px;
-        margin: 0 auto 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .compare-page .compare-items .item .info .img a{
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-    }
-
-    .compare-page .compare-items .item .info .img img{
-        max-width: 100%;
-        max-height: 160px;
-        width: auto;
-        height: auto;
-        object-fit: contain;
-    }
-
-    .compare-page .compare-items .item .info .name{
-        flex: 0 0 72px;
-        width: 100%;
-        height: 72px;
-        min-height: 72px !important;
-        margin: 0;
-        overflow: hidden;
-        font: 400 13px/1.35 'roboto', sans-serif;
-    }
-
-    .compare-page .compare-items .item .info .name a{
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-height: 72px;
-        border: 0;
-    }
-
-    .compare-page .params-name{
-        width: 240px;
-    }
-
-    .compare-page .params-name .values{
-        margin-top: 268px !important;
-        padding-bottom: 16px !important;
-    }
-
-    .compare-page .compare-items{
-        margin-left: 240px;
-    }
-
-    .compare-page .values .val,
-    .compare-page .params-name .values .val,
-    .compare-page .compare-items .item .values .val{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 52px;
-        padding: 10px 12px;
-        box-sizing: border-box;
-        font: 400 13px/1.35 'roboto', sans-serif;
-        white-space: normal;
-    }
-
-    .compare-page .params-name .values .val{
-        justify-content: flex-end;
-        text-align: right;
-        padding-right: 16px;
-        color: #555;
-        font-weight: 500;
-    }
-
-    .compare-page .params-name .values .val.basket{
-        height: auto;
-        min-height: 64px;
-    }
-
-    .compare-page .compare-items .item .values .val.val--actions{
-        display: flex !important;
-        min-height: 64px;
-        padding-top: 12px;
-        padding-bottom: 12px;
-    }
+.cmp-grid{
+	min-width: calc(var(--cmp-label-w) + (var(--cmp-n) * var(--cmp-col-min)));
 }
 
-.compare-scroll-hint,
-.compare-scroll-next{
-    display: none;
+.cmp-head,
+.cmp-row,
+.cmp-section__toggle{
+	display: grid;
+	grid-template-columns: var(--cmp-label-w) repeat(var(--cmp-n), minmax(var(--cmp-col-min), 1fr));
+	align-items: stretch;
 }
 
+/* Sticky шапка товаров */
+.cmp-head{
+	position: sticky;
+	top: 64px;
+	z-index: 30;
+	background: #fff;
+	padding: 8px 0 16px;
+	border-bottom: 1px solid var(--cmp-line);
+	transition: box-shadow .2s ease;
+}
+
+.cmp.is-stuck .cmp-head{
+	box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.cmp-head__label{
+	min-height: 1px;
+}
+
+.cmp-card{
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 8px 12px 4px;
+	box-sizing: border-box;
+}
+
+.cmp-card__remove{
+	position: absolute;
+	top: 4px;
+	right: 8px;
+	z-index: 2;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	color: #9aa3af;
+	text-decoration: none;
+	background: transparent;
+}
+
+.cmp-card__remove:hover{
+	color: #111;
+	background: #f3f4f6;
+}
+
+.cmp-card__img{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 140px;
+	margin-top: 8px;
+	text-decoration: none;
+}
+
+.cmp-card__img img{
+	max-width: 100%;
+	max-height: 140px;
+	width: auto;
+	height: auto;
+	object-fit: contain;
+}
+
+.cmp-card__name{
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+	min-height: 3.9em;
+	color: #111;
+	font: 400 14px/1.3 'roboto', sans-serif;
+	text-decoration: none;
+}
+
+.cmp-card__name:hover{ color: var(--cmp-blue); }
+
+.cmp-card__buy{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	width: 100%;
+	margin-top: auto;
+}
+
+.cmp-card__price{
+	font: 700 20px/1.2 'roboto', sans-serif;
+	color: var(--cmp-blue);
+}
+
+.cmp-card__cart{
+	flex: 0 0 44px;
+	width: 44px;
+	height: 44px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: 0;
+	border-radius: 50%;
+	background: var(--cmp-blue);
+	color: #fff;
+	cursor: pointer;
+	box-shadow: 0 2px 8px rgba(4, 100, 187, 0.28);
+}
+
+.cmp-card__cart:hover{ background: var(--cmp-blue-hover); }
+
+/* Секции характеристик */
+.cmp-section{
+	margin-top: 8px;
+}
+
+.cmp-section__toggle{
+	width: 100%;
+	align-items: center;
+	grid-template-columns: 1fr auto;
+	gap: 12px;
+	margin: 0;
+	padding: 16px 4px 12px;
+	border: 0;
+	border-bottom: 1px solid var(--cmp-line);
+	background: transparent;
+	color: #111;
+	font: 700 16px/1.3 'roboto', sans-serif;
+	text-align: left;
+	cursor: pointer;
+}
+
+.cmp-section__chev{
+	transition: transform .2s ease;
+	color: var(--cmp-muted);
+}
+
+.cmp-section.is-open .cmp-section__chev{
+	transform: rotate(180deg);
+}
+
+.cmp-section__body{
+	display: none;
+}
+
+.cmp-section.is-open .cmp-section__body{
+	display: block;
+}
+
+.cmp-row{
+	border-bottom: 1px solid var(--cmp-line);
+}
+
+.cmp-row.is-alt{
+	background: #f7f9fb;
+}
+
+.cmp-row__label,
+.cmp-row__val{
+	padding: 14px 12px;
+	box-sizing: border-box;
+	font: 400 13px/1.4 'roboto', sans-serif;
+}
+
+.cmp-row__label{
+	color: var(--cmp-muted);
+	font-weight: 500;
+}
+
+.cmp-row__val{
+	color: #1f2937;
+	word-break: break-word;
+}
+
+/* Mobile / tablet */
 @media screen and (max-width: 1019px){
-    .compare-cats__name{
-        max-width: 140px;
-    }
+	.cmp{
+		--cmp-label-w: 100px;
+		--cmp-col-min: 148px;
+		margin-bottom: 28px;
+	}
 
-    .compare-page .action-btn a{
-        width: 100%;
-        display: block;
-        text-align: center;
-    }
+	.cmp__title{
+		font-size: 22px;
+		margin-bottom: 12px;
+	}
 
-    .compare-scroll-wrap{
-        position: relative;
-    }
+	.cmp-toolbar{
+		flex-direction: column;
+		align-items: stretch;
+		gap: 10px;
+	}
 
-    .compare-scroll-viewport{
-        position: relative;
-    }
+	.cmp-toolbar__modes{
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
 
-    .compare-scroll-hint{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        margin: 0 0 12px;
-        padding: 11px 14px;
-        background: #eef5fc;
-        border: 1px solid #c5daf0;
-        border-radius: 4px;
-        color: #0464bb;
-        font: 500 13px/1.35 'roboto', sans-serif;
-    }
+	.cmp-mode{
+		justify-content: center;
+		padding: 10px 8px;
+		font-size: 12px;
+	}
 
-    .compare-scroll-hint::after{
-        content: "→";
-        flex: 0 0 auto;
-        font-size: 20px;
-        line-height: 1;
-        animation: compare-hint-nudge 1.15s ease-in-out infinite;
-    }
+	.cmp-clear{
+		justify-content: center;
+	}
 
-    /* Стрелка справа; вертикаль — центр блока товаров (JS). Иконка — SVG по центру круга. */
-    .compare-scroll-next{
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        position: absolute;
-        top: 0;
-        right: 8px;
-        z-index: 25;
-        width: 44px;
-        height: 44px;
-        margin: 0;
-        padding: 0;
-        border: 0;
-        border-radius: 50%;
-        background: #0464bb;
-        color: #fff;
-        font-size: 0;
-        line-height: 0;
-        box-shadow: 0 2px 8px rgba(4, 100, 187, 0.35);
-        cursor: pointer;
-        -webkit-tap-highlight-color: transparent;
-        transform: translateY(-50%);
-        animation: none;
-        will-change: transform;
-    }
+	/* На мобилке шапка товаров без пустой колонки — на всю ширину */
+	.cmp-head{
+		top: 56px;
+		padding-bottom: 10px;
+		grid-template-columns: repeat(var(--cmp-n), minmax(var(--cmp-col-min), 1fr));
+	}
 
-    .compare-scroll-next__ico{
-        display: block;
-        width: 18px;
-        height: 18px;
-        margin: 0;
-        flex: 0 0 auto;
-        pointer-events: none;
-    }
+	.cmp-head__label{
+		display: none;
+	}
 
-    .compare-scroll-wrap.is-hint-hidden .compare-scroll-hint,
-    .compare-scroll-wrap.is-scrolled .compare-scroll-hint{
-        display: none;
-    }
+	.cmp-card{
+		padding: 6px 8px;
+		gap: 8px;
+	}
 
-    .compare-scroll-wrap.is-hint-hidden .compare-scroll-next,
-    .compare-scroll-wrap.is-scrolled-end .compare-scroll-next{
-        display: none;
-    }
+	.cmp-card__img{
+		height: 88px;
+		margin-top: 18px;
+	}
 
-    .compare-scroll-viewport::after{
-        content: "";
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: 40px;
-        pointer-events: none;
-        z-index: 20;
-        background: linear-gradient(to right, rgba(255,255,255,0), #fff 70%);
-        opacity: 1;
-        transition: opacity .2s ease;
-    }
+	.cmp-card__img img{ max-height: 88px; }
 
-    .compare-scroll-wrap.is-hint-hidden .compare-scroll-viewport::after,
-    .compare-scroll-wrap.is-scrolled-end .compare-scroll-viewport::after{
-        opacity: 0;
-    }
+	.cmp-card__name{
+		font-size: 12px;
+		min-height: 3.6em;
+		-webkit-line-clamp: 3;
+	}
 
-    .compare-page .compare-items{
-        overflow: visible !important;
-    }
+	.cmp-card__price{ font-size: 15px; }
 
-    /*
-     * Единая сетка колонок: одинаковая ширина и padding у шапки и значений,
-     * иначе «Цена/Вес» уезжают относительно цифр.
-     */
-    .compare-page .values .val,
-    .compare-page .params-name .values .val,
-    .compare-page .compare-items .items .item .values .val{
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        vertical-align: middle !important;
-        width: 132px !important;
-        min-width: 132px !important;
-        max-width: 132px !important;
-        box-sizing: border-box !important;
-        padding: 12px 8px !important;
-        margin: 0 !important;
-        text-align: center !important;
-        white-space: normal !important;
-    }
+	.cmp-card__cart{
+		width: 38px;
+		height: 38px;
+		flex-basis: 38px;
+	}
 
-    .compare-page .params-name .values{
-        margin: 0 0 0 128px !important;
-        padding: 0 !important;
-        white-space: nowrap !important;
-    }
+	.cmp-row{
+		grid-template-columns: var(--cmp-label-w) repeat(var(--cmp-n), minmax(var(--cmp-col-min), 1fr));
+	}
 
-    .compare-page .compare-items .items .item{
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        align-items: stretch !important;
-        width: auto !important;
-        white-space: nowrap !important;
-    }
+	.cmp-row__label,
+	.cmp-row__val{
+		padding: 10px 6px;
+		font-size: 12px;
+	}
 
-    .compare-page .compare-items .items .item .values{
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        align-items: stretch !important;
-        vertical-align: middle !important;
-    }
-
-    .compare-page .compare-items .items .item .info{
-        position: relative;
-        z-index: 16;
-        display: flex !important;
-        flex: 0 0 128px !important;
-        align-items: center !important;
-        align-self: stretch !important;
-        width: 128px !important;
-        min-width: 128px !important;
-        max-width: 128px !important;
-        box-sizing: border-box !important;
-        padding: 6px 4px 6px 6px !important;
-        background: #fff;
-        will-change: transform;
-        text-align: left !important;
-        white-space: nowrap !important;
-        gap: 4px;
-    }
-
-    .compare-page .compare-items .items .item:nth-child(2n) .info{
-        background: #f5f6f8;
-    }
-
-    .compare-page .compare-items .items .item .info .img{
-        width: 36px !important;
-        flex: 0 0 36px !important;
-        display: block !important;
-    }
-
-    .compare-page .compare-items .items .item .info .img img{
-        width: 36px !important;
-        height: auto !important;
-        display: block;
-    }
-
-    .compare-page .compare-items .items .item .info .name{
-        display: block !important;
-        flex: 1 1 auto !important;
-        width: auto !important;
-        max-width: none !important;
-        min-width: 0 !important;
-        min-height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        white-space: normal !important;
-        text-align: left !important;
-        font-size: 12px !important;
-        line-height: 1.3 !important;
-        overflow: hidden;
-    }
-
-    .compare-page .compare-items .items .item .info .name a{
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
-        overflow: hidden;
-        word-break: break-word;
-        border: 0;
-    }
-
-    .compare-page .compare-items .items .item .values .val.val--actions{
-        display: inline-flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 8px;
-        width: 132px !important;
-        min-width: 132px !important;
-        max-width: 132px !important;
-        box-sizing: border-box !important;
-        vertical-align: middle !important;
-    }
-
-    .compare-page .compare-items .items .item .values .val.val--actions .add2basket{
-        display: block !important;
-        margin: 0 !important;
-        flex: 0 0 36px !important;
-        width: 36px !important;
-        height: 36px !important;
-        border-radius: 6px !important;
-    }
-
-    .compare-page .compare-items .items .item .values .val.val--actions .delete{
-        position: static !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        top: auto !important;
-        right: auto !important;
-        left: auto !important;
-        flex: 0 0 36px !important;
-        width: 36px !important;
-        height: 36px !important;
-        padding: 0 !important;
-        border: 1px solid #ced5d9 !important;
-        border-radius: 6px !important;
-        background: #fff !important;
-        color: #6b7280 !important;
-        font: 400 14px/1 Arial, sans-serif !important;
-        line-height: 1 !important;
-    }
-
-    .compare-page .compare-items .items .item .values .val.val--actions .delete svg{
-        width: 12px;
-        height: 12px;
-    }
-
-    /* При скролле — только название, ширина колонки НЕ меняется (иначе съезд сетки) */
-    .compare-scroll-wrap.is-scrolled .compare-items .items .item .info{
-        box-shadow: 4px 0 10px rgba(0, 0, 0, 0.08);
-    }
-
-    .compare-scroll-wrap.is-scrolled .compare-items .items .item .info .img{
-        display: none !important;
-    }
-
-    .compare-scroll-wrap.is-scrolled .compare-items .items .item .info .name{
-        width: auto !important;
-        max-width: none !important;
-        flex: 1 1 auto !important;
-    }
-
-    .compare-scroll-wrap.is-scrolled .compare-items .items .item .info .name a{
-        -webkit-line-clamp: 4;
-    }
+	.cmp-section__toggle{
+		display: flex;
+		font-size: 15px;
+		padding: 14px 2px 10px;
+		grid-template-columns: unset;
+	}
 }
 
-@keyframes compare-hint-nudge{
-    0%, 100%{ transform: translateY(-50%) translateX(0); }
-    50%{ transform: translateY(-50%) translateX(5px); }
+@media screen and (max-width: 660px){
+	.cmp{
+		--cmp-label-w: 96px;
+		--cmp-col-min: 132px;
+	}
+
+	.cmp-card__buy{
+		flex-wrap: wrap;
+	}
 }
+
+/* Совместимость: старый корневой класс больше не используется */
