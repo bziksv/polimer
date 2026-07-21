@@ -237,53 +237,31 @@ if (!empty($arResult['ITEMS']) && \Bitrix\Main\Loader::includeModule('iblock'))
 		foreach ($arResult['ITEMS'] as &$arItem)
 		{
 			$elementId = (int)($arItem['ID'] ?? 0);
-			$iblockId = (int)($arItem['IBLOCK_ID'] ?? 0);
-			if ($elementId <= 0 || $iblockId <= 0)
+			if ($elementId <= 0)
 			{
 				continue;
 			}
 
-			$propsByCode = array();
-			$rsProps = CIBlockElement::GetProperty(
-				$iblockId,
-				$elementId,
-				array('sort' => 'asc', 'id' => 'asc'),
-				array('ACTIVE' => 'Y', 'EMPTY' => 'N')
-			);
-			while ($prop = $rsProps->Fetch())
+			$obElement = CIBlockElement::GetByID($elementId)->GetNextElement();
+			if (!$obElement)
 			{
-				$code = (string)($prop['CODE'] !== '' && $prop['CODE'] !== null ? $prop['CODE'] : $prop['ID']);
-				if ($code === '' || polimerIsHiddenCatalogProp($code, (string)$prop['NAME']))
-				{
-					continue;
-				}
+				continue;
+			}
 
-				if (!isset($propsByCode[$code]))
-				{
-					$propsByCode[$code] = $prop;
-					$propsByCode[$code]['VALUE'] = array();
-					$propsByCode[$code]['DESCRIPTION'] = array();
-				}
-
-				if (is_array($prop['VALUE']))
-				{
-					foreach ($prop['VALUE'] as $v)
-					{
-						$propsByCode[$code]['VALUE'][] = $v;
-					}
-				}
-				else
-				{
-					$propsByCode[$code]['VALUE'][] = $prop['VALUE'];
-				}
+			$props = $obElement->GetProperties();
+			if (!is_array($props))
+			{
+				continue;
 			}
 
 			$arItem['DISPLAY_PROPERTIES'] = array();
-			foreach ($propsByCode as $code => $prop)
+			foreach ($props as $code => $prop)
 			{
-				if (count($prop['VALUE']) === 1)
+				$code = (string)$code;
+				$propName = (string)($prop['NAME'] ?? '');
+				if ($code === '' || polimerIsHiddenCatalogProp($code, $propName))
 				{
-					$prop['VALUE'] = $prop['VALUE'][0];
+					continue;
 				}
 				if (!polimerPropHasPublicValue($prop['VALUE'] ?? null))
 				{
@@ -295,9 +273,42 @@ if (!empty($arResult['ITEMS']) && \Bitrix\Main\Loader::includeModule('iblock'))
 				{
 					continue;
 				}
-				if (!polimerPropHasPublicValue($display['DISPLAY_VALUE'] ?? null) && !polimerPropHasPublicValue($display['VALUE'] ?? null))
+
+				// Для списков/справочников в VALUE часто ID — берём только человекочитаемый DISPLAY_VALUE
+				$displayValue = $display['DISPLAY_VALUE'] ?? null;
+				if (!polimerPropHasPublicValue($displayValue))
 				{
-					continue;
+					// fallback: VALUE_ENUM для списков
+					if (polimerPropHasPublicValue($prop['VALUE_ENUM'] ?? null))
+					{
+						$display['DISPLAY_VALUE'] = $prop['VALUE_ENUM'];
+					}
+					elseif (polimerPropHasPublicValue($prop['VALUE_ENUM_ID'] ?? null) === false
+						&& isset($prop['VALUE']) && !is_numeric($prop['VALUE'])
+						&& polimerPropHasPublicValue($prop['VALUE']))
+					{
+						$display['DISPLAY_VALUE'] = $prop['VALUE'];
+					}
+					else
+					{
+						continue;
+					}
+				}
+
+				// Не показываем «голые» ID вместо названий
+				$check = $display['DISPLAY_VALUE'];
+				if (!is_array($check) && ctype_digit(trim((string)$check)))
+				{
+					if (polimerPropHasPublicValue($prop['VALUE_ENUM'] ?? null))
+					{
+						$display['DISPLAY_VALUE'] = is_array($prop['VALUE_ENUM'])
+							? implode(', ', $prop['VALUE_ENUM'])
+							: $prop['VALUE_ENUM'];
+					}
+					elseif (($prop['PROPERTY_TYPE'] ?? '') === 'L' || ($prop['USER_TYPE'] ?? '') === 'directory')
+					{
+						continue;
+					}
 				}
 
 				$arItem['DISPLAY_PROPERTIES'][$code] = $display;
@@ -306,9 +317,9 @@ if (!empty($arResult['ITEMS']) && \Bitrix\Main\Loader::includeModule('iblock'))
 					$showProps[$code] = array(
 						'ID' => $prop['ID'],
 						'CODE' => $code,
-						'NAME' => $prop['NAME'],
-						'SORT' => (int)$prop['SORT'],
-						'PROPERTY_TYPE' => $prop['PROPERTY_TYPE'],
+						'NAME' => $propName,
+						'SORT' => (int)($prop['SORT'] ?? 500),
+						'PROPERTY_TYPE' => $prop['PROPERTY_TYPE'] ?? '',
 					);
 				}
 			}
