@@ -228,31 +228,106 @@ if (!empty($arResult['ITEMS']) && \Bitrix\Main\Loader::includeModule('iblock'))
 			}
 		}
 		$arResult['ITEMS'] = $filtered;
+	}
 
-		if (!empty($arResult['SHOW_PROPERTIES']))
+	// Как в карточке: все заполненные публичные свойства, а не урезанный PROPERTY_CODE/features
+	if (!empty($arResult['ITEMS']) && function_exists('polimerIsHiddenCatalogProp'))
+	{
+		$showProps = array();
+		foreach ($arResult['ITEMS'] as &$arItem)
 		{
-			foreach ($arResult['SHOW_PROPERTIES'] as $code => $arProp)
+			$elementId = (int)($arItem['ID'] ?? 0);
+			$iblockId = (int)($arItem['IBLOCK_ID'] ?? 0);
+			if ($elementId <= 0 || $iblockId <= 0)
 			{
-				$hasValue = false;
-				foreach ($arResult['ITEMS'] as $arItem)
+				continue;
+			}
+
+			$propsByCode = array();
+			$rsProps = CIBlockElement::GetProperty(
+				$iblockId,
+				$elementId,
+				array('sort' => 'asc', 'id' => 'asc'),
+				array('ACTIVE' => 'Y', 'EMPTY' => 'N')
+			);
+			while ($prop = $rsProps->Fetch())
+			{
+				$code = (string)($prop['CODE'] !== '' && $prop['CODE'] !== null ? $prop['CODE'] : $prop['ID']);
+				if ($code === '' || polimerIsHiddenCatalogProp($code, (string)$prop['NAME']))
 				{
-					$val = $arItem['DISPLAY_PROPERTIES'][$code]['VALUE'] ?? null;
-					if ($val !== null && $val !== '' && $val !== array())
+					continue;
+				}
+
+				if (!isset($propsByCode[$code]))
+				{
+					$propsByCode[$code] = $prop;
+					$propsByCode[$code]['VALUE'] = array();
+					$propsByCode[$code]['DESCRIPTION'] = array();
+				}
+
+				if (is_array($prop['VALUE']))
+				{
+					foreach ($prop['VALUE'] as $v)
 					{
-						$hasValue = true;
-						break;
+						$propsByCode[$code]['VALUE'][] = $v;
 					}
 				}
-				if (!$hasValue)
+				else
 				{
-					unset($arResult['SHOW_PROPERTIES'][$code]);
+					$propsByCode[$code]['VALUE'][] = $prop['VALUE'];
+				}
+			}
+
+			$arItem['DISPLAY_PROPERTIES'] = array();
+			foreach ($propsByCode as $code => $prop)
+			{
+				if (count($prop['VALUE']) === 1)
+				{
+					$prop['VALUE'] = $prop['VALUE'][0];
+				}
+				if (!polimerPropHasPublicValue($prop['VALUE'] ?? null))
+				{
+					continue;
+				}
+
+				$display = CIBlockFormatProperties::GetDisplayValue($arItem, $prop);
+				if ($display === false || !is_array($display))
+				{
+					continue;
+				}
+				if (!polimerPropHasPublicValue($display['DISPLAY_VALUE'] ?? null) && !polimerPropHasPublicValue($display['VALUE'] ?? null))
+				{
+					continue;
+				}
+
+				$arItem['DISPLAY_PROPERTIES'][$code] = $display;
+				if (!isset($showProps[$code]))
+				{
+					$showProps[$code] = array(
+						'ID' => $prop['ID'],
+						'CODE' => $code,
+						'NAME' => $prop['NAME'],
+						'SORT' => (int)$prop['SORT'],
+						'PROPERTY_TYPE' => $prop['PROPERTY_TYPE'],
+					);
 				}
 			}
 		}
-	}
+		unset($arItem);
 
-	// Служебные / маркетплейс-свойства не показываем в сравнении
-	if (!empty($arResult['SHOW_PROPERTIES']) && function_exists('polimerFilterPublicCatalogProps'))
+		uasort($showProps, static function ($a, $b) {
+			$sa = (int)($a['SORT'] ?? 500);
+			$sb = (int)($b['SORT'] ?? 500);
+			if ($sa === $sb)
+			{
+				return strcmp((string)$a['NAME'], (string)$b['NAME']);
+			}
+			return $sa <=> $sb;
+		});
+
+		$arResult['SHOW_PROPERTIES'] = $showProps;
+	}
+	elseif (!empty($arResult['SHOW_PROPERTIES']) && function_exists('polimerFilterPublicCatalogProps'))
 	{
 		$arResult['SHOW_PROPERTIES'] = polimerFilterPublicCatalogProps($arResult['SHOW_PROPERTIES']);
 	}
