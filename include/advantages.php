@@ -53,7 +53,7 @@
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 32px;
-    margin-bottom: 60px;
+	margin: 50px 0;
 }
 
 .advantages-item {

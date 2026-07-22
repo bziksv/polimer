@@ -13952,12 +13952,39 @@ a.pickup-stores__item .desc {
     }
 }
 
+.pm__types {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px 20px;
+	justify-content: center;
+}
+
+.overlay-btn {
+	position: absolute;
+	top: 90%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #004994;
+	padding: 5px 12px;
+	border-radius: 15px;
+}
+
 .pm__types .type {
-    float: left;
-    width: 380px;
-    min-height: 345px;
-    margin-left: 30px;
-    border: 10px solid #cdd2d6
+	flex: 0 0 380px;
+	min-height: 345px;
+	border: 10px solid #cdd2d6;
+	position: relative;
+}
+
+.pm__types .type a {
+	color: #fff;
+}
+
+.pm__types .type img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
 .pm__types .type:first-child {
@@ -14036,11 +14063,6 @@ a.pickup-stores__item .desc {
 }
 
 @media screen and (max-width: 1319px) {
-    .pm__types .type {
-        width: 290px;
-        min-height: 445px;
-        margin-left: 35px
-    }
 
     .pm__types .type .title {
         padding: 105px 0 0 40px
@@ -14071,13 +14093,6 @@ a.pickup-stores__item .desc {
 }
 
 @media screen and (max-width: 1019px) {
-    .pm__types .type {
-        float: none;
-        width: 100%;
-        min-height: auto;
-        margin-left: 0;
-        margin-top: 20px
-    }
 
     .pm__types .type:first-child {
         margin-top: 0

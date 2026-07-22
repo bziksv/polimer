@@ -119,12 +119,174 @@ $APPLICATION->IncludeFile("/include/advantages.php", [], [
  <img width="580" src="/upload/company/03.jpg" height="387" style="margin-right: 30px;"> <img width="580" src="/upload/company/04.jpg" height="387"> <img width="580" src="/upload/company/05.jpg" height="387" style="margin-right: 30px;"> <img width="580" src="/upload/company/06.jpg" height="387"> <img width="580" src="/upload/company/07.jpg" height="387" style="margin-right: 30px;"> <img width="580" src="/upload/company/08.jpg" height="387"> <img width="580" src="/upload/company/09.jpg" height="387" style="margin-right: 30px;"> <img width="580" src="/upload/company/21.jpg" height="387"> <img width="580" src="/upload/company/11.jpg" height="387" style="margin-right: 30px;"> <img width="580" src="/upload/company/12.jpg" height="387"> <img width="580" src="/upload/company/13.jpg" height="387" style="margin-right: 30px;"> <img width="580" src="/upload/company/14.jpg" height="387"> <img width="580" src="/upload/company/15.jpg" height="387" style="margin-right: 30px;"> <img width="580" src="/upload/company/16.jpg" height="387"> <img width="580" src="/upload/company/17.jpg" height="387" style="margin-right: 30px;"> <img width="580" src="/upload/company/18.jpg" height="387"> <img width="580" src="/upload/company/19.jpg" height="387" style="margin-right: 30px;"> <img width="580" src="/upload/company/20.jpg" height="387"> <img width="580" src="/upload/company/10.jpg" height="387" style="margin-right: 30px;"> <img width="580" src="/upload/company/22.jpg" height="387">
 	</p>
 </div>
- <br>
-<h2>
-Партнеры </h2>
+
+<style>
+.brands {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #004994;
+  padding: 20px 0;
+  margin: 50px -50px 0 -50px;
+  position: relative;
+}
+
+/* Градиентные шторки по краям — скрывают появление/исчезновение логотипов */
+.brands::before,
+.brands::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  z-index: 10;
+  pointer-events: none;
+}
+.brands::before {
+  left: 0;
+  background: linear-gradient(to right, #004994 0%, rgba(0,73,148,0) 100%);
+}
+.brands::after {
+  right: 0;
+  background: linear-gradient(to left, #004994 0%, rgba(0,73,148,0) 100%);
+}
+
+.brands-row {
+  width: 100%;
+  overflow: visible;
+  position: relative;
+}
+
+.brands-track {
+  display: flex;
+margin-bottom: 30px;
+  animation: scroll-left 45s linear infinite;
+}
+.bottom-row .brands-track {
+  animation: scroll-right 45s linear infinite;
+}
+
+/* Белые карточки */
+.brand-item {
+  flex: 0 0 240px;
+  height: 120px;
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.brand-item:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+  z-index: 1000;
+}
+
+.brand-item img {
+  max-width: 75%;
+  max-height: 75%;
+  object-fit: contain;
+}
+
+.brands-header {
+  color: #fff;
+  text-align: center;
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.5em;
+  margin-top: 1em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@keyframes scroll-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes scroll-right {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+@media (max-width: 768px) {
+  .brand-item { flex: 0 0 160px; height: 100px; }
+  .brands-header { font-size: 1.5rem; }
+  .brands::before, .brands::after { width: 40px; }
+}
+</style>
+
+<div class="brands">
+  <div class="brands-header">Наши партнеры</div>
+
+  <!-- Верхняя строка - движется влево -->
+  <div class="brands-row top-row">
+    <div class="brands-track" style="width: 4800px; animation-play-state: running; opacity: 1; transition: opacity 0.6s;">
+      <div class="brand-item"><img src="/upload/logo-amet.svg" alt="Амет"></div>
+      <div class="brand-item"><img src="/upload/evraz.svg" alt="Evraz"></div>
+      <div class="brand-item"><img src="/upload/mmk.svg" alt="Магнитогорский металлургический комбинат"></div>
+      <div class="brand-item"><img src="/upload/mechel.svg" alt="Mechel"></div>
+      <div class="brand-item"><img src="/upload/bik.svg" alt="БИК"></div>
+
+      <div class="brand-item"><img src="/upload/logo-amet.svg" alt="Амет"></div>
+      <div class="brand-item"><img src="/upload/evraz.svg" alt="Evraz"></div>
+      <div class="brand-item"><img src="/upload/mmk.svg" alt="Магнитогорский металлургический комбинат"></div>
+      <div class="brand-item"><img src="/upload/mechel.svg" alt="Mechel"></div>
+      <div class="brand-item"><img src="/upload/bik.svg" alt="БИК"></div>
+
+      <div class="brand-item"><img src="/upload/logo-amet.svg" alt="Амет"></div>
+      <div class="brand-item"><img src="/upload/evraz.svg" alt="Evraz"></div>
+      <div class="brand-item"><img src="/upload/mmk.svg" alt="Магнитогорский металлургический комбинат"></div>
+      <div class="brand-item"><img src="/upload/mechel.svg" alt="Mechel"></div>
+      <div class="brand-item"><img src="/upload/bik.svg" alt="БИК"></div>
+
+      <div class="brand-item"><img src="/upload/logo-amet.svg" alt="Амет"></div>
+      <div class="brand-item"><img src="/upload/evraz.svg" alt="Evraz"></div>
+      <div class="brand-item"><img src="/upload/mmk.svg" alt="Магнитогорский металлургический комбинат"></div>
+      <div class="brand-item"><img src="/upload/mechel.svg" alt="Mechel"></div>
+      <div class="brand-item"><img src="/upload/bik.svg" alt="БИК"></div>
+    </div>
+  </div>
+
+  <!-- Нижняя строка - движется вправо -->
+  <div class="brands-row bottom-row">
+    <div class="brands-track" style="width: 4320px; animation-play-state: running; opacity: 1; transition: opacity 0.6s;">
+      <div class="brand-item"><img height="80px" src="/upload/nlmk.svg" alt="НЛМК"></div>
+      <div class="brand-item"><img src="/upload/severstal.svg" alt="Северсталь"></div>
+      <div class="brand-item"><img src="/upload/vtb.svg" alt="ВТБ"></div>
+
+      <div class="brand-item"><img height="80px" src="/upload/nlmk.svg" alt="НЛМК"></div>
+      <div class="brand-item"><img src="/upload/severstal.svg" alt="Северсталь"></div>
+      <div class="brand-item"><img src="/upload/vtb.svg" alt="ВТБ"></div>
+
+      <div class="brand-item"><img height="80px" src="/upload/nlmk.svg" alt="НЛМК"></div>
+      <div class="brand-item"><img src="/upload/severstal.svg" alt="Северсталь"></div>
+      <div class="brand-item"><img src="/upload/vtb.svg" alt="ВТБ"></div>
+
+      <div class="brand-item"><img height="80px" src="/upload/nlmk.svg" alt="НЛМК"></div>
+      <div class="brand-item"><img src="/upload/severstal.svg" alt="Северсталь"></div>
+      <div class="brand-item"><img src="/upload/vtb.svg" alt="ВТБ"></div>
+
+      <div class="brand-item"><img height="80px" src="/upload/nlmk.svg" alt="НЛМК"></div>
+      <div class="brand-item"><img src="/upload/severstal.svg" alt="Северсталь"></div>
+      <div class="brand-item"><img src="/upload/vtb.svg" alt="ВТБ"></div>
+
+      <div class="brand-item"><img height="80px" src="/upload/nlmk.svg" alt="НЛМК"></div>
+      <div class="brand-item"><img src="/upload/severstal.svg" alt="Северсталь"></div>
+      <div class="brand-item"><img src="/upload/vtb.svg" alt="ВТБ"></div>
+    </div>
+  </div>
+</div>
+
+
+<!--
+<h2>Партнеры </h2>
 <div>
 	<p>
  <a href="http://spravkavrn.ru/company/26321_polimer/" target="_blank" style="border: none;"><img alt="Фирма максимальной открытости по версии бесплатной справочной службы ЧТО-ГДЕ-ПОЧЕМ 084" src="http://spravkavrn.ru/img/medals/info1.png" style="height:100px; width:100px; margin-right: 30px;" title="Фирма максимальной открытости по версии бесплатной справочной службы ЧТО-ГДЕ-ПОЧЕМ 084" border="0"></a> <a href="http://spravkavrn.ru/company/26321_polimer/" target="_blank" style="border: none;"><img alt="Участник рейтинга полезности по версии бесплатной справочной службы ЧТО-ГДЕ-ПОЧЕМ 084" src="http://www.spravkavrn.ru/img/medals/top_polez.png" style="height:100px; width:100px; margin-right: 30px;" title="Участник рейтинга полезности по версии бесплатной справочной службы ЧТО-ГДЕ-ПОЧЕМ 084" border="0"></a> <a href="http://spravkavrn.ru/company/26321_polimer/" target="_blank" style="border: none;"><img alt="Участник рейтинга популярности по версии бесплатной справочной службы ЧТО-ГДЕ-ПОЧЕМ 084" src="http://spravkavrn.ru/img/medals/top_popul.png" style="height:100px; width:100px; margin-right: 30px;" title="Участник рейтинга популярности по версии бесплатной справочной службы ЧТО-ГДЕ-ПОЧЕМ 084" border="0"></a>
 	</p>
-</div>
+</div>-->
  <br><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
