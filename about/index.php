@@ -225,60 +225,113 @@ margin-bottom: 30px;
   <!-- Верхняя строка - движется влево -->
   <div class="brands-row top-row">
     <div class="brands-track" style="width: 4800px; animation-play-state: running; opacity: 1; transition: opacity 0.6s;">
-      <div class="brand-item"><img src="/upload/logo-amet.svg" alt="Амет"></div>
-      <div class="brand-item"><img src="/upload/evraz.svg" alt="Evraz"></div>
-      <div class="brand-item"><img src="/upload/mmk.svg" alt="Магнитогорский металлургический комбинат"></div>
-      <div class="brand-item"><img src="/upload/mechel.svg" alt="Mechel"></div>
-      <div class="brand-item"><img src="/upload/bik.svg" alt="БИК"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/761/wjict3vjaxfah0hsleaigyokuk5tgneh.jpg" alt="Декаст"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/3bf/roolgxtotfnrx9tw4u44zxxjtc3nynri.jpg" alt="Акватек"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/537/ztqo99wi5jzp9xu3krm8u4eiqdwo4mzf.jpg" alt="Wester"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/63e/igr8exui5r70r7zqywyueru35ghlevg7.jpg" alt="Itermic"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/e9a/bjhta45qe6bd2n2xqq6z6w5xo692v7v3.jpg" alt="Genberg"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/7ea/zjikfcztrmvxrwi15n4hor1n1rj50h1w.jpg" alt="Gidrolock"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/15f/wqj93e2e70gtytxsrkmyygkxbrfvn890.jpg" alt="Vilterm"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/665/wh53bmkoqlctzwtn39mj73q7h7r2v95f.jpg" alt="Ferroli"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/532/xqj28shv72mc4by4d4dvm1mghyudjprp.png" alt="VGR"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/c00/t6glhgihjxp2j6wnbsgvds8bvpzwcrzb.png" alt="Baxi"></div>
+	<div class="brand-item"><img src="/upload/medialibrary/3fb/1oqe5gsbvt83ljtwlhn4hb3kjbtqp65o.png" alt="FIT"></div>
 
-      <div class="brand-item"><img src="/upload/logo-amet.svg" alt="Амет"></div>
-      <div class="brand-item"><img src="/upload/evraz.svg" alt="Evraz"></div>
-      <div class="brand-item"><img src="/upload/mmk.svg" alt="Магнитогорский металлургический комбинат"></div>
-      <div class="brand-item"><img src="/upload/mechel.svg" alt="Mechel"></div>
-      <div class="brand-item"><img src="/upload/bik.svg" alt="БИК"></div>
-
-      <div class="brand-item"><img src="/upload/logo-amet.svg" alt="Амет"></div>
-      <div class="brand-item"><img src="/upload/evraz.svg" alt="Evraz"></div>
-      <div class="brand-item"><img src="/upload/mmk.svg" alt="Магнитогорский металлургический комбинат"></div>
-      <div class="brand-item"><img src="/upload/mechel.svg" alt="Mechel"></div>
-      <div class="brand-item"><img src="/upload/bik.svg" alt="БИК"></div>
-
-      <div class="brand-item"><img src="/upload/logo-amet.svg" alt="Амет"></div>
-      <div class="brand-item"><img src="/upload/evraz.svg" alt="Evraz"></div>
-      <div class="brand-item"><img src="/upload/mmk.svg" alt="Магнитогорский металлургический комбинат"></div>
-      <div class="brand-item"><img src="/upload/mechel.svg" alt="Mechel"></div>
-      <div class="brand-item"><img src="/upload/bik.svg" alt="БИК"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/761/wjict3vjaxfah0hsleaigyokuk5tgneh.jpg" alt="Декаст"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/3bf/roolgxtotfnrx9tw4u44zxxjtc3nynri.jpg" alt="Акватек"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/537/ztqo99wi5jzp9xu3krm8u4eiqdwo4mzf.jpg" alt="Wester"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/63e/igr8exui5r70r7zqywyueru35ghlevg7.jpg" alt="Itermic"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/e9a/bjhta45qe6bd2n2xqq6z6w5xo692v7v3.jpg" alt="Genberg"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/7ea/zjikfcztrmvxrwi15n4hor1n1rj50h1w.jpg" alt="Gidrolock"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/15f/wqj93e2e70gtytxsrkmyygkxbrfvn890.jpg" alt="Vilterm"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/665/wh53bmkoqlctzwtn39mj73q7h7r2v95f.jpg" alt="Ferroli"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/532/xqj28shv72mc4by4d4dvm1mghyudjprp.png" alt="VGR"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/c00/t6glhgihjxp2j6wnbsgvds8bvpzwcrzb.png" alt="Baxi"></div>
+	<div class="brand-item"><img src="/upload/medialibrary/3fb/1oqe5gsbvt83ljtwlhn4hb3kjbtqp65o.png" alt="FIT"></div>
     </div>
   </div>
 
   <!-- Нижняя строка - движется вправо -->
   <div class="brands-row bottom-row">
     <div class="brands-track" style="width: 4320px; animation-play-state: running; opacity: 1; transition: opacity 0.6s;">
-      <div class="brand-item"><img height="80px" src="/upload/nlmk.svg" alt="НЛМК"></div>
-      <div class="brand-item"><img src="/upload/severstal.svg" alt="Северсталь"></div>
-      <div class="brand-item"><img src="/upload/vtb.svg" alt="ВТБ"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/f03/kvtg03rj6p7bfdb6h4vag6mxz1hrlc2e.jpg" alt="Lamborghini"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/35a/v02o5yken8p6zv3j5h1k3npu0ncijtxx.png" alt="Ariston"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/ce6/mzn3gkku9p6ziyp0tmb2r6mdjet21e1j.jpg" alt="Барьер"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/0e3/96k2q3vg0uvan1u6swesk0lnhm4w25d4.png" alt="Stout"></div>
+	<div class="brand-item"><img src="/upload/medialibrary/116/e903y68riiioiqdx4tesqeuydt1wxwy3.png" alt="Перфоград"></div>
+	<div class="brand-item"><img src="/upload/medialibrary/fa8/8jc85a6ymzcqioub7nzt4rxb6zehy4fp.png" alt="Ресанта"></div>
+	<div class="brand-item"><img src="/upload/medialibrary/796/ybvpny4jvl7a72j3o27owuvqnipwkqy0.png" alt="Воля"></div>
+	<div class="brand-item"><img src="/upload/medialibrary/df9/zgfcrf7nzyysf2pk2fk4w39729e5gy10.png" alt="Nextwood"></div>
+	<div class="brand-item"><img src="/upload/medialibrary/7c3/ta2e6eoj12yc52dmnu15oj5j5uw2iseo.png" alt="Lalitudo"></div>
+	<div class="brand-item"><img src="/upload/medialibrary/630/09k1jlyqp0g5fkj2lredfrm7drsoukp1.png" alt="Русский свет"></div>
+	<div class="brand-item"><img src="/upload/medialibrary/ed4/r1u3amia3lzhi0c42xhc07uj37o55s1u.png" alt="Зубр"></div>
 
-      <div class="brand-item"><img height="80px" src="/upload/nlmk.svg" alt="НЛМК"></div>
-      <div class="brand-item"><img src="/upload/severstal.svg" alt="Северсталь"></div>
-      <div class="brand-item"><img src="/upload/vtb.svg" alt="ВТБ"></div>
-
-      <div class="brand-item"><img height="80px" src="/upload/nlmk.svg" alt="НЛМК"></div>
-      <div class="brand-item"><img src="/upload/severstal.svg" alt="Северсталь"></div>
-      <div class="brand-item"><img src="/upload/vtb.svg" alt="ВТБ"></div>
-
-      <div class="brand-item"><img height="80px" src="/upload/nlmk.svg" alt="НЛМК"></div>
-      <div class="brand-item"><img src="/upload/severstal.svg" alt="Северсталь"></div>
-      <div class="brand-item"><img src="/upload/vtb.svg" alt="ВТБ"></div>
-
-      <div class="brand-item"><img height="80px" src="/upload/nlmk.svg" alt="НЛМК"></div>
-      <div class="brand-item"><img src="/upload/severstal.svg" alt="Северсталь"></div>
-      <div class="brand-item"><img src="/upload/vtb.svg" alt="ВТБ"></div>
-
-      <div class="brand-item"><img height="80px" src="/upload/nlmk.svg" alt="НЛМК"></div>
-      <div class="brand-item"><img src="/upload/severstal.svg" alt="Северсталь"></div>
-      <div class="brand-item"><img src="/upload/vtb.svg" alt="ВТБ"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/f03/kvtg03rj6p7bfdb6h4vag6mxz1hrlc2e.jpg" alt="Lamborghini"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/35a/v02o5yken8p6zv3j5h1k3npu0ncijtxx.png" alt="Ariston"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/ce6/mzn3gkku9p6ziyp0tmb2r6mdjet21e1j.jpg" alt="Барьер"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/0e3/96k2q3vg0uvan1u6swesk0lnhm4w25d4.png" alt="Stout"></div>
+	<div class="brand-item"><img src="/upload/medialibrary/116/e903y68riiioiqdx4tesqeuydt1wxwy3.png" alt="Перфоград"></div>
+	<div class="brand-item"><img src="/upload/medialibrary/fa8/8jc85a6ymzcqioub7nzt4rxb6zehy4fp.png" alt="Ресанта"></div>
+	<div class="brand-item"><img src="/upload/medialibrary/796/ybvpny4jvl7a72j3o27owuvqnipwkqy0.png" alt="Воля"></div>
+	<div class="brand-item"><img src="/upload/medialibrary/df9/zgfcrf7nzyysf2pk2fk4w39729e5gy10.png" alt="Nextwood"></div>
+	<div class="brand-item"><img src="/upload/medialibrary/7c3/ta2e6eoj12yc52dmnu15oj5j5uw2iseo.png" alt="Lalitudo"></div>
+	<div class="brand-item"><img src="/upload/medialibrary/630/09k1jlyqp0g5fkj2lredfrm7drsoukp1.png" alt="Русский свет"></div>
+	<div class="brand-item"><img src="/upload/medialibrary/ed4/r1u3amia3lzhi0c42xhc07uj37o55s1u.png" alt="Зубр"></div>
     </div>
   </div>
+
+<div class="brands-row top-row">
+    <div class="brands-track" style="width: 4800px; animation-play-state: running; opacity: 1; transition: opacity 0.6s;">
+      <div class="brand-item"><img src="/upload/medialibrary/8ad/qd267m08d88pxhi8qp76d3u153omzxbo.png" alt="Gardeck"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/81c/mzs7wmxplixvinc4kul64htgpzh27vzx.png" alt="Форммат"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/3d7/amjrct81htgu3kukoegyw5rlc4o8vwz4.jpg" alt="Plastilux"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/517/7linafxnozo346d9idpkwztwsnk9v7gw.png" alt="Varmega"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/54e/3flcfxn17j7f8vxwbbyy8u5r1d1fspoo.jpg" alt="Альтерпласт"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/dc6/t4m16xnh7pvvt7z3y89ikvygalay2fh4.png" alt="Аквабрайт"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/0b8/utkjsooqfkb9sj7vito0y6aswi6dbh37.png" alt="Polygal vostok"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/08a/2qy3g31ymuulgcaq1ym214ur7mdy1ci5.png" alt="Технониколь"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/ed3/zcly912d8ocx9zedvwkzcal1cluuxy2q.png" alt="Доброга"></div>
+
+      <div class="brand-item"><img src="/upload/medialibrary/8ad/qd267m08d88pxhi8qp76d3u153omzxbo.png" alt="Gardeck"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/81c/mzs7wmxplixvinc4kul64htgpzh27vzx.png" alt="Форммат"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/3d7/amjrct81htgu3kukoegyw5rlc4o8vwz4.jpg" alt="Plastilux"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/517/7linafxnozo346d9idpkwztwsnk9v7gw.png" alt="Varmega"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/54e/3flcfxn17j7f8vxwbbyy8u5r1d1fspoo.jpg" alt="Альтерпласт"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/dc6/t4m16xnh7pvvt7z3y89ikvygalay2fh4.png" alt="Аквабрайт"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/0b8/utkjsooqfkb9sj7vito0y6aswi6dbh37.png" alt="Polygal vostok"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/08a/2qy3g31ymuulgcaq1ym214ur7mdy1ci5.png" alt="Технониколь"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/ed3/zcly912d8ocx9zedvwkzcal1cluuxy2q.png" alt="Доброга"></div>
+    </div>
+  </div>
+
+
+  <!-- Нижняя строка - движется вправо -->
+  <div class="brands-row bottom-row">
+    <div class="brands-track" style="width: 4320px; animation-play-state: running; opacity: 1; transition: opacity 0.6s;">
+      <div class="brand-item"><img src="/upload/medialibrary/bca/x8759ezce7pq8nqx953uml5w1rd8zb1i.png" alt="Tebo"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/b8d/z79csu9y4mq1oi3m6lw589hfwiyabpcf.png" alt="Radena"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/b88/7a65cf4xy8rqxjqfufa0qx4vyqw39yd2.png" alt="Humalt"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/883/7c9iz9zbde4l6zeegi4yk0gyh9dtjlg7.png" alt="Fora"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/f8b/578zd1ebc2f3j6m8kwp7xxcwghw36dwp.png" alt="Evolution"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/cdd/i3pp704m409it098cx69l9vmmedt4k20.png" alt="Stream"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/afc/7ekc9t2mwp1dcy7h798s6uy9sg430shu.png" alt="Fusitek"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/b67/4z5xbfx1o0m90qpo55jve9dt3564vl7y.png" alt="Rommer"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/d6c/xz3aahcsajsyy77jo42f7xczs3olnd9h.png" alt="Баз"></div>
+
+      <div class="brand-item"><img src="/upload/medialibrary/bca/x8759ezce7pq8nqx953uml5w1rd8zb1i.png" alt="Tebo"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/b8d/z79csu9y4mq1oi3m6lw589hfwiyabpcf.png" alt="Radena"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/b88/7a65cf4xy8rqxjqfufa0qx4vyqw39yd2.png" alt="Humalt"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/883/7c9iz9zbde4l6zeegi4yk0gyh9dtjlg7.png" alt="Fora"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/f8b/578zd1ebc2f3j6m8kwp7xxcwghw36dwp.png" alt="Evolution"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/cdd/i3pp704m409it098cx69l9vmmedt4k20.png" alt="Stream"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/afc/7ekc9t2mwp1dcy7h798s6uy9sg430shu.png" alt="Fusitek"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/b67/4z5xbfx1o0m90qpo55jve9dt3564vl7y.png" alt="Rommer"></div>
+      <div class="brand-item"><img src="/upload/medialibrary/d6c/xz3aahcsajsyy77jo42f7xczs3olnd9h.png" alt="Баз"></div>
+    </div>
+  </div>
+
+
+
 </div>
 
 
