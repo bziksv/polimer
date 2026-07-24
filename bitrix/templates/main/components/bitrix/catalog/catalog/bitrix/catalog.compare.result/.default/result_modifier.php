@@ -146,7 +146,7 @@ if ($existShow || $existDelete)
 	Collection::sortByColumn($arResult['ALL_OFFER_PROPERTIES'], array('SORT' => SORT_ASC, 'ID' => SORT_ASC));
 }
 
-// --- Вкладки по разделам каталога (как у Ситилинка) ---
+// --- Вкладки по родительским разделам (бренды-листья схлопываются) ---
 $arResult['COMPARE_SECTIONS'] = array();
 $arResult['COMPARE_SECTION_ID'] = 0;
 
@@ -157,40 +157,97 @@ $arResult['COMPARE_URL_DIFFERENT_Y'] = $comparePage.'?DIFFERENT=Y';
 
 if (!empty($arResult['ITEMS']) && \Bitrix\Main\Loader::includeModule('iblock'))
 {
-	$sectionCounts = array();
+	// Листовой раздел товара → группа сравнения (родитель, иначе сам лист)
+	$leafIds = array();
 	foreach ($arResult['ITEMS'] as $arItem)
 	{
-		$sid = (int)($arItem['IBLOCK_SECTION_ID'] ?? 0);
-		if (!isset($sectionCounts[$sid]))
+		$leafId = (int)($arItem['IBLOCK_SECTION_ID'] ?? 0);
+		if ($leafId > 0)
 		{
-			$sectionCounts[$sid] = 0;
+			$leafIds[$leafId] = $leafId;
 		}
-		$sectionCounts[$sid]++;
 	}
 
-	$sectionNames = array();
-	$idsToLoad = array_filter(array_keys($sectionCounts));
-	if ($idsToLoad)
+	$leafMeta = array(); // leafId => ['NAME'=>, 'PARENT_ID'=>]
+	if ($leafIds)
 	{
 		$rsSect = CIBlockSection::GetList(
 			array('LEFT_MARGIN' => 'ASC'),
-			array('ID' => $idsToLoad, 'CHECK_PERMISSIONS' => 'N'),
+			array('ID' => array_values($leafIds), 'CHECK_PERMISSIONS' => 'N'),
 			false,
-			array('ID', 'NAME')
+			array('ID', 'NAME', 'IBLOCK_SECTION_ID')
 		);
 		while ($sect = $rsSect->Fetch())
 		{
-			$sectionNames[(int)$sect['ID']] = $sect['NAME'];
+			$leafMeta[(int)$sect['ID']] = array(
+				'NAME' => (string)$sect['NAME'],
+				'PARENT_ID' => (int)$sect['IBLOCK_SECTION_ID'],
+			);
 		}
 	}
 
-	$sections = array();
-	foreach ($sectionCounts as $sid => $cnt)
+	$leafToGroup = array(0 => 0);
+	$parentIdsToLoad = array();
+	foreach ($leafIds as $leafId)
 	{
-		$sid = (int)$sid;
-		$sections[$sid] = array(
-			'ID' => $sid,
-			'NAME' => ($sid > 0 && isset($sectionNames[$sid])) ? $sectionNames[$sid] : 'Без раздела',
+		$parentId = (int)($leafMeta[$leafId]['PARENT_ID'] ?? 0);
+		if ($parentId > 0)
+		{
+			$leafToGroup[$leafId] = $parentId;
+			$parentIdsToLoad[$parentId] = $parentId;
+		}
+		else
+		{
+			// корневой раздел — группа = сам лист
+			$leafToGroup[$leafId] = $leafId;
+		}
+	}
+
+	$groupNames = array();
+	foreach ($leafMeta as $leafId => $meta)
+	{
+		if (($leafToGroup[$leafId] ?? 0) === $leafId)
+		{
+			$groupNames[$leafId] = $meta['NAME'];
+		}
+	}
+	if ($parentIdsToLoad)
+	{
+		$rsParent = CIBlockSection::GetList(
+			array('LEFT_MARGIN' => 'ASC'),
+			array('ID' => array_values($parentIdsToLoad), 'CHECK_PERMISSIONS' => 'N'),
+			false,
+			array('ID', 'NAME')
+		);
+		while ($sect = $rsParent->Fetch())
+		{
+			$groupNames[(int)$sect['ID']] = (string)$sect['NAME'];
+		}
+	}
+
+	$sectionCounts = array();
+	$itemGroupIds = array(); // index в ITEMS => groupId
+	foreach ($arResult['ITEMS'] as $idx => $arItem)
+	{
+		$leafId = (int)($arItem['IBLOCK_SECTION_ID'] ?? 0);
+		$groupId = (int)($leafToGroup[$leafId] ?? 0);
+		$itemGroupIds[$idx] = $groupId;
+		if (!isset($sectionCounts[$groupId]))
+		{
+			$sectionCounts[$groupId] = 0;
+		}
+		$sectionCounts[$groupId]++;
+	}
+
+	$sections = array();
+	foreach ($sectionCounts as $gid => $cnt)
+	{
+		$gid = (int)$gid;
+		$sections[$gid] = array(
+			'ID' => $gid,
+			'NAME' => ($gid > 0 && isset($groupNames[$gid]) && $groupNames[$gid] !== '')
+				? $groupNames[$gid]
+				: 'Без раздела',
 			'COUNT' => (int)$cnt,
 		);
 	}
@@ -220,9 +277,9 @@ if (!empty($arResult['ITEMS']) && \Bitrix\Main\Loader::includeModule('iblock'))
 	{
 		$activeSid = (int)$arResult['COMPARE_SECTION_ID'];
 		$filtered = array();
-		foreach ($arResult['ITEMS'] as $arItem)
+		foreach ($arResult['ITEMS'] as $idx => $arItem)
 		{
-			if ((int)($arItem['IBLOCK_SECTION_ID'] ?? 0) === $activeSid)
+			if ((int)($itemGroupIds[$idx] ?? 0) === $activeSid)
 			{
 				$filtered[] = $arItem;
 			}
