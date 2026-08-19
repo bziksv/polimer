@@ -392,28 +392,29 @@
 			|| document.querySelector('.pd__block input[name="PERSONAL_PHONE"]');
 		if (!phoneInput) return;
 		var line = phoneInput.closest('.line');
-		if (!line || line.querySelector('.prime-phoneauth-status')) return;
+		var container = phoneInput.closest('#personal-contacts') || line && line.parentNode;
+		if (!line || !container || container.querySelector('.prime-phoneauth-status')) return;
 
 		var status = document.createElement('div');
 		status.className = 'prime-phoneauth-status';
 		if (cfg.confirmed) {
 			status.className += ' is-ok';
 			status.textContent = 'Номер подтверждён — можно входить по телефону';
-			line.appendChild(status);
+			container.appendChild(status);
 			return;
 		}
 		status.className += ' is-wait';
-		status.innerHTML = '<span>' + (cfg.duplicate
+		status.innerHTML = '<span class="prime-phoneauth-status__text">' + (cfg.duplicate
 			? 'Этот номер указан ещё в других аккаунтах.'
 			: 'Номер не подтверждён') + '</span>'
 			+ '<button type="button" class="prime-phoneauth-prompt__btn is-compact" data-role="verify">Подтвердить звонком</button>';
-		line.appendChild(status);
+		container.appendChild(status);
 
 		var waitBox = document.createElement('div');
 		waitBox.className = 'prime-phoneauth-wait';
 		waitBox.style.display = 'none';
 		waitBox.innerHTML = waitMarkup();
-		line.appendChild(waitBox);
+		container.appendChild(waitBox);
 
 		var pollTimer = null;
 		function stopPoll() {

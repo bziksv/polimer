@@ -140,8 +140,57 @@
 	margin: 10px 0 0 160px;
 	max-width: 320px;
 }
-.pd__block #personal-contacts .line {
+.pd__block #personal-contacts {
+	margin-top: 0;
+}
+.pd__block #personal-contacts .prime-phoneauth-status,
+.pd__block #personal-contacts .prime-phoneauth-wait {
+	margin: 10px 0 0 auto;
+	width: 450px;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+.pd__block #personal-contacts .prime-phoneauth-status {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 	flex-wrap: wrap;
+	gap: 10px 12px;
+	font-size: 14px;
+	line-height: 1.35;
+}
+.pd__block #personal-contacts .prime-phoneauth-status__text {
+	flex: 1 1 140px;
+}
+.pd__block #personal-contacts .prime-phoneauth-status .prime-phoneauth-prompt__btn.is-compact {
+	flex: 0 0 auto;
+	margin: 0;
+	height: 36px;
+	padding: 0 16px;
+	line-height: 32px;
+	font-size: 14px;
+	border-width: 2px;
+}
+.pd__block #personal-contacts .prime-phoneauth-wait {
+	margin-top: 12px;
+	padding: 12px 14px;
+	border: 1px solid #cdd2d6;
+	border-radius: 5px;
+	background: #f8fafb;
+}
+@media screen and (max-width: 659px) {
+	.pd__block #personal-contacts .prime-phoneauth-status,
+	.pd__block #personal-contacts .prime-phoneauth-wait {
+		width: 200px;
+	}
+	.pd__block #personal-contacts .prime-phoneauth-status {
+		flex-direction: column;
+		align-items: stretch;
+	}
+	.pd__block #personal-contacts .prime-phoneauth-status .prime-phoneauth-prompt__btn.is-compact {
+		width: 100%;
+		text-align: center;
+	}
 }
 .prime-phoneauth-modal {
 	position: fixed;
