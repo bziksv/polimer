@@ -51,6 +51,10 @@ if ($normalCount > 0)
 					<div class="l-cell del"><div class="txt dl">Удалить</div><a href="javascript:void(0)" onclick="polimerRemoveBasketItem(<?=$arItem["ID"]?>); return false;"></a></div>
 					<div class="basket-item-removed-overlay" aria-hidden="true">
 						<div class="basket-item-removed-overlay__content">
+							<div class="basket-item-removed-overlay__product">
+								<img src="<?=$arItem['PREVIEW_PICTURE_SRC']?>" alt="">
+								<span class="basket-item-removed-overlay__product-name"><?=htmlspecialcharsbx($arItem['NAME'])?></span>
+							</div>
 							<p class="basket-item-removed-overlay__title">Товар удалён</p>
 							<p class="basket-item-removed-overlay__hint">При оформлении дальше не попадёт. Если нужно вернуть обратно, нажмите кнопку ниже</p>
 							<button type="button" class="basket-item-removed-overlay__restore" onclick="polimerRestoreBasketItem(<?=$arItem["ID"]?>); return false;">Вернуть</button>

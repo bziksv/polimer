@@ -14,6 +14,10 @@ $basket = \Bitrix\Sale\Basket::loadItemsForFUser(
 
 $warning = "";
 foreach ($basket as $basketItem) {
+    if ($basketItem->isDelay()) {
+        continue;
+    }
+
     $productId = $basketItem->getProductId();
     $quantityInBasket = $basketItem->getQuantity();
 
