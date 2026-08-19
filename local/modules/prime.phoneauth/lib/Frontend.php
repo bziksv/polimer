@@ -17,7 +17,12 @@ class Frontend
 		if (strpos($content, 'PRIME_PHONEAUTH') !== false) {
 			return;
 		}
-		if (!Config::isEnabled()) {
+		if (!\Bitrix\Main\Loader::includeModule('prime.phoneauth')) {
+			return;
+		}
+
+		$moduleEnabled = Config::isEnabled();
+		if (!$moduleEnabled && strpos($content, 'prime-phoneauth-tabs') === false) {
 			return;
 		}
 
@@ -42,7 +47,7 @@ class Frontend
 			&& !AuthService::isPromptSnoozed();
 
 		$config = [
-			'enabled' => true,
+			'enabled' => $moduleEnabled,
 			'sessid' => function_exists('bitrix_sessid') ? bitrix_sessid() : '',
 			'startUrl' => '/ajax/phoneauth.php?action=start',
 			'lookupUrl' => '/ajax/phoneauth.php?action=lookup',
@@ -60,8 +65,8 @@ class Frontend
 			'standalonePrompt' => $standalonePrompt,
 		];
 
-		$css = '/local/modules/prime.phoneauth/assets/auth.css?v=1.1.9';
-		$js = '/local/modules/prime.phoneauth/assets/auth.js?v=1.0.17';
+		$css = '/local/modules/prime.phoneauth/assets/auth.css?v=1.2.0';
+		$js = '/local/modules/prime.phoneauth/assets/auth.js?v=1.0.18';
 		$inject = "\n<link rel=\"stylesheet\" href=\"" . htmlspecialcharsbx($css) . "\">\n"
 			. '<script>window.PRIME_PHONEAUTH=' . Json::encode($config) . ';</script>' . "\n"
 			. '<script src="' . htmlspecialcharsbx($js) . '"></script>' . "\n";

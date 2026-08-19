@@ -3,7 +3,8 @@
  */
 (function () {
 	var cfg = window.PRIME_PHONEAUTH;
-	if (!cfg || cfg.enabled === false) return;
+	if (!cfg) return;
+	var phoneOn = cfg.enabled !== false;
 
 	function postForm(url, data) {
 		var body = [];
@@ -926,11 +927,15 @@
 	function onReady() {
 		document.querySelectorAll('.personal_enter .auth, .bx-authform .auth').forEach(function (root) {
 			initTabs(root);
-			bindPhoneForm(root);
+			if (phoneOn) {
+				bindPhoneForm(root);
+			}
 		});
-		initRegister();
-		initProfile();
-		setTimeout(initPhonePrompt, 0);
+		if (phoneOn) {
+			initRegister();
+			initProfile();
+			setTimeout(initPhonePrompt, 0);
+		}
 	}
 
 	window.primePhoneauthMountProfile = function (root) {

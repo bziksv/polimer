@@ -609,9 +609,21 @@ body.prime-phoneauth-prompt-open {
 	color: #666;
 	text-align: center;
 }
-.personal_enter .auth .prime-auth-social,
-.bx-authform .auth .prime-auth-social {
+.prime-auth-social--dev .bx-authform-social ul li .bx-authform-social-icon {
+	display: block;
+	width: 35px;
+	height: 35px;
+}
+.bx-authform .auth {
+	width: 100%;
+}
+.bx-authform .auth .prime-phoneauth-tabs--2,
+.bx-authform .auth .prime-phoneauth-tabs--3 {
+	width: 100%;
 	max-width: 100%;
+}
+.bx-authform .auth .prime-auth-social__icons .bx-authform-social {
+	width: 100%;
 }
 #authorized.popup .personal_enter .auth .prime-phoneauth-tabs--3 {
 	max-width: none;

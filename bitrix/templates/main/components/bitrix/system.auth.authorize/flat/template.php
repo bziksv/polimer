@@ -13,10 +13,28 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 
 //one css for all system.auth.* forms
 $APPLICATION->SetAdditionalCSS("/bitrix/css/main/system.auth/flat/style.css");
+$phoneAuthModule = \Bitrix\Main\Loader::includeModule('prime.phoneauth');
+$phoneAuthOn = $phoneAuthModule && \Prime\PhoneAuth\Config::isEnabled();
+if ($phoneAuthModule) {
+	$APPLICATION->SetAdditionalCSS('/local/modules/prime.phoneauth/assets/auth.css?v=1.2.0');
+}
+$authTabsCount = 2 + ($phoneAuthOn ? 1 : 0);
 ?>
 <style>
 	.bx-filter-param-text {
 		margin-left: 5px;
+	}
+	.bx-authform .auth .prime-phoneauth-panel {
+		display: none;
+	}
+	.bx-authform .auth .prime-phoneauth-panel.is-active {
+		display: block;
+	}
+	.bx-authform .auth .prime-phoneauth-tabs {
+		width: 100%;
+		max-width: 100%;
+		margin-left: auto;
+		margin-right: auto;
 	}
 </style>
 
@@ -37,14 +55,6 @@ if($arResult['ERROR_MESSAGE'] <> ''):
 <?endif?>
 
 	<h3 class="bx-title"><?=GetMessage("AUTH_PLEASE_AUTH")?></h3>
-
-<?
-$phoneAuthOn = false;
-if (\Bitrix\Main\Loader::includeModule('prime.phoneauth')) {
-	$phoneAuthOn = \Prime\PhoneAuth\Config::isEnabled();
-}
-$authTabsCount = 2 + ($phoneAuthOn ? 1 : 0);
-?>
 
 <div class="auth">
 <div class="prime-phoneauth-tabs prime-phoneauth-tabs--<?= (int)$authTabsCount ?>" role="tablist">
