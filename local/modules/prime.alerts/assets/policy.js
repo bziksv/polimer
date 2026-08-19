@@ -8,49 +8,7 @@
 	var cfg = window.PRIME_ALERTS;
 	if (!cfg) return;
 
-	function mountInlineBanner() {
-		var node = document.querySelector('.prime-alerts-profile-banner');
-		if (!node) {
-			var html = cfg.profileInlineBannerHtml;
-			if (!html) {
-				return null;
-			}
-			var wrap = document.createElement('div');
-			wrap.innerHTML = html;
-			node = wrap.firstElementChild;
-			if (!node) {
-				return null;
-			}
-		}
-
-		var personal = document.querySelector('.personal_page, .lk_content');
-		if (!personal) {
-			if (node.parentNode) {
-				node.parentNode.removeChild(node);
-			}
-			return null;
-		}
-		var anchor = personal.querySelector('.header') || personal.querySelector('.pd__block') || personal.firstElementChild;
-		if (anchor && node.parentNode !== anchor.parentNode) {
-			if (anchor.parentNode) {
-				anchor.parentNode.insertBefore(node, anchor);
-			} else {
-				personal.insertBefore(node, personal.firstChild);
-			}
-		} else if (node.parentNode !== personal) {
-			personal.insertBefore(node, personal.firstChild);
-		}
-
-		if (typeof window.primePhoneauthMountProfile === 'function') {
-			window.primePhoneauthMountProfile(node);
-		}
-
-		return node;
-	}
-
 	function placeProfileBanner() {
-		mountInlineBanner();
-
 		var node = document.querySelector('.prime-alerts-profile-modal');
 		if (!node) {
 			var html = cfg.profileBannerHtml;
@@ -63,11 +21,6 @@
 			if (!node) {
 				return;
 			}
-		}
-
-		if (node.classList.contains('prime-alerts-profile-banner')) {
-			mountInlineBanner();
-			return;
 		}
 
 		if (node.parentNode !== document.body) {

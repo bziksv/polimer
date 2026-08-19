@@ -13,7 +13,7 @@ class ProfileBanner
 			return false;
 		}
 
-		if (self::isQuietPath() || self::isProfileEditPath()) {
+		if (self::isQuietPath()) {
 			return false;
 		}
 
@@ -22,15 +22,6 @@ class ProfileBanner
 		}
 
 		return !self::isSnoozed();
-	}
-
-	public static function shouldShowInline(): bool
-	{
-		if (!self::isBannerEnabled() || !self::needsAttention()) {
-			return false;
-		}
-
-		return self::isProfileEditPath();
 	}
 
 	protected static function isBannerEnabled(): bool
@@ -355,21 +346,6 @@ class ProfileBanner
 			return '';
 		}
 
-		return self::buildMarkup('modal');
-	}
-
-	public static function renderInline(): string
-	{
-		if (!self::shouldShowInline()) {
-			return '';
-		}
-
-		return self::buildMarkup('inline');
-	}
-
-	protected static function buildMarkup(string $mode): string
-	{
-		$inline = $mode === 'inline';
 		$data = self::profileData();
 		$email = $data['email'] !== '' ? $data['email'] : 'не указан';
 		self::phoneAuthState();
@@ -377,7 +353,6 @@ class ProfileBanner
 		$needConfirm = self::phoneAuthAvailable() && self::phoneNeedsAttention();
 		$emailUnconfirmed = self::emailUnconfirmed($data);
 		$emailBad = self::emailNeedsAttention($data);
-		$showSnooze = !$inline;
 		$emailEsc = htmlspecialcharsbx($email);
 		$phoneEsc = htmlspecialcharsbx($phone);
 		$urlEsc = htmlspecialcharsbx($data['profileUrl']);
@@ -400,21 +375,12 @@ class ProfileBanner
 		}
 		$phoneLi = '<li><span>Телефон в профиле</span><strong>' . $phoneEsc . '</strong></li>';
 		if ($canPhone && ($phoneEmpty || $needConfirm)) {
-			if ($inline && !$phoneEmpty) {
-				$phoneLi = '<li>'
-					. '<span>Телефон в профиле</span>'
-					. '<div class="prime-alerts-profile-modal__phone-row">'
-					. '<strong>' . $phoneEsc . '</strong>'
-					. '<span class="prime-alerts-profile-banner__hint">Подтвердите номер в форме ниже</span>'
-					. '</div></li>';
-			} else {
-				$phoneLi = '<li>'
-					. '<span>Телефон в профиле</span>'
-					. '<div class="prime-alerts-profile-modal__phone-row">'
-					. ($phoneEmpty ? '' : '<strong>' . $phoneEsc . '</strong>')
-					. '<span class="is-inline" data-prime-phone-confirm="1"></span>'
-					. '</div></li>';
-			}
+			$phoneLi = '<li>'
+				. '<span>Телефон в профиле</span>'
+				. '<div class="prime-alerts-profile-modal__phone-row">'
+				. ($phoneEmpty ? '' : '<strong>' . $phoneEsc . '</strong>')
+				. '<span class="is-inline" data-prime-phone-confirm="1"></span>'
+				. '</div></li>';
 		} elseif ($phoneConfirmed) {
 			$phoneLi = '<li>'
 				. '<span>Телефон в профиле</span>'
@@ -426,20 +392,14 @@ class ProfileBanner
 		$facts = '<ul class="prime-alerts-profile-modal__facts">' . $emailLi . $phoneLi . '</ul>'
 			. '<div class="prime-alerts-profile-modal__note" data-prime-phone-note="1"></div>';
 
-		if ($inline) {
-			return '<div class="prime-alerts-profile-banner" data-email-unconfirmed="' . ($emailUnconfirmed ? '1' : '0') . '">'
-				. '<div class="prime-alerts-profile-banner__title">' . $title . '</div>'
-				. '<div class="prime-alerts-profile-banner__text">' . $body . '</div>'
-				. $facts
-				. '</div>';
+		if (self::isProfileEditPath()) {
+			$primary = '<button type="button" class="prime-alerts-profile-modal__btn" data-prime-alerts-close="1">Понятно</button>';
+		} elseif ($emailUnconfirmed && !$emailBad) {
+			$primary = '<button type="button" class="prime-alerts-profile-modal__btn" data-prime-alerts-close="1">Понятно, продолжить</button>';
+		} else {
+			$primary = '<a class="prime-alerts-profile-modal__btn" href="' . $urlEsc . '">Изменить данные в профиле</a>';
 		}
-
-		$primary = ($emailUnconfirmed && !$emailBad)
-			? '<button type="button" class="prime-alerts-profile-modal__btn" data-prime-alerts-close="1">Понятно, продолжить</button>'
-			: '<a class="prime-alerts-profile-modal__btn" href="' . $urlEsc . '">Изменить данные в профиле</a>';
-		$snooze = $showSnooze
-			? '<button type="button" class="prime-alerts-profile-modal__snooze" data-prime-alerts-snooze="1">Отложить на 2 недели</button>'
-			: '';
+		$snooze = '<button type="button" class="prime-alerts-profile-modal__snooze" data-prime-alerts-snooze="1">Отложить на 2 недели</button>';
 
 		return '<div class="prime-alerts-profile-modal" role="dialog" aria-modal="true" aria-labelledby="prime-alerts-profile-title" data-email-unconfirmed="' . ($emailUnconfirmed ? '1' : '0') . '">'
 			. '<div class="prime-alerts-profile-modal__overlay"></div>'

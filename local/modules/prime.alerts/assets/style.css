@@ -65,11 +65,8 @@
 
 .prime-alerts-profile-modal {
 	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 10050;
+	inset: 0;
+	z-index: 10120;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -350,31 +347,6 @@ body.prime-alerts-profile-open {
 .prime-alerts-profile-banner .prime-alerts-profile-modal__facts {
 	margin: 12px 0 0;
 }
-.prime-alerts-profile-banner__hint {
-	display: block;
-	margin-top: 6px;
-	font-size: 12px;
-	line-height: 1.35;
-	color: var(--pa-muted, #5a7a9a);
-}
-@media (max-width: 768px) {
-	.prime-alerts-profile-banner {
-		margin: 0 0 16px;
-		padding: 14px 14px 12px;
-		border-radius: 8px;
-	}
-	.prime-alerts-profile-banner__title {
-		font-size: 15px;
-	}
-	.prime-alerts-profile-banner .prime-alerts-profile-modal__facts li {
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 6px;
-	}
-	.prime-alerts-profile-banner .prime-alerts-profile-modal__phone-row {
-		width: 100%;
-	}
-}
 .prime-alerts-profile-modal__note:empty {
 	display: none;
 }
@@ -430,25 +402,77 @@ body.prime-alerts-profile-open {
 }
 @media (max-width: 768px) {
 	.prime-alerts-profile-modal {
-		align-items: flex-end;
-		padding: 0;
+		align-items: center;
+		justify-content: center;
+		padding: 12px;
+	}
+	.prime-alerts-profile-modal__overlay {
+		background: rgba(0, 0, 0, 0.62);
 	}
 	.prime-alerts-profile-modal__box {
-		border-radius: 12px 12px 0 0;
-		max-width: none;
+		border-radius: 12px;
+		border-left-width: 4px;
+		max-width: 100%;
 		width: 100%;
-		max-height: min(92vh, 92dvh);
-		padding: 24px 18px calc(20px + env(safe-area-inset-bottom, 0px));
+		max-height: min(88vh, 88dvh);
+		padding: 22px 16px calc(18px + env(safe-area-inset-bottom, 0px));
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
+		box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+	}
+	.prime-alerts-profile-modal__icon {
+		width: 44px;
+		height: 44px;
+		line-height: 44px;
+		font-size: 22px;
+		margin: 0 auto 12px;
+	}
+	.prime-alerts-profile-modal__title {
+		font-size: 18px;
+		line-height: 1.3;
+		text-align: center;
+		padding-right: 0;
+		margin-bottom: 10px;
+	}
+	.prime-alerts-profile-modal__text {
+		font-size: 14px;
+		line-height: 1.45;
+		text-align: center;
+	}
+	.prime-alerts-profile-modal__facts {
+		flex-direction: column;
+		gap: 8px;
+		margin: 14px 0;
+	}
+	.prime-alerts-profile-modal__facts li {
+		flex: 1 1 auto;
+		width: 100%;
+		padding: 10px 12px;
+	}
+	.prime-alerts-profile-modal__phone-row .prime-phoneauth-prompt__btn.is-compact {
+		width: 100%;
+		height: 40px;
+		padding: 0 14px;
+		line-height: 36px;
+		font-size: 14px;
+		white-space: normal;
 	}
 	.prime-alerts-profile-modal__actions {
 		flex-direction: column;
 		gap: 10px;
+		margin-top: 4px;
 	}
 	.prime-alerts-profile-modal__btn,
 	.prime-alerts-profile-modal__snooze {
 		width: 100%;
 		box-sizing: border-box;
+		text-align: center;
+	}
+	.prime-alerts-profile-modal__close {
+		top: 8px;
+		right: 8px;
+		width: 36px;
+		height: 36px;
+		font-size: 30px;
 	}
 }
