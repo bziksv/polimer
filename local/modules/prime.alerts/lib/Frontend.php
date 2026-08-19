@@ -42,8 +42,9 @@ class Frontend
 		$policyRegister = $policyOn && Config::isYes('policy_register', 'Y');
 		$policyOrder = $policyOn && Config::isYes('policy_order', 'Y');
 		$profileBannerHtml = ProfileBanner::render();
+		$profileInlineBannerHtml = ProfileBanner::renderInline();
 
-		if (!$policyRegister && !$policyOrder && $profileBannerHtml === '') {
+		if (!$policyRegister && !$policyOrder && $profileBannerHtml === '' && $profileInlineBannerHtml === '') {
 			return;
 		}
 
@@ -62,15 +63,16 @@ class Frontend
 			'noticeSignup' => $policyOn ? EmailPolicy::getNoticeHtml('signup') : '',
 			'noticeCheckout' => $policyOn ? EmailPolicy::getNoticeHtml('checkout') : '',
 			'profileBannerHtml' => $profileBannerHtml,
-			'profileEmail' => $profileBannerHtml !== '' ? (string)$profileData['email'] : '',
-			'emailUnconfirmed' => $profileBannerHtml !== '' && ProfileBanner::emailUnconfirmed($profileData),
-			'justRegistered' => $profileBannerHtml !== '' && ProfileBanner::isJustRegistered(),
+			'profileInlineBannerHtml' => $profileInlineBannerHtml,
+			'profileEmail' => ($profileBannerHtml !== '' || $profileInlineBannerHtml !== '') ? (string)$profileData['email'] : '',
+			'emailUnconfirmed' => ($profileBannerHtml !== '' || $profileInlineBannerHtml !== '') && ProfileBanner::emailUnconfirmed($profileData),
+			'justRegistered' => ($profileBannerHtml !== '' || $profileInlineBannerHtml !== '') && ProfileBanner::isJustRegistered(),
 			'sessid' => function_exists('bitrix_sessid') ? bitrix_sessid() : '',
 			'snoozeUrl' => '/local/modules/prime.alerts/ajax/snooze.php',
 		];
 
-		$cssHref = '/local/modules/prime.alerts/assets/style.css?v=1.5.14';
-		$jsHref = '/local/modules/prime.alerts/assets/policy.js?v=1.5.11';
+		$cssHref = '/local/modules/prime.alerts/assets/style.css?v=1.5.15';
+		$jsHref = '/local/modules/prime.alerts/assets/policy.js?v=1.5.12';
 		$flash = '';
 		try {
 			$session = \Bitrix\Main\Application::getInstance()->getSession();
@@ -90,6 +92,7 @@ class Frontend
 		$inject = "\n" . Theme::cssBlock() . "\n"
 			. '<link rel="stylesheet" href="' . htmlspecialcharsbx($cssHref) . "\">\n"
 			. ($profileBannerHtml !== '' ? $profileBannerHtml . "\n" : '')
+			. ($profileInlineBannerHtml !== '' ? $profileInlineBannerHtml . "\n" : '')
 			. '<script>window.PRIME_ALERTS=' . Json::encode($config) . ';</script>' . "\n"
 			. '<script src="' . htmlspecialcharsbx($jsHref) . '"></script>' . "\n";
 
