@@ -31,36 +31,6 @@
 		return d.length === 10 ? d : d;
 	}
 
-	function escapeHtml(text) {
-		return String(text || '')
-			.replace(/&/g, '&amp;')
-			.replace(/</g, '&lt;')
-			.replace(/>/g, '&gt;')
-			.replace(/"/g, '&quot;');
-	}
-
-	/** Тот же блок, что prime.alerts-notice--exists под e-mail на регистрации */
-	function regDuplicateNoticeHtml(title, message, accounts) {
-		var accHtml = '';
-		(accounts || []).forEach(function (email) {
-			if (!email) return;
-			accHtml += '<li>' + escapeHtml(email) + '</li>';
-		});
-		var accountsBlock = accHtml
-			? '<ul class="prime-alerts-notice__accounts">' + accHtml + '</ul>'
-			: '';
-		return '<div class="prime-alerts-notice prime-alerts-notice--exists signup-phone-exists-notice">'
-			+ '<div class="prime-alerts-notice__inner">'
-			+ '<div class="prime-alerts-notice__icon" aria-hidden="true">!</div>'
-			+ '<div class="prime-alerts-notice__content">'
-			+ '<div class="prime-alerts-notice__title">' + escapeHtml(title) + '</div>'
-			+ '<div class="prime-alerts-notice__text">'
-			+ '<p>' + escapeHtml(message) + '</p>'
-			+ accountsBlock
-			+ '<p><a href="/auth/">Войти</a> · <a href="/auth/?forgot_password=yes">Забыли пароль?</a></p>'
-			+ '</div></div></div>';
-	}
-
 	function switchToLogin() {
 		var auth = document.querySelector('.personal_enter .auth');
 		if (!auth) return;
@@ -595,8 +565,7 @@
 		}
 
 		function syncRegBoxVisibility() {
-			var hasContent = !!box.querySelector('.prime-alerts-live-notice.is-visible')
-				|| (statusEl.textContent || '').trim() !== ''
+			var hasContent = (statusEl.textContent || '').trim() !== ''
 				|| accountsEl.children.length > 0
 				|| wait.style.display !== 'none'
 				|| (!lookupOnly && verifyBtn.style.display !== 'none');
@@ -614,22 +583,31 @@
 			accountsEl.style.display = '';
 		}
 
-		function showRegDuplicateNotice(data) {
+		function openRegDuplicatePopup(data, phone) {
 			clearRegDuplicateNotice();
-			statusEl.style.display = 'none';
-			accountsEl.style.display = 'none';
+			statusEl.textContent = '';
+			statusEl.className = 'prime-phoneauth-reg__status';
+			setAccounts([]);
 			if (linksEl) linksEl.style.display = 'none';
-			var live = document.createElement('div');
-			live.className = 'prime-alerts-live-notice is-visible';
-			live.setAttribute('data-kind', 'duplicate');
-			live.setAttribute('aria-live', 'polite');
-			live.innerHTML = regDuplicateNoticeHtml(
-				'Номер уже используется',
-				data.message || cfg.duplicateMessage || 'Номер уже используется в другом аккаунте.',
-				data.accounts || []
-			);
-			box.insertBefore(live, box.firstChild);
+			verifyBtn.style.display = 'none';
 			syncRegBoxVisibility();
+			if (lastModalPhone === phone && document.querySelector('.prime-phoneauth-modal')) {
+				return;
+			}
+			lastModalPhone = phone;
+			var title = data.status === 'taken' || ((data.accounts || []).length === 1)
+				? 'Номер уже используется'
+				: 'Несколько аккаунтов';
+			if (lookupOnly) {
+				showDuplicate(
+					data.message || cfg.duplicateMessage,
+					data.accounts,
+					title,
+					{ lock: false, onLogin: switchToLogin }
+				);
+				return;
+			}
+			openClaimModal(false);
 		}
 		setAccounts([]);
 		syncRegBoxVisibility();
@@ -735,8 +713,7 @@
 			}
 			lastLookupData = data;
 			if (ctx.mode === 'bx' && phoneDuplicateActive(data)) {
-				showRegDuplicateNotice(data);
-				verifyBtn.style.display = 'none';
+				openRegDuplicatePopup(data, phone);
 				return;
 			}
 			clearRegDuplicateNotice();
@@ -787,6 +764,7 @@
 				syncRegBoxVisibility();
 				return;
 			}
+			if (document.querySelector('.prime-phoneauth-modal')) return;
 			if (phone === lastLookupPhone && (tokenInp.value || wait.style.display !== 'none')) return;
 			lastLookupPhone = phone;
 			postForm(cfg.lookupUrl, { phone: phone }).then(function (data) {
