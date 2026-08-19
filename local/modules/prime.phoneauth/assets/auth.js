@@ -485,14 +485,47 @@
 		return d.length === 10;
 	}
 
+	function findRegisterPhoneContext() {
+		if (cfg.authorized) return null;
+
+		var legacyForm = document.querySelector('.personal_enter .reg form[name="regform"]');
+		if (legacyForm) {
+			var legacyPhone = legacyForm.querySelector('input[name="REGISTER[PERSONAL_PHONE]"]');
+			if (legacyPhone) {
+				var legacyLine = legacyPhone.closest('.line');
+				if (legacyLine && !legacyLine.parentNode.querySelector('.prime-phoneauth-reg')) {
+					return { form: legacyForm, phoneInput: legacyPhone, anchor: legacyLine, mode: 'legacy' };
+				}
+			}
+		}
+
+		var bxForm = document.querySelector('.bx-authform form[name="bform"]');
+		if (bxForm) {
+			var bxPhone = bxForm.querySelector('input[name="USER_PERSONAL_PHONE"]');
+			if (bxPhone) {
+				var group = bxPhone.closest('.bx-authform-formgroup-container');
+				var root = bxForm.closest('.bx-authform') || bxForm;
+				if (group && !root.querySelector('.prime-phoneauth-reg')) {
+					return { form: bxForm, phoneInput: bxPhone, anchor: group, mode: 'bx' };
+				}
+			}
+		}
+
+		return null;
+	}
+
+	function phoneDuplicateActive(data) {
+		if (!data || !data.ok) return false;
+		if ((data.accounts || []).length) return true;
+		return data.status === 'taken' || data.status === 'exists';
+	}
+
 	function initRegister() {
-		if (cfg.authorized) return;
-		var form = document.querySelector('.personal_enter .reg form[name="regform"]');
-		if (!form) return;
-		var phoneInput = form.querySelector('input[name="REGISTER[PERSONAL_PHONE]"]');
-		if (!phoneInput) return;
-		var line = phoneInput.closest('.line');
-		if (!line || line.parentNode.querySelector('.prime-phoneauth-reg')) return;
+		var ctx = findRegisterPhoneContext();
+		if (!ctx) return;
+		var form = ctx.form;
+		var phoneInput = ctx.phoneInput;
+		var lookupOnly = cfg.lookupOnly === true || !phoneOn || cfg.callAuth !== true;
 
 		var tokenInp = document.createElement('input');
 		tokenInp.type = 'hidden';
@@ -500,9 +533,12 @@
 		form.appendChild(tokenInp);
 
 		var box = document.createElement('div');
-		box.className = 'prime-phoneauth-reg';
+		box.className = 'prime-phoneauth-reg' + (ctx.mode === 'bx' ? ' prime-phoneauth-reg--bx' : '');
 		box.innerHTML = '<div class="prime-phoneauth-reg__status" data-role="status"></div>'
 			+ '<ul class="prime-phoneauth-reg__accounts" data-role="accounts"></ul>'
+			+ '<p class="prime-phoneauth-reg__links" data-role="links" style="display:none">'
+			+ '<a href="/auth/">Войти</a> · <a href="/auth/?forgot_password=yes">Забыли пароль?</a>'
+			+ '</p>'
 			+ '<button type="button" class="prime-phoneauth-back" data-role="verify" style="display:none">Подтвердить звонком</button>'
 			+ '<div class="prime-phoneauth-wait" data-role="wait" style="display:none">'
 			+ '<p data-role="message"></p>'
@@ -511,10 +547,11 @@
 			+ '<button type="button" class="prime-phoneauth-test" data-role="test">Я позвонил (тест)</button>'
 			+ '<button type="button" class="prime-phoneauth-back" data-role="back">Отмена</button>'
 			+ '</div>';
-		line.parentNode.insertBefore(box, line.nextSibling);
+		ctx.anchor.parentNode.insertBefore(box, ctx.anchor.nextSibling);
 
 		var statusEl = box.querySelector('[data-role="status"]');
 		var accountsEl = box.querySelector('[data-role="accounts"]');
+		var linksEl = box.querySelector('[data-role="links"]');
 		var verifyBtn = box.querySelector('[data-role="verify"]');
 		var wait = box.querySelector('[data-role="wait"]');
 		var lastLookupPhone = '';
@@ -523,6 +560,9 @@
 		var claimMode = false;
 		var lastLookupData = null;
 		var pollTimer = null;
+		if (lookupOnly) {
+			verifyBtn.style.display = 'none';
+		}
 
 		function stopPoll() {
 			if (pollTimer) {
@@ -614,12 +654,28 @@
 				statusEl.className = 'prime-phoneauth-reg__status';
 				statusEl.textContent = '';
 				setAccounts([]);
+				if (linksEl) linksEl.style.display = 'none';
 				verifyBtn.style.display = 'none';
 				claimMode = false;
 				lastLookupData = null;
 				return;
 			}
 			lastLookupData = data;
+			if (lookupOnly) {
+				if (phoneDuplicateActive(data)) {
+					statusEl.className = 'prime-phoneauth-reg__status is-bad';
+					statusEl.textContent = data.message || cfg.duplicateMessage || 'Номер уже используется в другом аккаунте.';
+					setAccounts(data.accounts || []);
+					if (linksEl) linksEl.style.display = '';
+				} else {
+					statusEl.className = 'prime-phoneauth-reg__status';
+					statusEl.textContent = data.status === 'free' ? '' : (data.message || '');
+					setAccounts([]);
+					if (linksEl) linksEl.style.display = 'none';
+				}
+				verifyBtn.style.display = 'none';
+				return;
+			}
 			claimMode = !!data.canClaim || (data.accounts || []).length > 0;
 			statusEl.className = 'prime-phoneauth-reg__status' + (data.status === 'taken' ? ' is-bad' : '');
 			statusEl.textContent = data.message || '';
@@ -642,6 +698,7 @@
 				statusEl.textContent = '';
 				statusEl.className = 'prime-phoneauth-reg__status';
 				setAccounts([]);
+				if (linksEl) linksEl.style.display = 'none';
 				verifyBtn.style.display = 'none';
 				lastLookupPhone = '';
 				claimMode = false;
@@ -666,6 +723,7 @@
 			statusEl.className = 'prime-phoneauth-reg__status';
 			statusEl.textContent = '';
 			setAccounts([]);
+			if (linksEl) linksEl.style.display = 'none';
 			verifyBtn.style.display = 'none';
 			lastLookupPhone = '';
 			lastModalPhone = '';
@@ -723,6 +781,36 @@
 		if (phoneReady(phoneInput.value)) {
 			lookupNow();
 		}
+
+		form.addEventListener('submit', function (e) {
+			if (tokenInp.value) return;
+			if (!phoneReady(phoneInput.value)) return;
+			if (lastLookupData && phoneDuplicateActive(lastLookupData)) {
+				e.preventDefault();
+				e.stopPropagation();
+				applyLookup(lastLookupData, phoneInput.value);
+				try { phoneInput.focus(); } catch (err) {}
+				return;
+			}
+			if (!lastLookupData || lastLookupPhone !== phoneInput.value) {
+				e.preventDefault();
+				e.stopPropagation();
+				postForm(cfg.lookupUrl, { phone: phoneInput.value }).then(function (data) {
+					lastLookupPhone = phoneInput.value;
+					applyLookup(data, phoneInput.value);
+					if (!phoneDuplicateActive(data)) {
+						if (typeof form.requestSubmit === 'function') {
+							form.requestSubmit();
+						} else {
+							var btn = form.querySelector('input[type="submit"], button[type="submit"]');
+							if (btn) btn.click();
+						}
+					} else {
+						try { phoneInput.focus(); } catch (err2) {}
+					}
+				});
+			}
+		}, true);
 	}
 
 	function mountPhoneConfirm(root) {
@@ -931,8 +1019,8 @@
 				bindPhoneForm(root);
 			}
 		});
+		initRegister();
 		if (phoneOn) {
-			initRegister();
 			initProfile();
 			setTimeout(initPhonePrompt, 0);
 		}

@@ -22,7 +22,9 @@ class Frontend
 		}
 
 		$moduleEnabled = Config::isEnabled();
-		if (!$moduleEnabled && strpos($content, 'prime-phoneauth-tabs') === false) {
+		$hasRegistrationPhone = strpos($content, 'name="USER_PERSONAL_PHONE"') !== false
+			|| strpos($content, 'REGISTER[PERSONAL_PHONE]') !== false;
+		if (!$moduleEnabled && strpos($content, 'prime-phoneauth-tabs') === false && !$hasRegistrationPhone) {
 			return;
 		}
 
@@ -48,6 +50,8 @@ class Frontend
 
 		$config = [
 			'enabled' => $moduleEnabled,
+			'callAuth' => Config::isCallAuthEnabled(),
+			'lookupOnly' => !$moduleEnabled || !Config::isCallAuthEnabled(),
 			'sessid' => function_exists('bitrix_sessid') ? bitrix_sessid() : '',
 			'startUrl' => '/ajax/phoneauth.php?action=start',
 			'lookupUrl' => '/ajax/phoneauth.php?action=lookup',
@@ -65,8 +69,8 @@ class Frontend
 			'standalonePrompt' => $standalonePrompt,
 		];
 
-		$css = '/local/modules/prime.phoneauth/assets/auth.css?v=1.2.0';
-		$js = '/local/modules/prime.phoneauth/assets/auth.js?v=1.0.18';
+		$css = '/local/modules/prime.phoneauth/assets/auth.css?v=1.2.1';
+		$js = '/local/modules/prime.phoneauth/assets/auth.js?v=1.0.19';
 		$inject = "\n<link rel=\"stylesheet\" href=\"" . htmlspecialcharsbx($css) . "\">\n"
 			. '<script>window.PRIME_PHONEAUTH=' . Json::encode($config) . ';</script>' . "\n"
 			. '<script src="' . htmlspecialcharsbx($js) . '"></script>' . "\n";

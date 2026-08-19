@@ -346,6 +346,22 @@
 	width: 240px;
 	margin: -4px 0 14px;
 }
+.bx-authform .prime-phoneauth-reg--bx {
+	width: 100%;
+	max-width: 100%;
+	margin: -8px 0 18px;
+}
+.prime-phoneauth-reg__links {
+	margin: 0 0 8px;
+	font-size: 13px;
+	line-height: 1.4;
+}
+.prime-phoneauth-reg__links a {
+	color: var(--pa-accent, #0464bb);
+}
+.bx-authform .prime-phoneauth-reg__accounts {
+	display: block;
+}
 .prime-phoneauth-reg__status {
 	font-size: 12px;
 	line-height: 1.4;

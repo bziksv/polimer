@@ -139,6 +139,7 @@ class prime_phoneauth extends CModule
 		$this->UnInstallEvents();
 
 		$em = EventManager::getInstance();
+		$em->registerEventHandler('main', 'OnBeforeUserRegister', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onBeforeUserRegister');
 		$em->registerEventHandler('main', 'OnBeforeUserAdd', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onBeforeUserAdd');
 		$em->registerEventHandler('main', 'OnAfterUserAdd', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onAfterUserAdd');
 		$em->registerEventHandler('main', 'OnBeforeUserUpdate', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onBeforeUserUpdate');
@@ -150,6 +151,7 @@ class prime_phoneauth extends CModule
 	public function UnInstallEvents()
 	{
 		$em = EventManager::getInstance();
+		$em->unRegisterEventHandler('main', 'OnBeforeUserRegister', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onBeforeUserRegister');
 		$em->unRegisterEventHandler('main', 'OnBeforeUserAdd', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onBeforeUserAdd');
 		$em->unRegisterEventHandler('main', 'OnAfterUserAdd', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onAfterUserAdd');
 		$em->unRegisterEventHandler('main', 'OnBeforeUserUpdate', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onBeforeUserUpdate');

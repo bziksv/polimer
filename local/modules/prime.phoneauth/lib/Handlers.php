@@ -4,10 +4,20 @@ namespace Prime\PhoneAuth;
 
 class Handlers
 {
-	public static function onBeforeUserAdd(&$arFields): void
+	public static function onBeforeUserRegister(&$arFields)
 	{
+		return self::validateRegisterPhone($arFields);
+	}
+
+	public static function onBeforeUserAdd(&$arFields)
+	{
+		if (!self::validateRegisterPhone($arFields)) {
+			return false;
+		}
 		self::syncPhoneFields($arFields, 0);
 		self::applyRegisterConfirmation($arFields);
+
+		return true;
 	}
 
 	public static function onAfterUserAdd(&$arFields): void
@@ -33,6 +43,41 @@ class Handlers
 	{
 		$id = (int)($arFields['ID'] ?? 0);
 		self::syncPhoneFields($arFields, $id);
+	}
+
+	protected static function validateRegisterPhone(array &$arFields): bool
+	{
+		if (defined('ADMIN_SECTION') && ADMIN_SECTION === true) {
+			return true;
+		}
+
+		$login = strtolower(trim((string)($arFields['LOGIN'] ?? '')));
+		if ($login === 'technical_boc' || strpos($login, 'technical_') === 0) {
+			return true;
+		}
+
+		$phone = trim((string)($arFields['PERSONAL_PHONE'] ?? ''));
+		if ($phone === '') {
+			return true;
+		}
+
+		$lookup = AuthService::lookup($phone);
+		if (empty($lookup['accounts'])) {
+			return true;
+		}
+
+		$norm = Phone::national10($phone);
+		$token = (string)($_POST['prime_phoneauth_token'] ?? '');
+		if ($token !== '' && AuthService::registerTokenMatches($token, $norm)) {
+			return true;
+		}
+
+		global $APPLICATION;
+		if (is_object($APPLICATION)) {
+			$APPLICATION->ThrowException((string)($lookup['message'] ?? AuthService::duplicateMessage()));
+		}
+
+		return false;
 	}
 
 	protected static function syncPhoneFields(array &$arFields, int $userId): void
