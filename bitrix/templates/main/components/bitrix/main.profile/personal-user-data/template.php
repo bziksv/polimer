@@ -59,6 +59,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 					<div class="line"><span><?=GetMessage('NAME')?></span><input type="text" name="NAME" maxlength="50" value="<?=$arResult["arUser"]["NAME"]?>" /></div>
 					<div class="line"><span><?=GetMessage('LAST_NAME')?></span><input type="text" name="LAST_NAME" maxlength="50" value="<?=$arResult["arUser"]["LAST_NAME"]?>" /></div>
 					<div class="line"><span><?=GetMessage('EMAIL')?></span><input type="text" name="EMAIL" maxlength="50" value="<? echo $arResult["arUser"]["EMAIL"]?>" /></div>
+					<div id="personal-contacts">
 					<div class="line"><span><?=GetMessage('USER_PHONE')?></span><input type="tel" name="PERSONAL_PHONE" maxlength="255" class="ru_phone_check phone_check" placeholder="+7-___-___-__-__" autocomplete="tel" inputmode="tel" value="<?
 						$phoneDisplay = (string)($arResult['arUser']['PERSONAL_PHONE'] ?? '');
 						if ($phoneDisplay !== '' && \Bitrix\Main\Loader::includeModule('prime.phoneauth')) {
@@ -66,6 +67,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 						}
 						echo htmlspecialcharsbx($phoneDisplay);
 					?>" /></div>
+					</div>
 
 					<? if($arResult["DATA_SAVED"] == "Y"):?>
 					<div class="line"><span>Успешно сохранено!</span></div>

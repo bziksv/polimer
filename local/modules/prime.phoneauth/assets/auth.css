@@ -127,16 +127,21 @@
 .prime-phoneauth-status.is-wait {
 	color: var(--pa-muted, #5a7a9a);
 }
-.personal_page .prime-phoneauth-status .prime-phoneauth-prompt__btn.is-compact {
+.personal_page .prime-phoneauth-status .prime-phoneauth-prompt__btn.is-compact,
+.pd__block .prime-phoneauth-status .prime-phoneauth-prompt__btn.is-compact {
 	height: 34px;
 	padding: 0 14px;
 	font-size: 13px;
 	line-height: 30px;
 	border-width: 2px;
 }
-.personal_page .prime-phoneauth-wait {
+.personal_page .prime-phoneauth-wait,
+.pd__block .prime-phoneauth-wait {
 	margin: 10px 0 0 160px;
 	max-width: 320px;
+}
+.pd__block #personal-contacts .line {
+	flex-wrap: wrap;
 }
 .prime-phoneauth-modal {
 	position: fixed;

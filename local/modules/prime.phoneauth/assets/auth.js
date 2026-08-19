@@ -388,7 +388,8 @@
 
 	function initProfile() {
 		if (!cfg.authorized) return;
-		var phoneInput = document.querySelector('#personal-contacts input[name="PERSONAL_PHONE"]');
+		var phoneInput = document.querySelector('#personal-contacts input[name="PERSONAL_PHONE"]')
+			|| document.querySelector('.pd__block input[name="PERSONAL_PHONE"]');
 		if (!phoneInput) return;
 		var line = phoneInput.closest('.line');
 		if (!line || line.querySelector('.prime-phoneauth-status')) return;
