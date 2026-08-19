@@ -135,7 +135,7 @@ document.getElementById('bx_auth_secure').style.display = '';
 	<div class="prime-phoneauth-wait" style="display:none">
 		<p data-role="message"></p>
 		<p>Звоните с номера <strong data-role="from-phone"></strong></p>
-		<p>Звоните на телефон: <a class="prime-phoneauth-number" data-role="call-number"></a></p>
+		<p class="prime-phoneauth-call-line"><span class="prime-phoneauth-call-line__label">Звоните на телефон:</span><a class="prime-phoneauth-number" data-role="call-number"></a></p>
 		<ol class="prime-phoneauth-steps">
 			<li>Наберите номер с того телефона, который указали</li>
 			<li>Звонок сбросится сам — страница войдёт в аккаунт</li>

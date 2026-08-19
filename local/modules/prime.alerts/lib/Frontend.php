@@ -69,7 +69,7 @@ class Frontend
 			'snoozeUrl' => '/local/modules/prime.alerts/ajax/snooze.php',
 		];
 
-		$cssHref = '/local/modules/prime.alerts/assets/style.css?v=1.5.13';
+		$cssHref = '/local/modules/prime.alerts/assets/style.css?v=1.5.14';
 		$jsHref = '/local/modules/prime.alerts/assets/policy.js?v=1.5.11';
 		$flash = '';
 		try {

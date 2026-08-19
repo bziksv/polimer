@@ -47,7 +47,7 @@
 	function waitMarkup() {
 		return '<p data-role="message"></p>'
 			+ '<p>Звоните с номера <strong data-role="from-phone"></strong></p>'
-			+ '<p>Звоните на телефон: <a class="prime-phoneauth-number" data-role="call-number"></a></p>'
+			+ '<p class="prime-phoneauth-call-line"><span class="prime-phoneauth-call-line__label">Звоните на телефон:</span><a class="prime-phoneauth-number" data-role="call-number"></a></p>'
 			+ '<div class="prime-phoneauth-error" data-role="wait-error" style="display:none"></div>'
 			+ '<button type="button" class="prime-phoneauth-test" data-role="test">Я позвонил (тест)</button>'
 			+ '<button type="button" class="prime-phoneauth-back" data-role="back">Отмена</button>';
@@ -504,7 +504,7 @@
 			+ '<div class="prime-phoneauth-wait" data-role="wait" style="display:none">'
 			+ '<p data-role="message"></p>'
 			+ '<p>Звоните с номера <strong data-role="from-phone"></strong></p>'
-			+ '<p>Звоните на телефон: <a class="prime-phoneauth-number" data-role="call-number"></a></p>'
+			+ '<p class="prime-phoneauth-call-line"><span class="prime-phoneauth-call-line__label">Звоните на телефон:</span><a class="prime-phoneauth-number" data-role="call-number"></a></p>'
 			+ '<button type="button" class="prime-phoneauth-test" data-role="test">Я позвонил (тест)</button>'
 			+ '<button type="button" class="prime-phoneauth-back" data-role="back">Отмена</button>'
 			+ '</div>';

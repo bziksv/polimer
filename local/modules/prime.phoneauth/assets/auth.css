@@ -68,6 +68,16 @@
 .prime-phoneauth-wait p {
 	margin: 0 0 8px;
 }
+.prime-phoneauth-call-line {
+	margin: 0 0 8px;
+}
+.prime-phoneauth-call-line__label {
+	display: block;
+	margin-bottom: 4px;
+}
+.prime-phoneauth-call-line .prime-phoneauth-number {
+	display: block;
+}
 .prime-phoneauth-number {
 	display: inline;
 	font-size: 16px;
