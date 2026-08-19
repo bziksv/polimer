@@ -572,9 +572,11 @@
 			if (linksEl && linksEl.style.display !== 'none') {
 				hasContent = true;
 			}
+			box.classList.toggle('is-visible', hasContent);
 			box.style.display = hasContent ? '' : 'none';
 		}
-		box.style.display = 'none';
+		setAccounts([]);
+		syncRegBoxVisibility();
 
 		function stopPoll() {
 			if (pollTimer) {

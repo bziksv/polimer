@@ -359,8 +359,11 @@
 .prime-phoneauth-reg__links a {
 	color: var(--pa-accent, #0464bb);
 }
-.bx-authform .prime-phoneauth-reg__accounts {
+.bx-authform .prime-phoneauth-reg__accounts:not(:empty) {
 	display: block;
+}
+.prime-phoneauth-reg:not(.is-visible) {
+	display: none !important;
 }
 .prime-phoneauth-reg__status {
 	font-size: 12px;

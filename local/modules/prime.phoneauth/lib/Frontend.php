@@ -69,8 +69,8 @@ class Frontend
 			'standalonePrompt' => $standalonePrompt,
 		];
 
-		$css = '/local/modules/prime.phoneauth/assets/auth.css?v=1.2.1';
-		$js = '/local/modules/prime.phoneauth/assets/auth.js?v=1.0.20';
+		$css = '/local/modules/prime.phoneauth/assets/auth.css?v=1.2.2';
+		$js = '/local/modules/prime.phoneauth/assets/auth.js?v=1.0.21';
 		$inject = "\n<link rel=\"stylesheet\" href=\"" . htmlspecialcharsbx($css) . "\">\n"
 			. '<script>window.PRIME_PHONEAUTH=' . Json::encode($config) . ';</script>' . "\n"
 			. '<script src="' . htmlspecialcharsbx($js) . '"></script>' . "\n";
