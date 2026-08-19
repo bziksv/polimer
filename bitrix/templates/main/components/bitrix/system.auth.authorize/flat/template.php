@@ -43,47 +43,17 @@ $phoneAuthOn = false;
 if (\Bitrix\Main\Loader::includeModule('prime.phoneauth')) {
 	$phoneAuthOn = \Prime\PhoneAuth\Config::isEnabled();
 }
+$authTabsCount = 2 + ($phoneAuthOn ? 1 : 0);
 ?>
 
 <div class="auth">
-<? if ($phoneAuthOn): ?>
-<div class="prime-phoneauth-tabs" role="tablist">
+<div class="prime-phoneauth-tabs prime-phoneauth-tabs--<?= (int)$authTabsCount ?>" role="tablist">
 	<button type="button" class="is-active" data-tab="password" role="tab">По логину</button>
+	<? if ($phoneAuthOn): ?>
 	<button type="button" data-tab="phone" role="tab">По телефону</button>
+	<? endif ?>
+	<button type="button" data-tab="social" role="tab">Соцсети</button>
 </div>
-<? endif; ?>
-
-<div class="prime-auth-social prime-auth-social--dev">
-	<div class="prime-auth-social__head">
-		<span class="prime-auth-social__title">Войти через социальные сети</span>
-		<span class="prime-auth-social__badge">В разработке</span>
-	</div>
-	<div class="prime-auth-social__icons">
-<?if($arResult["AUTH_SERVICES"]):?>
-<?
-$APPLICATION->IncludeComponent("bitrix:socserv.auth.form",
-	"flat",
-	array(
-		"AUTH_SERVICES" => $arResult["AUTH_SERVICES"],
-		"AUTH_URL" => $arResult["AUTH_URL"],
-		"POST" => $arResult["POST"],
-	),
-	$component,
-	array("HIDE_ICONS"=>"Y")
-);
-?>
-<?else:?>
-		<div class="prime-auth-social__fallback">
-			<span class="prime-auth-social__fallback-icon vk" title="ВКонтакте — в разработке"></span>
-			<span class="prime-auth-social__fallback-icon ok" title="Одноклассники — в разработке"></span>
-			<span class="prime-auth-social__fallback-icon go" title="Google — в разработке"></span>
-			<span class="prime-auth-social__fallback-icon fb" title="Facebook — в разработке"></span>
-		</div>
-<?endif?>
-	</div>
-</div>
-
-<div class="prime-auth-social-divider" aria-hidden="true"><span>или</span></div>
 
 <div class="prime-phoneauth-panel is-active" data-panel="password">
 
@@ -175,6 +145,38 @@ document.getElementById('bx_auth_secure').style.display = '';
 	</div>
 </div>
 <? endif; ?>
+
+<div class="prime-phoneauth-panel" data-panel="social">
+	<div class="prime-auth-social prime-auth-social--dev">
+		<div class="prime-auth-social__head">
+			<span class="prime-auth-social__badge">В разработке</span>
+		</div>
+		<div class="prime-auth-social__icons">
+<?if($arResult["AUTH_SERVICES"]):?>
+<?
+$APPLICATION->IncludeComponent("bitrix:socserv.auth.form",
+	"flat",
+	array(
+		"AUTH_SERVICES" => $arResult["AUTH_SERVICES"],
+		"AUTH_URL" => $arResult["AUTH_URL"],
+		"POST" => $arResult["POST"],
+	),
+	$component,
+	array("HIDE_ICONS"=>"Y")
+);
+?>
+<?else:?>
+			<div class="prime-auth-social__fallback">
+				<span class="prime-auth-social__fallback-icon vk" title="ВКонтакте — в разработке"></span>
+				<span class="prime-auth-social__fallback-icon ok" title="Одноклассники — в разработке"></span>
+				<span class="prime-auth-social__fallback-icon go" title="Google — в разработке"></span>
+				<span class="prime-auth-social__fallback-icon fb" title="Facebook — в разработке"></span>
+			</div>
+<?endif?>
+		</div>
+		<p class="prime-auth-social__note">Скоро можно будет войти через ВКонтакте и другие сервисы.</p>
+	</div>
+</div>
 </div>
 
 <?if ($arParams["NOT_SHOW_LINKS"] != "Y"):?>

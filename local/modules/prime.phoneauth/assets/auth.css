@@ -10,6 +10,18 @@
 	background: #fff;
 	box-sizing: border-box;
 }
+.prime-phoneauth-tabs--3 {
+	width: 100%;
+	max-width: 360px;
+}
+.prime-phoneauth-tabs--3 button {
+	font-size: 11px;
+	padding: 9px 3px;
+}
+.prime-phoneauth-tabs--2 {
+	width: 100%;
+	max-width: 320px;
+}
 .prime-phoneauth-tabs button {
 	flex: 1;
 	border: 0;
@@ -435,9 +447,12 @@ body.prime-phoneauth-prompt-open {
 	overflow: hidden;
 }
 
-/* Social login — в разработке */
+/* Social login — вкладка «Соцсети», в разработке */
+.prime-phoneauth-panel[data-panel="social"] .prime-auth-social {
+	margin: 0;
+	padding: 4px 0 0;
+}
 .prime-auth-social {
-	margin: 0 0 16px;
 	text-align: center;
 }
 .prime-auth-social__head {
@@ -520,36 +535,17 @@ body.prime-phoneauth-prompt-open {
 .prime-auth-social__fallback-icon.fb {
 	background-position-x: -170px;
 }
-.prime-auth-social-divider {
-	position: relative;
-	margin: 0 0 18px;
-	text-align: center;
-}
-.prime-auth-social-divider::before {
-	content: '';
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 50%;
-	border-top: 1px solid #e0e0e0;
-}
-.prime-auth-social-divider span {
-	position: relative;
-	display: inline-block;
-	padding: 0 12px;
+.prime-auth-social__note {
+	margin: 14px 0 0;
 	font-size: 13px;
-	color: #888;
-	background: #fff;
+	line-height: 1.45;
+	color: #666;
+	text-align: center;
 }
 .personal_enter .auth .prime-auth-social,
 .bx-authform .auth .prime-auth-social {
 	max-width: 100%;
 }
-#authorized.popup .personal_enter .auth .prime-auth-social {
-	margin-left: 40px;
-	margin-right: 40px;
-}
-#authorized.popup .personal_enter .auth .prime-auth-social-divider {
-	margin-left: 40px;
-	margin-right: 40px;
+#authorized.popup .personal_enter .auth .prime-phoneauth-tabs--3 {
+	max-width: none;
 }
