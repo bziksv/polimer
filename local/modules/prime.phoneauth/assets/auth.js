@@ -595,18 +595,6 @@
 				return;
 			}
 			lastModalPhone = phone;
-			var title = data.status === 'taken' || ((data.accounts || []).length === 1)
-				? 'Номер уже используется'
-				: 'Несколько аккаунтов';
-			if (lookupOnly) {
-				showDuplicate(
-					data.message || cfg.duplicateMessage,
-					data.accounts,
-					title,
-					{ lock: false, onLogin: switchToLogin }
-				);
-				return;
-			}
 			openClaimModal(false);
 		}
 		setAccounts([]);
