@@ -44,6 +44,21 @@
 	color: var(--pa-accent, #b8860b);
 }
 
+.prime-alerts-notice--exists {
+	border-color: #f5c2c7;
+	background: #f8d7da;
+	color: #842029;
+}
+.prime-alerts-notice--exists .prime-alerts-notice__title {
+	color: #842029;
+}
+.prime-alerts-notice--exists .prime-alerts-notice__icon {
+	background: #842029;
+}
+.prime-alerts-notice--exists a {
+	color: #0464bb;
+}
+
 .prime-alerts-flash {
 	margin: 0 0 16px;
 	padding: 12px 16px;

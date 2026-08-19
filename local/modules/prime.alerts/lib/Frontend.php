@@ -55,6 +55,9 @@ class Frontend
 		$profileData = ProfileBanner::profileData();
 		$config = [
 			'enabled' => $policyOn,
+			'checkEmailDuplicate' => true,
+			'checkEmailUrl' => '/local/modules/prime.alerts/ajax/check_email.php',
+			'emailExistsNotice' => EmailLookup::getExistsNoticeHtml(),
 			'providers' => $providers,
 			'policyRegister' => $policyRegister,
 			'policyOrder' => $policyOrder,
@@ -69,8 +72,8 @@ class Frontend
 			'snoozeUrl' => '/local/modules/prime.alerts/ajax/snooze.php',
 		];
 
-		$cssHref = '/local/modules/prime.alerts/assets/style.css?v=1.5.16';
-		$jsHref = '/local/modules/prime.alerts/assets/policy.js?v=1.5.13';
+		$cssHref = '/local/modules/prime.alerts/assets/style.css?v=1.5.17';
+		$jsHref = '/local/modules/prime.alerts/assets/policy.js?v=1.5.14';
 		$flash = '';
 		try {
 			$session = \Bitrix\Main\Application::getInstance()->getSession();

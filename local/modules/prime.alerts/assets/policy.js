@@ -119,7 +119,10 @@
 		onReady();
 	}
 
-	if (cfg.enabled === false) return;
+	var duplicateTimers = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
+	var duplicateCache = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
+	var duplicateState = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
+	var DUPLICATE_DEBOUNCE_MS = 450;
 
 	var providers = cfg.providers || [];
 	var everywhere = cfg.noticeEverywhere === true;
@@ -327,6 +330,75 @@
 		if (box) box.style.display = 'none';
 	}
 
+	function duplicateStateFor(inp) {
+		if (!duplicateState) return { exists: false, checking: false };
+		return duplicateState.get(inp) || { exists: false, checking: false };
+	}
+
+	function setDuplicateState(inp, state) {
+		if (duplicateState) duplicateState.set(inp, state);
+	}
+
+	function showDuplicateNotice(box) {
+		if (!box.getAttribute('data-dup-filled')) {
+			box.innerHTML = cfg.emailExistsNotice || '';
+			box.setAttribute('data-dup-filled', '1');
+			box.setAttribute('data-kind', 'duplicate');
+		}
+		box.style.display = '';
+	}
+
+	function checkEmailDuplicate(email) {
+		var url = cfg.checkEmailUrl || '/local/modules/prime.alerts/ajax/check_email.php';
+		var body = 'sessid=' + encodeURIComponent(cfg.sessid || (window.BX && BX.bitrix_sessid && BX.bitrix_sessid()) || '')
+			+ '&email=' + encodeURIComponent(email);
+		return fetch(url, {
+			method: 'POST',
+			credentials: 'same-origin',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+				'X-Requested-With': 'XMLHttpRequest'
+			},
+			body: body
+		}).then(function (r) { return r.json(); }).catch(function () { return { ok: false }; });
+	}
+
+	function scheduleDuplicateCheck(inp) {
+		if (cfg.checkEmailDuplicate === false || contextFor(inp) !== 'signup') {
+			return;
+		}
+		var email = String(inp.value || '').trim();
+		if (!looksComplete(email)) {
+			setDuplicateState(inp, { exists: false, checking: false });
+			return;
+		}
+		if (duplicateCache && duplicateCache.has(email)) {
+			setDuplicateState(inp, { exists: duplicateCache.get(email), checking: false });
+			return;
+		}
+		setDuplicateState(inp, { exists: false, checking: true });
+		if (!duplicateTimers) {
+			checkEmailDuplicate(email).then(function (data) {
+				var exists = !!(data && data.ok && data.exists);
+				if (duplicateCache) duplicateCache.set(email, exists);
+				setDuplicateState(inp, { exists: exists, checking: false });
+				if (String(inp.value || '').trim() === email) refreshInput(inp);
+			});
+			return;
+		}
+		var prev = duplicateTimers.get(inp);
+		if (prev) clearTimeout(prev);
+		duplicateTimers.set(inp, setTimeout(function () {
+			duplicateTimers.delete(inp);
+			checkEmailDuplicate(email).then(function (data) {
+				var exists = !!(data && data.ok && data.exists);
+				if (duplicateCache) duplicateCache.set(email, exists);
+				setDuplicateState(inp, { exists: exists, checking: false });
+				if (String(inp.value || '').trim() === email) refreshInput(inp);
+			});
+		}, DUPLICATE_DEBOUNCE_MS));
+	}
+
 	function showNotice(inp, ctx, box) {
 		if (!box.getAttribute('data-filled')) {
 			box.innerHTML = noticeHtml(ctx);
@@ -348,25 +420,42 @@
 		if (!isEmailInput(inp)) return;
 		var ctx = contextFor(inp);
 		var box = ensureBox(inp);
-		if (!ctx || !policyEnabledFor(ctx)) {
-			hideBox(box);
-			return;
-		}
 		if (!box) return;
 
 		var email = String(inp.value || '').trim();
 		if (!email) {
+			setDuplicateState(inp, { exists: false, checking: false });
 			hideBox(box);
 			return;
 		}
 
-		// While typing — wait for a finished-looking address
 		if (!looksComplete(email)) {
+			setDuplicateState(inp, { exists: false, checking: false });
+			hideBox(box);
+			return;
+		}
+
+		if (ctx === 'signup' && cfg.checkEmailDuplicate !== false) {
+			scheduleDuplicateCheck(inp);
+			var dup = duplicateStateFor(inp);
+			if (dup.exists) {
+				showDuplicateNotice(box);
+				return;
+			}
+			if (dup.checking) {
+				hideBox(box);
+				return;
+			}
+		}
+
+		if (cfg.enabled === false || !ctx || !policyEnabledFor(ctx)) {
 			hideBox(box);
 			return;
 		}
 
 		if (!isAllowed(email)) {
+			box.removeAttribute('data-dup-filled');
+			box.removeAttribute('data-kind');
 			showNotice(inp, ctx, box);
 		} else {
 			hideBox(box);
@@ -409,6 +498,51 @@
 		}, true);
 		document.addEventListener('blur', function (e) {
 			if (e.target && e.target.tagName === 'INPUT') refreshInput(e.target, { force: true });
+		}, true);
+		document.addEventListener('submit', function (e) {
+			var form = e.target;
+			if (!form || form.tagName !== 'FORM') return;
+			var inputs = form.querySelectorAll('input[name="USER_EMAIL"], input[name="REGISTER[EMAIL]"], input[name="EMAIL"]');
+			for (var i = 0; i < inputs.length; i++) {
+				var emailInput = inputs[i];
+				if (!isEmailInput(emailInput) || contextFor(emailInput) !== 'signup') continue;
+				var email = String(emailInput.value || '').trim();
+				if (!looksComplete(email) || cfg.checkEmailDuplicate === false) continue;
+				if (form.getAttribute('data-prime-alerts-email-ok') === email) {
+					form.removeAttribute('data-prime-alerts-email-ok');
+					continue;
+				}
+				var dup = duplicateStateFor(emailInput);
+				if (dup.exists) {
+					e.preventDefault();
+					e.stopPropagation();
+					refreshInput(emailInput, { force: true });
+					try { emailInput.focus(); } catch (err) {}
+					return;
+				}
+				if (dup.checking || !(duplicateCache && duplicateCache.has(email))) {
+					e.preventDefault();
+					e.stopPropagation();
+					checkEmailDuplicate(email).then(function (data) {
+						var exists = !!(data && data.ok && data.exists);
+						if (duplicateCache) duplicateCache.set(email, exists);
+						setDuplicateState(emailInput, { exists: exists, checking: false });
+						refreshInput(emailInput, { force: true });
+						if (!exists) {
+							form.setAttribute('data-prime-alerts-email-ok', email);
+							if (typeof form.requestSubmit === 'function') {
+								form.requestSubmit();
+							} else {
+								var btn = form.querySelector('input[type="submit"], button[type="submit"]');
+								if (btn) btn.click();
+							}
+						} else {
+							try { emailInput.focus(); } catch (err2) {}
+						}
+					});
+					return;
+				}
+			}
 		}, true);
 		scan();
 	}

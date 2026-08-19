@@ -72,6 +72,10 @@ class Handlers
 
 	public static function onBeforeUserRegister(&$arFields)
 	{
+		if (!self::validateEmailNotRegistered($arFields)) {
+			return false;
+		}
+
 		return self::validateUserEmail($arFields, 'signup');
 	}
 
@@ -295,6 +299,32 @@ class Handlers
 					return true;
 				}
 			}
+		}
+
+		return false;
+	}
+
+	protected static function validateEmailNotRegistered(array $arFields, int $excludeUserId = 0): bool
+	{
+		if (!Config::isEnabled()) {
+			return true;
+		}
+
+		$email = trim((string)($arFields['EMAIL'] ?? ''));
+		if ($email === '') {
+			$login = trim((string)($arFields['LOGIN'] ?? ''));
+			if (strpos($login, '@') !== false) {
+				$email = $login;
+			}
+		}
+
+		if ($email === '' || !EmailLookup::isRegistered($email, $excludeUserId)) {
+			return true;
+		}
+
+		global $APPLICATION;
+		if (is_object($APPLICATION)) {
+			$APPLICATION->ThrowException(EmailLookup::getExistsMessage());
 		}
 
 		return false;
