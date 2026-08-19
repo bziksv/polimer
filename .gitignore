@@ -1,5 +1,7 @@
 .osp/*
 .idea/*
+.DS_Store
+**/.DS_Store
 upload
 upload/*
 bitrix/php_interface/*
