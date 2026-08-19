@@ -69,9 +69,14 @@ class Frontend
 			'standalonePrompt' => $standalonePrompt,
 		];
 
-		$css = '/local/modules/prime.phoneauth/assets/auth.css?v=1.2.2';
-		$js = '/local/modules/prime.phoneauth/assets/auth.js?v=1.0.22';
-		$inject = "\n<link rel=\"stylesheet\" href=\"" . htmlspecialcharsbx($css) . "\">\n"
+		$css = '/local/modules/prime.phoneauth/assets/auth.css?v=1.2.3';
+		$js = '/local/modules/prime.phoneauth/assets/auth.js?v=1.0.23';
+		$alertsCss = '';
+		if ($hasRegistrationPhone && \Bitrix\Main\Loader::includeModule('prime.alerts')) {
+			$alertsCss = '<link rel="stylesheet" href="/local/modules/prime.alerts/assets/style.css?v=1.5.20">' . "\n";
+		}
+		$inject = "\n" . $alertsCss
+			. "<link rel=\"stylesheet\" href=\"" . htmlspecialcharsbx($css) . "\">\n"
 			. '<script>window.PRIME_PHONEAUTH=' . Json::encode($config) . ';</script>' . "\n"
 			. '<script src="' . htmlspecialcharsbx($js) . '"></script>' . "\n";
 

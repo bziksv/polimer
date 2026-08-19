@@ -349,7 +349,16 @@
 .bx-authform .prime-phoneauth-reg--bx {
 	width: 100%;
 	max-width: 100%;
-	margin: -8px 0 18px;
+	margin: -4px 0 20px;
+}
+.bx-authform .prime-phoneauth-reg--bx .prime-alerts-live-notice,
+.bx-authform .prime-phoneauth-reg--bx .prime-alerts-notice {
+	width: 100%;
+	margin: 0;
+	box-sizing: border-box;
+}
+.bx-authform .prime-phoneauth-reg--bx .prime-alerts-live-notice:not(.is-visible) {
+	display: none !important;
 }
 .prime-phoneauth-reg__links {
 	margin: 0 0 8px;

@@ -59,6 +59,16 @@
 	color: #0464bb;
 }
 
+.prime-alerts-notice__accounts {
+	margin: 0 0 8px;
+	padding-left: 18px;
+	font-size: 13px;
+	line-height: 1.45;
+}
+.prime-alerts-notice__accounts li {
+	margin: 2px 0;
+}
+
 .bx-authform .prime-alerts-live-notice {
 	margin: -4px 0 20px;
 	width: 100%;

@@ -31,6 +31,36 @@
 		return d.length === 10 ? d : d;
 	}
 
+	function escapeHtml(text) {
+		return String(text || '')
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;');
+	}
+
+	/** Тот же блок, что prime.alerts-notice--exists под e-mail на регистрации */
+	function regDuplicateNoticeHtml(title, message, accounts) {
+		var accHtml = '';
+		(accounts || []).forEach(function (email) {
+			if (!email) return;
+			accHtml += '<li>' + escapeHtml(email) + '</li>';
+		});
+		var accountsBlock = accHtml
+			? '<ul class="prime-alerts-notice__accounts">' + accHtml + '</ul>'
+			: '';
+		return '<div class="prime-alerts-notice prime-alerts-notice--exists signup-phone-exists-notice">'
+			+ '<div class="prime-alerts-notice__inner">'
+			+ '<div class="prime-alerts-notice__icon" aria-hidden="true">!</div>'
+			+ '<div class="prime-alerts-notice__content">'
+			+ '<div class="prime-alerts-notice__title">' + escapeHtml(title) + '</div>'
+			+ '<div class="prime-alerts-notice__text">'
+			+ '<p>' + escapeHtml(message) + '</p>'
+			+ accountsBlock
+			+ '<p><a href="/auth/">Войти</a> · <a href="/auth/?forgot_password=yes">Забыли пароль?</a></p>'
+			+ '</div></div></div>';
+	}
+
 	function switchToLogin() {
 		var auth = document.querySelector('.personal_enter .auth');
 		if (!auth) return;
@@ -565,7 +595,8 @@
 		}
 
 		function syncRegBoxVisibility() {
-			var hasContent = (statusEl.textContent || '').trim() !== ''
+			var hasContent = !!box.querySelector('.prime-alerts-live-notice.is-visible')
+				|| (statusEl.textContent || '').trim() !== ''
 				|| accountsEl.children.length > 0
 				|| wait.style.display !== 'none'
 				|| (!lookupOnly && verifyBtn.style.display !== 'none');
@@ -574,6 +605,31 @@
 			}
 			box.classList.toggle('is-visible', hasContent);
 			box.style.display = hasContent ? '' : 'none';
+		}
+
+		function clearRegDuplicateNotice() {
+			var live = box.querySelector('.prime-alerts-live-notice[data-kind="duplicate"]');
+			if (live && live.parentNode) live.parentNode.removeChild(live);
+			statusEl.style.display = '';
+			accountsEl.style.display = '';
+		}
+
+		function showRegDuplicateNotice(data) {
+			clearRegDuplicateNotice();
+			statusEl.style.display = 'none';
+			accountsEl.style.display = 'none';
+			if (linksEl) linksEl.style.display = 'none';
+			var live = document.createElement('div');
+			live.className = 'prime-alerts-live-notice is-visible';
+			live.setAttribute('data-kind', 'duplicate');
+			live.setAttribute('aria-live', 'polite');
+			live.innerHTML = regDuplicateNoticeHtml(
+				'Номер уже используется',
+				data.message || cfg.duplicateMessage || 'Номер уже используется в другом аккаунте.',
+				data.accounts || []
+			);
+			box.insertBefore(live, box.firstChild);
+			syncRegBoxVisibility();
 		}
 		setAccounts([]);
 		syncRegBoxVisibility();
@@ -666,6 +722,7 @@
 
 		function applyLookup(data, phone) {
 			if (!data || !data.ok) {
+				clearRegDuplicateNotice();
 				statusEl.className = 'prime-phoneauth-reg__status';
 				statusEl.textContent = '';
 				setAccounts([]);
@@ -677,21 +734,18 @@
 				return;
 			}
 			lastLookupData = data;
+			if (ctx.mode === 'bx' && phoneDuplicateActive(data)) {
+				showRegDuplicateNotice(data);
+				verifyBtn.style.display = 'none';
+				return;
+			}
+			clearRegDuplicateNotice();
 			if (lookupOnly) {
 				if (phoneDuplicateActive(data)) {
 					statusEl.className = 'prime-phoneauth-reg__status is-bad';
 					statusEl.textContent = data.message || cfg.duplicateMessage || 'Номер уже используется в другом аккаунте.';
 					setAccounts(data.accounts || []);
 					if (linksEl) linksEl.style.display = '';
-					if ((data.accounts || []).length && lastModalPhone !== phone) {
-						lastModalPhone = phone;
-						showDuplicate(
-							data.message || cfg.duplicateMessage,
-							data.accounts,
-							data.status === 'taken' ? 'Номер уже используется' : 'Несколько аккаунтов',
-							{ lock: false, onLogin: switchToLogin }
-						);
-					}
 				} else {
 					statusEl.className = 'prime-phoneauth-reg__status';
 					statusEl.textContent = data.status === 'free' ? '' : (data.message || '');
@@ -721,6 +775,7 @@
 			var phone = phoneInput.value;
 			if (!phoneReady(phone)) {
 				resetConfirm();
+				clearRegDuplicateNotice();
 				statusEl.textContent = '';
 				statusEl.className = 'prime-phoneauth-reg__status';
 				setAccounts([]);
@@ -732,7 +787,6 @@
 				syncRegBoxVisibility();
 				return;
 			}
-			if (document.querySelector('.prime-phoneauth-modal')) return;
 			if (phone === lastLookupPhone && (tokenInp.value || wait.style.display !== 'none')) return;
 			lastLookupPhone = phone;
 			postForm(cfg.lookupUrl, { phone: phone }).then(function (data) {
