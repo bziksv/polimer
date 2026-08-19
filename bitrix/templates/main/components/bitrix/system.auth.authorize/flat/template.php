@@ -52,8 +52,13 @@ if (\Bitrix\Main\Loader::includeModule('prime.phoneauth')) {
 	<button type="button" data-tab="phone" role="tab">По телефону</button>
 </div>
 <? endif; ?>
-<div class="prime-phoneauth-panel is-active" data-panel="password">
 
+<div class="prime-auth-social prime-auth-social--dev">
+	<div class="prime-auth-social__head">
+		<span class="prime-auth-social__title">Войти через социальные сети</span>
+		<span class="prime-auth-social__badge">В разработке</span>
+	</div>
+	<div class="prime-auth-social__icons">
 <?if($arResult["AUTH_SERVICES"]):?>
 <?
 $APPLICATION->IncludeComponent("bitrix:socserv.auth.form",
@@ -67,9 +72,20 @@ $APPLICATION->IncludeComponent("bitrix:socserv.auth.form",
 	array("HIDE_ICONS"=>"Y")
 );
 ?>
-
-	<hr class="bxe-light">
+<?else:?>
+		<div class="prime-auth-social__fallback">
+			<span class="prime-auth-social__fallback-icon vk" title="ВКонтакте — в разработке"></span>
+			<span class="prime-auth-social__fallback-icon ok" title="Одноклассники — в разработке"></span>
+			<span class="prime-auth-social__fallback-icon go" title="Google — в разработке"></span>
+			<span class="prime-auth-social__fallback-icon fb" title="Facebook — в разработке"></span>
+		</div>
 <?endif?>
+	</div>
+</div>
+
+<div class="prime-auth-social-divider" aria-hidden="true"><span>или</span></div>
+
+<div class="prime-phoneauth-panel is-active" data-panel="password">
 
 	<form name="form_auth" method="post" target="_top" action="<?=$arResult["AUTH_URL"]?>">
 
