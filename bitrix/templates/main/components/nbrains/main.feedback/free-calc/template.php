@@ -37,7 +37,7 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
 
 		<div class="line pl">
 			<span>Телефон</span>
-			<input type="text" class="phone" name="PHONE" placeholder="+7 (473) 234-03-01" value="<?=$_POST['PHONE']?>">
+			<input type="tel" class="phone ru_phone_check" name="PHONE" placeholder="+7-___-___-__-__" autocomplete="tel" inputmode="tel" value="<?=$_POST['PHONE']?>">
 			<span class="txt_ct">Время звонка, до</span>
 			<input type="text" class="call_time" name="TIME_AFTER" value="<?=$_POST['TIME_AFTER']?>">
 		</div>

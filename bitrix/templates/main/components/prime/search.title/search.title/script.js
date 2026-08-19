@@ -733,7 +733,7 @@ function PolimerTitleSearch(arParams)
 			jQuery('body').prepend(data);
 
 			if (jQuery.fn.mask)
-				jQuery('.phone').mask('+7 (999) 999-99-99');
+				jQuery('.phone').mask('+7-999-999-99-99', { placeholder: '_', autoclear: false });
 
 			try
 			{

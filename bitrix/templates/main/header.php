@@ -101,6 +101,13 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 		Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/wickedpicker.min.js');
 		Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/jquery.maskedinput.min.js');
 
+		$ruPhoneJsPath = $_SERVER['DOCUMENT_ROOT'] . SITE_TEMPLATE_PATH . '/js/ru-phone.js';
+		$ruPhoneJsUrl = SITE_TEMPLATE_PATH . '/js/ru-phone.js';
+		if (is_file($ruPhoneJsPath)) {
+			$ruPhoneJsUrl .= '?' . filemtime($ruPhoneJsPath);
+		}
+		Asset::getInstance()->addJs($ruPhoneJsUrl);
+
 		Asset::getInstance()->addJs(SITE_TEMPLATE_PATH.'/js/jquery.bpopup.min.js');
 
 		Asset::getInstance()->addJs('/js/readmore.js');

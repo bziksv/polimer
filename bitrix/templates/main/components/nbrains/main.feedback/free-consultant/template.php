@@ -58,7 +58,7 @@ $showForm = $hasErrors;
 								switch ($field['CODE']):
 									case "PHONE":
 										?>
-											<input type="text" placeholder="+7 (473) 234-03-01" class="phone" name="<?=$field['CODE']?>" value="<?=$arResult[$field['CODE']]?>" required>
+											<input type="text" placeholder="+7-___-___-__-__" class="phone" name="<?=$field['CODE']?>" value="<?=$arResult[$field['CODE']]?>" required>
 										<?
 										break;
 									case "EMAIL":

@@ -110,7 +110,7 @@ new BX.PhoneAuth({
 		<div class="bx-authform-formgroup-container">
 			<div class="bx-authform-label-container"><?if($arResult["PERSONAL_PHONE_REQUIRED"]):?><span class="bx-authform-starrequired">*</span><?endif?><?echo GetMessage("main_register_phone_number")?></div>
 			<div class="bx-authform-input-container">
-				<input type="text" class="phone" name="USER_PERSONAL_PHONE" maxlength="255" value="<?=$arResult["USER_PERSONAL_PHONE"]?>" <?if($arResult["PERSONAL_PHONE_REQUIRED"]):?>required=""<?endif?>/>
+				<input type="tel" class="phone ru_phone_check phone_check" name="USER_PERSONAL_PHONE" maxlength="255" placeholder="+7-___-___-__-__" autocomplete="tel" inputmode="tel" value="<?=$arResult["USER_PERSONAL_PHONE"]?>" <?if($arResult["PERSONAL_PHONE_REQUIRED"]):?>required=""<?endif?>/>
 			</div>
 		</div>
 		

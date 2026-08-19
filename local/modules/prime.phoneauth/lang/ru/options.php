@@ -1,0 +1,19 @@
+<?php
+$MESS['PRIME_PHONEAUTH_TAB'] = 'Настройки';
+$MESS['PRIME_PHONEAUTH_TAB_TITLE'] = 'Вход по телефону';
+$MESS['PRIME_PHONEAUTH_ENABLED'] = 'Модуль включён';
+$MESS['PRIME_PHONEAUTH_CALL_AUTH'] = 'Вход и подтверждение звонком';
+$MESS['PRIME_PHONEAUTH_CALL_AUTH_HINT'] = 'Пока номер в Novofon не активирован — оставьте выкл. На локале работает кнопка «Я позвонил (тест)».';
+$MESS['PRIME_PHONEAUTH_TEST_CONFIRM'] = 'Тестовое подтверждение без реального звонка';
+$MESS['PRIME_PHONEAUTH_TEST_CONFIRM_HINT'] = 'Показывает кнопку «Я позвонил (тест)». На localhost включается автоматически.';
+$MESS['PRIME_PHONEAUTH_VERIFY_NUMBER'] = 'Номер Novofon, на который звонит клиент';
+$MESS['PRIME_PHONEAUTH_VERIFY_NUMBER_HINT'] = 'E.164 без «+», например 79951234567. Этот номер показывается в попапе.';
+$MESS['PRIME_PHONEAUTH_WEBHOOK_IPS'] = 'Разрешённые IP webhook';
+$MESS['PRIME_PHONEAUTH_WEBHOOK_IPS_HINT'] = 'Через запятую. По умолчанию IP Novofon: 37.139.38.215';
+$MESS['PRIME_PHONEAUTH_WEBHOOK_SECRET'] = 'Секрет webhook';
+$MESS['PRIME_PHONEAUTH_WEBHOOK_SECRET_HINT'] = 'Создаётся сам для каждого сайта. В Novofon копируйте URL ниже, не секрет отдельно. Пустое поле при сохранении секрет не затирает.';
+$MESS['PRIME_PHONEAUTH_WEBHOOK_REGEN'] = 'Сгенерировать заново';
+$MESS['PRIME_PHONEAUTH_WEBHOOK_URL'] = 'URL для Novofon';
+$MESS['PRIME_PHONEAUTH_WEBHOOK_URL_HINT'] = 'Этот адрес подставьте в уведомления Novofon на виртуальный номер ЭХК. На каждом сайте модуль выдаёт свой URL и свой секрет.';
+$MESS['PRIME_PHONEAUTH_WEBHOOK_URL_LOCAL'] = 'Сейчас открыто с';
+$MESS['PRIME_PHONEAUTH_SAVED'] = 'Настройки сохранены.';

@@ -63,7 +63,7 @@ $this->setFrameMode(true);
 			</div>
 			<div class="inp">
 				<span>Телефон</span>
-				<input type="text" name="phone" placeholder="+7 (473) 234-03-01" class="phone">
+				<input type="tel" name="phone" placeholder="+7-___-___-__-__" class="phone ru_phone_check" autocomplete="tel" inputmode="tel">
 			</div>
 			<div class="inp">
 				<input type="checkbox" name="rule" id="rule" value="Y" checked/>

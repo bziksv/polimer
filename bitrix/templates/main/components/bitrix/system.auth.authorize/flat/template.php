@@ -38,6 +38,22 @@ if($arResult['ERROR_MESSAGE'] <> ''):
 
 	<h3 class="bx-title"><?=GetMessage("AUTH_PLEASE_AUTH")?></h3>
 
+<?
+$phoneAuthOn = false;
+if (\Bitrix\Main\Loader::includeModule('prime.phoneauth')) {
+	$phoneAuthOn = \Prime\PhoneAuth\Config::isEnabled();
+}
+?>
+
+<div class="auth">
+<? if ($phoneAuthOn): ?>
+<div class="prime-phoneauth-tabs" role="tablist">
+	<button type="button" class="is-active" data-tab="password" role="tab">По логину</button>
+	<button type="button" data-tab="phone" role="tab">По телефону</button>
+</div>
+<? endif; ?>
+<div class="prime-phoneauth-panel is-active" data-panel="password">
+
 <?if($arResult["AUTH_SERVICES"]):?>
 <?
 $APPLICATION->IncludeComponent("bitrix:socserv.auth.form",
@@ -114,6 +130,36 @@ document.getElementById('bx_auth_secure').style.display = '';
 			<input type="submit" class="btn btn-primary" name="Login" value="<?=GetMessage("AUTH_AUTHORIZE")?>" />
 		</div>
 	</form>
+
+</div>
+<? if ($phoneAuthOn): ?>
+<div class="prime-phoneauth-panel" data-panel="phone">
+	<div class="prime-phoneauth-error" style="display:none"></div>
+	<form class="prime-phoneauth-phone-form" action="#" method="post">
+		<div class="bx-authform-formgroup-container">
+			<div class="bx-authform-label-container">Телефон</div>
+			<div class="bx-authform-input-container">
+				<input type="text" name="PHONE" class="ru_phone_check" placeholder="+7-___-___-__-__" autocomplete="tel" inputmode="tel">
+			</div>
+		</div>
+		<div class="bx-authform-formgroup-container">
+			<input type="submit" class="btn btn-primary" value="Продолжить">
+		</div>
+	</form>
+	<div class="prime-phoneauth-wait" style="display:none">
+		<p data-role="message"></p>
+		<p>Звоните с номера <strong data-role="from-phone"></strong></p>
+		<p>Звоните на телефон: <a class="prime-phoneauth-number" data-role="call-number"></a></p>
+		<ol class="prime-phoneauth-steps">
+			<li>Наберите номер с того телефона, который указали</li>
+			<li>Звонок сбросится сам — страница войдёт в аккаунт</li>
+		</ol>
+		<button type="button" class="prime-phoneauth-test" data-role="test">Я позвонил (тест)</button>
+		<button type="button" class="prime-phoneauth-back" data-role="back">Другой способ входа</button>
+	</div>
+</div>
+<? endif; ?>
+</div>
 
 <?if ($arParams["NOT_SHOW_LINKS"] != "Y"):?>
 	<hr class="bxe-light">

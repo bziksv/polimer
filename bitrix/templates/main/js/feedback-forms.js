@@ -55,6 +55,16 @@
 				}
 			}
 
+			if ($input.is('.phone, .ru_phone_check, .phone_check, [name=PHONE], [name=phone], [autocomplete=tel]') && val !== '') {
+				var phoneOk = window.PolimerRuPhone && window.PolimerRuPhone.isValidRuPhone
+					? window.PolimerRuPhone.isValidRuPhone(val)
+					: /^\+7-\d{3}-\d{3}-\d{2}-\d{2}$/.test(val);
+				if (!phoneOk) {
+					markInvalid($input, 'Укажите номер в формате +7-___-___-__-__');
+					ok = false;
+				}
+			}
+
 			if ($input.is('[name=FIO], .name') && val !== '') {
 				if (!/[А-Яа-яЁё]/.test(val)) {
 					markInvalid($input, 'ФИО — только кириллица');

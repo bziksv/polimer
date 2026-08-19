@@ -7577,7 +7577,7 @@ header .header__bottom.fixed .header__account span
     color: #333
 }
 
-.pd__block .line input[type=text], .pd__block .line input[type=password] {
+.pd__block .line input[type=text], .pd__block .line input[type=password], .pd__block .line input[type=tel] {
     position: absolute;
     top: 0;
     right: 0;
