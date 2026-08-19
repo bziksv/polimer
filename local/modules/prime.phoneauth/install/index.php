@@ -142,6 +142,7 @@ class prime_phoneauth extends CModule
 		$em->registerEventHandler('main', 'OnBeforeUserRegister', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onBeforeUserRegister');
 		$em->registerEventHandler('main', 'OnBeforeUserAdd', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onBeforeUserAdd');
 		$em->registerEventHandler('main', 'OnAfterUserAdd', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onAfterUserAdd');
+		$em->registerEventHandler('main', 'OnAfterUserRegister', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onAfterUserRegister', 200);
 		$em->registerEventHandler('main', 'OnBeforeUserUpdate', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onBeforeUserUpdate');
 		$em->registerEventHandler('main', 'OnEndBufferContent', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Frontend', 'onEndBufferContent');
 
@@ -154,6 +155,7 @@ class prime_phoneauth extends CModule
 		$em->unRegisterEventHandler('main', 'OnBeforeUserRegister', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onBeforeUserRegister');
 		$em->unRegisterEventHandler('main', 'OnBeforeUserAdd', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onBeforeUserAdd');
 		$em->unRegisterEventHandler('main', 'OnAfterUserAdd', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onAfterUserAdd');
+		$em->unRegisterEventHandler('main', 'OnAfterUserRegister', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onAfterUserRegister');
 		$em->unRegisterEventHandler('main', 'OnBeforeUserUpdate', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Handlers', 'onBeforeUserUpdate');
 		$em->unRegisterEventHandler('main', 'OnEndBufferContent', $this->MODULE_ID, '\\Prime\\PhoneAuth\\Frontend', 'onEndBufferContent');
 

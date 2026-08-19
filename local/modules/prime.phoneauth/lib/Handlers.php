@@ -6,11 +6,14 @@ class Handlers
 {
 	public static function onBeforeUserRegister(&$arFields)
 	{
+		self::ensurePersonalPhoneFromPost($arFields);
+
 		return self::validateRegisterPhone($arFields);
 	}
 
 	public static function onBeforeUserAdd(&$arFields)
 	{
+		self::ensurePersonalPhoneFromPost($arFields);
 		if (!self::validateRegisterPhone($arFields)) {
 			return false;
 		}
@@ -18,6 +21,50 @@ class Handlers
 		self::applyRegisterConfirmation($arFields);
 
 		return true;
+	}
+
+	public static function onAfterUserRegister(&$arFields): void
+	{
+		$userId = (int)($arFields['USER_ID'] ?? $arFields['ID'] ?? 0);
+		if ($userId <= 0) {
+			return;
+		}
+
+		$phone = trim((string)($_POST['USER_PERSONAL_PHONE'] ?? $_REQUEST['USER_PERSONAL_PHONE'] ?? ''));
+		if ($phone === '') {
+			return;
+		}
+
+		$norm = Phone::national10($phone);
+		if ($norm === '') {
+			return;
+		}
+
+		$token = (string)($_POST['prime_phoneauth_token'] ?? '');
+		if ($token === '' || !AuthService::registerTokenMatches($token, $norm)) {
+			return;
+		}
+
+		$rs = \CUser::GetByID($userId);
+		$row = $rs ? $rs->Fetch() : false;
+		if ($row && AuthService::isConfirmed($row[AuthService::UF_CONFIRMED] ?? 0)) {
+			if (AuthService::consumeRegisterToken($token, $norm)) {
+				AuthService::releasePhoneFromOthers($userId, $norm);
+			}
+
+			return;
+		}
+
+		$user = new \CUser();
+		$user->Update($userId, [
+			'PERSONAL_PHONE' => $phone,
+			AuthService::UF_CONFIRMED => 1,
+			AuthService::UF_NORM => $norm,
+		]);
+
+		if (AuthService::consumeRegisterToken($token, $norm)) {
+			AuthService::releasePhoneFromOthers($userId, $norm);
+		}
 	}
 
 	public static function onAfterUserAdd(&$arFields): void
@@ -43,6 +90,29 @@ class Handlers
 	{
 		$id = (int)($arFields['ID'] ?? 0);
 		self::syncPhoneFields($arFields, $id);
+	}
+
+	protected static function ensurePersonalPhoneFromPost(array &$arFields): void
+	{
+		if (trim((string)($arFields['PERSONAL_PHONE'] ?? '')) !== '') {
+			return;
+		}
+
+		$phone = trim((string)($_POST['USER_PERSONAL_PHONE'] ?? $_REQUEST['USER_PERSONAL_PHONE'] ?? ''));
+		if ($phone !== '') {
+			$arFields['PERSONAL_PHONE'] = $phone;
+		}
+	}
+
+	protected static function hasValidRegisterToken(string $norm): bool
+	{
+		if ($norm === '') {
+			return false;
+		}
+
+		$token = (string)($_POST['prime_phoneauth_token'] ?? '');
+
+		return $token !== '' && AuthService::registerTokenMatches($token, $norm);
 	}
 
 	protected static function validateRegisterPhone(array &$arFields): bool
@@ -105,7 +175,7 @@ class Handlers
 		}
 
 		if ($newNorm !== $oldNorm) {
-			$arFields[AuthService::UF_CONFIRMED] = 0;
+			$arFields[AuthService::UF_CONFIRMED] = self::hasValidRegisterToken($newNorm) ? 1 : 0;
 		} elseif ($wasConfirmed) {
 			$arFields[AuthService::UF_CONFIRMED] = 1;
 		}
