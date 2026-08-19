@@ -245,11 +245,11 @@ document.getElementById('bx_auth_secure_conf').style.display = '';
 			<span class="bx-authform-starrequired">*</span><?=GetMessage("AUTH_REQ")?>
 		</div>
 
-		<div class="bx-authform-link-container">
-			<a href="<?=$arResult["AUTH_AUTH_URL"]?>" rel="nofollow"><b><?=GetMessage("AUTH_AUTH")?></b></a>
-		</div>
-
 	</form>
+
+	<div class="bx-authform-link-container">
+		<a href="<?=$arResult["AUTH_AUTH_URL"]?>" rel="nofollow"><b><?=GetMessage("AUTH_AUTH")?></b></a>
+	</div>
 
 <script>
 	document.bform.USER_NAME.focus();

@@ -1063,6 +1063,27 @@
 		});
 	}
 
+	function initAuthSwitchLinks() {
+		document.querySelectorAll('.bx-authform-link-container a[href]').forEach(function (a) {
+			if (a.getAttribute('data-prime-auth-switch') === '1') {
+				return;
+			}
+			var href = a.getAttribute('href') || '';
+			if (!/(^|[?&])(login|register)=yes/.test(href)) {
+				return;
+			}
+			a.setAttribute('data-prime-auth-switch', '1');
+			a.addEventListener('click', function (e) {
+				e.preventDefault();
+				e.stopPropagation();
+				if (typeof CloseWaitWindow === 'function') {
+					CloseWaitWindow();
+				}
+				window.location.assign(href);
+			});
+		});
+	}
+
 	function onReady() {
 		document.querySelectorAll('.personal_enter .auth, .bx-authform .auth').forEach(function (root) {
 			initTabs(root);
@@ -1070,6 +1091,7 @@
 				bindPhoneForm(root);
 			}
 		});
+		initAuthSwitchLinks();
 		initRegister();
 		if (phoneOn) {
 			initProfile();
@@ -1093,6 +1115,7 @@
 
 	if (window.BX && BX.addCustomEvent) {
 		BX.addCustomEvent('onAjaxSuccess', function () {
+			initAuthSwitchLinks();
 			initRegister();
 		});
 	}
