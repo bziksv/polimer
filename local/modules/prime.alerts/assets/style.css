@@ -59,6 +59,15 @@
 	color: #0464bb;
 }
 
+.bx-authform .prime-alerts-live-notice {
+	margin: -4px 0 20px;
+	width: 100%;
+}
+.bx-authform .prime-alerts-live-notice .prime-alerts-notice {
+	width: 100%;
+	box-sizing: border-box;
+}
+
 .prime-alerts-flash {
 	margin: 0 0 16px;
 	padding: 12px 16px;

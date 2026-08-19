@@ -158,8 +158,19 @@
 
 	function fieldWrap(inp) {
 		return inp.closest(
-			'.line, .sale-profile-detail-form-group, .bx-soa-customer-field, .form-group, .soa-property-container, .field, .row, .form-input, tr, label'
+			'.bx-authform-formgroup-container, .line, .sale-profile-detail-form-group, .bx-soa-customer-field, .form-group, .soa-property-container, .field, .row, .form-input, tr, label'
 		) || inp.parentNode;
+	}
+
+	function noticeAnchor(inp) {
+		var bxGroup = inp.closest('.bx-authform-formgroup-container');
+		if (bxGroup) return bxGroup;
+		var wrap = fieldWrap(inp);
+		if (!wrap) return inp.parentNode;
+		if (wrap.classList && wrap.classList.contains('form-input')) {
+			return wrap.parentNode || wrap;
+		}
+		return wrap;
 	}
 
 	function isLeadForm(inp, form, idText) {
@@ -199,9 +210,16 @@
 			form.className || '',
 			form.getAttribute('data-action') || ''
 		];
-		var actionInput = form.querySelector('input[name="ACTION"], input[name="action"], input[name="register"], input[name="REGISTER"]');
+		var actionInput = form.querySelector('input[name="ACTION"], input[name="action"], input[name="register"], input[name="REGISTER"], input[name="Register"]');
 		if (actionInput) {
 			parts.push(actionInput.name || '', actionInput.value || '');
+		}
+		var typeInput = form.querySelector('input[name="TYPE"]');
+		if (typeInput) {
+			parts.push('TYPE', typeInput.value || '');
+		}
+		if (form.querySelector('input[name="AUTH_FORM"]')) {
+			parts.push('AUTH_FORM');
 		}
 		return { form: form, text: parts.join(' ') };
 	}
@@ -246,6 +264,11 @@
 			return 'signup';
 		}
 		if (form) {
+			if (form.querySelector('input[name="TYPE"][value="REGISTRATION"]')
+				&& form.querySelector('input[name="USER_EMAIL"], input[name="REGISTER[EMAIL]"]')
+				&& form.querySelector('input[name="USER_PASSWORD"], input[name="REGISTER[PASSWORD]"], input[type="password"]')) {
+				return 'signup';
+			}
 			if (form.querySelector('input[name="REGISTER[LOGIN]"], input[name="REGISTER[EMAIL]"], input[name="UF_EMAIL"]')) {
 				return 'signup';
 			}
@@ -280,9 +303,8 @@
 	}
 
 	function ensureBox(inp) {
-		var wrap = fieldWrap(inp);
-		if (!wrap || !wrap.parentNode) return null;
-		var anchor = (wrap.classList && wrap.classList.contains('form-input')) ? (wrap.parentNode || wrap) : wrap;
+		var anchor = noticeAnchor(inp);
+		if (!anchor || !anchor.parentNode) return null;
 		var next = anchor.nextElementSibling;
 		if (next && next.classList && next.classList.contains('prime-alerts-live-notice')) {
 			return next;
@@ -345,7 +367,7 @@
 			box.setAttribute('data-dup-filled', '1');
 			box.setAttribute('data-kind', 'duplicate');
 		}
-		box.style.display = '';
+		box.style.display = 'block';
 	}
 
 	function checkEmailDuplicate(email) {

@@ -564,6 +564,18 @@
 			verifyBtn.style.display = 'none';
 		}
 
+		function syncRegBoxVisibility() {
+			var hasContent = (statusEl.textContent || '').trim() !== ''
+				|| accountsEl.children.length > 0
+				|| wait.style.display !== 'none'
+				|| (!lookupOnly && verifyBtn.style.display !== 'none');
+			if (linksEl && linksEl.style.display !== 'none') {
+				hasContent = true;
+			}
+			box.style.display = hasContent ? '' : 'none';
+		}
+		box.style.display = 'none';
+
 		function stopPoll() {
 			if (pollTimer) {
 				clearInterval(pollTimer);
@@ -580,6 +592,7 @@
 				accountsEl.appendChild(li);
 			});
 			accountsEl.style.display = accountsEl.children.length ? '' : 'none';
+			syncRegBoxVisibility();
 		}
 
 		function resetConfirm() {
@@ -658,6 +671,7 @@
 				verifyBtn.style.display = 'none';
 				claimMode = false;
 				lastLookupData = null;
+				syncRegBoxVisibility();
 				return;
 			}
 			lastLookupData = data;
@@ -674,6 +688,7 @@
 					if (linksEl) linksEl.style.display = 'none';
 				}
 				verifyBtn.style.display = 'none';
+				syncRegBoxVisibility();
 				return;
 			}
 			claimMode = !!data.canClaim || (data.accounts || []).length > 0;
@@ -703,6 +718,7 @@
 				lastLookupPhone = '';
 				claimMode = false;
 				lastLookupData = null;
+				syncRegBoxVisibility();
 				return;
 			}
 			if (document.querySelector('.prime-phoneauth-modal')) return;
