@@ -230,6 +230,12 @@
 	function contextFor(inp) {
 		if (!inp) return null;
 
+		var formEarly = inp.form || inp.closest('form');
+		if (formEarly && formEarly.name === 'bform'
+			&& (inp.name || '').toUpperCase() === 'USER_EMAIL') {
+			return 'signup';
+		}
+
 		var blob = formBlob(inp);
 		var form = blob.form;
 		var id = blob.text;
@@ -401,6 +407,7 @@
 		}
 		if (duplicateCache && duplicateCache.has(email)) {
 			setDuplicateState(inp, { exists: duplicateCache.get(email), checking: false });
+			refreshInput(inp, { force: true });
 			return;
 		}
 		setDuplicateState(inp, { exists: false, checking: true });
@@ -582,13 +589,26 @@
 		var inp = document.querySelector('.bx-authform form[name="bform"] input[name="USER_EMAIL"]');
 		if (!inp || inp.getAttribute('data-prime-email-bound') === '1') return;
 		inp.setAttribute('data-prime-email-bound', '1');
+		var lastVal = '';
 		function runCheck() {
 			if (looksComplete(inp.value)) refreshInput(inp, { force: true });
 		}
+		inp.addEventListener('input', runCheck);
+		inp.addEventListener('change', runCheck);
 		inp.addEventListener('blur', runCheck);
-		if (looksComplete(inp.value)) {
-			setTimeout(runCheck, 100);
-		}
+		inp.addEventListener('keyup', runCheck);
+		// autofill часто не шлёт input/blur — опрашиваем значение
+		var poll = setInterval(function () {
+			var v = String(inp.value || '');
+			if (v !== lastVal) {
+				lastVal = v;
+				runCheck();
+			}
+		}, 400);
+		setTimeout(function () { clearInterval(poll); }, 12000);
+		runCheck();
+		setTimeout(runCheck, 100);
+		setTimeout(runCheck, 600);
 	}
 
 	if (document.readyState === 'loading') {
