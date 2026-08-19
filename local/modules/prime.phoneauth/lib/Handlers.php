@@ -92,6 +92,15 @@ class Handlers
 		self::syncPhoneFields($arFields, $id);
 	}
 
+	public static function onProlog(): void
+	{
+		if (defined('ADMIN_SECTION') && ADMIN_SECTION === true) {
+			return;
+		}
+
+		AuthService::redirectAfterPasswordLogin();
+	}
+
 	protected static function ensurePersonalPhoneFromPost(array &$arFields): void
 	{
 		if (trim((string)($arFields['PERSONAL_PHONE'] ?? '')) !== '') {

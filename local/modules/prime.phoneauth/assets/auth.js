@@ -31,6 +31,53 @@
 		return d.length === 10 ? d : d;
 	}
 
+	var defaultAuthRedirect = '/personal/orders-list.php';
+
+	function unwrapAuthBackurl(url) {
+		if (!url || url.charAt(0) !== '/') {
+			return defaultAuthRedirect;
+		}
+		var q = url.indexOf('?');
+		if (q === -1) {
+			if (url === '/personal/' || url === '/personal') {
+				return defaultAuthRedirect;
+			}
+			return url;
+		}
+		var path = url.slice(0, q);
+		var params = new URLSearchParams(url.slice(q + 1));
+		var inner = params.get('backurl');
+		if (inner && inner.charAt(0) === '/' && (path === '/login/' || path === '/login' || path === '/auth/' || path === '/auth')) {
+			return unwrapAuthBackurl(inner);
+		}
+		if (path === '/personal/' || path === '/personal') {
+			return defaultAuthRedirect;
+		}
+		return url;
+	}
+
+	function resolveAuthRedirect(serverRedirect) {
+		if (serverRedirect && serverRedirect.charAt(0) === '/' && serverRedirect !== '/personal/' && serverRedirect !== '/personal') {
+			return unwrapAuthBackurl(serverRedirect);
+		}
+		var inp = document.querySelector('input[name="backurl"]');
+		if (inp && inp.value && inp.value.charAt(0) === '/') {
+			return unwrapAuthBackurl(inp.value);
+		}
+		var m = location.search.match(/(?:^|[?&])backurl=([^&]+)/);
+		if (m) {
+			var u = decodeURIComponent(m[1]);
+			if (u.charAt(0) === '/') {
+				return unwrapAuthBackurl(u);
+			}
+		}
+		return defaultAuthRedirect;
+	}
+
+	function authRedirectTarget(data) {
+		return resolveAuthRedirect(data && data.redirect ? data.redirect : '');
+	}
+
 	function switchToLogin() {
 		var auth = document.querySelector('.personal_enter .auth');
 		if (!auth) return;
@@ -317,7 +364,7 @@
 					.then(function (data) {
 						if (data && data.status === 'confirmed') {
 							stopPoll();
-							window.location.href = data.redirect || '/personal/';
+							window.location.href = authRedirectTarget(data);
 						} else if (data && (data.status === 'expired' || data.status === 'cancelled' || data.status === 'missing')) {
 							stopPoll();
 							resetWait();
@@ -334,7 +381,10 @@
 			var phoneInp = form.querySelector('input[name="PHONE"]');
 			var btn = form.querySelector('button[type="submit"], input[type="submit"]');
 			if (btn) btn.disabled = true;
-			postForm(cfg.startUrl, { phone: phoneInp ? phoneInp.value : '' })
+			postForm(cfg.startUrl, {
+				phone: phoneInp ? phoneInp.value : '',
+				backurl: resolveAuthRedirect('')
+			})
 				.then(function (data) {
 					if (btn) btn.disabled = false;
 					if (!data || !data.ok) {
@@ -364,7 +414,7 @@
 					postForm(cfg.testUrl, { token: token })
 						.then(function (data) {
 							if (data && data.status === 'confirmed') {
-								window.location.href = data.redirect || '/personal/';
+								window.location.href = authRedirectTarget(data);
 								return;
 							}
 							testBtn.disabled = false;

@@ -13,7 +13,7 @@ Loader::registerAutoLoadClasses('prime.phoneauth', [
 	'Prime\\PhoneAuth\\Frontend' => 'lib/Frontend.php',
 ]);
 
-$eventsVer = '1.0.3';
+$eventsVer = '1.0.4';
 if (Option::get('prime.phoneauth', 'events_version', '') !== $eventsVer) {
 	$installFile = __DIR__ . '/install/index.php';
 	if (is_file($installFile)) {

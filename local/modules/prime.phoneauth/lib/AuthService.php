@@ -289,6 +289,10 @@ class AuthService
 			return ['ok' => false, 'error' => 'Вход по телефону выключен.'];
 		}
 
+		if (!$asUserId) {
+			self::rememberBackurl((string)($_POST['backurl'] ?? ''));
+		}
+
 		$norm = Phone::national10($phoneRaw);
 		if ($norm === '') {
 			return ['ok' => false, 'error' => 'Укажите корректный номер телефона РФ.'];
@@ -478,10 +482,15 @@ class AuthService
 			$USER->Authorize($userId);
 		}
 
+		$redirect = self::resolveBackurl();
+		if (isset($_SESSION['PRIME_PHONEAUTH_BACKURL'])) {
+			unset($_SESSION['PRIME_PHONEAUTH_BACKURL']);
+		}
+
 		return [
 			'ok' => true,
 			'status' => 'confirmed',
-			'redirect' => '/personal/',
+			'redirect' => $redirect,
 		];
 	}
 
@@ -616,5 +625,88 @@ class AuthService
 		} catch (\Throwable $e) {
 			return false;
 		}
+	}
+
+	public const DEFAULT_REDIRECT = '/personal/orders-list.php';
+
+	public static function rememberBackurl(?string $candidate = null): string
+	{
+		$url = self::resolveBackurl($candidate);
+		$_SESSION['PRIME_PHONEAUTH_BACKURL'] = $url;
+
+		return $url;
+	}
+
+	public static function resolveBackurl(?string $candidate = null): string
+	{
+		if ($candidate === null || $candidate === '') {
+			try {
+				$req = \Bitrix\Main\Context::getCurrent()->getRequest();
+				if (!empty($_SESSION['PRIME_PHONEAUTH_BACKURL']) && is_string($_SESSION['PRIME_PHONEAUTH_BACKURL'])) {
+					$candidate = (string)$_SESSION['PRIME_PHONEAUTH_BACKURL'];
+				} else {
+					$candidate = (string)$req->getPost('backurl');
+					if ($candidate === '') {
+						$candidate = (string)$req->get('backurl');
+					}
+				}
+			} catch (\Throwable $e) {
+				return self::DEFAULT_REDIRECT;
+			}
+		}
+
+		$candidate = trim((string)$candidate);
+		if ($candidate === '' || $candidate[0] !== '/' || str_starts_with($candidate, '//')) {
+			return self::DEFAULT_REDIRECT;
+		}
+
+		$parsed = parse_url($candidate);
+		if (!empty($parsed['query'])) {
+			parse_str($parsed['query'], $params);
+			if (!empty($params['backurl']) && is_string($params['backurl'])) {
+				$inner = trim($params['backurl']);
+				$path = (string)($parsed['path'] ?? '');
+				if (
+					$inner !== ''
+					&& $inner[0] === '/'
+					&& !str_starts_with($inner, '//')
+					&& in_array(rtrim($path, '/'), ['/login', '/auth'], true)
+				) {
+					return self::resolveBackurl($inner);
+				}
+			}
+		}
+
+		$pathOnly = (string)($parsed['path'] ?? $candidate);
+		if (in_array(rtrim($pathOnly, '/'), ['/personal'], true)) {
+			return self::DEFAULT_REDIRECT;
+		}
+
+		return $candidate;
+	}
+
+	public static function redirectAfterPasswordLogin(): void
+	{
+		global $USER, $APPLICATION;
+
+		if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+			return;
+		}
+		if (empty($_POST['AUTH_FORM']) || ($_POST['TYPE'] ?? '') !== 'AUTH') {
+			return;
+		}
+		if (!is_object($USER) || !$USER->IsAuthorized()) {
+			return;
+		}
+		if (!is_object($APPLICATION) || $APPLICATION->arAuthResult !== true) {
+			return;
+		}
+
+		$target = self::resolveBackurl((string)($_POST['backurl'] ?? ''));
+		if ($target === '') {
+			return;
+		}
+
+		LocalRedirect($target);
 	}
 }
