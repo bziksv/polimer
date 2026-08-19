@@ -83,6 +83,14 @@
 	margin-top: 8px;
 	margin-bottom: 18px;
 }
+.prime-alerts-live-notice:not(.is-visible) {
+	display: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	height: 0 !important;
+	overflow: hidden !important;
+	border: 0 !important;
+}
 .prime-alerts-live-notice .prime-alerts-notice {
 	margin: 0;
 }

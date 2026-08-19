@@ -72,8 +72,8 @@ class Frontend
 			'snoozeUrl' => '/local/modules/prime.alerts/ajax/snooze.php',
 		];
 
-		$cssHref = '/local/modules/prime.alerts/assets/style.css?v=1.5.18';
-		$jsHref = '/local/modules/prime.alerts/assets/policy.js?v=1.5.15';
+		$cssHref = '/local/modules/prime.alerts/assets/style.css?v=1.5.19';
+		$jsHref = '/local/modules/prime.alerts/assets/policy.js?v=1.5.16';
 		$flash = '';
 		try {
 			$session = \Bitrix\Main\Application::getInstance()->getSession();

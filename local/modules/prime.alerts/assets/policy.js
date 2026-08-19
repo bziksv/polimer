@@ -302,13 +302,14 @@
 		return ctx === 'checkout' ? (cfg.noticeCheckout || '') : (cfg.noticeSignup || '');
 	}
 
-	function ensureBox(inp) {
+	function ensureBox(inp, create) {
 		var anchor = noticeAnchor(inp);
 		if (!anchor || !anchor.parentNode) return null;
-		var next = anchor.nextElementSibling;
-		if (next && next.classList && next.classList.contains('prime-alerts-live-notice')) {
-			return next;
+		var sibling = anchor.nextElementSibling;
+		if (sibling && sibling.classList && sibling.classList.contains('prime-alerts-live-notice')) {
+			return sibling;
 		}
+		if (!create) return null;
 		var box = document.createElement('div');
 		box.className = 'prime-alerts-live-notice';
 		box.setAttribute('aria-live', 'polite');
@@ -319,6 +320,13 @@
 			anchor.parentNode.appendChild(box);
 		}
 		return box;
+	}
+
+	function removeEmptyNoticeBox(inp) {
+		var box = ensureBox(inp, false);
+		if (!box) return;
+		if (box.getAttribute('data-kind') || (box.textContent || '').trim() !== '') return;
+		if (box.parentNode) box.parentNode.removeChild(box);
 	}
 
 	function isEmailInput(inp) {
@@ -348,10 +356,6 @@
 		return false;
 	}
 
-	function hideBox(box) {
-		if (box) box.style.display = 'none';
-	}
-
 	function duplicateStateFor(inp) {
 		if (!duplicateState) return { exists: false, checking: false };
 		return duplicateState.get(inp) || { exists: false, checking: false };
@@ -368,6 +372,7 @@
 			box.setAttribute('data-kind', 'duplicate');
 		}
 		box.style.display = 'block';
+		box.classList.add('is-visible');
 	}
 
 	function checkEmailDuplicate(email) {
@@ -430,7 +435,14 @@
 			box.innerHTML = noticeHtml(ctx);
 			box.setAttribute('data-ctx', ctx);
 		}
-		box.style.display = '';
+		box.style.display = 'block';
+		box.classList.add('is-visible');
+	}
+
+	function hideBox(box) {
+		if (!box) return;
+		box.style.display = 'none';
+		box.classList.remove('is-visible');
 	}
 
 	/**
@@ -441,19 +453,11 @@
 		opts = opts || {};
 		if (!isEmailInput(inp)) return;
 		var ctx = contextFor(inp);
-		var box = ensureBox(inp);
-		if (!box) return;
 
 		var email = String(inp.value || '').trim();
-		if (!email) {
+		if (!email || !looksComplete(email)) {
 			setDuplicateState(inp, { exists: false, checking: false });
-			hideBox(box);
-			return;
-		}
-
-		if (!looksComplete(email)) {
-			setDuplicateState(inp, { exists: false, checking: false });
-			hideBox(box);
+			removeEmptyNoticeBox(inp);
 			return;
 		}
 
@@ -461,26 +465,31 @@
 			scheduleDuplicateCheck(inp);
 			var dup = duplicateStateFor(inp);
 			if (dup.exists) {
-				showDuplicateNotice(box);
+				showDuplicateNotice(ensureBox(inp, true));
 				return;
 			}
 			if (dup.checking) {
-				hideBox(box);
+				removeEmptyNoticeBox(inp);
 				return;
 			}
 		}
 
 		if (cfg.enabled === false || !ctx || !policyEnabledFor(ctx)) {
-			hideBox(box);
+			removeEmptyNoticeBox(inp);
 			return;
 		}
+
+		var box = ensureBox(inp, true);
+		if (!box) return;
 
 		if (!isAllowed(email)) {
 			box.removeAttribute('data-dup-filled');
 			box.removeAttribute('data-kind');
 			showNotice(inp, ctx, box);
+			box.setAttribute('data-kind', 'policy');
+			box.classList.add('is-visible');
 		} else {
-			hideBox(box);
+			removeEmptyNoticeBox(inp);
 		}
 	}
 
@@ -494,8 +503,7 @@
 		// hide immediately if incomplete so notice doesn't linger mid-edit
 		var email = String(inp.value || '').trim();
 		if (!looksComplete(email)) {
-			var box = ensureBox(inp);
-			hideBox(box);
+			removeEmptyNoticeBox(inp);
 		}
 		timers.set(inp, setTimeout(function () {
 			timers.delete(inp);
@@ -567,6 +575,20 @@
 			}
 		}, true);
 		scan();
+		initBxRegistrationEmail();
+	}
+
+	function initBxRegistrationEmail() {
+		var inp = document.querySelector('.bx-authform form[name="bform"] input[name="USER_EMAIL"]');
+		if (!inp || inp.getAttribute('data-prime-email-bound') === '1') return;
+		inp.setAttribute('data-prime-email-bound', '1');
+		function runCheck() {
+			if (looksComplete(inp.value)) refreshInput(inp, { force: true });
+		}
+		inp.addEventListener('blur', runCheck);
+		if (looksComplete(inp.value)) {
+			setTimeout(runCheck, 100);
+		}
 	}
 
 	if (document.readyState === 'loading') {
