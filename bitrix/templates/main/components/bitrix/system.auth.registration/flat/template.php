@@ -6,7 +6,13 @@
  * @copyright 2001-2024 Bitrix
  */
 
+use Bitrix\Main\Loader;
 use Bitrix\Main\Web\Json;
+
+$primeRegEmailExistsNotice = '';
+if (Loader::includeModule('prime.alerts')) {
+	$primeRegEmailExistsNotice = \Prime\Alerts\EmailLookup::getExistsNoticeHtml();
+}
 
 /**
  * Bitrix vars
@@ -247,12 +253,119 @@ document.getElementById('bx_auth_secure_conf').style.display = '';
 
 <script>
 	document.bform.USER_NAME.focus();
-	
-	if (document.bform.USER_EMAIL) {
-		document.bform.USER_EMAIL.addEventListener("keyup", function (e) {
+
+	(function () {
+		var NOTICE_HTML = <?= Json::encode($primeRegEmailExistsNotice) ?>;
+		var CHECK_URL = '/local/modules/prime.alerts/ajax/check_email.php';
+		var cache = Object.create(null);
+		var timers = Object.create(null);
+
+		function sessid() {
+			if (window.PRIME_ALERTS && window.PRIME_ALERTS.sessid) {
+				return window.PRIME_ALERTS.sessid;
+			}
+			return (window.BX && BX.bitrix_sessid && BX.bitrix_sessid()) || '';
+		}
+
+		function looksComplete(email) {
+			return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(String(email || '').trim());
+		}
+
+		function emailAnchor(inp) {
+			return inp.closest('.bx-authform-formgroup-container');
+		}
+
+		function hideDupBox(anchor) {
+			if (!anchor) return;
+			var box = anchor.nextElementSibling;
+			if (box && box.classList.contains('prime-alerts-live-notice') && box.getAttribute('data-kind') === 'duplicate') {
+				box.parentNode.removeChild(box);
+			}
+		}
+
+		function showDupBox(anchor) {
+			if (!anchor || !NOTICE_HTML) return;
+			var box = anchor.nextElementSibling;
+			if (!box || !box.classList.contains('prime-alerts-live-notice')) {
+				box = document.createElement('div');
+				box.className = 'prime-alerts-live-notice';
+				box.setAttribute('aria-live', 'polite');
+				anchor.parentNode.insertBefore(box, anchor.nextSibling);
+			}
+			box.innerHTML = NOTICE_HTML;
+			box.setAttribute('data-kind', 'duplicate');
+			box.setAttribute('data-dup-filled', '1');
+			box.style.display = 'block';
+			box.classList.add('is-visible');
+		}
+
+		function checkRegEmail(inp) {
+			if (!inp) return;
+			var email = String(inp.value || '').trim();
+			var anchor = emailAnchor(inp);
+			if (!looksComplete(email)) {
+				hideDupBox(anchor);
+				return;
+			}
+			if (cache[email] !== undefined) {
+				if (cache[email]) showDupBox(anchor);
+				else hideDupBox(anchor);
+				return;
+			}
+			clearTimeout(timers[inp]);
+			timers[inp] = setTimeout(function () {
+				fetch(CHECK_URL, {
+					method: 'POST',
+					credentials: 'same-origin',
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+						'X-Requested-With': 'XMLHttpRequest'
+					},
+					body: 'sessid=' + encodeURIComponent(sessid()) + '&email=' + encodeURIComponent(email)
+				}).then(function (r) { return r.json(); }).then(function (data) {
+					cache[email] = !!(data && data.ok && data.exists);
+					if (String(inp.value || '').trim() === email) {
+						checkRegEmail(inp);
+					}
+				}).catch(function () {});
+			}, 400);
+		}
+
+		function bindRegEmail() {
+			var inp = document.bform && document.bform.USER_EMAIL;
+			if (!inp || inp.getAttribute('data-prime-reg-dup-bound') === '1') return;
+			inp.setAttribute('data-prime-reg-dup-bound', '1');
+
+			inp.addEventListener('keyup', function () {
 				document.bform.USER_LOGIN.value = document.bform.USER_EMAIL.value;
-		});
-	}
+				checkRegEmail(inp);
+				if (window.primeAlertsCheckRegistrationEmail) {
+					window.primeAlertsCheckRegistrationEmail(inp);
+				}
+			});
+			['input', 'change', 'blur', 'paste'].forEach(function (ev) {
+				inp.addEventListener(ev, function () { checkRegEmail(inp); });
+			});
+
+			var lastVal = inp.value;
+			var poll = setInterval(function () {
+				if (inp.value !== lastVal) {
+					lastVal = inp.value;
+					checkRegEmail(inp);
+				}
+			}, 400);
+			setTimeout(function () { clearInterval(poll); }, 20000);
+
+			checkRegEmail(inp);
+			setTimeout(function () { checkRegEmail(inp); }, 150);
+			setTimeout(function () { checkRegEmail(inp); }, 800);
+		}
+
+		bindRegEmail();
+		if (window.BX && BX.addCustomEvent) {
+			BX.addCustomEvent('onAjaxSuccess', bindRegEmail);
+		}
+	})();
 </script>
 
 <?endif?>

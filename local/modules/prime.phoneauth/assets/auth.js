@@ -683,6 +683,15 @@
 					statusEl.textContent = data.message || cfg.duplicateMessage || 'Номер уже используется в другом аккаунте.';
 					setAccounts(data.accounts || []);
 					if (linksEl) linksEl.style.display = '';
+					if ((data.accounts || []).length && lastModalPhone !== phone) {
+						lastModalPhone = phone;
+						showDuplicate(
+							data.message || cfg.duplicateMessage,
+							data.accounts,
+							data.status === 'taken' ? 'Номер уже используется' : 'Несколько аккаунтов',
+							{ lock: false, onLogin: switchToLogin }
+						);
+					}
 				} else {
 					statusEl.className = 'prime-phoneauth-reg__status';
 					statusEl.textContent = data.status === 'free' ? '' : (data.message || '');
@@ -733,6 +742,10 @@
 		}
 
 		phoneInput.addEventListener('blur', lookupNow);
+		phoneInput.addEventListener('input', function () {
+			clearTimeout(phoneInput._primeLookupTimer);
+			phoneInput._primeLookupTimer = setTimeout(lookupNow, 500);
+		});
 		phoneInput.addEventListener('change', function () {
 			var now = phoneDigits(phoneInput.value);
 			if (now === lastPhoneDigits) return;
@@ -1057,4 +1070,13 @@
 	} else {
 		onReady();
 	}
+
+	if (window.BX && BX.addCustomEvent) {
+		BX.addCustomEvent('onAjaxSuccess', function () {
+			initRegister();
+		});
+	}
+	setInterval(function () { initRegister(); }, 1500);
+
+	window.primePhoneauthInitRegister = initRegister;
 })();

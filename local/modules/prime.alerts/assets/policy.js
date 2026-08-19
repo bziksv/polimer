@@ -407,7 +407,6 @@
 		}
 		if (duplicateCache && duplicateCache.has(email)) {
 			setDuplicateState(inp, { exists: duplicateCache.get(email), checking: false });
-			refreshInput(inp, { force: true });
 			return;
 		}
 		setDuplicateState(inp, { exists: false, checking: true });
@@ -520,6 +519,7 @@
 
 	function scan(root) {
 		root = root || document;
+		initBxRegistrationEmail();
 		var nodes = root.querySelectorAll('input[type="email"], input[type="text"], input:not([type])');
 		for (var i = 0; i < nodes.length; i++) {
 			if (isEmailInput(nodes[i])) refreshInput(nodes[i]);
@@ -622,4 +622,11 @@
 		BX.addCustomEvent('onFrameDataReceived', function () { scan(); });
 	}
 	setInterval(function () { scan(); }, 1500);
+
+	window.primeAlertsCheckRegistrationEmail = function (inp) {
+		if (!inp) {
+			inp = document.querySelector('.bx-authform form[name="bform"] input[name="USER_EMAIL"]');
+		}
+		if (inp) refreshInput(inp, { force: true });
+	};
 })();
