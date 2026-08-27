@@ -23,7 +23,7 @@ switch ($_REQUEST['FORM_ID']) {
                     3 => "DESC",
                     4 => "RULE",
                 ),
-                "USE_CAPTCHA" => "Y",
+                "USE_CAPTCHA" => "N",
                 "COMPONENT_TEMPLATE" => "write-mail",
                 "AJAX_MODE" => "Y"
             ),
@@ -60,7 +60,7 @@ switch ($_REQUEST['FORM_ID']) {
                     7 => "PRODUCT",
                     8 => "LINK_PRODUCT",
                 ),
-                "USE_CAPTCHA" => "Y",
+                "USE_CAPTCHA" => "N",
                 "COMPONENT_TEMPLATE" => "buy-one-click",
                 "PRODUCT" => array(
                     "NAME" => $arResult["NAME"],
@@ -94,7 +94,7 @@ switch ($_REQUEST['FORM_ID']) {
                     4 => "PRODUCT",
                     5 => "LINK_PRODUCT",
                 ),
-                "USE_CAPTCHA" => "Y",
+                "USE_CAPTCHA" => "N",
                 "COMPONENT_TEMPLATE" => "free-consultant",
                 "AJAX_MODE" => "Y"
             ),
@@ -122,7 +122,7 @@ switch ($_REQUEST['FORM_ID']) {
                     4 => "LINK_PRODUCT",
                     5 => "RULE",
                 ),
-                "USE_CAPTCHA" => "Y",
+                "USE_CAPTCHA" => "N",
                 "COMPONENT_TEMPLATE" => "order-product",
                 "COMPOSITE_FRAME_MODE" => "A",
                 "COMPOSITE_FRAME_TYPE" => "AUTO",
@@ -151,7 +151,7 @@ switch ($_REQUEST['FORM_ID']) {
                     2 => "MESSAGE",
                     3 => "RULE",
                 ),
-                "USE_CAPTCHA" => "Y",
+                "USE_CAPTCHA" => "N",
                 "COMPONENT_TEMPLATE" => "reviews",
                 "AJAX_MODE" => "Y"
             ),
@@ -179,7 +179,7 @@ switch ($_REQUEST['FORM_ID']) {
 					4 => "RULE",
                     5 => "PRODUCT_CART",
                 ),
-                "USE_CAPTCHA" => "Y",
+                "USE_CAPTCHA" => "N",
                 "COMPONENT_TEMPLATE" => "buy-one-click-cart",
                 "AJAX_MODE" => "Y"
             ),

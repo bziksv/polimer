@@ -101,7 +101,7 @@ new BX.PhoneAuth({
 
 <?elseif(!$arResult["SHOW_EMAIL_SENT_CONFIRMATION"]):?>
 
-	<form method="post" action="<?=$arResult["AUTH_URL"]?>" name="bform" enctype="multipart/form-data">
+	<form method="post" action="<?=$arResult["AUTH_URL"]?>" name="bform" enctype="multipart/form-data" class="js-polimer-consent-form" novalidate>
 		<input type="hidden" name="AUTH_FORM" value="Y" />
 		<input type="hidden" name="TYPE" value="REGISTRATION" />
 		<input type="hidden" name="USER_LOGIN" value="<?=$arResult["USER_EMAIL"]?>" />
@@ -204,33 +204,15 @@ document.getElementById('bx_auth_secure_conf').style.display = '';
 
 <?endif?>
 		<div class="bx-authform-formgroup-container">
-			<div class="bx-authform-label-container">
-			</div>
 			<div class="bx-authform-input-container">
-				<?$APPLICATION->IncludeComponent("bitrix:main.userconsent.request", "",
-					array(
-						"ID" => COption::getOptionString("main", "new_user_agreement", ""),
-						"IS_CHECKED" => "Y",
-						"AUTO_SAVE" => "N",
-						"IS_LOADED" => "Y",
-						"ORIGINATOR_ID" => $arResult["AGREEMENT_ORIGINATOR_ID"],
-						"ORIGIN_ID" => $arResult["AGREEMENT_ORIGIN_ID"],
-						"INPUT_NAME" => $arResult["AGREEMENT_INPUT_NAME"],
-						"REPLACE" => array(
-							"button_caption" => GetMessage("AUTH_REGISTER"),
-							"fields" => array(
-								rtrim(GetMessage("AUTH_NAME"), ":"),
-								rtrim(GetMessage("AUTH_LAST_NAME"), ":"),
-								rtrim(GetMessage("AUTH_LOGIN_MIN"), ":"),
-								rtrim(GetMessage("AUTH_PASSWORD_REQ"), ":"),
-								rtrim(GetMessage("AUTH_EMAIL"), ":"),
-							)
-						),
-					)
-				);?>
+				<?php
+				$consentName = $arResult['AGREEMENT_INPUT_NAME'] ?: 'USER_AGREEMENT';
+				$consentChecked = !empty($_POST[$consentName]);
+				$consentInvalid = false;
+				require $_SERVER['DOCUMENT_ROOT'] . '/include/legal/consent-checkbox.php';
+				?>
 			</div>
 		</div>
-		<noindex><p>Нажимая на эту кнопку, я даю свое согласие на обработку персональных данных и соглашаюсь с условиями <a href="/upload/politics.pdf" target="_blank">политики обработки персональных данных</a>.</p></noindex>
 		<div class="bx-authform-formgroup-container">
 			<input type="submit" class="btn btn-primary" name="Register" value="<?=GetMessage("AUTH_REGISTER")?>" />
 		</div>

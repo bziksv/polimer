@@ -50,6 +50,18 @@ function KHAYR_MAIN_COMMENT_getUrl(url, newParams)
 
 function KHAYR_MAIN_COMMENT_validate(_this, pagen)
 {
+	var $form = $(_this);
+	var $consent = $form.find('.polimer-consent-rule input[type="checkbox"]').first();
+	if ($consent.length && !$consent.is(':checked')) {
+		var $wrap = $consent.closest('.polimer-consent-rule');
+		$wrap.addClass('is-invalid');
+		if (!$wrap.find('.polimer-field-error').length) {
+			$wrap.append($('<span class="polimer-field-error"></span>').text('Отметьте согласие на обработку персональных данных'));
+		}
+		$('html, body').animate({ scrollTop: $wrap.offset().top - 80 }, 200);
+		return false;
+	}
+
 	if (!pagen)
 		pagen = '';
 	else
@@ -63,9 +75,6 @@ function KHAYR_MAIN_COMMENT_validate(_this, pagen)
 		contentType: false,
         success: function(result) {
 			$("#KHAYR_MAIN_COMMENT_container").html(result);
-			grecaptcha.render(document.getElementById('KHAYR_MAIN_COMMENT_grecaptcha'), {
-				'sitekey' : (window.POLIMER_RECAPTCHA_SITEKEY || '6LfAz1YtAAAAAMPXRZUxo38fvpz__MlOHs7DBA41')
-			});
 			KHAYR_MAIN_COMMENT_ShowMessage();
 		},
         error: function() {

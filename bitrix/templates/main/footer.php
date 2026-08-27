@@ -9,8 +9,10 @@
 								<img src="<?=SITE_TEMPLATE_PATH?>/img/logo_svg.svg" alt="Полимер" width="206" height="44">
 							</a>
 							<p class="footer__logotext">Оптово-розничная торговля материалами и оборудованием для отопления и водоснабжения в Воронежской области.</p>
-							<a href="/upload/politics.pdf" target="_blank" style="font-size: 11px; text-decoration: none; color: #4d4d4d;">Политика обработки персональных данных</a><br><a href="/upload/rules-recommendation.pdf" target="_blank" style="font-size: 11px; text-decoration: none; color: #4d4d4d;">Правила применения рекомендательных
-технологий</a><br><a href="/upload/politika-ispolzovanija-cookies-polimer.pdf" target="_blank" style="font-size: 11px; text-decoration: none; color: #4d4d4d;">Политика использования cookie-файлов</a>
+							<a href="/info/polimer-politika-personalnyh-dannyh/" rel="nofollow" style="font-size: 11px; text-decoration: none; color: #4d4d4d;">Политика обработки персональных данных</a><br>
+							<a href="/info/polimer-soglasie-obrabotki-pd/" rel="nofollow" style="font-size: 11px; text-decoration: none; color: #4d4d4d;">Согласие на обработку персональных данных</a><br>
+							<a href="/info/polimer-pravila-rekomendatelnyh-tehnologiy/" rel="nofollow" style="font-size: 11px; text-decoration: none; color: #4d4d4d;">Правила применения рекомендательных технологий</a><br>
+							<a href="/info/polimer-politika-cookie/" rel="nofollow" style="font-size: 11px; text-decoration: none; color: #4d4d4d;">Политика использования cookie-файлов</a>
 						</div><!--end::col__1-->
 
 						<div class="footer__col col--2">
@@ -87,7 +89,7 @@
 
 					<div class="footer__bottom cl">
 
-						<noindex><p style="font-size: .857em;">Наш сайт использует <a href="/upload/politika-ispolzovanija-cookies-polimer.pdf" target="_blank">cookies</a> для обеспечения работоспособности и сбора статистики. С их помощью мы анализируем пользовательскую активность, улучшаем работу сайта и делаем рекламу более релевантной. Оставаясь на сайте, вы даете согласие на обработку ваших персональных данных. Вы можете отключить сохранение cookies в настройках браузера в любой момент. На сайте также применяются <a href="/upload/rules-recommendation.pdf" target="_blank">рекомендательные технологии</a>. Подробнее об обработке персональных данных — в соответствующей <a href="/upload/politics.pdf" target="_blank">Политике</a>.</p></noindex>
+						<noindex><p style="font-size: .857em;">Наш сайт использует <a href="/info/polimer-politika-cookie/" rel="nofollow">cookies</a> для работоспособности и сбора статистики: с их помощью мы анализируем пользовательскую активность, улучшаем работу сайта и делаем рекламу более релевантной. Оставаясь на сайте, вы даёте <a href="/info/polimer-soglasie-obrabotki-pd/" rel="nofollow">согласие на обработку персональных данных</a> и принимаете <a href="/info/polimer-politika-personalnyh-dannyh/" rel="nofollow">Политику обработки персональных данных</a>. Также применяются <a href="/info/polimer-pravila-rekomendatelnyh-tehnologiy/" rel="nofollow">рекомендательные технологии</a>. Сохранение cookies можно отключить в настройках браузера в любой момент.</p></noindex>
 						<div class="footer__copyright">© 2006 — <?=date("Y");?>. Полимер.</div>
 						
 						<div class="footer__studio">

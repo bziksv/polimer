@@ -17,9 +17,6 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 ?><!DOCTYPE html>
 <html lang="ru">
 	<head>
-        <script src='https://www.google.com/recaptcha/api.js' async defer></script>
-		<script>window.POLIMER_RECAPTCHA_SITEKEY = <?= json_encode(POLIMER_RECAPTCHA_SITE_KEY, JSON_UNESCAPED_UNICODE) ?>;</script>
-
 		<title><?$APPLICATION->ShowTitle()?></title>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 		<!-- JavaScript -->
@@ -41,8 +38,9 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 		Asset::getInstance()->addString('<meta name="msapplication-TileColor" content="#014075">');
 		Asset::getInstance()->addString('<meta http-equiv="X-UA-Compatible" content="IE=edge">');
 		Asset::getInstance()->addString('<meta name="viewport" content="width=device-width, initial-scale=1">');
-		Asset::getInstance()->addString('<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&amp;subset=cyrillic,latin-ext" rel="stylesheet">');
-		Asset::getInstance()->addString('<link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,700,700i&amp;subset=cyrillic-ext,latin-ext" rel="stylesheet">');
+
+		Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/open-sans.css');
+		Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/fira-sans.css');
 
 		Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/vendor.min.css');
 		Asset::getInstance()->addCss(SITE_TEMPLATE_PATH.'/css/slick.css');

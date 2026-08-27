@@ -4242,6 +4242,42 @@ header .header__bottom.fixed {
     cursor: default;
 }
 
+/* footer desktop/tablet landscape — 5 колонок (лого + 4 магазина/каталог) в одну строку */
+@media screen and (min-width: 1020px) {
+    footer .footer__top {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: flex-start !important;
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
+    footer .footer__top .footer__col,
+    footer .footer__top .footer__col.col--1,
+    footer .footer__top .footer__col.col--2,
+    footer .footer__top .footer__col.col--3,
+    footer .footer__top .footer__col.col--4 {
+        position: static !important;
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        left: auto !important;
+        float: none !important;
+    }
+
+    footer .footer__top .footer__col.col--1 {
+        flex: 0 0 28% !important;
+        width: 28% !important;
+        max-width: 28% !important;
+    }
+
+    footer .footer__top .footer__col.col--2 {
+        flex: 0 0 18% !important;
+        width: 18% !important;
+        max-width: 18% !important;
+    }
+}
+
 /* footer mobile — убрать legacy-пустоту (padding-bottom: 400px и absolute-колонки) */
 @media screen and (max-width: 659px) {
     footer .footer__top {

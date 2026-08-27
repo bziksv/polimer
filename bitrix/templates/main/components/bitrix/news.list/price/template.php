@@ -66,8 +66,12 @@ $this->setFrameMode(true);
 				<input type="tel" name="phone" placeholder="+7-___-___-__-__" class="phone ru_phone_check" autocomplete="tel" inputmode="tel">
 			</div>
 			<div class="inp">
-				<input type="checkbox" name="rule" id="rule" value="Y" checked/>
-				Нажимая на эту кнопку, я даю свое согласие на <a href="/upload/compliance.pdf" target="_blank">обработку персональных данных</a> и соглашаюсь с условиями <a href="/upload/politics.pdf" target="_blank">политики конфиденциальности</a>.*
+				<?php
+				$consentName = 'rule';
+				$consentChecked = !empty($_POST['rule']);
+				$consentInvalid = false;
+				require $_SERVER['DOCUMENT_ROOT'] . '/include/legal/consent-checkbox.php';
+				?>
 			</div>
 			<br><br><br>
 			<input class="btn_subscribe" type="submit" value=" Подписаться " />

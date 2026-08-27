@@ -104,7 +104,7 @@ function KHAYR_MAIN_COMMENT_ShowTree($arItem, $arParams, $arResult)
             <span class="title"><?=GetMessage('KHAYR_MAIN_COMMENT_ADD_NAME')?></span>
         </div>
         <?if ($arResult["CAN_COMMENT"]) {?>
-            <form enctype="multipart/form-data" action="<?=$GLOBALS["APPLICATION"]->GetCurUri()?>" method='POST' onsubmit='return KHAYR_MAIN_COMMENT_validate(this);'>
+            <form enctype="multipart/form-data" action="<?=$GLOBALS["APPLICATION"]->GetCurUri()?>" method='POST' class="js-polimer-consent-form" onsubmit='return KHAYR_MAIN_COMMENT_validate(this);' novalidate>
 
                 <?if ($arParams["LOAD_MARK"]) {?>
                     <input type="hidden" name="MARK" value="0" id="rate_0" />
@@ -200,26 +200,22 @@ function KHAYR_MAIN_COMMENT_ShowTree($arItem, $arParams, $arResult)
                         <div class="value">
                             <textarea name="MESSAGE" rows="10" placeholder='<?=GetMessage("KHAYR_MAIN_COMMENT_MESSAGE")?>'><?=$arResult["POST"]["MESSAGE"]?></textarea>
                         </div>
-
-						<noindex><p>На нашем сайте осуществляется сбор персональных данных и <a target="_blank" href="/upload/politika-ispolzovanija-cookies-polimer.pdf">cookies</a> для улучшения работы сайта, персонализации контента и анализа посещаемости. Продолжая, вы соглашаетесь с использованием cookies и <a target="_blank" href="/upload/compliance.pdf">обработкой ваших данных</a> в соответствии с нашей <a target="_blank" href="/upload/politics.pdf">Политикой конфиденциальности</a>.</p></noindex>
-
+                    </div>
+                </div>
+                <div class="line cl">
+                    <div class="cl_col">
+                        <?php
+                        $consentName = 'PD_CONSENT';
+                        $consentChecked = ($arResult['POST']['PD_CONSENT'] ?? '') === 'Y';
+                        $consentInvalid = !empty($arResult['PD_CONSENT_INVALID']);
+                        require $_SERVER['DOCUMENT_ROOT'] . '/include/legal/consent-checkbox.php';
+                        ?>
                     </div>
                 </div>
 
                 <input type='hidden' name='PARENT' value='' />
                 <input type='hidden' name='ACTION' value='add' />
                 <input type='hidden' name='DEPTH' value='1' />
-                <?if ($arParams["USE_CAPTCHA"]) {?>
-                    <div class="line cl">
-                        <div class="cl_col">
-                            <div class="value">
-                                <div class="mf-captcha">
-                                    <div class="g-recaptcha" id="KHAYR_MAIN_COMMENT_grecaptcha" data-sitekey="<?= htmlspecialcharsbx(POLIMER_RECAPTCHA_SITE_KEY) ?>"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?}?>
                 <?if ($arParams["LEGAL"]) {?>
                     <input type='checkbox' id="LEGAL_main_form" name='LEGAL' value='Y' <?=($arResult["POST"]["LEGAL"] == "Y" ? "checked" : "")?> />
                     <label for="LEGAL_main_form"><?=$arParams["LEGAL_TEXT"]?></label>

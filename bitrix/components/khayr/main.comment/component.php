@@ -85,18 +85,15 @@ $arResult["LOAD_AVATAR"] = (!$arResult["USER"]["AVATAR"] && $arParams["LOAD_AVAT
 if (strlen($arResult["POST"]["ACTION"]) > 0)
 {
 
+	if ($arResult["POST"]["PD_CONSENT"] != "Y") {
+		$errors[] = "Отметьте согласие на обработку персональных данных";
+		$arResult['PD_CONSENT_INVALID'] = true;
+	}
+
 	if ($arParams["LEGAL"])
 	{
 		if ($arResult["POST"]["LEGAL"] != "Y")
 			$errors[] = GetMessage("KHAYR_MAIN_COMMENT_LEGAL_WRONG");
-	}
-	
-	if ($arParams["USE_CAPTCHA"])
-	{
-        $captcha_code = $arResult["POST"]["g-recaptcha-response"];
-        if (!polimerVerifyGoogleRecaptcha($captcha_code))
-            $errors[] = GetMessage("KHAYR_MAIN_COMMENT_CAPTHCA_EMPTY");
-
 	}
 	
 	if ($arResult["POST"]["ACTION"] == "add")

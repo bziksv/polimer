@@ -47,7 +47,7 @@ if(strlen($arResult["OK_MESSAGE"]) > 0)
 		</div>
 		<? elseif($field['PROPERTY_TYPE'] == "L"):?>
 			<div class="mf-name">
-				<input type="checkbox" name="<?=$field['CODE']?>" value="Y" checked/>
+				<input type="checkbox" name="<?=$field['CODE']?>" value="Y"/>
 				<div class="mf-text">
 					<a href="#" class="show-popup" data-id="<?=$arParams["IBLOCK_TYPE"].$arParams["IBLOCK_ID"]?>"><span><?=$field['NAME']?></span></a>
 					<?if($field['IS_REQUIRED'] == "Y"):?>

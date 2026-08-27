@@ -735,14 +735,6 @@ function PolimerTitleSearch(arParams)
 			if (jQuery.fn.mask)
 				jQuery('.phone').mask('+7-999-999-99-99', { placeholder: '_', autoclear: false });
 
-			try
-			{
-				grecaptcha.render(jQuery('#' + popupId + ' .g-recaptcha').get(0), {
-					sitekey: (window.POLIMER_RECAPTCHA_SITEKEY || '6LfAz1YtAAAAAMPXRZUxo38fvpz__MlOHs7DBA41')
-				});
-			}
-			catch (error) {}
-
 			jQuery('.popup#' + popupId).velocity('fadeIn', 'fast');
 		});
 	};

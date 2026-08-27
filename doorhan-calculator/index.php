@@ -22,7 +22,7 @@ $APPLICATION->SetTitle("Калькулятор ворот Дорхан (DOORHAN)
                 markup: 0, // наценка (%)
                 cityCode: "CB0000120", // код города
                 dealerCode: "VR0000695", // код дилера
-                agreementLink: "http://polimer-vrn.ru/upload/compliance.pdf", // адрес ссылки на текст соглашения на обработку персональных данных
+                agreementLink: "/info/polimer-soglasie-obrabotki-pd/",
                 layout: {
                     aide: 'dhaide', // id тэга для вставки калькулятора
                 }

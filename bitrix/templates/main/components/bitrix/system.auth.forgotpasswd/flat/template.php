@@ -53,12 +53,6 @@ if(!empty($arParams["~AUTH_RESULT"])):
 		</div>
 <?endif?>
 
-<?if (true):?>
-		<div class="mf-captcha">
-			<div class="g-recaptcha" data-sitekey="<?= htmlspecialcharsbx(POLIMER_RECAPTCHA_SITE_KEY) ?>"></div>
-		</div>
-<?endif?>
-
 		<div class="bx-authform-formgroup-container">
 			<input type="submit" class="btn btn-primary" name="send_account_info" value="<?=GetMessage("AUTH_SEND")?>" />
 		</div>

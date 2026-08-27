@@ -9,6 +9,7 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
  * @global CMain $APPLICATION
  * @global CUser $USER
  */
+$errorFields = array_fill_keys($arResult['ERROR_FIELDS'] ?? [], true);
 ?>
 
 
@@ -40,7 +41,7 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
 	<div class="title">Написать письмо</div>
 	<div class="subtitle">Если у Вас возник вопрос или Вы хотите оставить комментарий, воспользуйтесь формой обратной связи. Наши специалисты свяжутся с Вами в ближайшее время.</div>
 
-<form class="ym-goal-write-email" action="<?=POST_FORM_ACTION_URI?>" method="POST" enctype="multipart/form-data">
+<form class="ym-goal-write-email js-polimer-consent-form" action="<?=POST_FORM_ACTION_URI?>" method="POST" enctype="multipart/form-data" novalidate>
 
 <?=bitrix_sessid_post()?>
 
@@ -66,15 +67,12 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
 				</span>
      		</span>
 		<? elseif($field['PROPERTY_TYPE'] == "L" AND $field['CODE'] != "DESC"):?>
-			<div class="rule">
-				<input type="checkbox" class="fio" name="<?=$field['CODE']?>" value="Y" checked>
-				<span>
-					Нажимая на эту кнопку, я даю свое согласие на обработку персональных данных и соглашаюсь с условиями <a href="/upload/politics.pdf" target="_blank">политики обработки персональных данных</a>.
-<!--					Я прочитал правила-->
-<!--					<a href="#" class="show-popup" data-id="--><?//=$arParams["IBLOCK_TYPE"].$arParams["IBLOCK_ID"]?><!--">Правила</a>-->
-<!--					и даю свое согласие на обработку персональных данных-->
-				</span>
-			</div>
+			<?php
+			$consentName = $field['CODE'];
+			$consentChecked = !empty($arResult[$field['CODE']]);
+			$consentInvalid = !empty($errorFields[$field['CODE']]);
+			require $_SERVER['DOCUMENT_ROOT'] . '/include/legal/consent-checkbox.php';
+			?>
 		<? elseif($field['CODE'] == "DESC"):?>
 			<span class="line cl wide">
      			<span class="label"><?=$field['NAME']?></span>
@@ -87,12 +85,6 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
 	<? endforeach; ?>
 
 
-
-		<?if($arParams["USE_CAPTCHA"] == "Y"):?>
-			<div class="mf-captcha">
-				<div class="g-recaptcha" data-sitekey="<?= htmlspecialcharsbx(POLIMER_RECAPTCHA_SITE_KEY) ?>"></div>
-			</div>
-		<?endif;?>
 
 
 		<span class="line submit">

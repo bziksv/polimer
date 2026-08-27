@@ -9,6 +9,7 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
  * @global CMain $APPLICATION
  * @global CUser $USER
  */
+$errorFields = array_fill_keys($arResult['ERROR_FIELDS'] ?? [], true);
 ?>
 
 
@@ -40,7 +41,7 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
 	<a href="#" class="close">&nbsp;</a>
 	<div class="title">Купить в 1 клик</div>
 	<div class="subtitle">Укажите ваши данные и наши менеджеры свяжуться с вами для оформления заказа</div>
-	<form action="<?=POST_FORM_ACTION_URI?>" method="POST" enctype="multipart/form-data">
+	<form action="<?=POST_FORM_ACTION_URI?>" method="POST" enctype="multipart/form-data" class="js-polimer-feedback-form js-polimer-consent-form" novalidate>
 		<?=bitrix_sessid_post()?>
 		<fieldset>
 
@@ -184,25 +185,16 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
 						<? endif;?>
 
 				<? elseif($field['PROPERTY_TYPE'] == "L"):?>
-					<div class="rule">
-						<input type="checkbox" class="fio" name="<?=$field['CODE']?>" value="Y" checked>
-				<span>
-					Нажимая на эту кнопку, я даю свое согласие на обработку персональных данных и соглашаюсь с условиями <a href="/upload/politics.pdf" target="_blank">политики обработки персональных данных</a>.
-<!--					Я прочитал правила-->
-<!--					<a href="#" class="show-popup" data-id="--><?//=$arParams["IBLOCK_TYPE"].$arParams["IBLOCK_ID"]?><!--">Правила</a>-->
-<!--					и даю свое согласие на обработку персональных данных-->
-				</span>
-					</div>
+					<?php
+					$consentName = $field['CODE'];
+					$consentChecked = !empty($arResult[$field['CODE']]);
+					$consentInvalid = !empty($errorFields[$field['CODE']]);
+					require $_SERVER['DOCUMENT_ROOT'] . '/include/legal/consent-checkbox.php';
+					?>
 				<? endif; ?>
 			<? endif; ?>
 
 			<? endforeach; ?>
-
-			<?if($arParams["USE_CAPTCHA"] == "Y"):?>
-				<div class="mf-captcha">
-					<div class="g-recaptcha" data-sitekey="<?= htmlspecialcharsbx(POLIMER_RECAPTCHA_SITE_KEY) ?>"></div>
-				</div>
-			<?endif;?>
 
 
 			<span class="line submit">

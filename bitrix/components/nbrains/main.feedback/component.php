@@ -58,17 +58,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] <> '' && (!isset($_P
 			$arResult["ERROR_FIELDS"][] = 'FIO';
 		}
 
-		if($arParams["USE_CAPTCHA"] == "Y")
-		{
-			$captcha_code = $_POST["g-recaptcha-response"];
-			if (!polimerVerifyGoogleRecaptcha($captcha_code))
-			{
-				$arResult["ERROR_MESSAGE"][] = GetMessage("MF_CAPTHCA_EMPTY");
-				$arResult["ERROR_FIELDS"][] = 'CAPTCHA';
-			}
-
-		}
-
 		if(empty($arResult["ERROR_MESSAGE"])){
 			$el = new CIBlockElement;
 			$PROP = array();
@@ -138,9 +127,5 @@ elseif($_REQUEST["success"] == $arResult["PARAMS_HASH"])
 $arResult['USER_FIELD'] = $arPropertyField;
 if (!isset($arResult['ERROR_FIELDS']) || !is_array($arResult['ERROR_FIELDS']))
 	$arResult['ERROR_FIELDS'] = array();
-
-
-if($arParams["USE_CAPTCHA"] == "Y")
-	$arResult["capCode"] =  htmlspecialcharsbx($APPLICATION->CaptchaGetCode());
 
 $this->IncludeComponentTemplate();

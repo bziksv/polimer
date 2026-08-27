@@ -9,6 +9,7 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
  * @global CMain $APPLICATION
  * @global CUser $USER
  */
+$errorFields = array_fill_keys($arResult['ERROR_FIELDS'] ?? [], true);
 ?>
 
 
@@ -38,7 +39,7 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
 <div class="popup" id="reviews" <?if($_REQUEST['popup'] == "show"):?>style="display: block; opacity: 1;"<?endif;?>>
 	<a href="#" class="close">&nbsp;</a>
 	<div class="title">Заполните форму отзыва</div>
-<form action="<?=POST_FORM_ACTION_URI?>" method="POST" enctype="multipart/form-data">
+<form action="<?=POST_FORM_ACTION_URI?>" method="POST" enctype="multipart/form-data" class="js-polimer-consent-form" novalidate>
 
 <?=bitrix_sessid_post()?>
 
@@ -54,15 +55,12 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
 					<input type="text" placeholder="<?if($field['CODE'] == "FIO"){ print "Пример: Иванов Иван (на кириллице)";}?>" class="<?if($field['CODE'] == "PHONE"){print "phone";}elseif($field['CODE'] == "FIO"){print "name";}?>" name="<?=$field['CODE']?>" value="<?=(empty($arResult[$field['CODE']])) ? $_REQUEST[$field['CODE']] : $arResult[$field['CODE']]?>" /></span>
      		</span>
 		<? elseif($field['PROPERTY_TYPE'] == "L" AND $field['CODE'] != "DESC"):?>
-			<div class="rule">
-				<input type="checkbox" class="fio" name="<?=$field['CODE']?>" value="Y" checked>
-				<span>
-					Нажимая на эту кнопку, я даю свое согласие на обработку персональных данных и соглашаюсь с условиями <a href="/upload/politics.pdf" target="_blank">политики обработки персональных данных</a>.
-<!--					Я прочитал правила-->
-<!--					<a href="#" class="show-popup" data-id="--><?//=$arParams["IBLOCK_TYPE"].$arParams["IBLOCK_ID"]?><!--">Правила</a>-->
-<!--					и даю свое согласие на обработку персональных данных-->
-				</span>
-			</div>
+			<?php
+			$consentName = $field['CODE'];
+			$consentChecked = !empty($arResult[$field['CODE']]);
+			$consentInvalid = !empty($errorFields[$field['CODE']]);
+			require $_SERVER['DOCUMENT_ROOT'] . '/include/legal/consent-checkbox.php';
+			?>
 		<? elseif($field['CODE'] == "MESSAGE"):?>
 			<span class="line cl wide">
      			<span class="label"><?=$field['NAME']?></span>
@@ -75,12 +73,6 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
 	<? endforeach; ?>
 
 
-
-		<?if($arParams["USE_CAPTCHA"] == "Y"):?>
-			<div class="mf-captcha">
-				<div class="g-recaptcha" data-sitekey="<?= htmlspecialcharsbx(POLIMER_RECAPTCHA_SITE_KEY) ?>"></div>
-			</div>
-		<?endif;?>
 
 
 		<span class="line submit">

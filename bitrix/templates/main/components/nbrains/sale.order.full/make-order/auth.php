@@ -68,7 +68,7 @@ if($cntBasketItems > 0):
 		<a href="#" class="back2enter">Авторизация</a>
 
 		<? if($arResult["AUTH"]["new_user_registration"]=="Y"):?>
-		<form method="post" action="<?= $arParams["PATH_TO_ORDER"]?>" name="order_reg_form">
+		<form method="post" action="<?= $arParams["PATH_TO_ORDER"]?>" name="order_reg_form" class="js-polimer-consent-form" novalidate>
 			<?=bitrix_sessid_post()?>
 
 		<div class="form_registration">
@@ -147,10 +147,12 @@ if($cntBasketItems > 0):
 			</div>
 
 			<div class="agent">
-				<label>
-					<input type="checkbox" name="rule" id="rule" value="Y" checked/>
-					<span>Нажимая на эту кнопку, я даю свое согласие на <a href="/upload/compliance.pdf" target="_blank">обработку персональных данных</a> и соглашаюсь с условиями <a href="/upload/politics.pdf" target="_blank">политики конфиденциальности</a>.*</span>
-				</label>
+				<?php
+				$consentName = 'rule';
+				$consentChecked = !empty($arResult['POST']['rule']);
+				$consentInvalid = false;
+				require $_SERVER['DOCUMENT_ROOT'] . '/include/legal/consent-checkbox.php';
+				?>
 			</div>
 
 			<input type="submit" class="registrate" value="<?echo GetMessage("STOF_NEXT_STEP")?>">
@@ -167,13 +169,6 @@ if($cntBasketItems > 0):
 
 <script>
 	$(function(){
-
-		$(function(){
-			$('#rule').change(function(){
-				$('.registrate').attr('disabled',$(this).prop('checked') ? false : true );
-			});
-		});
-
 		$('.registrate').click(function(){
 			var c = $('.phone_code').val();
 			var p = $('.phone_number').val();

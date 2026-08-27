@@ -9,8 +9,9 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
  * @global CMain $APPLICATION
  * @global CUser $USER
  */
+$errorFields = array_fill_keys($arResult['ERROR_FIELDS'] ?? [], true);
 ?>
-<form class="ym-goal-calc" action="<?=POST_FORM_ACTION_URI?>" method="POST" enctype="multipart/form-data">
+<form class="ym-goal-calc js-polimer-consent-form" action="<?=POST_FORM_ACTION_URI?>" method="POST" enctype="multipart/form-data" novalidate>
 <?=bitrix_sessid_post()?>
 
 <div class="row cl">
@@ -54,23 +55,14 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
 
 
 		<a href="#" class="attach" style="position: relative;"><input style="opacity: 0;position: absolute;min-width: 495px;cursor: pointer;" name="FILE" type="file" />Прикрепите план здания или техническое задание <span>(файл до 50 мб)</span></a>
-		<?if($arParams["USE_CAPTCHA"] == "Y"):?>
-			<div class="mf-captcha">
-				<div class="g-recaptcha" data-sitekey="<?= htmlspecialcharsbx(POLIMER_RECAPTCHA_SITE_KEY) ?>"></div>
-			</div>
-		<?endif;?>
 
 
-
-		<div class="rule">
-			<input type="checkbox" class="fio" name="RULE" value="Y" checked>
-			<span>
-				Нажимая на эту кнопку, я даю свое согласие на обработку персональных данных и соглашаюсь с условиями <a href="/upload/politics.pdf" target="_blank">политики обработки персональных данных</a>.
-<!--					Я прочитал правила-->
-<!--					<a href="#" class="show-popup" data-id="--><?//=$arParams["IBLOCK_TYPE"].$arParams["IBLOCK_ID"]?><!--">Правила</a>-->
-<!--					и даю свое согласие на обработку персональных данных-->
-			</span>
-		</div>
+		<?php
+		$consentName = 'RULE';
+		$consentChecked = !empty($_POST['RULE']);
+		$consentInvalid = !empty($errorFields['RULE']);
+		require $_SERVER['DOCUMENT_ROOT'] . '/include/legal/consent-checkbox.php';
+		?>
 
 		<input type="hidden" name="PARAMS_HASH" value="<?=$arResult["PARAMS_HASH"]?>">
 		<input type="submit" class="send" name="submit" value="<?=GetMessage("MFT_SUBMIT")?>">
