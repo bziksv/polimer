@@ -570,6 +570,37 @@
 		return data.status === 'taken' || data.status === 'exists';
 	}
 
+	var REG_TOKEN_STORAGE_KEY = 'prime_phoneauth_reg';
+
+	function readRegTokenStorage(phone) {
+		try {
+			var raw = sessionStorage.getItem(REG_TOKEN_STORAGE_KEY);
+			if (!raw) return '';
+			var saved = JSON.parse(raw);
+			if (!saved || !saved.token || !saved.phone) return '';
+			if (saved.phone !== phoneDigits(phone)) return '';
+			return String(saved.token);
+		} catch (e) {
+			return '';
+		}
+	}
+
+	function writeRegTokenStorage(phone, token) {
+		if (!token) return;
+		try {
+			sessionStorage.setItem(REG_TOKEN_STORAGE_KEY, JSON.stringify({
+				phone: phoneDigits(phone),
+				token: String(token)
+			}));
+		} catch (e) {}
+	}
+
+	function clearRegTokenStorage() {
+		try {
+			sessionStorage.removeItem(REG_TOKEN_STORAGE_KEY);
+		} catch (e) {}
+	}
+
 	function initRegister() {
 		var ctx = findRegisterPhoneContext();
 		if (!ctx) return;
@@ -577,10 +608,13 @@
 		var phoneInput = ctx.phoneInput;
 		var lookupOnly = cfg.lookupOnly === true || !phoneOn || cfg.callAuth !== true;
 
-		var tokenInp = document.createElement('input');
-		tokenInp.type = 'hidden';
-		tokenInp.name = 'prime_phoneauth_token';
-		form.appendChild(tokenInp);
+		var tokenInp = form.querySelector('input[name="prime_phoneauth_token"]');
+		if (!tokenInp) {
+			tokenInp = document.createElement('input');
+			tokenInp.type = 'hidden';
+			tokenInp.name = 'prime_phoneauth_token';
+			form.appendChild(tokenInp);
+		}
 
 		var box = document.createElement('div');
 		box.className = 'prime-phoneauth-reg' + (ctx.mode === 'bx' ? ' prime-phoneauth-reg--bx' : '');
@@ -672,6 +706,7 @@
 		function resetConfirm() {
 			stopPoll();
 			tokenInp.value = '';
+			clearRegTokenStorage();
 			wait.style.display = 'none';
 			verifyBtn.disabled = false;
 		}
@@ -682,6 +717,35 @@
 			verifyBtn.style.display = 'none';
 			statusEl.className = 'prime-phoneauth-reg__status is-ok';
 			statusEl.textContent = 'Номер подтверждён. Завершите регистрацию.';
+			if (tokenInp.value && phoneReady(phoneInput.value)) {
+				writeRegTokenStorage(phoneInput.value, tokenInp.value);
+				lastLookupPhone = phoneInput.value;
+			}
+			syncRegBoxVisibility();
+		}
+
+		function restoreConfirmedToken() {
+			var token = String(tokenInp.value || '').trim();
+			if (!token) {
+				token = readRegTokenStorage(phoneInput.value);
+				if (token) tokenInp.value = token;
+			}
+			if (!token || !phoneReady(phoneInput.value)) {
+				return Promise.resolve(false);
+			}
+			return fetch(cfg.statusUrl + '&token=' + encodeURIComponent(token), { credentials: 'same-origin' })
+				.then(function (r) { return r.json(); })
+				.then(function (data) {
+					if (data && data.status === 'confirmed') {
+						tokenInp.value = token;
+						markConfirmed();
+						return true;
+					}
+					tokenInp.value = '';
+					clearRegTokenStorage();
+					return false;
+				})
+				.catch(function () { return false; });
 		}
 
 		function startPoll(token) {
@@ -879,9 +943,11 @@
 			}).catch(function () { testBtn.disabled = false; });
 		});
 
-		if (phoneReady(phoneInput.value)) {
-			lookupNow();
-		}
+		restoreConfirmedToken().then(function (restored) {
+			if (!restored && phoneReady(phoneInput.value)) {
+				lookupNow();
+			}
+		});
 
 		form.addEventListener('submit', function (e) {
 			if (tokenInp.value) return;

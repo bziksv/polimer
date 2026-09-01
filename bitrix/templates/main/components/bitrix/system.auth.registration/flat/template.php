@@ -119,6 +119,9 @@ new BX.PhoneAuth({
 				<input type="tel" class="phone ru_phone_check phone_check" name="USER_PERSONAL_PHONE" maxlength="255" placeholder="+7-___-___-__-__" autocomplete="tel" inputmode="tel" value="<?=$arResult["USER_PERSONAL_PHONE"]?>" <?if($arResult["PERSONAL_PHONE_REQUIRED"]):?>required=""<?endif?>/>
 			</div>
 		</div>
+		<?if(!empty($arResult['PRIME_PHONEAUTH_TOKEN'])):?>
+			<input type="hidden" name="prime_phoneauth_token" value="<?=$arResult['PRIME_PHONEAUTH_TOKEN']?>" />
+		<?endif?>
 		
 		<?if($arResult["EMAIL_REGISTRATION"]):?>
 			<div class="bx-authform-formgroup-container">
