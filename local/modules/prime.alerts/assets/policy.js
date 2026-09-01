@@ -120,7 +120,7 @@
 	}
 
 	var duplicateTimers = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
-	var duplicateCache = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
+	var duplicateCache = typeof Map !== 'undefined' ? new Map() : null;
 	var duplicateState = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
 	var DUPLICATE_DEBOUNCE_MS = 450;
 
@@ -329,10 +329,28 @@
 	}
 
 	function removeEmptyNoticeBox(inp) {
-		var box = ensureBox(inp, false);
-		if (!box) return;
-		if (box.getAttribute('data-kind') || (box.textContent || '').trim() !== '') return;
-		if (box.parentNode) box.parentNode.removeChild(box);
+		hideLiveNotice(inp);
+	}
+
+	function hideLiveNotice(inp, kind) {
+		var anchor = noticeAnchor(inp);
+		if (!anchor || !anchor.parentNode) return;
+		var box = anchor.nextElementSibling;
+		if (!box || !box.classList || !box.classList.contains('prime-alerts-live-notice')) {
+			return;
+		}
+		if (kind && box.getAttribute('data-kind') !== kind) {
+			return;
+		}
+		hideBox(box);
+		box.removeAttribute('data-kind');
+		box.removeAttribute('data-filled');
+		box.removeAttribute('data-ctx');
+		box.removeAttribute('data-dup-filled');
+		box.innerHTML = '';
+		if (box.parentNode) {
+			box.parentNode.removeChild(box);
+		}
 	}
 
 	function isEmailInput(inp) {
@@ -416,6 +434,9 @@
 				if (duplicateCache) duplicateCache.set(email, exists);
 				setDuplicateState(inp, { exists: exists, checking: false });
 				if (String(inp.value || '').trim() === email) refreshInput(inp);
+			}).catch(function () {
+				setDuplicateState(inp, { exists: false, checking: false });
+				if (String(inp.value || '').trim() === email) refreshInput(inp);
 			});
 			return;
 		}
@@ -427,6 +448,9 @@
 				var exists = !!(data && data.ok && data.exists);
 				if (duplicateCache) duplicateCache.set(email, exists);
 				setDuplicateState(inp, { exists: exists, checking: false });
+				if (String(inp.value || '').trim() === email) refreshInput(inp);
+			}).catch(function () {
+				setDuplicateState(inp, { exists: false, checking: false });
 				if (String(inp.value || '').trim() === email) refreshInput(inp);
 			});
 		}, DUPLICATE_DEBOUNCE_MS));
@@ -495,7 +519,7 @@
 			box.setAttribute('data-kind', 'policy');
 			box.classList.add('is-visible');
 		} else {
-			removeEmptyNoticeBox(inp);
+			hideLiveNotice(inp, 'policy');
 		}
 	}
 

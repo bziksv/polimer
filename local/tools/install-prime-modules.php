@@ -21,6 +21,19 @@ $modules = [
 	'prime.phoneauth' => 'prime_phoneauth',
 ];
 
+$primeAlertsOptions = [
+	'enabled' => 'Y',
+	'policy_enabled' => 'Y',
+	'policy_register' => 'Y',
+	'policy_order' => 'Y',
+	'notice_everywhere' => 'N',
+	'support_email' => 'info@polimer-vrn.ru',
+	'support_phone' => '+7 (473) 250-22-33',
+	'extra_domains' => '',
+	'profile_banner' => 'Y',
+	'color_scheme' => 'polimer',
+];
+
 foreach ($modules as $moduleId => $className) {
 	$installFile = $_SERVER['DOCUMENT_ROOT'] . '/local/modules/' . $moduleId . '/install/index.php';
 	if (!is_file($installFile)) {
@@ -40,6 +53,15 @@ foreach ($modules as $moduleId => $className) {
 		$installer->InstallEvents();
 		echo "events refreshed {$moduleId}\n";
 	}
+}
+
+if (\Bitrix\Main\Loader::includeModule('prime.alerts')) {
+	foreach ($primeAlertsOptions as $name => $value) {
+		if (\Bitrix\Main\Config\Option::get('prime.alerts', $name, '') === '') {
+			\Bitrix\Main\Config\Option::set('prime.alerts', $name, $value);
+		}
+	}
+	echo "options ensured prime.alerts\n";
 }
 
 try {

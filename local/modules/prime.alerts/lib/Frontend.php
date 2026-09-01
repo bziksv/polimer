@@ -16,8 +16,8 @@ class Frontend
 			return;
 		}
 
-		// Avoid double inject
-		if (strpos($content, 'PRIME_ALERTS') !== false) {
+		// Avoid double inject (registration template may reference window.PRIME_ALERTS before config exists)
+		if (strpos($content, 'window.PRIME_ALERTS=') !== false) {
 			return;
 		}
 
@@ -73,7 +73,7 @@ class Frontend
 		];
 
 		$cssHref = '/local/modules/prime.alerts/assets/style.css?v=1.5.20';
-		$jsHref = '/local/modules/prime.alerts/assets/policy.js?v=1.5.19';
+		$jsHref = '/local/modules/prime.alerts/assets/policy.js?v=1.5.21';
 		$flash = '';
 		try {
 			$session = \Bitrix\Main\Application::getInstance()->getSession();
