@@ -71,6 +71,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 			this.isHttps = window.location.protocol === "https:";
 			this.orderSaveAllowed = false;
 			this.socServiceHiddenNode = false;
+			this.deliveryChoiceConfirmed = false;
 		},
 
 		/**
@@ -1788,6 +1789,12 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 				section = this.getNextSection(actionSection),
 				allSections, titleNode, editStep;
 
+			if (actionSection && this.deliveryBlockNode && actionSection.id === this.deliveryBlockNode.id)
+			{
+				this.deliveryChoiceConfirmed = true;
+				this.editTotalBlock();
+			}
+
 			this.reachGoal('next', actionSection);
 
 			if (
@@ -2203,6 +2210,8 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 
 				BX.addClass(allSections[i], 'bx-step-completed');
 				allSections[i].setAttribute('data-visited', 'true');
+				if (this.deliveryBlockNode && allSections[i].id === this.deliveryBlockNode.id)
+					this.deliveryChoiceConfirmed = true;
 				i++;
 			}
 		},
@@ -5788,6 +5797,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 				selectedInput.checked = false;
 			}
 
+			this.deliveryChoiceConfirmed = true;
 			this.sendRequest();
 		},
 
@@ -7977,7 +7987,11 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 			curDelivery = this.getSelectedDelivery();
 			deliveryError = curDelivery && curDelivery.CALCULATE_ERRORS && curDelivery.CALCULATE_ERRORS.length;
 
-			if (deliveryError)
+			if (!this.deliveryChoiceConfirmed)
+			{
+				deliveryValue = BX.message('SOA_SUM_DELIVERY_NOT_SELECTED') || 'ещё не выбран способ';
+			}
+			else if (deliveryError)
 			{
 				deliveryValue = BX.message('SOA_NOT_CALCULATED');
 				params.error = deliveryError;

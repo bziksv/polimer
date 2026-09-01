@@ -96,6 +96,7 @@ $MESS["SOA_PROP_NEW_PROFILE"] = "New profile";
 $MESS["SOA_PS_SELECT_ERROR"] = "Payment system not selected";
 $MESS["SOA_REQUIRED"] = "this field is required";
 $MESS["SOA_SUM_DELIVERY"] = "Delivery:";
+$MESS["SOA_SUM_DELIVERY_NOT_SELECTED"] = "method not selected yet";
 $MESS["SOA_SUM_DISCOUNT"] = "Discount";
 $MESS["SOA_SUM_IT"] = "Total:";
 $MESS["SOA_SUM_LEFT_TO_PAY"] = "Amount payable:";

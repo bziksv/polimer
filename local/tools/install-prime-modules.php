@@ -42,7 +42,15 @@ foreach ($modules as $moduleId => $className) {
 	}
 }
 
-\Bitrix\Main\Data\ManagedCache::clearByTag('bitrix_module_to_module');
+try {
+	$managed = \Bitrix\Main\Application::getInstance()->getManagedCache();
+	if (is_object($managed) && method_exists($managed, 'cleanDir')) {
+		$managed->cleanDir('b_module');
+		$managed->cleanDir('b_module_to_module');
+	}
+} catch (\Throwable $e) {
+	// ignore cache cleanup errors
+}
 if (function_exists('BXClearCache')) {
 	BXClearCache(true);
 }

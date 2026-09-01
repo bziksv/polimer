@@ -13,11 +13,9 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 
 //one css for all system.auth.* forms
 $APPLICATION->SetAdditionalCSS("/bitrix/css/main/system.auth/flat/style.css");
+$APPLICATION->SetAdditionalCSS('/local/modules/prime.phoneauth/assets/auth.css?v=1.2.4');
 $phoneAuthModule = \Bitrix\Main\Loader::includeModule('prime.phoneauth');
 $phoneAuthOn = $phoneAuthModule && \Prime\PhoneAuth\Config::isEnabled();
-if ($phoneAuthModule) {
-	$APPLICATION->SetAdditionalCSS('/local/modules/prime.phoneauth/assets/auth.css?v=1.2.0');
-}
 $authTabsCount = 2 + ($phoneAuthOn ? 1 : 0);
 ?>
 <style>
@@ -31,10 +29,37 @@ $authTabsCount = 2 + ($phoneAuthOn ? 1 : 0);
 		display: block;
 	}
 	.bx-authform .auth .prime-phoneauth-tabs {
+		display: flex;
 		width: 100%;
 		max-width: 100%;
-		margin-left: auto;
-		margin-right: auto;
+		margin: 0 0 18px;
+		border: 2px solid #0464bb;
+		border-radius: 5px;
+		overflow: hidden;
+		background: #fff;
+		box-sizing: border-box;
+	}
+	.bx-authform .auth .prime-phoneauth-tabs button {
+		flex: 1 1 0;
+		margin: 0;
+		border: 0;
+		border-radius: 0;
+		background: #fff;
+		padding: 9px 6px;
+		min-height: 38px;
+		font-size: 13px;
+		font-weight: 700;
+		line-height: 1.2;
+		color: #0464bb;
+		cursor: pointer;
+		box-sizing: border-box;
+	}
+	.bx-authform .auth .prime-phoneauth-tabs button + button {
+		border-left: 2px solid #0464bb;
+	}
+	.bx-authform .auth .prime-phoneauth-tabs button.is-active {
+		background: #0464bb;
+		color: #fff;
 	}
 </style>
 
@@ -216,5 +241,20 @@ try{document.form_auth.USER_PASSWORD.focus();}catch(e){}
 <?else:?>
 try{document.form_auth.USER_LOGIN.focus();}catch(e){}
 <?endif?>
+(function () {
+	var root = document.querySelector('.bx-authform .auth');
+	if (!root) return;
+	var tabs = root.querySelectorAll('.prime-phoneauth-tabs button');
+	if (!tabs.length) return;
+	tabs.forEach(function (btn) {
+		btn.addEventListener('click', function () {
+			var name = btn.getAttribute('data-tab');
+			tabs.forEach(function (b) { b.classList.toggle('is-active', b === btn); });
+			root.querySelectorAll('.prime-phoneauth-panel').forEach(function (p) {
+				p.classList.toggle('is-active', p.getAttribute('data-panel') === name);
+			});
+		});
+	});
+})();
 </script>
 

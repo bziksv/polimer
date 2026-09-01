@@ -52,6 +52,7 @@ $MESS["SOA_SUM_WEIGHT_SUM"] = "Общий вес:";
 $MESS["SOA_SUM_SUMMARY"] = "Товаров на:";
 $MESS["SOA_SUM_VAT"] = "НДС:";
 $MESS["SOA_SUM_DELIVERY"] = "Доставка:";
+$MESS["SOA_SUM_DELIVERY_NOT_SELECTED"] = "ещё не выбран способ";
 $MESS["SOA_SUM_IT"] = "Итого:";
 $MESS["SOA_SUM_PAYED"] = "Оплачено:";
 $MESS["SOA_SUM_LEFT_TO_PAY"] = "Осталось оплатить:";
