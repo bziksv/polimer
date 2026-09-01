@@ -399,10 +399,40 @@
 		box.classList.add('is-visible');
 	}
 
-	function checkEmailDuplicate(email) {
+	function getExcludeUserId(inp) {
+		var id = parseInt(cfg.currentUserId, 10);
+		if (id > 0) return id;
+		var form = inp && (inp.form || inp.closest('form'));
+		if (form) {
+			var idInp = form.querySelector('input[name="ID"]');
+			if (idInp && idInp.value) {
+				id = parseInt(idInp.value, 10);
+				if (id > 0) return id;
+			}
+		}
+		return 0;
+	}
+
+	function isOwnProfileEmail(email, inp) {
+		email = String(email || '').trim().toLowerCase();
+		if (!email) return false;
+		var own = String(cfg.profileEmail || '').trim().toLowerCase();
+		if (own !== '' && email === own) return true;
+		return false;
+	}
+
+	function duplicateCacheKey(email, inp) {
+		return String(email || '').trim().toLowerCase() + '|' + getExcludeUserId(inp);
+	}
+
+	function checkEmailDuplicate(email, inp) {
 		var url = cfg.checkEmailUrl || '/local/modules/prime.alerts/ajax/check_email.php';
+		var excludeUserId = inp ? getExcludeUserId(inp) : (parseInt(cfg.currentUserId, 10) || 0);
 		var body = 'sessid=' + encodeURIComponent(cfg.sessid || (window.BX && BX.bitrix_sessid && BX.bitrix_sessid()) || '')
 			+ '&email=' + encodeURIComponent(email);
+		if (excludeUserId > 0) {
+			body += '&exclude_user_id=' + encodeURIComponent(String(excludeUserId));
+		}
 		return fetch(url, {
 			method: 'POST',
 			credentials: 'same-origin',
@@ -423,15 +453,20 @@
 			setDuplicateState(inp, { exists: false, checking: false });
 			return;
 		}
-		if (duplicateCache && duplicateCache.has(email)) {
-			setDuplicateState(inp, { exists: duplicateCache.get(email), checking: false });
+		if (isOwnProfileEmail(email, inp)) {
+			setDuplicateState(inp, { exists: false, checking: false });
+			return;
+		}
+		var cacheKey = duplicateCacheKey(email, inp);
+		if (duplicateCache && duplicateCache.has(cacheKey)) {
+			setDuplicateState(inp, { exists: duplicateCache.get(cacheKey), checking: false });
 			return;
 		}
 		setDuplicateState(inp, { exists: false, checking: true });
 		if (!duplicateTimers) {
-			checkEmailDuplicate(email).then(function (data) {
+			checkEmailDuplicate(email, inp).then(function (data) {
 				var exists = !!(data && data.ok && data.exists);
-				if (duplicateCache) duplicateCache.set(email, exists);
+				if (duplicateCache) duplicateCache.set(cacheKey, exists);
 				setDuplicateState(inp, { exists: exists, checking: false });
 				if (String(inp.value || '').trim() === email) refreshInput(inp);
 			}).catch(function () {
@@ -444,9 +479,9 @@
 		if (prev) clearTimeout(prev);
 		duplicateTimers.set(inp, setTimeout(function () {
 			duplicateTimers.delete(inp);
-			checkEmailDuplicate(email).then(function (data) {
+			checkEmailDuplicate(email, inp).then(function (data) {
 				var exists = !!(data && data.ok && data.exists);
-				if (duplicateCache) duplicateCache.set(email, exists);
+				if (duplicateCache) duplicateCache.set(cacheKey, exists);
 				setDuplicateState(inp, { exists: exists, checking: false });
 				if (String(inp.value || '').trim() === email) refreshInput(inp);
 			}).catch(function () {
@@ -573,6 +608,8 @@
 					form.removeAttribute('data-prime-alerts-email-ok');
 					continue;
 				}
+				if (isOwnProfileEmail(email, emailInput)) continue;
+				var cacheKey = duplicateCacheKey(email, emailInput);
 				var dup = duplicateStateFor(emailInput);
 				if (dup.exists) {
 					e.preventDefault();
@@ -581,12 +618,12 @@
 					try { emailInput.focus(); } catch (err) {}
 					return;
 				}
-				if (dup.checking || !(duplicateCache && duplicateCache.has(email))) {
+				if (dup.checking || !(duplicateCache && duplicateCache.has(cacheKey))) {
 					e.preventDefault();
 					e.stopPropagation();
-					checkEmailDuplicate(email).then(function (data) {
+					checkEmailDuplicate(email, emailInput).then(function (data) {
 						var exists = !!(data && data.ok && data.exists);
-						if (duplicateCache) duplicateCache.set(email, exists);
+						if (duplicateCache) duplicateCache.set(cacheKey, exists);
 						setDuplicateState(emailInput, { exists: exists, checking: false });
 						refreshInput(emailInput, { force: true });
 						if (!exists) {

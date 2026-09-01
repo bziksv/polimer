@@ -53,6 +53,19 @@ class Frontend
 		)));
 
 		$profileData = ProfileBanner::profileData();
+		global $USER;
+		$currentUserId = 0;
+		$currentUserEmail = '';
+		if (is_object($USER) && $USER->IsAuthorized()) {
+			$currentUserId = (int)$USER->GetID();
+			$currentUserEmail = trim((string)$USER->GetEmail());
+			if ($currentUserEmail === '' && $currentUserId > 0) {
+				$rsUser = \CUser::GetByID($currentUserId);
+				if ($row = $rsUser->Fetch()) {
+					$currentUserEmail = trim((string)($row['EMAIL'] ?? ''));
+				}
+			}
+		}
 		$config = [
 			'enabled' => $policyOn,
 			'checkEmailDuplicate' => true,
@@ -65,7 +78,8 @@ class Frontend
 			'noticeSignup' => $policyOn ? EmailPolicy::getNoticeHtml('signup') : '',
 			'noticeCheckout' => $policyOn ? EmailPolicy::getNoticeHtml('checkout') : '',
 			'profileBannerHtml' => $profileBannerHtml,
-			'profileEmail' => $profileBannerHtml !== '' ? (string)$profileData['email'] : '',
+			'profileEmail' => $currentUserEmail !== '' ? $currentUserEmail : (string)$profileData['email'],
+			'currentUserId' => $currentUserId,
 			'emailUnconfirmed' => $profileBannerHtml !== '' && ProfileBanner::emailUnconfirmed($profileData),
 			'justRegistered' => $profileBannerHtml !== '' && ProfileBanner::isJustRegistered(),
 			'sessid' => function_exists('bitrix_sessid') ? bitrix_sessid() : '',
@@ -73,7 +87,7 @@ class Frontend
 		];
 
 		$cssHref = '/local/modules/prime.alerts/assets/style.css?v=1.5.20';
-		$jsHref = '/local/modules/prime.alerts/assets/policy.js?v=1.5.21';
+		$jsHref = '/local/modules/prime.alerts/assets/policy.js?v=1.5.22';
 		$flash = '';
 		try {
 			$session = \Bitrix\Main\Application::getInstance()->getSession();
