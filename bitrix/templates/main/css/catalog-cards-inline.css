@@ -1169,6 +1169,18 @@ header .header__bottom.fixed {
     background: #fff !important;
     aspect-ratio: 3 / 4 !important;
 }
+.products_roll .pr_box .item .hover .inner .pic .discount {
+    font-size: 12px !important;
+    line-height: 16px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    box-sizing: border-box !important;
+    z-index: 2 !important;
+}
 .products_roll .pr_box .item .hover .inner .pic .pic-slides {
     position: absolute !important;
     inset: 0 !important;
@@ -1273,7 +1285,7 @@ header .header__bottom.fixed {
 }
 /* резерв под .cost-old — иначе кнопка «В корзину» прыгает при скидке */
 .products_roll .pr_box .item .hover .inner .card-footer .cost {
-    min-height: 38px !important;
+    min-height: 40px !important;
     box-sizing: border-box !important;
 }
 .products_roll .pr_box .item .hover .inner .card-footer .add2cart,
