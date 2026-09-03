@@ -54,7 +54,7 @@ polimer/
 | Host | `127.0.0.1` | `localhost` |
 | Schema | `dev` | `dev` |
 | Логин / пароль | `dev_usr` / `devdevdev` | `dev_usr` / `devdevdev` |
-| Дамп | `~/Downloads/polimer_vrn_r_db (1).sql.gz` | тот же дамп на сервере |
+| Дамп | `polimer/polimer_vrn_r_db.sql.gz` (свежий с prod, 2026-09-03) | тот же дамп на сервере |
 
 Конфиг локали: `dev.polimer-vrn.ru/bitrix/php_interface/dbconn.local.php` + `bitrix/.settings.php`  
 (старые креды закомментированы в файлах — для отката).
@@ -62,8 +62,9 @@ polimer/
 Конфиг remote-dev правится **только на сервере** (`dbconn.php` / `.settings.php` в каталоге dev). Prod не трогать.
 
 ```bash
-# Локальный импорт (пример)
-gunzip -c "~/Downloads/polimer_vrn_r_db (1).sql.gz" \
+# Локальный импорт (свежий дамп с prod в корне polimer/)
+mysql -u root -e "DROP DATABASE IF EXISTS \`dev\`; CREATE DATABASE \`dev\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+gunzip -c polimer_vrn_r_db.sql.gz \
   | mysql -u root --max_allowed_packet=512M --force dev
 
 # Прогресс локального импорта

@@ -1127,8 +1127,9 @@ header .header__bottom.fixed {
     position: relative !important;
     display: flex !important;
     flex-direction: column !important;
-    height: 510px !important;
+    height: 530px !important;
     box-sizing: border-box !important;
+    overflow: visible !important;
 }
 .products_roll .pr_box .item .hover {
     position: relative !important;
@@ -1137,7 +1138,9 @@ header .header__bottom.fixed {
     flex: 1 1 auto !important;
     height: 100% !important;
     min-height: 0 !important;
+    max-height: 100% !important;
     width: 100% !important;
+    box-sizing: border-box !important;
 }
 .products_roll .pr_box .item .hover .inner {
     position: relative !important;
@@ -1151,8 +1154,9 @@ header .header__bottom.fixed {
     box-sizing: border-box !important;
 }
 .products_roll .pr_box .item .hover .inner::after {
-    flex: 0 0 16px !important;
-    height: 16px !important;
+    flex: 0 0 8px !important;
+    height: 8px !important;
+    max-height: 8px !important;
 }
 .products_roll .pr_box .item .hover .inner .pic {
     position: relative !important;
@@ -1170,6 +1174,11 @@ header .header__bottom.fixed {
     aspect-ratio: 3 / 4 !important;
 }
 .products_roll .pr_box .item .hover .inner .pic .discount {
+    position: absolute !important;
+    top: auto !important;
+    right: 10px !important;
+    bottom: 10px !important;
+    left: auto !important;
     font-size: 12px !important;
     line-height: 16px !important;
     font-weight: 700 !important;
@@ -1178,8 +1187,14 @@ header .header__bottom.fixed {
     height: auto !important;
     min-width: 0 !important;
     min-height: 0 !important;
+    margin: 0 !important;
+    padding: 4px 7px !important;
     box-sizing: border-box !important;
-    z-index: 2 !important;
+    border-radius: 4px !important;
+    background: #0060bf !important;
+    color: #fff !important;
+    z-index: 3 !important;
+    pointer-events: none !important;
 }
 .products_roll .pr_box .item .hover .inner .pic .pic-slides {
     position: absolute !important;
@@ -1270,10 +1285,12 @@ header .header__bottom.fixed {
 }
 .products_roll .pr_box .item .hover .inner .card-footer {
     margin-top: auto !important;
+    flex: 0 0 auto !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     width: 100% !important;
+    padding-bottom: 0 !important;
 }
 .products_roll .pr_box .item .hover .inner .card-footer .cost,
 .products_roll .pr_box .item .hover .inner .card-footer .noprice {
@@ -1282,11 +1299,14 @@ header .header__bottom.fixed {
     left: auto !important;
     bottom: auto !important;
     margin-top: 0 !important;
+    margin-bottom: 8px !important;
 }
 /* резерв под .cost-old — иначе кнопка «В корзину» прыгает при скидке */
 .products_roll .pr_box .item .hover .inner .card-footer .cost {
     min-height: 40px !important;
+    max-height: 40px !important;
     box-sizing: border-box !important;
+    overflow: hidden !important;
 }
 .products_roll .pr_box .item .hover .inner .card-footer .add2cart,
 .products_roll .pr_box .item .hover .inner .card-footer .add2cartOrder {

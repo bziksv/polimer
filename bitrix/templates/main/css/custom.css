@@ -1,14 +1,16 @@
 div.discount {
     position: absolute;
-	bottom: 0px;
-    right: 20px;
+    top: auto;
+    right: 10px;
+    bottom: 10px;
     background-color: #0060bf;
     width: fit-content;
     color: #FFF;
-    padding: 2px 5px;
-    border-radius: 5px;
+    padding: 4px 7px;
+    border-radius: 4px;
     font-weight: bold;
-	z-index: 1;
+    z-index: 3;
+    pointer-events: none;
 }
 
 .d-inline {
