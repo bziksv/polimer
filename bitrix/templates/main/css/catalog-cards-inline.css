@@ -804,6 +804,9 @@
     .products_roll .pr_box .item .hover .inner .card-footer .cost-old {
         display: none !important;
     }
+    .products_roll .pr_box .item .hover .inner .card-footer .cost {
+        min-height: 0 !important;
+    }
     .products_roll .pr_box .item .hover .inner .card-footer .quantity,
     .products_roll .pr_box .item .hover .inner .quantity {
         position: relative !important;
@@ -1267,6 +1270,11 @@ header .header__bottom.fixed {
     left: auto !important;
     bottom: auto !important;
     margin-top: 0 !important;
+}
+/* резерв под .cost-old — иначе кнопка «В корзину» прыгает при скидке */
+.products_roll .pr_box .item .hover .inner .card-footer .cost {
+    min-height: 38px !important;
+    box-sizing: border-box !important;
 }
 .products_roll .pr_box .item .hover .inner .card-footer .add2cart,
 .products_roll .pr_box .item .hover .inner .card-footer .add2cartOrder {

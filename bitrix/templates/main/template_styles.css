@@ -15526,6 +15526,11 @@ footer .footer__bottom .footer__studio a {
     margin-bottom: 10px;
 }
 
+.products_roll .pr_box .item .hover .inner .card-footer .cost {
+    min-height: 38px;
+    box-sizing: border-box;
+}
+
 .products_roll .pr_box .item .hover .inner .card-footer .add2cart,
 .products_roll .pr_box .item .hover .inner .card-footer .add2cartOrder {
     margin: 0 auto 0;
