@@ -54,7 +54,7 @@ polimer/
 | Host | `127.0.0.1` | `localhost` |
 | Schema | `dev` | `dev` |
 | Логин / пароль | `dev_usr` / `devdevdev` | `dev_usr` / `devdevdev` |
-| Дамп | `polimer/polimer_vrn_r_db.sql.gz` (свежий с prod, 2026-09-03) | тот же дамп на сервере |
+| Дамп | `polimer/polimer_vrn_r_db.sql.gz` (свежий с prod, 2026-09-09) | тот же дамп на сервере |
 
 Конфиг локали: `dev.polimer-vrn.ru/bitrix/php_interface/dbconn.local.php` + `bitrix/.settings.php`  
 (старые креды закомментированы в файлах — для отката).
