@@ -8,28 +8,39 @@ function inCompare($IBLOCK_ID, $ID)
     return isset($_SESSION["CATALOG_COMPARE_LIST"][$IBLOCK_ID]["ITEMS"][$ID]);
 }
 
-function price($id){
+/** Числовое значение базовой цены (для сравнений и сортировки). */
+function priceValue($id)
+{
     $ar_res_price = CPrice::GetBasePrice($id, false, false);
-    if($ar_res_price['PRICE']){
-        return $ar_res_price['PRICE'];
-    }else{
+    if (!empty($ar_res_price['PRICE']) && (float)$ar_res_price['PRICE'] > 0) {
+        return (float)$ar_res_price['PRICE'];
+    }
+
+    return false;
+}
+
+/** Цена для вывода: 2 знака после запятой, без хвоста 00000000. */
+function price($id){
+    $value = priceValue($id);
+    if ($value === false) {
         return false;
     }
 
+    return number_format(round($value, 2), 2, '.', ' ');
 }
 function priceDiscount($id){
     global $USER;
     $ar_res_price = CCatalogProduct::GetOptimalPrice($id, 1, $USER->GetUserGroupArray(), 'N');
-    if($ar_res_price['DISCOUNT_PRICE']){
-        return $ar_res_price['DISCOUNT_PRICE'];
-    }else{
-        return false;
+    if (!empty($ar_res_price['DISCOUNT_PRICE']) && (float)$ar_res_price['DISCOUNT_PRICE'] > 0) {
+        return round((float)$ar_res_price['DISCOUNT_PRICE'], 2);
     }
+
+    return false;
 }
 
 function checkProduct($id){
     $ar_res = CCatalogProduct::GetByID($id);
-    if($ar_res['QUANTITY'] > 0 && (float)price($id))
+    if($ar_res['QUANTITY'] > 0 && priceValue($id) !== false)
         return true;
 
     return false;
@@ -71,7 +82,7 @@ function polimerGetProductAvailability($id)
     if (checkProduct($id))
         return 'available';
 
-    if ((float)price($id) > 0)
+    if (priceValue($id) !== false)
         return 'order';
 
     return 'unavailable';
@@ -221,9 +232,9 @@ function polimerGetSearchProductSortPrice(array $productItem)
     if ($productId <= 0)
         return PHP_FLOAT_MAX;
 
-    $productPrice = price($productId);
+    $productPrice = priceValue($productId);
 
-    return $productPrice ? (float)$productPrice : PHP_FLOAT_MAX;
+    return $productPrice !== false ? $productPrice : PHP_FLOAT_MAX;
 }
 
 function polimerSortSearchProductsByAvailabilityAndPrice(array $products, $query = '')
