@@ -8,11 +8,18 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
-		"Отзывы",
-		"/about/reviews/",
-		Array(),
-		Array(),
-		""
+		"Отзывы", 
+		"/about/reviews/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+	Array(
+		"Бренды", 
+		"/brands/", 
+		Array(), 
+		Array(), 
+		"" 
 	)
 );
 ?>
