@@ -1106,16 +1106,58 @@ function polimerGenerateTypoQueries($query, $maxVariants = 40)
     return array_slice(array_values(array_unique($variants)), 0, max(1, (int)$maxVariants));
 }
 
+/**
+ * Приводит строку поиска к валидному UTF-8 (иначе preg_* с /u даёт false).
+ */
+function polimerNormalizeSearchQueryEncoding($query)
+{
+    $query = (string)$query;
+    if ($query === '')
+        return '';
+
+    if (mb_check_encoding($query, 'UTF-8'))
+        return $query;
+
+    $converted = @mb_convert_encoding($query, 'UTF-8', 'Windows-1251,CP1251,ISO-8859-1,UTF-8');
+    if (is_string($converted) && $converted !== '' && mb_check_encoding($converted, 'UTF-8'))
+        return $converted;
+
+    $stripped = preg_replace('/[^\x09\x0A\x0D\x20-\x7E]+/', ' ', $query);
+    return is_string($stripped) ? $stripped : '';
+}
+
+/**
+ * Безопасный разбор поисковой строки на токены (не падает на не-UTF-8).
+ */
+function polimerSplitSearchTokens($query, $minLen = 2)
+{
+    $query = trim(polimerNormalizeSearchQueryEncoding($query));
+    if ($query === '')
+        return [];
+
+    $tokens = preg_split('/[\s,]+/u', $query, -1, PREG_SPLIT_NO_EMPTY);
+    if (!is_array($tokens))
+        return [];
+
+    $minLen = (int)$minLen;
+    if ($minLen <= 0)
+        return array_values($tokens);
+
+    return array_values(array_filter($tokens, static function ($token) use ($minLen) {
+        return mb_strlen((string)$token) >= $minLen;
+    }));
+}
+
 function polimerBuildTokenTypoQueries($query, $maxVariants = 40, $maxVariantsPerToken = 12)
 {
-    $query = trim((string)$query);
+    $query = trim(polimerNormalizeSearchQueryEncoding($query));
     if ($query === '')
         return [];
 
     if (!preg_match('/[\s,]+/u', $query))
         return polimerGenerateTypoQueries($query, $maxVariants);
 
-    $tokens = preg_split('/[\s,]+/u', $query, -1, PREG_SPLIT_NO_EMPTY);
+    $tokens = polimerSplitSearchTokens($query, 0);
     if (count($tokens) < 2)
         return polimerGenerateTypoQueries($query, $maxVariants);
 
@@ -1175,7 +1217,7 @@ function polimerBuildTokenTypoQueries($query, $maxVariants = 40, $maxVariantsPer
 
 function polimerCorrectSearchQueryByTokens($query, $iblockId = IBLOCK_CATALOG)
 {
-    $query = trim((string)$query);
+    $query = trim(polimerNormalizeSearchQueryEncoding($query));
     if ($query === '')
         return null;
 
@@ -1191,7 +1233,7 @@ function polimerCorrectSearchQueryByTokens($query, $iblockId = IBLOCK_CATALOG)
             return $variant;
     }
 
-    $tokens = preg_split('/[\s,]+/u', $query, -1, PREG_SPLIT_NO_EMPTY);
+    $tokens = polimerSplitSearchTokens($query, 0);
     if (count($tokens) < 2)
         return null;
 
@@ -1248,14 +1290,11 @@ function polimerSuggestSearchCorrection($query, $iblockId = IBLOCK_CATALOG)
  */
 function polimerBuildRelaxedSearchQueries($query)
 {
-    $query = trim((string)$query);
+    $query = trim(polimerNormalizeSearchQueryEncoding($query));
     if ($query === '')
         return [];
 
-    $tokens = preg_split('/[\s,]+/u', $query, -1, PREG_SPLIT_NO_EMPTY);
-    $tokens = array_values(array_filter($tokens, static function ($token) {
-        return mb_strlen($token) >= 2;
-    }));
+    $tokens = polimerSplitSearchTokens($query, 2);
 
     if (count($tokens) < 2)
         return [];
@@ -1398,10 +1437,7 @@ function polimerSearchCatalogByTokens($query, $iblockId = IBLOCK_CATALOG, $limit
     if (!CModule::IncludeModule('iblock'))
         return [];
 
-    $tokens = preg_split('/[\s,]+/u', trim($query), -1, PREG_SPLIT_NO_EMPTY);
-    $tokens = array_values(array_filter($tokens, static function ($token) {
-        return mb_strlen($token) >= 2;
-    }));
+    $tokens = polimerSplitSearchTokens($query, 2);
 
     if (empty($tokens))
         return [];
@@ -1443,18 +1479,15 @@ function polimerSearchCatalogByTokens($query, $iblockId = IBLOCK_CATALOG, $limit
  */
 function polimerScoreSearchNameRelevance($name, $query)
 {
-    $nameLower = mb_strtolower(trim((string)$name));
-    $queryLower = mb_strtolower(trim((string)$query));
+    $nameLower = mb_strtolower(trim(polimerNormalizeSearchQueryEncoding($name)));
+    $queryLower = mb_strtolower(trim(polimerNormalizeSearchQueryEncoding($query)));
     if ($queryLower === '' || $nameLower === '')
         return 4;
 
     if ($nameLower === $queryLower)
         return 0;
 
-    $tokens = preg_split('/[\s,]+/u', $queryLower, -1, PREG_SPLIT_NO_EMPTY);
-    $tokens = array_values(array_filter($tokens, static function ($token) {
-        return mb_strlen($token) >= 2;
-    }));
+    $tokens = polimerSplitSearchTokens($queryLower, 2);
 
     if (empty($tokens))
         return 4;
@@ -1522,7 +1555,7 @@ function polimerRankCatalogIdsByQuery(array $ids, $query)
 
 function polimerSearchCatalogAllIds($query, $iblockId = IBLOCK_CATALOG, $maxIds = 50000, $fullText = true)
 {
-    $query = trim((string)$query);
+    $query = trim(polimerNormalizeSearchQueryEncoding($query));
     if ($query === '')
         return [];
 
@@ -1535,10 +1568,7 @@ function polimerSearchCatalogAllIds($query, $iblockId = IBLOCK_CATALOG, $maxIds 
         if (count($allIds) >= $maxIds)
             break;
 
-        $tokens = preg_split('/[\s,]+/u', trim($searchQuery), -1, PREG_SPLIT_NO_EMPTY);
-        $tokens = array_values(array_filter($tokens, static function ($token) {
-            return mb_strlen($token) >= 2;
-        }));
+        $tokens = polimerSplitSearchTokens($searchQuery, 2);
 
         if (empty($tokens))
             continue;
@@ -1658,15 +1688,12 @@ function polimerEnhanceSearchPageResult(array &$arResult, array $arParams)
 
 function polimerSearchCatalogSections($query, $iblockId = IBLOCK_CATALOG, $maxSections = 500)
 {
-    $query = trim((string)$query);
+    $query = trim(polimerNormalizeSearchQueryEncoding($query));
     if ($query === '' || !CModule::IncludeModule('iblock'))
         return [];
 
     $maxSections = max(1, (int)$maxSections);
-    $origTokens = preg_split('/[\s,]+/u', $query, -1, PREG_SPLIT_NO_EMPTY);
-    $origTokens = array_values(array_filter($origTokens, static function ($token) {
-        return mb_strlen($token) >= 2;
-    }));
+    $origTokens = polimerSplitSearchTokens($query, 2);
 
     if (empty($origTokens))
         return [];
@@ -1680,10 +1707,7 @@ function polimerSearchCatalogSections($query, $iblockId = IBLOCK_CATALOG, $maxSe
         if (count($found) >= $maxSections)
             break;
 
-        $tokens = preg_split('/[\s,]+/u', trim($searchQuery), -1, PREG_SPLIT_NO_EMPTY);
-        $tokens = array_values(array_filter($tokens, static function ($token) {
-            return mb_strlen($token) >= 2;
-        }));
+        $tokens = polimerSplitSearchTokens($searchQuery, 2);
 
         if (empty($tokens))
             continue;

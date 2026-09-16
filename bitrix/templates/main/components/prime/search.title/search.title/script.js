@@ -598,15 +598,18 @@ function PolimerTitleSearch(arParams)
 				if (_this.cache[_this.cache_key] == null)
 				{
 					_this.setSearchLoading(true);
-					BX.ajax.post(
-						_this.arParams.AJAX_PAGE,
-						{
+					BX.ajax({
+						method: 'POST',
+						dataType: 'html',
+						url: _this.arParams.AJAX_PAGE,
+						timeout: 20,
+						data: BX.ajax.prepareData({
 							'ajax_call': 'y',
 							'INPUT_ID': _this.arParams.INPUT_ID,
 							'q': _this.INPUT.value,
 							'l': _this.arParams.MIN_QUERY_LEN
-						},
-						function(result)
+						}),
+						onsuccess: function(result)
 						{
 							if (requestId !== _this.searchRequestId)
 								return;
@@ -622,8 +625,21 @@ function PolimerTitleSearch(arParams)
 								_this.runningCall = false;
 								_this.onChange();
 							}
+						},
+						onfailure: function()
+						{
+							if (requestId !== _this.searchRequestId)
+								return;
+
+							_this.setSearchLoading(false);
+							_this.running = false;
+							if (_this.runningCall)
+							{
+								_this.runningCall = false;
+								_this.onChange();
+							}
 						}
-					);
+					});
 					return;
 				}
 
