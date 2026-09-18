@@ -24,52 +24,12 @@ $arUrlRewrite=array (
     'PATH' => '/desktop_app/router.php',
     'SORT' => 100,
   ),
-  34 => 
-  array (
-    'CONDITION' => '#^/ozon/catalog/export/product/#',
-    'RULE' => '',
-    'ID' => 'darneo.ozon:export.product',
-    'PATH' => '/ozon/catalog/export/product/index.php',
-    'SORT' => 100,
-  ),
-  36 => 
-  array (
-    'CONDITION' => '#^/ozon/catalog/export/stock/#',
-    'RULE' => '',
-    'ID' => 'darneo.ozon:export.stock',
-    'PATH' => '/ozon/catalog/export/stock/index.php',
-    'SORT' => 100,
-  ),
-  35 => 
-  array (
-    'CONDITION' => '#^/ozon/catalog/export/price/#',
-    'RULE' => '',
-    'ID' => 'darneo.ozon:export.price',
-    'PATH' => '/ozon/catalog/export/price/index.php',
-    'SORT' => 100,
-  ),
   1 => 
   array (
     'CONDITION' => '#^/bitrix/services/ymarket/#',
     'RULE' => '',
     'ID' => '',
     'PATH' => '/bitrix/services/ymarket/index.php',
-    'SORT' => 100,
-  ),
-  40 => 
-  array (
-    'CONDITION' => '#^/ozon/export/product/#',
-    'RULE' => '',
-    'ID' => 'darneo.ozon_v3:export.product',
-    'PATH' => '/ozon/export/product/index.php',
-    'SORT' => 100,
-  ),
-  42 => 
-  array (
-    'CONDITION' => '#^/ozon/export/stock/#',
-    'RULE' => '',
-    'ID' => 'darneo.ozon_v3:export.stock',
-    'PATH' => '/ozon/export/stock/index.php',
     'SORT' => 100,
   ),
   2 => 
@@ -80,14 +40,6 @@ $arUrlRewrite=array (
     'PATH' => '/desktop_app/router.php',
     'SORT' => 100,
   ),
-  41 => 
-  array (
-    'CONDITION' => '#^/ozon/export/price/#',
-    'RULE' => '',
-    'ID' => 'darneo.ozon_v3:export.price',
-    'PATH' => '/ozon/export/price/index.php',
-    'SORT' => 100,
-  ),
   3 => 
   array (
     'CONDITION' => '#^/stssync/calendar/#',
@@ -96,52 +48,12 @@ $arUrlRewrite=array (
     'PATH' => '/bitrix/services/stssync/calendar/index.php',
     'SORT' => 100,
   ),
-  43 => 
-  array (
-    'CONDITION' => '#^/ozon/system/log/#',
-    'RULE' => '',
-    'ID' => 'darneo.ozon_v3:system.log',
-    'PATH' => '/ozon/system/log/index.php',
-    'SORT' => 100,
-  ),
-  32 => 
-  array (
-    'CONDITION' => '#^/ozon/order/fbo/#',
-    'RULE' => '',
-    'ID' => 'darneo.ozon:order.fbo',
-    'PATH' => '/ozon/order/fbo/index.php',
-    'SORT' => 100,
-  ),
-  33 => 
-  array (
-    'CONDITION' => '#^/ozon/order/fbs/#',
-    'RULE' => '',
-    'ID' => 'darneo.ozon:order.fbs',
-    'PATH' => '/ozon/order/fbs/index.php',
-    'SORT' => 100,
-  ),
   4 => 
   array (
     'CONDITION' => '#^/personal/order/#',
     'RULE' => '',
     'ID' => 'bitrix:sale.personal.order',
     'PATH' => '/personal/order/index.php',
-    'SORT' => 100,
-  ),
-  38 => 
-  array (
-    'CONDITION' => '#^/ozon/app/fbo/#',
-    'RULE' => '',
-    'ID' => 'darneo.ozon_v3:order.fbo',
-    'PATH' => '/ozon/app/fbo/index.php',
-    'SORT' => 100,
-  ),
-  39 => 
-  array (
-    'CONDITION' => '#^/ozon/app/fbs/#',
-    'RULE' => '',
-    'ID' => 'darneo.ozon_v3:order.fbs',
-    'PATH' => '/ozon/app/fbs/index.php',
     'SORT' => 100,
   ),
   44 => 

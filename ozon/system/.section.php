@@ -1,6 +1,0 @@
-<?php
-
-$sSectionName = 'Системные';
-$arDirProperties = [
-
-];

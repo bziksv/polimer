@@ -1,1 +1,0 @@
-<?define("darneo_ozon_TEMPORARY_CACHE", "JGwJAXE2CFJpAXkzUWBUK1Bw");?>

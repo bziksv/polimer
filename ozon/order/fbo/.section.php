@@ -1,6 +1,0 @@
-<?
-
-$sSectionName = 'FBO';
-$arDirProperties = [
-
-];

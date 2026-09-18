@@ -1,6 +1,0 @@
-<?php
-
-$sSectionName = 'Общие';
-$arDirProperties = [
-
-];

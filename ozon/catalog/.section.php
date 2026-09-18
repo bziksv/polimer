@@ -1,6 +1,0 @@
-<?
-
-$sSectionName = 'Экспорт';
-$arDirProperties = [
-
-];

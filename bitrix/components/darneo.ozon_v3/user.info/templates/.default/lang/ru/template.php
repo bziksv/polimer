@@ -1,3 +1,0 @@
-<?php
-
-$MESS['DARNEO_OZON_TEMPLATE_HEADER_LOGOUT'] = 'Выйти';

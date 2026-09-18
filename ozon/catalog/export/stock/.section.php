@@ -1,6 +1,0 @@
-<?
-
-$sSectionName = 'Обновление остатков';
-$arDirProperties = [
-
-];

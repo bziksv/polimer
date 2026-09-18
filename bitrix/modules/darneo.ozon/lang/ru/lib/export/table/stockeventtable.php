@@ -1,3 +1,0 @@
-<?php
-
-$MESS['DARNEO_OZON_EXPORT_TABLE_STOCK_EVENT_ELEMENT_ID'] = 'Элемент';

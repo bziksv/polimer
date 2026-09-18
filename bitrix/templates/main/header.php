@@ -29,6 +29,80 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 		<?
 		$APPLICATION->ShowHead();
 
+		if (!function_exists('polimerHeadSocialMeta'))
+		{
+			function polimerHeadSocialMeta()
+			{
+				global $APPLICATION;
+				if (defined('ERROR_404') && ERROR_404 === 'Y')
+				{
+					return '';
+				}
+
+				$origin = 'https://polimer-vrn.ru';
+				$path = (string)$APPLICATION->GetCurPage(false);
+				if ($path === '')
+				{
+					$path = '/';
+				}
+				$url = $origin . $path;
+				$logo = $origin . SITE_TEMPLATE_PATH . '/img/logo_svg.svg';
+
+				$title = trim((string)$APPLICATION->GetProperty('title'));
+				if ($title === '')
+				{
+					$title = trim((string)$APPLICATION->GetTitle(false));
+				}
+				if ($title === '')
+				{
+					$title = 'Интернет-магазин инженерной сантехники и строительных материалов c доставкой — «Полимер»';
+				}
+
+				$desc = trim((string)$APPLICATION->GetProperty('description'));
+				if ($desc === '')
+				{
+					$desc = 'Инженерная сантехника и строительные материалы в интернет-магазине кампании ООО «Полимер»';
+				}
+
+				$schema = [
+					'@context' => 'https://schema.org',
+					'@graph' => [
+						[
+							'@type' => 'Organization',
+							'name' => 'ООО «Полимер»',
+							'url' => $origin . '/',
+							'logo' => $logo,
+						],
+						[
+							'@type' => 'WebSite',
+							'name' => 'Полимер',
+							'url' => $origin . '/',
+							'publisher' => [
+								'@type' => 'Organization',
+								'name' => 'ООО «Полимер»',
+							],
+						],
+					],
+				];
+
+				$html = '';
+				if (trim((string)$APPLICATION->GetProperty('canonical')) === '')
+				{
+					$html .= '<link rel="canonical" href="' . htmlspecialcharsbx($url) . "\" />\n";
+				}
+				$html .= '<meta property="og:type" content="website" />' . "\n";
+				$html .= '<meta property="og:site_name" content="Полимер" />' . "\n";
+				$html .= '<meta property="og:url" content="' . htmlspecialcharsbx($url) . "\" />\n";
+				$html .= '<meta property="og:title" content="' . htmlspecialcharsbx($title) . "\" />\n";
+				$html .= '<meta property="og:description" content="' . htmlspecialcharsbx($desc) . "\" />\n";
+				$html .= '<meta property="og:image" content="' . htmlspecialcharsbx($logo) . "\" />\n";
+				$html .= '<script type="application/ld+json">' . json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "</script>\n";
+
+				return $html;
+			}
+		}
+		$APPLICATION->AddBufferContent('polimerHeadSocialMeta');
+
 
 		Asset::getInstance()->addString('<link rel="icon" href="https://polimer-vrn.ru/favicon.ico" type="image/x-icon">');
 		Asset::getInstance()->addString('<link rel="shortcut icon" href="https://polimer-vrn.ru/favicon.svg" type="image/svg+xml">');

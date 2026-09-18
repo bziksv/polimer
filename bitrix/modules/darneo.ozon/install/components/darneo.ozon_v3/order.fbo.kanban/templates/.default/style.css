@@ -1,9 +1,0 @@
-.kanban-title-board span {
-    display: flex;
-    justify-content: space-between;
-}
-
-.kanban-item .media-body {
-    font-size: 13px;
-    color: #999;
-}

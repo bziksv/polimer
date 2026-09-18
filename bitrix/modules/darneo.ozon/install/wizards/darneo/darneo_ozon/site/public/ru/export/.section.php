@@ -1,6 +1,0 @@
-<?php
-
-$sSectionName = 'Выгрузка';
-$arDirProperties = [
-
-];

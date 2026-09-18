@@ -1,6 +1,0 @@
-<?
-
-$sSectionName = 'FBS';
-$arDirProperties = [
-
-];

@@ -122,6 +122,8 @@ Disallow: /catalog/ventilyatory/98/
 ################################
 Disallow: /news/
 ################################
+Disallow: /ozon/
+Disallow: /catalog/detail.php
 Disallow: /catalog/root.php
 Disallow: /kredit.php
 Disallow: /detail.php
