@@ -161,6 +161,53 @@ if (!empty($arResult['ITEMS']))
 				
 				<? endforeach; ?>
 
+				<?
+				$polimerList = [];
+				$polimerPos = 1;
+				foreach ($arResult['ITEMS'] as $polimerItem) {
+					$polimerUrl = polimerAbsoluteUrl($polimerItem['DETAIL_PAGE_URL'] ?? '');
+					if ($polimerUrl === '' || empty($polimerItem['NAME'])) {
+						continue;
+					}
+					$polimerListItem = [
+						'@type' => 'ListItem',
+						'position' => $polimerPos,
+						'url' => $polimerUrl,
+						'name' => $polimerItem['NAME'],
+					];
+					$polimerPict = $polimerItem['PREVIEW_PICTURE'] ?? '';
+					$polimerPictSrc = is_array($polimerPict) ? ($polimerPict['SRC'] ?? '') : $polimerPict;
+					$polimerPictSrc = polimerAbsoluteUrl($polimerPictSrc);
+					$polimerProductNode = [
+						'@type' => 'Product',
+						'name' => $polimerItem['NAME'],
+						'url' => $polimerUrl,
+					];
+					if ($polimerPictSrc !== '') {
+						$polimerProductNode['image'] = $polimerPictSrc;
+					}
+					$polimerListPrice = $polimerItem['ITEM_PRICES'][$polimerItem['ITEM_PRICE_SELECTED'] ?? 0] ?? null;
+					$polimerListOffer = polimerSchemaOffer($polimerListPrice, $polimerItem['CATALOG_QUANTITY'] ?? 0, $polimerUrl);
+					if ($polimerListOffer) {
+						$polimerProductNode['offers'] = $polimerListOffer;
+					}
+					$polimerListItem['item'] = $polimerProductNode;
+					$polimerList[] = $polimerListItem;
+					$polimerPos++;
+				}
+				if ($polimerList) {
+					$polimerItemList = [
+						'@context' => 'https://schema.org',
+						'@type' => 'ItemList',
+						'name' => $arResult['NAME'] ?: 'Каталог',
+						'itemListElement' => $polimerList,
+					];
+					?>
+					<script type="application/ld+json"><?=json_encode($polimerItemList, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)?></script>
+					<?
+				}
+				?>
+
 			</div>
 
 			<div class="pr_footer cl">

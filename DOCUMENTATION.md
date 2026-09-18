@@ -398,7 +398,7 @@ tail -f bitrix/cache/polimer/catalog_image_audit_build.log
 
 ## 13. SEO (2026-09-19)
 
-- На всех страницах шаблона (не только главная): canonical на `https://polimer-vrn.ru`, Open Graph и Schema.org Organization + WebSite. На главной по-прежнему видимый H1 «Компания ООО «Полимер»».
+- На всех страницах шаблона: canonical на `https://polimer-vrn.ru`, Open Graph и Schema.org `OnlineStore` + `WebSite` (поиск по сайту). На карточке товара — `Product` с ценой, наличием и фото; в разделе каталога — `ItemList`. На главной по-прежнему видимый H1 «Компания ООО «Полимер»».
 - `robots.txt`: `Disallow: /ozon/` и `Disallow: /catalog/detail.php`. `/catalog/detail.php` — 301 на `/catalog/`. `/about/`, `*.pdf`, `*.xls` не менялись.
 - Модуль `darneo.ozon` удалён (2026-09-19): снят с prod и remote-dev, таблицы `darneo_ozon_*` дропнуты, cron выгрузок снят. Публичная папка `/ozon/`, компоненты и шаблон уходят вместе с кодом.
 - Карта сайта: в настройках SEO-модуля каталоги `/ozon/` и `/ordercheck/` и файл `/catalog/detail.php` исключены; текущий `sitemap-files.xml` на проде почищен.

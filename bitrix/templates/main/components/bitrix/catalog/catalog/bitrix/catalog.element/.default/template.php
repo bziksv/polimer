@@ -33,7 +33,69 @@ $PRINT_PRICE = Loc::getMessage(
 );
 
 $inCompare = inCompare($arResult['IBLOCK_ID'], $arResult['ID']);
+
+$polimerProductUrl = polimerAbsoluteUrl($arResult['DETAIL_PAGE_URL'] ?? '');
+$polimerImages = [];
+foreach ((array)($arResult['GALLERY'] ?? []) as $polimerImg) {
+	$polimerSrc = polimerAbsoluteUrl($polimerImg['SRC'] ?? '');
+	if ($polimerSrc !== '' && !in_array($polimerSrc, $polimerImages, true)) {
+		$polimerImages[] = $polimerSrc;
+	}
+}
+$polimerImages = array_slice($polimerImages, 0, 5);
+if ($polimerImages) {
+	$APPLICATION->SetPageProperty('og_image', $polimerImages[0]);
+}
+$APPLICATION->SetPageProperty('og_type', 'product');
+
+$polimerDesc = trim(preg_replace('/\s+/u', ' ', html_entity_decode(strip_tags((string)($arResult['DETAIL_TEXT'] ?: $arResult['PREVIEW_TEXT'])), ENT_QUOTES, 'UTF-8')));
+if ($polimerDesc !== '') {
+	$polimerDesc = mb_substr($polimerDesc, 0, 500);
+}
+$polimerSku = '';
+$polimerTraits = $arResult['PROPERTIES']['CML2_TRAITS']['VALUE'] ?? null;
+if (is_array($polimerTraits) && !empty($polimerTraits[2])) {
+	$polimerSku = trim((string)$polimerTraits[2]);
+} elseif (!empty($arResult['PROPERTIES']['CML2_ARTICLE']['VALUE'])) {
+	$polimerSku = trim((string)$arResult['PROPERTIES']['CML2_ARTICLE']['VALUE']);
+}
+$polimerProduct = [
+	'@context' => 'https://schema.org',
+	'@type' => 'Product',
+	'name' => $arResult['NAME'],
+	'url' => $polimerProductUrl,
+];
+if ($polimerImages) {
+	$polimerProduct['image'] = $polimerImages;
+}
+if ($polimerDesc !== '') {
+	$polimerProduct['description'] = $polimerDesc;
+}
+if ($polimerSku !== '') {
+	$polimerProduct['sku'] = $polimerSku;
+}
+$polimerBrandRaw = $arResult['PROPERTIES']['PROIZVODITEL']['VALUE'] ?? '';
+if (is_array($polimerBrandRaw)) {
+	$polimerBrandRaw = reset($polimerBrandRaw);
+}
+$polimerBrand = trim((string)$polimerBrandRaw);
+if ($polimerBrand !== '') {
+	$polimerProduct['brand'] = ['@type' => 'Brand', 'name' => $polimerBrand];
+}
+if (!empty($arResult['RATING']['COUNT']) && !empty($arResult['RATING']['STARS'])) {
+	$polimerProduct['aggregateRating'] = [
+		'@type' => 'AggregateRating',
+		'ratingValue' => (string)$arResult['RATING']['STARS'],
+		'reviewCount' => (int)$arResult['RATING']['COUNT'],
+		'bestRating' => 5,
+	];
+}
+$polimerOffer = polimerSchemaOffer($price, $arResult['CATALOG_QUANTITY'] ?? 0, $polimerProductUrl);
+if ($polimerOffer) {
+	$polimerProduct['offers'] = $polimerOffer;
+}
 ?>
+<script type="application/ld+json"><?=json_encode($polimerProduct, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)?></script>
 <script type="text/javascript">
     var viewedCounter = {
         path: '/bitrix/components/bitrix/catalog.element/ajax.php',

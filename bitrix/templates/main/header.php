@@ -29,6 +29,61 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 		<?
 		$APPLICATION->ShowHead();
 
+		if (!function_exists('polimerAbsoluteUrl'))
+		{
+			function polimerAbsoluteUrl($path)
+			{
+				$path = trim((string)$path);
+				if ($path === '')
+				{
+					return '';
+				}
+				if (preg_match('#^https?://#i', $path))
+				{
+					return $path;
+				}
+				if ($path[0] !== '/')
+				{
+					$path = '/' . $path;
+				}
+				return 'https://polimer-vrn.ru' . $path;
+			}
+
+			function polimerSchemaOffer($price, $qty, $url)
+			{
+				if (!is_array($price))
+				{
+					return null;
+				}
+				$amount = (float)($price['PRICE'] ?? 0);
+				if ($amount <= 0)
+				{
+					return null;
+				}
+				$base = (float)($price['BASE_PRICE'] ?? $amount);
+				$currency = trim((string)($price['CURRENCY'] ?? ''));
+				if ($currency === '')
+				{
+					$currency = 'RUB';
+				}
+				$inStock = (float)$qty > 0 && $base > 0;
+
+				return [
+					'@type' => 'Offer',
+					'url' => $url,
+					'priceCurrency' => $currency,
+					'price' => number_format($amount, 2, '.', ''),
+					'availability' => $inStock ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder',
+					'itemCondition' => 'https://schema.org/NewCondition',
+					'seller' => [
+						'@type' => 'OnlineStore',
+						'name' => 'ООО «Полимер»',
+						'url' => 'https://polimer-vrn.ru/',
+					],
+				];
+			}
+		}
+
 		if (!function_exists('polimerHeadSocialMeta'))
 		{
 			function polimerHeadSocialMeta()
@@ -68,34 +123,62 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 					'@context' => 'https://schema.org',
 					'@graph' => [
 						[
-							'@type' => 'Organization',
+							'@type' => 'OnlineStore',
 							'name' => 'ООО «Полимер»',
 							'url' => $origin . '/',
 							'logo' => $logo,
+							'image' => $logo,
+							'telephone' => '+7-473-250-22-33',
+							'address' => [
+								'@type' => 'PostalAddress',
+								'streetAddress' => 'Ильюшина, д. 10Б',
+								'addressLocality' => 'Воронеж',
+								'addressCountry' => 'RU',
+							],
+							'sameAs' => [
+								'https://t.me/POLIMER36',
+								'https://vk.com/polimer36',
+							],
 						],
 						[
 							'@type' => 'WebSite',
 							'name' => 'Полимер',
 							'url' => $origin . '/',
 							'publisher' => [
-								'@type' => 'Organization',
+								'@type' => 'OnlineStore',
 								'name' => 'ООО «Полимер»',
+							],
+							'potentialAction' => [
+								'@type' => 'SearchAction',
+								'target' => $origin . '/search/?q={search_term_string}',
+								'query-input' => 'required name=search_term_string',
 							],
 						],
 					],
 				];
+
+				$ogType = trim((string)$APPLICATION->GetProperty('og_type'));
+				if ($ogType === '')
+				{
+					$ogType = 'website';
+				}
+				$ogImage = trim((string)$APPLICATION->GetProperty('og_image'));
+				if ($ogImage === '')
+				{
+					$ogImage = $logo;
+				}
 
 				$html = '';
 				if (trim((string)$APPLICATION->GetProperty('canonical')) === '')
 				{
 					$html .= '<link rel="canonical" href="' . htmlspecialcharsbx($url) . "\" />\n";
 				}
-				$html .= '<meta property="og:type" content="website" />' . "\n";
+				$html .= '<meta property="og:type" content="' . htmlspecialcharsbx($ogType) . "\" />\n";
 				$html .= '<meta property="og:site_name" content="Полимер" />' . "\n";
 				$html .= '<meta property="og:url" content="' . htmlspecialcharsbx($url) . "\" />\n";
 				$html .= '<meta property="og:title" content="' . htmlspecialcharsbx($title) . "\" />\n";
 				$html .= '<meta property="og:description" content="' . htmlspecialcharsbx($desc) . "\" />\n";
-				$html .= '<meta property="og:image" content="' . htmlspecialcharsbx($logo) . "\" />\n";
+				$html .= '<meta property="og:image" content="' . htmlspecialcharsbx($ogImage) . "\" />\n";
 				$html .= '<script type="application/ld+json">' . json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "</script>\n";
 
 				return $html;
