@@ -172,7 +172,7 @@ foreach ($rootSections as $section) {
 				aria-label="<?=htmlspecialcharsbx($section['NAME'])?>">
 				<div class="catalog-menu-v6__panel-head">
 					<div>
-						<h3 class="catalog-menu-v6__panel-title"><?=htmlspecialcharsbx($section['NAME'])?></h3>
+						<div class="catalog-menu-v6__panel-title"><?=htmlspecialcharsbx($section['NAME'])?></div>
 						<? if (!empty($section['ELEMENT_CNT'])): ?>
 						<p class="catalog-menu-v6__panel-meta"><?=catalogMenuV6FormatCount($section['ELEMENT_CNT'])?> позиций в разделе</p>
 						<? endif; ?>

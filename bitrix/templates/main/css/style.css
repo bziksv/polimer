@@ -1258,6 +1258,11 @@ header .header__bottom .header__cart:hover .cart__number {
   text-align: left;
   padding: 36px 30px 0 0;
 }
+.mp__banners .mp__slider .item .slider__content .slider__title {
+  margin: 0 0 16px;
+  font: 500 1.5em/1.25 'Fira Sans', sans-serif;
+  color: #333;
+}
 .mp__banners .mp__slider .item .slider__content img {
   margin: 0 0 40px 0;
 }

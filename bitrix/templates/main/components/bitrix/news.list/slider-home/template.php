@@ -20,7 +20,7 @@ $this->setFrameMode(true);
 				<img src="<?=resizeImage($arItem["PREVIEW_PICTURE"]["ID"], 380, 380)?>" alt="<?=$arItem['NAME']?>">
 			</div>
 			<div class="slider__content">
-					<h2><?=$arItem['NAME']?></h2>
+					<div class="slider__title"><?=$arItem['NAME']?></div>
 <!--				<img src="--><?//=$arItem["DETAIL_PICTURE"]["SRC"]?><!--" width="161" height="37" alt="--><?//=$arItem["PREVIEW_PICTURE"]["ALT"]?><!--" class="slider__img">-->
 				<div class="slider__text">
 					<?if($arParams["DISPLAY_PREVIEW_TEXT"]!="N" && $arItem["PREVIEW_TEXT"]):?>

@@ -17,7 +17,7 @@ $GLOBALS['filter_brand'] = array('NAME' => trim($_REQUEST['q']));
 ?>
 
 <div class="row">
-    <div class="h1">Каталог брендов</div>
+    <h1 class="h1">Каталог брендов</h1>
     <?if($arParams["USE_SEARCH"]=="Y"):?>
         <?$APPLICATION->IncludeComponent("bitrix:search.title", "search.title.brand", Array(
             "CATEGORY_0" => array(	// Ограничение области поиска

@@ -11,6 +11,7 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
  */
 $errorFields = array_fill_keys($arResult['ERROR_FIELDS'] ?? [], true);
 ?>
+<h1 class="h1"><?=$APPLICATION->GetTitle(false)?></h1>
 <form class="ym-goal-calc js-polimer-consent-form" action="<?=POST_FORM_ACTION_URI?>" method="POST" enctype="multipart/form-data" novalidate>
 <?=bitrix_sessid_post()?>
 

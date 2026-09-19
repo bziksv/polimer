@@ -41,9 +41,9 @@ $this->addExternalCss($templateFolder.'/style.css');
 			</a>
 
 			<div class="sale-page__body">
-				<h2 class="sale-page__title">
+				<div class="sale-page__title">
 					<a href="<?=$arItem["DETAIL_PAGE_URL"]?>"><?=$arItem["NAME"]?></a>
-				</h2>
+				</div>
 
 				<?if($arParams["DISPLAY_PREVIEW_TEXT"] != "N" && $arItem["PREVIEW_TEXT"]):?>
 				<p class="sale-page__excerpt"><?=TruncateText(strip_tags($arItem["PREVIEW_TEXT"]), 120)?></p>

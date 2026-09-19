@@ -19,7 +19,7 @@ $this->setFrameMode(true);
         <? if(is_array($arResult['FILTER_LITTER']['int'])):?>
             <ul class="letter-list">
                 <? foreach ($arResult['FILTER_LITTER']['int'] as $key):?>
-                    <li class="letter-item"><a href=#letter_<?=$key?>""><?=$key;?></a></li>
+                    <li class="letter-item"><a href="#letter_<?=htmlspecialcharsbx($key)?>"><?=htmlspecialcharsbx($key);?></a></li>
                 <?endforeach;?>
             </ul>
         <?endif;?>
@@ -27,7 +27,7 @@ $this->setFrameMode(true);
         <?if(count($arResult['FILTER_LITTER']['str_eng'])):?>
             <ul class="letter-list">
                 <? foreach ($arResult['FILTER_LITTER']['str_eng'] as $key):?>
-                    <li class="letter-item"><a href="#letter_<?=$key?>"><?=$key;?></a></li>
+                    <li class="letter-item"><a href="#letter_<?=htmlspecialcharsbx($key)?>"><?=htmlspecialcharsbx($key);?></a></li>
                 <?endforeach;?>
             </ul>
         <?endif;?>
@@ -35,7 +35,7 @@ $this->setFrameMode(true);
         <?if(count($arResult['FILTER_LITTER']['str_rus'])):?>
             <ul class="letter-list">
                 <? foreach ($arResult['FILTER_LITTER']['str_rus'] as $key):?>
-                    <li class="letter-item"><a href="#letter_<?=$key?>"><?=$key;?></a></li>
+                    <li class="letter-item"><a href="#letter_<?=htmlspecialcharsbx($key)?>"><?=htmlspecialcharsbx($key);?></a></li>
                 <?endforeach;?>
             </ul>
         <?endif;?>

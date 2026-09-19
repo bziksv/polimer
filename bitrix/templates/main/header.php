@@ -279,9 +279,12 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 <meta name="yandex-verification" content="2094627454c95762" />
 <meta name="yandex-verification" content="f47bc301df09d1f5" />
 
+	</head>
+   	<body>
+   		<?$APPLICATION->ShowPanel()?>
 
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
+<!-- Yandex.Metrika counter: в body — <noscript><div> в <head> ломает разметку на всех страницах -->
+<script type="text/javascript">
    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
    m[i].l=1*new Date();
    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
@@ -302,13 +305,6 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 <script type="text/javascript">window._ab_id_=164570</script>
 <script src="https://cdn.botfaqtor.ru/one.js"></script>
 
-	</head>
-   	<body>
-   		<?$APPLICATION->ShowPanel()?>
-		<!-- [if lt IE 10]>
-			<p class="browsehappy"> Ваш браузер <strong>устарел</strong>.
-			Пожалуйста <a href="http://browsehappy.com/">обновите</a> его.</p>
-		<![endif]-->
       	<div class="container">
 			<header>
 				<div class="hmobile">

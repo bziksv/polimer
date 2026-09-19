@@ -16,6 +16,7 @@ $this->setFrameMode(true);
 
 ?>
 
+<h1 class="h1"><?$APPLICATION->ShowTitle(false)?></h1>
 
 <?
 $sectionId = $APPLICATION->IncludeComponent(
