@@ -1,6 +1,8 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Авторизация");
+// Template does not show PERSONAL_PHOTO; keep ImgShw out of the buffer (VK users get a photo).
+CFile::DisableJSFunction(true);
 ?>
 
 <?$APPLICATION->IncludeComponent(
@@ -9,7 +11,7 @@ $APPLICATION->SetTitle("Авторизация");
     array(
         "USER_PROPERTY_NAME" => "",
         "SET_TITLE" => "Y",
-        "AJAX_MODE" => "Y",
+        "AJAX_MODE" => "N",
         "USER_PROPERTY" => array(
         ),
         "SEND_INFO" => "N",

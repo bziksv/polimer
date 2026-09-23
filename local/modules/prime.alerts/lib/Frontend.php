@@ -120,6 +120,12 @@ class Frontend
 			}
 		}
 
-		$content = preg_replace('/<\/body>/i', $inject . '</body>', $content, 1);
+		// Last </body> only — ImgShw and similar JS embed the literal "</body>" in a string;
+		// replacing the first match splits the <script> and leaks JS onto the page.
+		$pos = strripos($content, '</body>');
+		if ($pos === false) {
+			return;
+		}
+		$content = substr($content, 0, $pos) . $inject . substr($content, $pos);
 	}
 }
