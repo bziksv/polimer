@@ -45,7 +45,19 @@
 					'X-Requested-With': 'XMLHttpRequest'
 				},
 				body: body
-			}).catch(function () {});
+			}).then(function (res) {
+				if (!res.ok) {
+					throw new Error('snooze ' + res.status);
+				}
+				return res.json().catch(function () {
+					return { ok: false };
+				});
+			}).then(function (data) {
+				if (!data || !data.ok) {
+					throw new Error('snooze rejected');
+				}
+				return data;
+			});
 		}
 
 		function closeModal() {
@@ -60,6 +72,10 @@
 			}
 			postSnooze().then(function () {
 				closeModal();
+			}).catch(function () {
+				if (btn) {
+					btn.disabled = false;
+				}
 			});
 		}
 

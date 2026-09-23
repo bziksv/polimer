@@ -17,11 +17,17 @@ class ProfileBanner
 			return false;
 		}
 
-		if (self::isPersonalPath()) {
-			return true;
+		// Уже на форме профиля — модалка мешает заполнять почту/телефон.
+		if (self::isProfileEditPath()) {
+			return false;
 		}
 
-		return !self::isSnoozed();
+		// «Отложить» должно работать и в ЛК, не только на витрине.
+		if (self::isSnoozed()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected static function isBannerEnabled(): bool
