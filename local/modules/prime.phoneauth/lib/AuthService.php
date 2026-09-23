@@ -82,7 +82,67 @@ class AuthService
 	{
 		return 'Этот номер уже есть в других аккаунтах. '
 			. 'Если это вы — войдите по логину и паролю и подтвердите телефон в профиле. '
-			. 'Если доступа к старым ящикам нет — можно завести новый аккаунт и жёстко подтвердить номер звонком с этого телефона, или подтвердить текущий, если вы уже вошли.';
+			. 'Если доступа к почте нет — подтвердите номер звонком с этого телефона: '
+			. 'после этого сможете входить в кабинет по телефону (к этому же ящику), без пароля.';
+	}
+
+	/** Короткая подсказка под списком ящиков в модалке. */
+	public static function duplicateHint(): string
+	{
+		return 'Нет доступа к почте? Подтвердите номер звонком с этого телефона — '
+			. 'номер закрепится за вами, и дальше можно авторизоваться по телефону '
+			. 'в аккаунт с этим ящиком.';
+	}
+
+	public static function maskEmail(string $value): string
+	{
+		$value = trim($value);
+		if ($value === '') {
+			return '';
+		}
+		if (strpos($value, '*') !== false) {
+			return $value;
+		}
+
+		$strlen = static function (string $s): int {
+			return function_exists('mb_strlen') ? (int)mb_strlen($s) : strlen($s);
+		};
+		$substr = static function (string $s, int $start, ?int $len = null): string {
+			if (function_exists('mb_substr')) {
+				return $len === null ? (string)mb_substr($s, $start) : (string)mb_substr($s, $start, $len);
+			}
+
+			return $len === null ? substr($s, $start) : substr($s, $start, $len);
+		};
+		$maskPart = static function (string $part, int $keep) use ($strlen, $substr): string {
+			$len = $strlen($part);
+			if ($len <= 0) {
+				return '****';
+			}
+			if ($len === 1) {
+				return $part . '****';
+			}
+			$keep = max(1, min($keep, $len - 1));
+
+			return $substr($part, 0, $keep) . '****';
+		};
+
+		$at = strrpos($value, '@');
+		if ($at === false) {
+			return $maskPart($value, 4);
+		}
+
+		$local = substr($value, 0, $at);
+		$domain = substr($value, $at + 1);
+		$dot = strrpos($domain, '.');
+		if ($dot === false) {
+			return $maskPart($local, 4) . '@' . $maskPart($domain, 2);
+		}
+
+		$name = substr($domain, 0, $dot);
+		$tld = substr($domain, $dot);
+
+		return $maskPart($local, 4) . '@' . $maskPart($name, 2) . $tld;
 	}
 
 	/**
@@ -105,7 +165,7 @@ class AuthService
 				continue;
 			}
 			$seen[$key] = true;
-			$emails[] = $label;
+			$emails[] = self::maskEmail($label);
 		}
 		natcasesort($emails);
 

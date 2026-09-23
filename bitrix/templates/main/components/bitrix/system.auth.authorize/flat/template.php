@@ -13,7 +13,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
 
 //one css for all system.auth.* forms
 $APPLICATION->SetAdditionalCSS("/bitrix/css/main/system.auth/flat/style.css");
-$APPLICATION->SetAdditionalCSS('/local/modules/prime.phoneauth/assets/auth.css?v=1.2.4');
+$APPLICATION->SetAdditionalCSS('/local/modules/prime.phoneauth/assets/auth.css?v=1.3.1');
 $phoneAuthModule = \Bitrix\Main\Loader::includeModule('prime.phoneauth');
 $phoneAuthOn = $phoneAuthModule && \Prime\PhoneAuth\Config::isEnabled();
 $authTabsCount = 2 + ($phoneAuthOn ? 1 : 0);
@@ -182,10 +182,7 @@ document.getElementById('bx_auth_secure').style.display = '';
 <? endif; ?>
 
 <div class="prime-phoneauth-panel" data-panel="social">
-	<div class="prime-auth-social prime-auth-social--dev">
-		<div class="prime-auth-social__head">
-			<span class="prime-auth-social__badge">В разработке</span>
-		</div>
+	<div class="prime-auth-social">
 		<div class="prime-auth-social__icons">
 <?if($arResult["AUTH_SERVICES"]):?>
 <?
@@ -201,15 +198,9 @@ $APPLICATION->IncludeComponent("bitrix:socserv.auth.form",
 );
 ?>
 <?else:?>
-			<div class="prime-auth-social__fallback">
-				<span class="prime-auth-social__fallback-icon vk" title="ВКонтакте — в разработке"></span>
-				<span class="prime-auth-social__fallback-icon ok" title="Одноклассники — в разработке"></span>
-				<span class="prime-auth-social__fallback-icon go" title="Google — в разработке"></span>
-				<span class="prime-auth-social__fallback-icon fb" title="Facebook — в разработке"></span>
-			</div>
+			<p class="prime-auth-social__note">Вход через соцсети пока недоступен.</p>
 <?endif?>
 		</div>
-		<p class="prime-auth-social__note">Скоро можно будет войти через ВКонтакте и другие сервисы.</p>
 	</div>
 </div>
 </div>

@@ -683,4 +683,39 @@ else
 		</script>
 		<?
 	}
+
+	// Модалка дубликата телефона на оформлении — грузим явно (не только через EndBufferContent)
+	if (\Bitrix\Main\Loader::includeModule('prime.phoneauth'))
+	{
+		$paEnabled = \Prime\PhoneAuth\Config::isEnabled();
+		$paCall = \Prime\PhoneAuth\Config::isCallAuthEnabled();
+		$paCfg = [
+			'enabled' => $paEnabled,
+			'callAuth' => $paCall,
+			'lookupOnly' => !$paEnabled || !$paCall,
+			'sessid' => bitrix_sessid(),
+			'startUrl' => '/ajax/phoneauth.php?action=start',
+			'lookupUrl' => '/ajax/phoneauth.php?action=lookup',
+			'statusUrl' => '/ajax/phoneauth.php?action=status',
+			'testUrl' => '/ajax/phoneauth.php?action=test',
+			'snoozeUrl' => '/ajax/phoneauth.php?action=snooze',
+			'callNumber' => \Prime\PhoneAuth\Config::getVerifyNumberDisplay(),
+			'testConfirm' => \Prime\PhoneAuth\Config::isTestConfirm(),
+			'authorized' => is_object($USER) && $USER->IsAuthorized(),
+			'phone' => '',
+			'confirmed' => false,
+			'duplicate' => false,
+			'duplicateMessage' => \Prime\PhoneAuth\AuthService::duplicateMessage(),
+			'duplicateHint' => \Prime\PhoneAuth\AuthService::duplicateHint(),
+			'duplicateAccounts' => [],
+			'standalonePrompt' => false,
+		];
+		?>
+		<link rel="stylesheet" href="/local/modules/prime.phoneauth/assets/auth.css?v=1.2.8">
+		<script>
+			window.PRIME_PHONEAUTH = window.PRIME_PHONEAUTH || <?= \Bitrix\Main\Web\Json::encode($paCfg) ?>;
+		</script>
+		<script src="/local/modules/prime.phoneauth/assets/auth.js?v=1.0.33"></script>
+		<?
+	}
 }

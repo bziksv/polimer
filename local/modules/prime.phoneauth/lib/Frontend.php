@@ -65,12 +65,13 @@ class Frontend
 			'confirmed' => $profile['confirmed'],
 			'duplicate' => $profile['duplicate'],
 			'duplicateMessage' => AuthService::duplicateMessage(),
+			'duplicateHint' => AuthService::duplicateHint(),
 			'duplicateAccounts' => $profile['accounts'],
 			'standalonePrompt' => $standalonePrompt,
 		];
 
-		$css = '/local/modules/prime.phoneauth/assets/auth.css?v=1.2.3';
-		$js = '/local/modules/prime.phoneauth/assets/auth.js?v=1.0.28';
+		$css = '/local/modules/prime.phoneauth/assets/auth.css?v=1.3.1';
+		$js = '/local/modules/prime.phoneauth/assets/auth.js?v=1.0.33';
 		$alertsCss = '';
 		if ($hasRegistrationPhone && \Bitrix\Main\Loader::includeModule('prime.alerts')) {
 			$alertsCss = '<link rel="stylesheet" href="/local/modules/prime.alerts/assets/style.css?v=1.5.20">' . "\n";

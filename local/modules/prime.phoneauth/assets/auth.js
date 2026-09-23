@@ -141,14 +141,21 @@
 					: '<button type="button" class="prime-phoneauth-modal__btn is-ghost" data-login="1">Войти в существующий аккаунт</button>')
 				+ '</div>';
 		} else {
-			chooseActions = '<button type="button" class="prime-phoneauth-modal__btn" data-close="1">Понятно</button>';
+			chooseActions = '<div class="prime-phoneauth-modal__actions">'
+				+ '<button type="button" class="prime-phoneauth-modal__btn" data-close="1">Понятно</button>'
+				+ (!cfg.authorized
+					? '<button type="button" class="prime-phoneauth-modal__btn is-ghost" data-login="1">Войти в существующий аккаунт</button>'
+					: '')
+				+ '</div>';
 		}
 		wrap.innerHTML = '<div class="prime-phoneauth-modal__overlay" data-close="' + overlayClose + '"></div>'
 			+ '<div class="prime-phoneauth-modal__box">'
 			+ '<div class="prime-phoneauth-modal__title"></div>'
 			+ '<div class="prime-phoneauth-modal__choose" data-role="choose">'
 			+ '<p class="prime-phoneauth-modal__text"></p>'
+			+ '<div class="prime-phoneauth-modal__accounts-label" data-role="accounts-label" style="display:none">Ящики, где уже есть этот номер:</div>'
 			+ '<ul class="prime-phoneauth-modal__accounts"></ul>'
+			+ '<p class="prime-phoneauth-modal__hint" data-role="hint" style="display:none"></p>'
 			+ chooseActions
 			+ '</div>'
 			+ '<div class="prime-phoneauth-modal__wait" data-role="wait" style="display:none">' + waitMarkup() + '</div>'
@@ -160,6 +167,8 @@
 		titleEl.textContent = title || 'Несколько аккаунтов';
 		wrap.querySelector('.prime-phoneauth-modal__text').textContent = message || cfg.duplicateMessage;
 		var list = wrap.querySelector('.prime-phoneauth-modal__accounts');
+		var accountsLabel = wrap.querySelector('[data-role="accounts-label"]');
+		var hintEl = wrap.querySelector('[data-role="hint"]');
 		(accounts || []).forEach(function (email) {
 			if (!email) return;
 			var li = document.createElement('li');
@@ -168,6 +177,16 @@
 		});
 		if (!list.children.length) {
 			list.style.display = 'none';
+			if (accountsLabel) accountsLabel.style.display = 'none';
+		} else if (accountsLabel) {
+			accountsLabel.style.display = '';
+		}
+		if (hintEl) {
+			var hintText = opts.hint || cfg.duplicateHint || '';
+			if (hintText) {
+				hintEl.textContent = hintText;
+				hintEl.style.display = '';
+			}
 		}
 		document.body.appendChild(wrap);
 
@@ -1200,18 +1219,298 @@
 		});
 	}
 
-	function onReady() {
-		document.querySelectorAll('.personal_enter .auth, .bx-authform .auth').forEach(function (root) {
-			initTabs(root);
-			if (phoneOn) {
-				bindPhoneForm(root);
+	function isDuplicateErrorText(text) {
+		return /номер уже есть в других|номер уже привязан|уже используется в друг/i.test(text || '');
+	}
+
+	function stripOrderRegPrefix(text) {
+		return String(text || '').replace(/^Ошибка регистрации нового пользователя:\s*/i, '').trim();
+	}
+
+	function getOrderPhone() {
+		var form = document.getElementById('bx-soa-order-form');
+		if (!form) return '';
+		var candidates = form.querySelectorAll(
+			'input[type="tel"], input[autocomplete="tel"], input[name*="PHONE"], input[name*="Phone"], input[name*="phone"]'
+		);
+		for (var i = 0; i < candidates.length; i++) {
+			var v = (candidates[i].value || '').trim();
+			if (phoneReady(v)) return v;
+		}
+		var all = form.querySelectorAll('input[type="text"], input:not([type])');
+		for (var j = 0; j < all.length; j++) {
+			var val = (all[j].value || '').trim();
+			if (/^\+?7[\d\-\s()]{10,}$/.test(val) && phoneReady(val)) return val;
+		}
+		return '';
+	}
+
+	function injectOrderToken(token) {
+		var form = document.getElementById('bx-soa-order-form');
+		if (!form || !token) return;
+		var inp = form.querySelector('input[name="prime_phoneauth_token"]');
+		if (!inp) {
+			inp = document.createElement('input');
+			inp.type = 'hidden';
+			inp.name = 'prime_phoneauth_token';
+			form.appendChild(inp);
+		}
+		inp.value = token;
+	}
+
+	function retryOrderSave() {
+		try {
+			if (window.BX && BX.Sale && BX.Sale.OrderAjaxComponent) {
+				var comp = BX.Sale.OrderAjaxComponent;
+				if (typeof comp.clickOrderSaveButton === 'function') {
+					comp.clickOrderSaveButton();
+					return;
+				}
+				if (typeof comp.sendRequest === 'function') {
+					if (typeof comp.allowOrderSave === 'function') {
+						comp.allowOrderSave();
+					}
+					comp.sendRequest('saveOrderAjax');
+					return;
+				}
+			}
+		} catch (e) {}
+		var btn = document.querySelector('#bx-soa-orderSave a, #bx-soa-orderSave .btn, [data-save-button]');
+		if (btn) btn.click();
+	}
+
+	function hideOrderDuplicateBanner(el) {
+		if (!el) return;
+		el.classList.add('prime-phoneauth-dup-hide');
+		el.style.setProperty('display', 'none', 'important');
+		el.setAttribute('aria-hidden', 'true');
+	}
+
+	function hideAllOrderDuplicateBanners(scope) {
+		var root = scope && scope.querySelectorAll ? scope : document;
+		root.querySelectorAll('.alert.alert-danger, .bx-soa-alert').forEach(function (el) {
+			if (isDuplicateErrorText(el.textContent || '')) {
+				hideOrderDuplicateBanner(el);
 			}
 		});
-		initAuthSwitchLinks();
-		initRegister();
+	}
+
+	var orderDupOpening = false;
+	var orderDupArmed = true;
+
+	function htmlToPlain(html) {
+		var d = document.createElement('div');
+		d.innerHTML = String(html || '');
+		return (d.textContent || d.innerText || '').replace(/\s+/g, ' ').trim();
+	}
+
+	function fillModalAccounts(wrap, accounts) {
+		if (!wrap) return;
+		var list = wrap.querySelector('.prime-phoneauth-modal__accounts');
+		var accountsLabel = wrap.querySelector('[data-role="accounts-label"]');
+		if (!list) return;
+		list.innerHTML = '';
+		(accounts || []).forEach(function (email) {
+			if (!email) return;
+			var li = document.createElement('li');
+			li.textContent = email;
+			list.appendChild(li);
+		});
+		if (!list.children.length) {
+			list.style.display = 'none';
+			if (accountsLabel) accountsLabel.style.display = 'none';
+		} else {
+			list.style.display = '';
+			if (accountsLabel) accountsLabel.style.display = '';
+		}
+	}
+
+	function openOrderDuplicateModal(message, accounts, phone) {
+		if (document.querySelector('.prime-phoneauth-modal')) {
+			return document.querySelector('.prime-phoneauth-modal');
+		}
+		var title = (accounts || []).length === 1 ? 'Номер уже используется' : 'Несколько аккаунтов';
+		var canClaim = phoneOn && cfg.callAuth === true && phoneReady(phone);
+
+		showDuplicate(message || cfg.duplicateMessage, accounts, title, {
+			lock: false,
+			hint: cfg.duplicateHint,
+			claimLabel: 'Подтвердить звонком и продолжить заказ',
+			startClaim: canClaim ? function () {
+				return postForm(cfg.startUrl, { phone: phone, register: 'Y', claim: 'Y' });
+			} : null,
+			onConfirmed: function (token) {
+				injectOrderToken(token);
+				orderDupArmed = true;
+				setTimeout(retryOrderSave, 200);
+			},
+			onLogin: function () {
+				// Наша форма входа (/login/), не кривой блок sale.order.ajax
+				var back = '/personal/order/make/';
+				try {
+					if (window.location.pathname && window.location.pathname.indexOf('/personal/order/') === 0) {
+						back = window.location.pathname + (window.location.search || '');
+					}
+				} catch (e) {}
+				window.location.assign('/login/?login=yes&backurl=' + encodeURIComponent(back));
+			}
+		});
+		return document.querySelector('.prime-phoneauth-modal');
+	}
+
+	function processOrderDuplicateError(rawText) {
+		var text = stripOrderRegPrefix(htmlToPlain(rawText));
+		if (!isDuplicateErrorText(text)) return false;
+
+		hideAllOrderDuplicateBanners(document);
+
+		if (!orderDupArmed || document.querySelector('.prime-phoneauth-modal') || orderDupOpening) {
+			return true;
+		}
+
+		orderDupArmed = false;
+		orderDupOpening = true;
+		var phone = getOrderPhone();
+
+		// Модалку сразу — не ждём lookup (иначе кажется, что «ничего нет»)
+		var modal = openOrderDuplicateModal(text || cfg.duplicateMessage, [], phone);
+		orderDupOpening = false;
+
+		if (phoneReady(phone) && cfg.lookupUrl) {
+			postForm(cfg.lookupUrl, { phone: phone }).then(function (data) {
+				if (!data) return;
+				var wrap = document.querySelector('.prime-phoneauth-modal');
+				if (!wrap) return;
+				var msg = data.message || data.error;
+				if (msg) {
+					var textEl = wrap.querySelector('.prime-phoneauth-modal__text');
+					if (textEl) textEl.textContent = msg;
+				}
+				fillModalAccounts(wrap, data.accounts || []);
+				var titleEl = wrap.querySelector('.prime-phoneauth-modal__title');
+				if (titleEl && (data.accounts || []).length === 1) {
+					titleEl.textContent = 'Номер уже используется';
+				}
+			}).catch(function () {});
+		}
+
+		return true;
+	}
+
+	function scanOrderDuplicateAlerts(root) {
+		if (!document.getElementById('bx-soa-order-form')) return;
+		var scope = root && root.querySelectorAll ? root : document;
+		var found = null;
+		scope.querySelectorAll('.alert.alert-danger, .bx-soa-alert, .bx-soa-section .alert').forEach(function (el) {
+			var text = (el.textContent || '').replace(/\s+/g, ' ').trim();
+			if (!isDuplicateErrorText(text)) return;
+			hideOrderDuplicateBanner(el);
+			if (!found) found = text;
+		});
+		if (found) {
+			processOrderDuplicateError(found);
+		}
+	}
+
+	function patchOrderAjaxComponent() {
+		function tryPatch() {
+			var Comp = window.BX && BX.Sale && BX.Sale.OrderAjaxComponent;
+			if (!Comp || Comp.__primePhoneDupPatched) {
+				return !!Comp;
+			}
+			if (typeof Comp.showError !== 'function') {
+				return false;
+			}
+			Comp.__primePhoneDupPatched = true;
+			var origShowError = Comp.showError;
+			Comp.showError = function (node, msg, border) {
+				var raw = (window.BX && BX.type && BX.type.isArray(msg)) ? msg.join('<br>') : String(msg || '');
+				var text = htmlToPlain(raw);
+				if (isDuplicateErrorText(text)) {
+					this.hasErrorSection = this.hasErrorSection || {};
+					if (node && node.id) {
+						this.hasErrorSection[node.id] = true;
+					}
+					processOrderDuplicateError(text);
+					hideAllOrderDuplicateBanners(document);
+					return;
+				}
+				return origShowError.apply(this, arguments);
+			};
+			return true;
+		}
+
+		if (tryPatch()) return;
+		var n = 0;
+		var timer = setInterval(function () {
+			if (tryPatch() || ++n > 60) {
+				clearInterval(timer);
+			}
+		}, 200);
+	}
+
+	function initOrderDuplicateModal() {
+		if (!document.getElementById('bx-soa-order-form')) return;
+
+		patchOrderAjaxComponent();
+		scanOrderDuplicateAlerts(document);
+
+		document.addEventListener('click', function (e) {
+			var t = e.target;
+			if (!t) return;
+			var btn = t.closest ? t.closest('[data-save-button], #bx-soa-orderSave a, #bx-soa-orderSave .btn') : null;
+			if (!btn) return;
+			orderDupArmed = true;
+			orderDupOpening = false;
+		}, true);
+
+		if (window.MutationObserver) {
+			var obs = new MutationObserver(function () {
+				scanOrderDuplicateAlerts(document);
+			});
+			var orderRoot = document.getElementById('bx-soa-order') || document.body;
+			obs.observe(orderRoot, {
+				childList: true,
+				subtree: true,
+				characterData: true,
+				attributes: true,
+				attributeFilter: ['style', 'class']
+			});
+		}
+
+		if (window.BX && BX.addCustomEvent) {
+			BX.addCustomEvent('onAjaxSuccess', function () {
+				patchOrderAjaxComponent();
+				setTimeout(function () { scanOrderDuplicateAlerts(document); }, 30);
+				setTimeout(function () { scanOrderDuplicateAlerts(document); }, 250);
+			});
+		}
+
+		setInterval(function () {
+			if (!document.getElementById('bx-soa-order-form')) return;
+			hideAllOrderDuplicateBanners(document);
+			patchOrderAjaxComponent();
+		}, 500);
+	}
+
+	function onReady() {
+		// Сначала заказ: initRegister на этой странице не нужен и не должен ломать модалку
+		try { initOrderDuplicateModal(); } catch (e) {}
+		try {
+			document.querySelectorAll('.personal_enter .auth, .bx-authform .auth').forEach(function (root) {
+				initTabs(root);
+				if (phoneOn) {
+					bindPhoneForm(root);
+				}
+			});
+		} catch (e) {}
+		try { initAuthSwitchLinks(); } catch (e) {}
+		try { initRegister(); } catch (e) {}
 		if (phoneOn) {
-			initProfile();
-			setTimeout(initPhonePrompt, 0);
+			try { initProfile(); } catch (e) {}
+			setTimeout(function () {
+				try { initPhonePrompt(); } catch (e) {}
+			}, 0);
 		}
 	}
 
