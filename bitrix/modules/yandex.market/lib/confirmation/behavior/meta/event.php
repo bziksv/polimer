@@ -20,8 +20,11 @@ class Event extends Market\Reference\Event\Base
 			&& ($page === '/' || $page === Market\Data\TextString::toLower(LANG_DIR))
 		)
 		{
+			$safeContents = Behavior::buildSafeMetaTag($contents);
+			if ($safeContents === null) { return; }
+
 			$assets = Main\Page\Asset::getInstance();
-			$assets->addString($contents,  false,Main\Page\AssetLocation::BEFORE_CSS);
+			$assets->addString($safeContents, false, Main\Page\AssetLocation::BEFORE_CSS);
 		}
 	}
 

@@ -84,6 +84,30 @@ class Behavior extends Market\Confirmation\Behavior\Reference\Behavior
 		return $result;
 	}
 
+	public static function buildSafeMetaTag($contents)
+	{
+		$contents = trim((string)$contents);
+		if ($contents === '') { return null; }
+
+		$behavior = new Behavior();
+		try
+		{
+			$attributes = $behavior->extractAttributes($contents);
+		}
+		catch (Main\ArgumentException $exception)
+		{
+			return null;
+		}
+
+		if (empty($attributes['name']) || !isset($attributes['content'])) { return null; }
+
+		return sprintf(
+			'<meta name="%s" content="%s">',
+			htmlspecialcharsbx((string)$attributes['name'], ENT_QUOTES),
+			htmlspecialcharsbx((string)$attributes['content'], ENT_QUOTES)
+		);
+	}
+
 	public function install($domain, $contents)
 	{
 		$this->registerEvent($domain, $contents, true);

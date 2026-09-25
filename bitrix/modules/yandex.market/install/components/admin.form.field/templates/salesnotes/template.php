@@ -20,13 +20,13 @@ $maxLength = 50;
 		<input class="adm-input <?= $arParams['CHILD_CLASS_NAME']; ?> js-hidden-input__input js-symbol-count__input" size="50" maxlength="<?= $maxLength; ?>" data-name="SALES_NOTES" <?
 			if (!$arParams['PLACEHOLDER'])
 			{
-				echo ' name="' . $arParams['INPUT_NAME'] . '"';
-				echo ' value="' . $arParams['VALUE'] . '"';
+				echo ' name="' . htmlspecialcharsbx((string)$arParams['INPUT_NAME']) . '"';
+				echo ' value="' . htmlspecialcharsbx((string)$arParams['VALUE']) . '"';
 			}
 		?> />
 		<span class="js-symbol-count__value"><?= !$arParams['HAS_VALUE'] ? $maxLength : ($maxLength - Market\Data\TextString::getLength($arParams['VALUE'])); ?></span>
 	</span>
-	<label class="b-hidden-input__toggle b-link action--heading target--inside js-hidden-input__label" tabindex="0"><?= $arParams['HAS_VALUE'] ? $arParams['VALUE'] : $lang['TOGGLE']; ?></label><?
+	<label class="b-hidden-input__toggle b-link action--heading target--inside js-hidden-input__label" tabindex="0"><?= $arParams['HAS_VALUE'] ? htmlspecialcharsbx((string)$arParams['VALUE']) : $lang['TOGGLE']; ?></label><?
 
 	if (!empty($arParams['SALES_NOTES_TIP']))
 	{

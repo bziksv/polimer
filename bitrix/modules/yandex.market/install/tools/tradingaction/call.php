@@ -20,9 +20,20 @@ try
 	}
 
 	$httpRequest = Main\Context::getCurrent()->getRequest();
+
+	if (!$httpRequest->isPost() || !check_bitrix_sessid())
+	{
+		throw new Main\AccessDeniedException();
+	}
+
 	$setupId = (int)$httpRequest->getPost('setup');
 	$path = (string)$httpRequest->getPost('path');
 	$payload = (array)$httpRequest->getPost('payload');
+
+	if ($path === '' || !preg_match('#^[a-z0-9_./-]+$#i', $path))
+	{
+		throw new Main\ArgumentException('Unknown action path');
+	}
 
 	$setup = Market\Trading\Setup\Model::loadById($setupId);
 	$router = $setup->wakeupService()->getRouter();

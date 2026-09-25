@@ -23,6 +23,11 @@
 	background-size: 100% auto;
 }
 
+.yamarket_basket_icon {
+	background: url('icons/yandex.market/ycp_favicon.png') no-repeat 50% 50%;
+	background-size: 22px 22px;
+}
+
 .adm-yamarket .adm-main-menu-item-icon,
 .adm-yamarket.adm-main-menu-item-active .adm-main-menu-item-icon {
 	height: 47px;

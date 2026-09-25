@@ -19,6 +19,11 @@ try
     $request = Main\Application::getInstance()->getContext()->getRequest();
 	$request->addFilter(new Main\Web\PostDecodeFilter());
 
+    if (!$request->isPost() || !check_bitrix_sessid())
+    {
+        throw new Main\SystemException('Access denied');
+    }
+
     $action = $request->getPost('action');
     $payload = $request->getPost('payload');
     $componentParameters = $request->getPost('componentParameters');

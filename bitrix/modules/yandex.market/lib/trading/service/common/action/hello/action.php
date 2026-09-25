@@ -14,12 +14,7 @@ class Action extends TradingService\Common\Action\HttpAction
 
 	public function checkAuthorization()
 	{
-		$requestToken = (string)$this->request->getAuthToken();
-
-		if ($requestToken === '')
-		{
-			throw new Market\Exceptions\Trading\AccessDenied('Auth token missing');
-		}
+		parent::checkAuthorization();
 	}
 
 	protected function createRequest(Main\HttpRequest $request, Main\Server $server)

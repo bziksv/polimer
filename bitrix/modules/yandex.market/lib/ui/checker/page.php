@@ -177,13 +177,13 @@ class Page extends Market\Ui\Reference\Page
 		/** @var Market\Error\Base $error */
 		foreach ($errors as $error)
 		{
-			$message = (string)($error->getMessage() ?: $error->getCode());
+			$message = htmlspecialcharsbx((string)($error->getMessage() ?: $error->getCode()));
 			$description = '';
 			$group = '';
 
 			if ($error instanceof Reference\Error)
 			{
-				$description = (string)$error->getDescription();
+				$description = htmlspecialcharsbx((string)$error->getDescription());
 				$group = (string)$error->getGroup();
 				$groupUrl = (string)$error->getGroupUrl();
 				$count = (int)$error->getCount();
@@ -233,14 +233,20 @@ class Page extends Market\Ui\Reference\Page
 
 		foreach ($groups as $group)
 		{
-			$message = sprintf('<strong>%s</strong><br />', $group['NAME']);
-			$message .= implode('<br />', $group['MESSAGES']);
+			$groupName = htmlspecialcharsbx((string)$group['NAME']);
+			$groupMessages = array_map(
+				static function($item) { return htmlspecialcharsbx((string)$item); },
+				(array)$group['MESSAGES']
+			);
+			$message = sprintf('<strong>%s</strong><br />', $groupName);
+			$message .= implode('<br />', $groupMessages);
 
 			if ($group['URL'])
 			{
+				$groupUrl = htmlspecialcharsbx((string)$group['URL']);
 				$message .= sprintf(
 					'<br /><a href="%s" target="_blank">%s</a>',
-					$group['URL'],
+					$groupUrl,
 					static::getLang('CHECKER_TEST_ERROR_MORE')
 				);
 			}

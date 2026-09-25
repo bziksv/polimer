@@ -22,6 +22,11 @@ try
 	}
 
 	$httpRequest = Main\Context::getCurrent()->getRequest();
+
+	if (!$httpRequest->isPost() || !check_bitrix_sessid())
+	{
+		throw new Main\AccessDeniedException();
+	}
 	$userId = (int)$httpRequest->getPost('USER_ID');
 	$personTypeId = (int)$httpRequest->getPost('PERSON_TYPE_ID');
 

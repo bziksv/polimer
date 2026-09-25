@@ -12,6 +12,7 @@ class FileIterator
 		'/ui/trading/concerns/hashandlemigration.php',
 		'/trading/service/beru',
 		'/trading/service/turbo',
+		'/trading/',
 		'/component/tradingimport',
 		'/service/data',
 		'/ui/userfield/autocomplete',
@@ -19,7 +20,9 @@ class FileIterator
 		'/ui/service',
 		'/api/oauth2/accesstoken',
 		'/api/oauth2/verificationcode',
+		'/api/oauth2/refreshtoken',
 		'/ui/userfield/tokentype.php',
+		'/checkout/',
 	];
 
 	public function __construct($basePath = null, $baseNamespace = null)

@@ -64,7 +64,7 @@ class Config
 
 		if (mb_strpos($optionValue, static::$serializedOptionPrefix) === 0)
 		{
-			$unserializedValue = unserialize(mb_substr(
+			$unserializedValue = Market\Utils\PhpSerializer::decode(mb_substr(
                 $optionValue,
                 mb_strlen(static::$serializedOptionPrefix)
             ));

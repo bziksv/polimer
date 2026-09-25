@@ -3,7 +3,8 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) { die(); }
 
 use Bitrix\Main\Localization\Loc;
 
-$allowPlainProperties = [
+// outlet VALUE may contain a safe map <a> built in adminview (text already htmlspecialcharsbx)
+$allowHtmlProperties = [
 	'outlet' => true,
 ];
 
@@ -13,13 +14,13 @@ $allowPlainProperties = [
 	<?php
 	foreach ($arResult['DELIVERY'] as $property)
 	{
-		$printValue = isset($allowPlainProperties[$property['ID']])
+		$printValue = isset($allowHtmlProperties[$property['ID']])
 			? $property['VALUE']
 			: htmlspecialcharsbx($property['VALUE'], ENT_COMPAT, false);
 
 		?>
 		<div class="yamarket-property">
-			<div class="yamarket-property__title"><?= $property['NAME']; ?></div>
+			<div class="yamarket-property__title"><?= htmlspecialcharsbx((string)$property['NAME']); ?></div>
 			<div class="yamarket-property__value">
 				<?= $printValue ?>
 				<?php

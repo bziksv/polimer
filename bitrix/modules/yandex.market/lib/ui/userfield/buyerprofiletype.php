@@ -81,6 +81,10 @@ class BuyerProfileType extends EnumerationType
 	{
 		$queryParameters = [
 			'lang' => LANGUAGE_ID,
+			// Экран открывается через window.open (GET) и при отсутствии id создаёт профиль
+			// покупателя, поэтому ссылка обязана нести sessid — иначе создание профиля
+			// выполняется по любому стороннему запросу к админской сессии (CSRF).
+			'sessid' => bitrix_sessid(),
 		];
 
 		if (isset($userField['SETTINGS']['SERVICE']))

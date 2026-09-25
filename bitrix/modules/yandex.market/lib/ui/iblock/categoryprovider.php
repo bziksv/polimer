@@ -202,7 +202,7 @@ class CategoryProvider
 
 		if (!empty($value['CATEGORY']))
 		{
-			$partials[] = (string)$value['CATEGORY'];
+			$partials[] = htmlspecialcharsbx((string)$value['CATEGORY']);
 		}
 
 		$parameters = array_filter(array_map(
@@ -223,30 +223,32 @@ class CategoryProvider
 	{
 		if (!isset($parameter['NAME'], $parameter['VALUE'])) { return null; }
 
-		$label = (string)$parameter['NAME'];
+		$label = htmlspecialcharsbx((string)$parameter['NAME']);
 		$values = is_array($parameter['VALUE']) ? $parameter['VALUE'] : [ $parameter['VALUE'] ];
 		$values = array_map(static function($value) {
 			if (!is_string($value)) { return null; }
 
 			if ($value === 'Y' || $value === 'N')
 			{
-				return self::getMessage('BOOLEAN_' . $value, null, $value);
+				return htmlspecialcharsbx(self::getMessage('BOOLEAN_' . $value, null, $value));
 			}
 
 			if (preg_match('/^(.*)\s\[\d+]$/', $value, $matches))
 			{
-				return $matches[1];
+				return htmlspecialcharsbx($matches[1]);
 			}
 
-			return $value;
+			return htmlspecialcharsbx($value);
 		}, $values);
 
-		if (isset($rowValue['UNIT']) && preg_match('/^(.*)\s\[\d+]$/', $rowValue['UNIT'], $unitMatches))
+		if (isset($parameter['UNIT']) && preg_match('/^(.*)\s\[\d+]$/', (string)$parameter['UNIT'], $unitMatches))
 		{
-			$label .= ", {$unitMatches[1]}";
+			$label .= ', ' . htmlspecialcharsbx($unitMatches[1]);
 		}
 
-		return sprintf('<small>%s: %s</small>', $label, implode(', ', $values));
+		$safeValues = array_filter($values, static function($item) { return $item !== null; });
+
+		return sprintf('<small>%s: %s</small>', $label, implode(', ', $safeValues));
 	}
 
 	private static function glueParametersDisplayValue(array $partials)

@@ -19,9 +19,15 @@ try
 	}
 
 	$httpRequest = Main\Context::getCurrent()->getRequest();
+
+	if ($httpRequest->isPost() && !check_bitrix_sessid())
+	{
+		throw new Main\AccessDeniedException();
+	}
 	$httpRequestData = $httpRequest->getQueryList()->toArray();
 	$request = new Market\Api\OAuth2\VerificationCode\Request();
 	$response = $request->emulateResponse($httpRequestData);
+	$postMessageOrigin = ($httpRequest->isHttps() ? 'https' : 'http') . '://' . $httpRequest->getHttpHost();
 
 	CAdminMessage::ShowMessage([
 		'TYPE' => 'OK',
@@ -35,7 +41,7 @@ try
 				method: 'yaMarketAuth',
 				result: true,
 				code: '<?= htmlspecialcharsbx($response->getVerificationCode()) ?>'
-			}, '*');
+			}, <?= Main\Web\Json::encode($postMessageOrigin) ?>);
 
 			window.close();
 		}
@@ -44,6 +50,9 @@ try
 }
 catch (Main\SystemException $exception)
 {
+	$httpRequest = Main\Context::getCurrent()->getRequest();
+	$postMessageOrigin = ($httpRequest->isHttps() ? 'https' : 'http') . '://' . $httpRequest->getHttpHost();
+
 	CAdminMessage::ShowMessage([
 		'TYPE' => 'ERROR',
 		'MESSAGE' => $exception->getMessage()
@@ -54,7 +63,7 @@ catch (Main\SystemException $exception)
 		window.opener && window.opener.postMessage({
 			method: 'yaMarketAuth',
 			result: false
-		}, '*');
+		}, <?= Main\Web\Json::encode($postMessageOrigin) ?>);
 	</script>
 	<?php
 }

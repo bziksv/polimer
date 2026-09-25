@@ -1,4 +1,4 @@
 <?php
 
-$MESS['YANDEX_MARKET_UI_ADMIN_MENU_TEXT'] = 'Маркет для продавцов';
-$MESS['YANDEX_MARKET_UI_ADMIN_MENU_TITLE'] = 'Яндекс.Маркет для продавцов';
+$MESS['YANDEX_MARKET_UI_ADMIN_MENU_TEXT'] = 'Фиды и YCP';
+$MESS['YANDEX_MARKET_UI_ADMIN_MENU_TITLE'] = 'Фиды и YCP';

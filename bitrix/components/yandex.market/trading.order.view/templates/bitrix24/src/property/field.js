@@ -82,7 +82,7 @@ export default class Field extends ReferenceField {
 		const onclick = this.makeActivityMethod(activity);
 
 		return `<small>
-			<a href="#" onclick='${onclick}; return false'>${title}</a>
+			<a href="#" onclick='${onclick}; return false'>${BX.util.htmlspecialchars(title)}</a>
 		</small>`;
 	}
 

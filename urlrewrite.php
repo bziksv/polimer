@@ -8,6 +8,30 @@ $arUrlRewrite=array (
     'PATH' => '/bitrix/services/yandex.market/trading/index.php',
     'SORT' => 100,
   ),
+  46 => 
+  array (
+    'CONDITION' => '#^/site_lt/yastore\\.checkout/#',
+    'RULE' => '',
+    'ID' => 'yastore:checkout',
+    'PATH' => '/site_lt/yastore.checkout/index.php',
+    'SORT' => 100,
+  ),
+  48 => 
+  array (
+    'CONDITION' => '#^/ozon/yastore\\.checkout/#',
+    'RULE' => '',
+    'ID' => 'yastore:checkout',
+    'PATH' => '/ozon/yastore.checkout/index.php',
+    'SORT' => 100,
+  ),
+  47 => 
+  array (
+    'CONDITION' => '#^/yastore\\.checkout/#',
+    'RULE' => '',
+    'ID' => 'yastore:checkout',
+    'PATH' => '/yastore.checkout/index.php',
+    'SORT' => 100,
+  ),
   0 => 
   array (
     'CONDITION' => '#^/online/([\\.\\-0-9a-zA-Z]+)(/?)([^/]*)#',

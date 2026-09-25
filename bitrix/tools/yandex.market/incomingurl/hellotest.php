@@ -27,9 +27,9 @@ try
 
     $httpRequest = Main\Context::getCurrent()->getRequest();
 
-    if (!$httpRequest->isPost())
+    if (!$httpRequest->isPost() || !check_bitrix_sessid())
     {
-        throw new Main\SystemException('Only POST requests are allowed.');
+        throw new Main\AccessDeniedException();
     }
 
     $httpRequestData = $httpRequest->getPostList()->toArray();
@@ -38,12 +38,6 @@ try
         'site' => true,
     ]);
 
-    $url = trim($testParameters['url'] ?? '');
-    if ($url === '' || !filter_var($url, FILTER_VALIDATE_URL))
-    {
-        throw new Main\SystemException('Invalid or empty URL.');
-    }
-
     $site = trim($testParameters['site'] ?? '');
     $siteRow = \Bitrix\Main\SiteTable::getRowById($site);
 
@@ -51,6 +45,33 @@ try
         throw new \Bitrix\Main\SystemException('Unknown site ID.');
     }
 
+    $url = trim($testParameters['url'] ?? '');
+    $parts = parse_url($url);
+    $host = preg_replace('/:\d+$/', '', (string)($parts['host'] ?? ''));
+    $scheme = strtolower((string)($parts['scheme'] ?? ''));
+    $allowedHost = preg_replace('/:\d+$/', '', trim((string)($siteRow['SERVER_NAME'] ?? '')));
+
+    if (
+        $url === ''
+        || !filter_var($url, FILTER_VALIDATE_URL)
+        || !in_array($scheme, ['http', 'https'], true)
+        || $host === ''
+        || $allowedHost === ''
+        || strcasecmp($host, $allowedHost) !== 0
+    )
+    {
+        throw new Main\SystemException('URL must match current site host (SERVER_NAME).');
+    }
+
+    if (
+        filter_var($host, FILTER_VALIDATE_IP)
+        && !filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)
+    )
+    {
+        throw new Main\SystemException('Private/reserved hosts are not allowed.');
+    }
+
+    $testParameters['url'] = $url;
     $test = new Market\Ui\Trading\HelloTest($testParameters);
 
     $testResult = $test->run();

@@ -16,6 +16,13 @@ try
 		throw new Main\SystemException('require module yandex.market');
 	}
 
+	$httpRequest = Main\Context::getCurrent()->getRequest();
+
+	if (!$httpRequest->isPost() || !check_bitrix_sessid())
+	{
+		throw new Main\AccessDeniedException();
+	}
+
 	$controller = new Market\Ui\Trading\CancellationAcceptCreator();
 
 	$controller->checkWriteAccess();

@@ -6,7 +6,7 @@ use Bitrix\Main;
 
 class PushRequest extends DataRequest
 {
-	/** @var string */
+	/** @return string */
 	public function getAction()
 	{
 		return $this->getField('action');

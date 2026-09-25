@@ -88,7 +88,7 @@ class Table extends Market\Reference\Storage\Table
 
 	public static function fetchDataModificationForValue($value)
 	{
-		return unserialize($value);
+		return Market\Utils\PhpSerializer::decode($value);
 	}
 
 	public static function getFieldEnumTitle($fieldName, $optionValue, Main\Entity\Field $field = null)

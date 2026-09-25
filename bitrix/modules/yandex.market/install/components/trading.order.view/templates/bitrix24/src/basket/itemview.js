@@ -178,7 +178,7 @@ export default class ItemView {
 		let content = this.valueFormatted(item, basketItem, column);
 
 		if (promos != null && Array.isArray(promos)) {
-			content += promos.map((promo) => `<div>${promo}</div>`).join('');
+			content += promos.map((promo) => `<div>${BX.util.htmlspecialchars(String(promo))}</div>`).join('');
 		}
 
 		return `<td class="for--${kebabCase(column)}">${content}</td>`;
@@ -301,16 +301,20 @@ export default class ItemView {
 	valueFormatted(item: Object, basketItem: Object, column: string) : string {
 		const formattedKey = column + '_FORMATTED';
 		let result = '';
+		let isHtmlFormatted = false;
 
 		if (item[column] != null) {
 			result = item[column];
 		} else if (basketItem[formattedKey] != null) {
 			result = basketItem[formattedKey];
+			isHtmlFormatted = true;
 		} else if (basketItem[column] != null) {
 			result = basketItem[column];
 		}
 
-		return result !== '' ? result : '&mdash;';
+		if (result === '') { return '&mdash;'; }
+
+		return isHtmlFormatted ? result : BX.util.htmlspecialchars(String(result));
 	}
 
 	basketValue(basketItem: Object, column: string) {

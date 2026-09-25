@@ -20,7 +20,7 @@
 			return $.ajax({
 				url: url,
 				type: 'POST',
-				data: formData,
+				data: $.extend({}, formData, { sessid: BX.bitrix_sessid() }),
 				dataType: 'json'
 			});
 		},

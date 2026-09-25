@@ -35,6 +35,11 @@ class ShipmentSubmit extends Market\Ui\Reference\Page
 
 	public function processRequest()
 	{
+		if (!$this->request->isPost() || !check_bitrix_sessid())
+		{
+			throw new Main\AccessDeniedException('Invalid session');
+		}
+
 		$this->checkAccess();
 		$submitResults = $this->submit();
 		$this->flushOrderCache();

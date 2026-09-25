@@ -20,13 +20,13 @@ $this->addExternalJs('/bitrix/js/yandex.market/ui/input/hiddeninput.js');
 		<input class="adm-input js-hidden-input__input <?= $arParams['CHILD_CLASS_NAME']; ?>" placeholder="<?= $langStatic['PLACEHOLDER']; ?>" data-name="NAME" <?
 			if (!$arParams['PLACEHOLDER'])
 			{
-				echo ' name="' . $arParams['INPUT_NAME'] . '"';
-				echo ' value="' . $arParams['VALUE'] . '"';
+				echo ' name="' . htmlspecialcharsbx((string)$arParams['INPUT_NAME']) . '"';
+				echo ' value="' . htmlspecialcharsbx((string)$arParams['VALUE']) . '"';
 			}
 		?> />
 	</span>
 	<label class="b-hidden-input__toggle b-link action--heading target--inside js-hidden-input__label" tabindex="0">
-		<?= $arParams['HAS_VALUE'] ? $arParams['VALUE'] : $lang['TOGGLE']; ?>
+		<?= $arParams['HAS_VALUE'] ? htmlspecialcharsbx((string)$arParams['VALUE']) : $lang['TOGGLE']; ?>
 	</label>
 </span>
 <script>

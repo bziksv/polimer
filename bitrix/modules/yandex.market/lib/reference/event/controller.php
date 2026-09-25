@@ -203,7 +203,7 @@ class Controller
 				&& $handlerRow['TO_METHOD_ARG'] !== ''
 			)
 			{
-				$handlerArguments = unserialize($handlerRow['TO_METHOD_ARG']);
+				$handlerArguments = unserialize($handlerRow['TO_METHOD_ARG'], ['allowed_classes' => false]);
 
 				if ($handlerArguments !== false && isset($handlerArguments[0]))
 				{
@@ -320,7 +320,7 @@ class Controller
 
 		if (is_string($handlerArgs))
 		{
-			$handlerArgsUnserialize = unserialize($handlerArgs);
+			$handlerArgsUnserialize = unserialize($handlerArgs, ['allowed_classes' => false]);
 
 			if (is_array($handlerArgsUnserialize) && !empty($handlerArgsUnserialize))
 			{

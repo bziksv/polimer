@@ -212,7 +212,9 @@ class Source extends Market\Export\Entity\Reference\Source
 					'VALUE' => '[' . $propertyRow['ID'] . '] ' . $propertyRow['NAME'],
 					'PROPERTY_TYPE' => $propertyRow['PROPERTY_TYPE'],
 					'USER_TYPE' => $propertyRow['USER_TYPE'],
-					'USER_TYPE_SETTINGS' => $propertyRow['USER_TYPE_SETTINGS'] ? unserialize($propertyRow['USER_TYPE_SETTINGS']) : null,
+					'USER_TYPE_SETTINGS' => $propertyRow['USER_TYPE_SETTINGS']
+						? Market\Utils\PhpSerializer::decode($propertyRow['USER_TYPE_SETTINGS'])
+						: null,
 					'MULTIPLE' => $propertyRow['MULTIPLE'] === 'Y',
 					'IBLOCK_ID' => $propertyRow['IBLOCK_ID'],
 				];

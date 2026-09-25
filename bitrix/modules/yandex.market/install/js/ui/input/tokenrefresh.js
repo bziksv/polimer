@@ -116,7 +116,8 @@
 					method: 'POST',
 					data: {
 						CLIENT_ID: clientId,
-						SCOPE: this.options.scope
+						SCOPE: this.options.scope,
+						sessid: BX.bitrix_sessid(),
 					},
 					dataType: 'json',
 					onsuccess: $.proxy(this.refreshEnd, this)
@@ -140,7 +141,8 @@
 					CODE: code,
 					SCOPE: this.options.scope,
 					CLIENT_ID: this.getOauthClientId(),
-					CLIENT_PASSWORD: this.getOauthClientPassword()
+					CLIENT_PASSWORD: this.getOauthClientPassword(),
+					sessid: BX.bitrix_sessid(),
 				},
 				dataType: 'json',
 				onsuccess: $.proxy(this.exchangeCodeEnd, this),

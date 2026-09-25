@@ -8,7 +8,7 @@ class HttpRequest extends TradingService\Reference\Action\HttpRequest
 {
 	public function getAuthToken()
 	{
-		$requestToken = $this->getAuthTokenFromHeader() ?: $this->getAuthTokenFromQuery();
+		$requestToken = $this->getAuthTokenFromHeader();
 
 		if ($requestToken === '')
 		{
@@ -39,10 +39,5 @@ class HttpRequest extends TradingService\Reference\Action\HttpRequest
 		}
 
 		return $result;
-	}
-
-	protected function getAuthTokenFromQuery()
-	{
-		return (string)$this->request->getQuery('auth-token');
 	}
 }

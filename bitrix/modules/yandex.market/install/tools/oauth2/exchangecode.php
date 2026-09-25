@@ -18,6 +18,11 @@ try
 	}
 
 	$httpRequest = Main\Context::getCurrent()->getRequest();
+
+	if (!$httpRequest->isPost() || !check_bitrix_sessid())
+	{
+		throw new Main\AccessDeniedException();
+	}
 	$httpRequestData = $httpRequest->getPostList()->toArray();
 
 	$processor = new Market\Api\OAuth2\AccessToken\ExchangeCode();

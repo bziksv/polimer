@@ -62,6 +62,7 @@
 				data: {
 					SERVICE_CODE: this.options.serviceCode,
 					PERSON_TYPE_ID: this.getPersonTypeId(),
+					sessid: BX.bitrix_sessid(),
 				},
 			});
 		},

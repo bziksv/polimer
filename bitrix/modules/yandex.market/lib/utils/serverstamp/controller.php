@@ -83,7 +83,7 @@ class Controller
 
 		if ($stored === '') { return []; }
 
-		$stored = unserialize($stored);
+		$stored = unserialize($stored, ['allowed_classes' => false]);
 
 		if (!is_array($stored)) { return []; }
 

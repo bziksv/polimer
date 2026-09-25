@@ -2,6 +2,8 @@
 
 namespace Yandex\Market\Reference\Storage\Field;
 
+use Yandex\Market;
+
 class Serializer
 {
 	public static function getParameters($nullable = false)
@@ -51,7 +53,7 @@ class Serializer
 	{
 		if ((string)$value !== '')
 		{
-			$result = unserialize($value);
+			$result = Market\Utils\PhpSerializer::decode($value);
 		}
 		else
 		{

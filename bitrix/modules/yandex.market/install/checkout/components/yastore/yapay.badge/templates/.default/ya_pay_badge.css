@@ -1,0 +1,11 @@
+.ya-pay-badge-split:empty {
+    display: none;
+}
+
+.ya-pay-badge-ultimate:empty {
+    display: none;
+}
+
+.ya-pay-badge-split + .ya-pay-badge-ultimate {
+    margin-top: 1rem;
+}

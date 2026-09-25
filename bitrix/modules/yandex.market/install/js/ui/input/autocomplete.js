@@ -40,6 +40,7 @@
 			return {
 				q: params.term,
 				page: this.options.paging && params.page || 1,
+				sessid: BX.bitrix_sessid(),
 			};
 		},
 

@@ -13,6 +13,12 @@ class FuzzySerializer extends Serializer
 		if ($value === null || is_scalar($value))
 		{
 			$result = (string)$value;
+
+			// Скаляр с префиксом иначе на чтении уйдёт в unserialize()
+			if (Market\Data\TextString::getPosition($result, static::PREFIX) === 0)
+			{
+				$result = static::PREFIX . serialize($result);
+			}
 		}
 		else
 		{
@@ -28,7 +34,7 @@ class FuzzySerializer extends Serializer
 		{
 			$prefixLength = Market\Data\TextString::getLength(static::PREFIX);
 			$serialized = Market\Data\TextString::getSubstring($value, $prefixLength);
-			$result = unserialize($serialized);
+			$result = Market\Utils\PhpSerializer::decode($serialized);
 		}
 		else if ((string)$value !== '')
 		{

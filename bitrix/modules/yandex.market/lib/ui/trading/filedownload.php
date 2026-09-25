@@ -40,7 +40,21 @@ class FileDownload extends Market\Ui\Reference\Page
 			throw new Main\SystemException($message);
 		}
 
-		return $url;
+		$uri = new Main\Web\Uri($url);
+		$allowedHosts = [
+			Market\Api\Glossary::MARKET_API_HOST,
+		];
+
+		if (
+			$uri->getScheme() !== 'https'
+			|| !in_array(mb_strtolower((string)$uri->getHost()), $allowedHosts, true)
+		)
+		{
+			$message = static::getLang('UI_TRADING_FILE_DOWNLOAD_URL_NOT_ALLOWED');
+			throw new Main\SystemException($message);
+		}
+
+		return $uri->getUri();
 	}
 
 	protected function getSetup()
@@ -76,8 +90,33 @@ class FileDownload extends Market\Ui\Reference\Page
 
 		$APPLICATION->RestartBuffer();
 		while (ob_get_level()) { ob_end_clean(); }
-		header('Content-type: ' . $type);
+		header('Content-type: ' . $this->sanitizeContentType($type));
+		// Содержимое приходит из внешнего API: отдаём его как вложение и запрещаем
+		// браузеру угадывать тип, чтобы ответ ни при каком Content-Type не отрендерился
+		// как HTML в origin магазина.
+		header('Content-Disposition: attachment');
+		header('X-Content-Type-Options: nosniff');
 		echo $contents;
 		die();
+	}
+
+	/**
+	 * Content-Type из ответа внешнего API не должен попадать в заголовок как есть.
+	 *
+	 * @param string $type
+	 * @return string
+	 */
+	protected function sanitizeContentType($type)
+	{
+		$type = trim((string)$type);
+		$type = (string)strtok($type, ';'); // отбрасываем параметры вида charset
+		$type = trim($type);
+
+		if ($type === '' || !preg_match('#^[a-z0-9][a-z0-9.+-]*/[a-z0-9][a-z0-9.+-]*$#i', $type))
+		{
+			return 'application/octet-stream';
+		}
+
+		return $type;
 	}
 }

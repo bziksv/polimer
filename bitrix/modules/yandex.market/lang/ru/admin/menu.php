@@ -2,6 +2,7 @@
 
 $MESS['YANDEX_MARKET_MENU_CONNECT'] = 'Подключение к Маркету';
 $MESS['YANDEX_MARKET_MENU_ORIGIN_ROOT'] = 'Рекламное размещение';
+$MESS['YANDEX_MARKET_MENU_YCP_SETTINGS'] = 'Подключение к YCP';
 $MESS['YANDEX_MARKET_MENU_SETUP'] = 'Прайс-листы';
 $MESS['YANDEX_MARKET_MENU_COLLECTION'] = 'Коллекции';
 $MESS['YANDEX_MARKET_MENU_PROMO'] = 'Акции (бета-версия)';

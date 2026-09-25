@@ -33,6 +33,7 @@
 					setup: this.options.setup,
 					path: this.options.path,
 					payload: this.options.payload,
+					sessid: BX.bitrix_sessid(),
 				},
 			});
 		},

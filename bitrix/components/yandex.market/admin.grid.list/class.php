@@ -194,6 +194,12 @@ class AdminGridList extends \CBitrixComponent
 
 	protected function processPostAction($data)
 	{
+		if (!$this->arParams['ALLOW_SAVE'] || !check_bitrix_sessid())
+		{
+			$this->addError($this->getLang('ACTION_DISALLOW'));
+			return;
+		}
+
 		try
 		{
 			$this->provider->processPostAction($this->getPostAction(), $data);

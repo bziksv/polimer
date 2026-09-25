@@ -1106,7 +1106,7 @@ class Source extends Market\Export\Entity\Reference\Source
 				if (isset($readyDiscountList[$discount['ID']])) { continue; } // DISTINCT
 
 				$readyDiscountList[$discount['ID']] = true;
-				$discountConditions = isset($discount['CONDITIONS']) ? unserialize($discount['CONDITIONS']) : null;
+					$discountConditions = isset($discount['CONDITIONS']) ? unserialize($discount['CONDITIONS'], ['allowed_classes' => false]) : null;
 
 				if (isset($discountConditions['CLASS_ID']))
 				{

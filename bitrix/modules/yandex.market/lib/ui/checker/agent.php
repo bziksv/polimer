@@ -52,9 +52,6 @@ class Agent extends Market\Reference\Agent\Regular
 			Export\AgentActivity::class,
 			Export\AgentLastExecution::class,
 			Export\AgentLog::class,
-			Trading\IncomingRequest::class,
-			Trading\OutgoingRequest::class,
-			Trading\EventLog::class,
 		];
 	}
 }

@@ -23,9 +23,9 @@ try
 
 	$httpRequest = Main\Context::getCurrent()->getRequest();
 
-	if (!$httpRequest->isPost())
+	if (!$httpRequest->isPost() || !check_bitrix_sessid())
 	{
-		throw new Main\NotSupportedException('only post request supported');
+		throw new Main\AccessDeniedException();
 	}
 
 	$serviceCode = $httpRequest->getPost('service');

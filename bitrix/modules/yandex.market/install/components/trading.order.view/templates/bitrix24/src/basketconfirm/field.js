@@ -96,7 +96,7 @@ export default class Field extends ReferenceField {
 		return changes
 			.map((change) => {
 				return this.getMessage('ITEM_CHANGE', {
-					NAME: change.name,
+					NAME: BX.util.htmlspecialchars(String(change.name)),
 					COUNT: change.diff,
 				});
 			})

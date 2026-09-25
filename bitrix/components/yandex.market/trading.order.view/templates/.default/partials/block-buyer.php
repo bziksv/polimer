@@ -11,7 +11,7 @@ use Bitrix\Main\Localization\Loc;
 	{
 		?>
 		<div class="yamarket-property">
-			<div class="yamarket-property__title"><?= $property['NAME']; ?></div>
+			<div class="yamarket-property__title"><?= htmlspecialcharsbx((string)$property['NAME']); ?></div>
 			<div class="yamarket-property__value">
 				<?= htmlspecialcharsbx($property['VALUE'], ENT_COMPAT, false); ?>
 				<?php

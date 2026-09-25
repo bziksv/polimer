@@ -7,5 +7,5 @@ Main\UI\Extension::load('ui.alerts');
 
 ?>
 <div class="ui-alert ui-alert-danger">
-	<?= $arResult['ERROR'] ?>
+	<?= htmlspecialcharsbx((string)$arResult['ERROR']) ?>
 </div>

@@ -20,9 +20,14 @@ try
 		throw new Main\AccessDeniedException();
 	}
 
-	session_write_close();
-
 	$httpRequest = Main\Context::getCurrent()->getRequest();
+
+	if (!$httpRequest->isPost() || !check_bitrix_sessid())
+	{
+		throw new Main\AccessDeniedException();
+	}
+
+	session_write_close();
 	$personTypeId = (int)$httpRequest->getPost('IBLOCK_ID');
 
 	$enum = Market\Ui\UserField\SkuFieldType::getFieldEnum($personTypeId);

@@ -14,7 +14,7 @@ class Action extends TradingService\Common\Action\HttpAction
 
 	public function checkAuthorization()
 	{
-		// nothing
+		parent::checkAuthorization();
 	}
 
 	protected function createRequest(Main\HttpRequest $request, Main\Server $server)

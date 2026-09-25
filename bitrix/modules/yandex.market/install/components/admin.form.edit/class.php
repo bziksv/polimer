@@ -125,7 +125,9 @@ class AdminFormEdit extends \CBitrixComponent
             if ($this->hasAjaxAction()) {
                 $this->processAjaxAction();
             } else if ($this->hasPostAction()) {
-                if (!check_bitrix_sessid()) {
+                if (!$this->arParams['ALLOW_SAVE']) {
+                    $this->addError($this->getLang('SAVE_DISALLOW'));
+                } else if (!check_bitrix_sessid()) {
                     $this->addError($this->getLang('EXPIRE_SESSION'));
                 }
 
@@ -291,6 +293,13 @@ class AdminFormEdit extends \CBitrixComponent
 
     protected function processAjaxAction()
     {
+        if (!$this->arParams['ALLOW_SAVE'] || !check_bitrix_sessid()) {
+            Market\Utils\HttpResponse::sendJson([
+                'status' => 'error',
+                'message' => $this->getLang('EXPIRE_SESSION'),
+            ]);
+        }
+
         try {
             $data = $this->arResult['ITEM'];
             $data['PRIMARY'] = $this->getPrimary();

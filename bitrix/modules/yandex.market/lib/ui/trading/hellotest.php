@@ -27,8 +27,15 @@ class HelloTest
 		$data = $this->getHelloData();
 
 		$this->installDebug();
-		$result = $this->queryHello($url, $data);
-		$this->uninstallDebug();
+
+		try
+		{
+			$result = $this->queryHello($url, $data);
+		}
+		finally
+		{
+			$this->uninstallDebug();
+		}
 
 		return $result;
 	}
@@ -93,7 +100,7 @@ class HelloTest
 				if (!is_scalar($value)) { continue; }
 
 				$langKey = '#' . Market\Data\TextString::toUpper($key) . '#';
-				$result[$langKey] = $value;
+				$result[$langKey] = htmlspecialcharsbx((string)$value);
 			}
 		}
 
@@ -125,13 +132,32 @@ class HelloTest
 		$responseRaw = $client->getResult();
 		$response = $this->parseResponse($responseRaw);
 
-		if ($status !== 200 || !$this->isValidResponse($response))
+		// 200 + hello:true — полный успех; 403 с ошибкой токена — endpoint наш и auth включён
+		if (
+			!($status === 200 && $this->isValidResponse($response))
+			&& !$this->isAuthRejectedResponse($status, $response)
+		)
 		{
 			$error = $this->makeResponseError($response, $status, $client);
 			$result->addError($error);
 		}
 
 		return $result;
+	}
+
+	protected function isAuthRejectedResponse($status, $response)
+	{
+		if ((int)$status !== 403 || !is_array($response) || !isset($response['error']))
+		{
+			return false;
+		}
+
+		$error = Market\Data\TextString::toLower((string)$response['error']);
+
+		return (
+			Market\Data\TextString::getPosition($error, 'token') !== false
+			|| Market\Data\TextString::getPosition($error, 'auth') !== false
+		);
 	}
 
 	protected function getHelloUrl()
@@ -217,7 +243,7 @@ class HelloTest
 			$code = 'INTERNAL_ERROR';
 			$message = $response['error'] ?: static::getLang('UI_TRADING_HELLO_TEST_ERROR_INTERNAL_ERROR');
 			$data = [
-				'response' => htmlspecialcharsbx(print_r($response, true)),
+				'response' => print_r($response, true),
 			];
 		}
 		else if (isset($clientErrors['SOCKET']))
@@ -230,7 +256,7 @@ class HelloTest
 			$code = 'CLIENT_ERROR';
 			$message = reset($clientErrors) ?: static::getLang('UI_TRADING_HELLO_TEST_ERROR_CLIENT_ERROR');
 			$data = [
-				'error' => htmlspecialcharsbx(print_r($clientErrors, true)),
+				'error' => print_r($clientErrors, true),
 			];
 		}
 		else
@@ -240,7 +266,7 @@ class HelloTest
 			$responseRaw = is_array($response) ? print_r($response, true) : $client->getResult();
 			$data = [
 				'status' => $status,
-				'response' => htmlspecialcharsbx($responseRaw),
+				'response' => $responseRaw,
 			];
 		}
 

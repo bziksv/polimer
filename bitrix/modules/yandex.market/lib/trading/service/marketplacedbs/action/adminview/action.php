@@ -453,7 +453,7 @@ class Action extends TradingService\Marketplace\Action\AdminView\Action
 			if ($outletDetails === null) { return null; }
 
 			$address = TradingService\MarketplaceDbs\Model\Order\Delivery\Address::fromOutlet($outletDetails);
-			$result = $address->getMeaningfulAddress();
+			$result = htmlspecialcharsbx((string)$address->getMeaningfulAddress());
 		}
 		catch (Main\SystemException $exception)
 		{
@@ -490,7 +490,7 @@ class Action extends TradingService\Marketplace\Action\AdminView\Action
 		{
 			if ((string)$storeId !== (string)$storeOption['ID']) { continue; }
 
-			$result = $storeOption['VALUE'];
+			$result = htmlspecialcharsbx((string)$storeOption['VALUE']);
 			break;
 		}
 
@@ -510,7 +510,9 @@ class Action extends TradingService\Marketplace\Action\AdminView\Action
 		$outletDetails = new Market\Api\Model\Outlet($stored);
 		$coords = $outletDetails->getCoords();
 		$address = TradingService\MarketplaceDbs\Model\Order\Delivery\Address::fromOutlet($outletDetails);
-		$addressString = $address->getMeaningfulAddress();
+		$code = htmlspecialcharsbx((string)$outlet->getCode());
+		$name = htmlspecialcharsbx((string)$outletDetails->getName());
+		$addressSafe = htmlspecialcharsbx((string)$address->getMeaningfulAddress());
 
 		if ($coords !== null)
 		{
@@ -522,15 +524,14 @@ class Action extends TradingService\Marketplace\Action\AdminView\Action
 				'z' => 14,
 			]);
 
-			$addressString = sprintf('<a href="%s" target="_blank">%s</a>', $url, $addressString);
+			$addressSafe = sprintf(
+				'<a href="%s" target="_blank">%s</a>',
+				htmlspecialcharsbx($url),
+				$addressSafe
+			);
 		}
 
-		return sprintf(
-			'[%s] %s: %s',
-			$outlet->getCode(),
-			$outletDetails->getName(),
-			$addressString
-		);
+		return sprintf('[%s] %s: %s', $code, $name, $addressSafe);
 	}
 
     protected function getDeliveryActivities()

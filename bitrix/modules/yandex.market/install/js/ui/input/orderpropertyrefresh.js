@@ -65,6 +65,7 @@
 						type: 'POST',
 						data: {
 							PERSON_TYPE_ID: personTypeId,
+							sessid: BX.bitrix_sessid(),
 						},
 						dataType: 'json',
 					});

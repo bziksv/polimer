@@ -41,7 +41,7 @@ else
 echo sprintf(
 	'<a href="#" %s>%s</a>',
 	UserField\Helper\Attributes::stringify($activityAttributes),
-	$activityTitle
+	htmlspecialcharsbx((string)$activityTitle)
 );
 
 // controller init

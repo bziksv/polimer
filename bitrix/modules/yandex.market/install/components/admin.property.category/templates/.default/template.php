@@ -163,12 +163,12 @@ SCRIPT;
             
                       if (item.similar === false) {
                         hasDifference = true;
-                        categoryOutput += '— <strong>' + item.categoryName + '</strong> (ID: ' + item.categoryId + ')<br>';
+                        categoryOutput += '— <strong>' + BX.util.htmlspecialchars(String(item.categoryName)) + '</strong> (ID: ' + BX.util.htmlspecialchars(String(item.categoryId)) + ')<br>';
                       }
                     }
             
                     if (hasDifference) {
-                      output += '{$categoryNotifyBusinessInfo} <strong>' + businessId + '</strong>:<br>' + categoryOutput + '<br>';
+                      output += '{$categoryNotifyBusinessInfo} <strong>' + BX.util.htmlspecialchars(String(businessId)) + '</strong>:<br>' + categoryOutput + '<br>';
                     }
                   }
             

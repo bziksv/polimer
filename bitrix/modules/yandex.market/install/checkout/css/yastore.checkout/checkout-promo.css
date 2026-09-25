@@ -1,0 +1,45 @@
+/*
+ * Reference: промо как .pay-button__additional в sdk-payment-method-2.
+ * На сайте стили в YAKIT_BUTTON_CSS — admin/yamarket_kit_options.php, Handlers::getDefaultButtonCss().
+ */
+
+.yastore-checkout-promo,
+.yastore-checkout-promo .pay-button__additional {
+    width: 100%;
+    padding: 0 12px 8px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: normal;
+    opacity: 0.8;
+    text-align: center;
+    white-space: nowrap;
+    text-decoration: none;
+    font-variant-numeric: lining-nums proportional-nums;
+}
+
+.yastore-checkout-promo:empty {
+    display: none;
+}
+
+.yastore-checkout-promo .pay-button__cashback-amount {
+    font-size: 10px;
+    font-weight: 400;
+}
+
+.yastore-checkout-promo .pay-button__discount-amount {
+    font-size: 10px;
+    font-style: italic;
+    font-weight: 400;
+}
+
+.yastore-checkout-promo svg {
+    display: inline-block;
+    margin-right: 1px;
+    margin-bottom: -1px;
+    vertical-align: baseline;
+    flex-shrink: 0;
+}
+
+.yastore-checkout-promo svg.pay-label-monochrome {
+    vertical-align: text-bottom;
+}

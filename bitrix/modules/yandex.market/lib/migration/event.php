@@ -33,11 +33,6 @@ class Event
 
 		static::truncateExportTrackTable();
 		static::restoreExportEvents();
-		static::restoreTradingEvents();
-		static::restoreCatalogEvents();
-		static::restoreApiTokenRefresh();
-		static::restoreSalesBoostEvents();
-		static::restoreConfirmationEvents();
 	}
 
 	protected static function truncateExportTrackTable()
@@ -66,66 +61,4 @@ class Event
 		}
 	}
 
-	protected static function restoreTradingEvents()
-	{
-		$setupList = Market\Trading\Setup\Model::loadList([
-			'filter' => [ '=ACTIVE' => Market\Trading\Setup\Table::BOOLEAN_Y ],
-		]);
-
-		foreach ($setupList as $setup)
-		{
-			static::installTradingService($setup);
-		}
-	}
-
-	protected static function restoreCatalogEvents()
-	{
-		$setupList = Market\Catalog\Setup\Model::loadList();
-
-		foreach ($setupList as $setup)
-		{
-			$setup->updateListener();
-		}
-	}
-
-	protected static function restoreSalesBoostEvents()
-	{
-		$boosts = Market\SalesBoost\Setup\Model::loadList([
-			'filter' => [ '=ACTIVE' => Market\Trading\Setup\Table::BOOLEAN_Y ],
-		]);
-
-		foreach ($boosts as $boost)
-		{
-			$boost->updateListener();
-		}
-	}
-
-	protected static function installTradingService(Market\Trading\Setup\Model $setup)
-	{
-		try
-		{
-			$setup->install();
-			$setup->activate();
-			$setup->save();
-		}
-		catch (Main\SystemException $exception)
-		{
-			trigger_error($exception->getMessage(), E_USER_WARNING);
-		}
-	}
-
-	protected static function restoreApiTokenRefresh()
-	{
-		Market\Api\OAuth2\RefreshToken\Agent::schedule();
-	}
-
-	protected static function restoreConfirmationEvents()
-	{
-		$setupList = Market\Confirmation\Setup\Model::loadList();
-
-		foreach ($setupList as $setup)
-		{
-			$setup->install();
-		}
-	}
 }

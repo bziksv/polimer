@@ -16,6 +16,11 @@ try
     require_once './class.php';
 
     $request = Main\Application::getInstance()->getContext()->getRequest();
+    if (!$request->isPost() || !check_bitrix_sessid())
+    {
+        throw new Main\SystemException('Access denied');
+    }
+
     $action = $request->getPost('MASSIVE_ACTION') ?: 'form';
 	$method = $action . 'Action';
 

@@ -115,8 +115,6 @@ class Action extends TradingService\Common\Action\HttpAction
 				'url' => $row['URL'],
 				'audit' => $row['AUDIT'],
 				'entity' => $row['ENTITY_TYPE'] === 'order' ? $row['ENTITY_ID'] : null,
-				'context' => $row['CONTEXT'],
-				'trace' => $row['TRACE'],
 			]);
 		}
 

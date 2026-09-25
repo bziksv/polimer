@@ -29,9 +29,33 @@ abstract class HttpAction extends TradingService\Reference\Action\HttpAction
 		$requestToken = $this->request->getAuthToken();
 		$optionsTokens = $this->provider->getOptions()->getYandexTokens();
 
-		if (!in_array($requestToken, $optionsTokens, true))
+		if (!$this->matchToken($requestToken, $optionsTokens))
 		{
 			throw new Market\Exceptions\Trading\AccessDenied('Auth token does not match');
 		}
+	}
+
+	/**
+	 * Сверка входящего токена с настроенными за постоянное время.
+	 *
+	 * in_array() со строгим сравнением выходит на первом же различии, из-за чего время
+	 * ответа зависит от длины совпавшего префикса. Токен здесь — секрет, поэтому сравниваем
+	 * через hash_equals и проходим весь список без досрочного выхода.
+	 */
+	protected function matchToken($requestToken, array $optionsTokens)
+	{
+		$result = false;
+
+		foreach ($optionsTokens as $optionToken)
+		{
+			if (!is_string($optionToken)) { continue; }
+
+			if (hash_equals($optionToken, (string)$requestToken))
+			{
+				$result = true;
+			}
+		}
+
+		return $result;
 	}
 }

@@ -172,7 +172,8 @@ if ($allowBoxEdit || $allowItemsEdit)
 						foreach ($columns as $column => $columnTitle)
 						{
 							$columnValue = null;
-							$columnFormatted = '&mdash;';
+							$columnFormatted = '—';
+							$columnIsHtmlFormatted = false;
 
 							if (isset($item[$column]))
 							{
@@ -184,7 +185,8 @@ if ($allowBoxEdit || $allowItemsEdit)
 								$columnFormattedKey = $column . '_FORMATTED';
 
 								$columnValue = $basketItem[$column];
-								$columnFormatted = isset($basketItem[$columnFormattedKey]) ? $basketItem[$columnFormattedKey] : $columnValue;
+								$columnIsHtmlFormatted = isset($basketItem[$columnFormattedKey]);
+								$columnFormatted = $columnIsHtmlFormatted ? $basketItem[$columnFormattedKey] : $columnValue;
 							}
 
 							switch ($column)
@@ -297,14 +299,16 @@ if ($allowBoxEdit || $allowItemsEdit)
 										<?php
 										if ($columnValue !== null || !$hasPromos)
 										{
-											echo $columnFormatted;
+											echo $columnIsHtmlFormatted
+												? $columnFormatted
+												: htmlspecialcharsbx((string)$columnFormatted);
 										}
 
 										if ($hasPromos)
 										{
 											foreach ($basketItem['PROMOS'] as $promo)
 											{
-												echo sprintf('<div>%s</div>', $promo);
+												echo sprintf('<div>%s</div>', htmlspecialcharsbx((string)$promo));
 											}
 										}
 										?>
@@ -314,7 +318,11 @@ if ($allowBoxEdit || $allowItemsEdit)
 
 								default:
 									?>
-									<td class="tal for--<?= mb_strtolower($column) ?> js-yamarket-basket-item__data" data-name="<?= $column ?>"><?= $columnFormatted ?></td>
+									<td class="tal for--<?= mb_strtolower($column) ?> js-yamarket-basket-item__data" data-name="<?= $column ?>"><?=
+										$columnIsHtmlFormatted
+											? $columnFormatted
+											: htmlspecialcharsbx((string)$columnFormatted)
+									?></td>
 									<?php
 									break;
 							}
@@ -344,7 +352,9 @@ if ($allowBoxEdit || $allowItemsEdit)
 					foreach ($arResult['BASKET']['SUMMARY'] as $summaryItem)
 					{
 						echo $isFirstSummaryItem ? '' : '<br />';
-						echo $summaryItem['NAME'] . ': ' . $summaryItem['VALUE'];
+						echo htmlspecialcharsbx((string)$summaryItem['NAME'])
+							. ': '
+							. htmlspecialcharsbx((string)$summaryItem['VALUE']);
 
 						$isFirstSummaryItem = false;
 					}
