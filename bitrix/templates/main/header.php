@@ -102,6 +102,7 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 				}
 				$url = $origin . $path;
 				$logo = $origin . SITE_TEMPLATE_PATH . '/img/logo_svg.svg';
+				$ogLogo = $origin . SITE_TEMPLATE_PATH . '/img/og_logo.jpg';
 
 				$title = trim((string)$APPLICATION->GetProperty('title'));
 				if ($title === '')
@@ -127,7 +128,7 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 							'name' => 'ООО «Полимер»',
 							'url' => $origin . '/',
 							'logo' => $logo,
-							'image' => $logo,
+							'image' => $ogLogo,
 							'telephone' => '+7-473-250-22-33',
 							'address' => [
 								'@type' => 'PostalAddress',
@@ -163,9 +164,10 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 					$ogType = 'website';
 				}
 				$ogImage = trim((string)$APPLICATION->GetProperty('og_image'));
-				if ($ogImage === '')
+				$ogIsLogo = $ogImage === '';
+				if ($ogIsLogo)
 				{
-					$ogImage = $logo;
+					$ogImage = $ogLogo;
 				}
 
 				$html = '';
@@ -179,6 +181,13 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 				$html .= '<meta property="og:title" content="' . htmlspecialcharsbx($title) . "\" />\n";
 				$html .= '<meta property="og:description" content="' . htmlspecialcharsbx($desc) . "\" />\n";
 				$html .= '<meta property="og:image" content="' . htmlspecialcharsbx($ogImage) . "\" />\n";
+				if ($ogIsLogo)
+				{
+					$html .= '<meta property="og:image:type" content="image/jpeg" />' . "\n";
+					$html .= '<meta property="og:image:width" content="1200" />' . "\n";
+					$html .= '<meta property="og:image:height" content="630" />' . "\n";
+				}
+				$html .= '<meta name="twitter:card" content="summary_large_image" />' . "\n";
 				$html .= '<script type="application/ld+json">' . json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "</script>\n";
 
 				return $html;

@@ -36,6 +36,14 @@
 .page_content .row.cl > .ct__content > .h1,
 .page_content .row.cl > .ct__content > h1 {
     padding-top: 0 !important;
+    margin-bottom: 12px !important;
+}
+/* убрать двойной зазор: margin заголовка + margin-top сетки подразделов */
+.ct__content > .h1 + .product_top .catalog_top,
+.ct__content > h1 + .product_top .catalog_top,
+.ct__content > .h1 + .product_top > .catalog_top,
+.ct__content > h1 + .product_top > .catalog_top {
+    margin-top: 0 !important;
 }
 @media screen and (max-width: 1019px) {
     .page_content .row.cl > .ct__content {
