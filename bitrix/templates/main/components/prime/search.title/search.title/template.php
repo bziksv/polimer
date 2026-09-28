@@ -28,7 +28,7 @@ if($arParams["SHOW_INPUT"] !== "N"):?>
     <div class="header__search"
          id="<?echo $CONTAINER_ID?>"
          data-polimer-search="Y"
-         data-ajax-page="<?echo CUtil::JSEscape(POST_FORM_ACTION_URI)?>"
+         data-ajax-page="/ajax/title-search.php"
          data-input-id="<?echo $INPUT_ID?>"
          data-min-query-len="2">
         <form class="search" action="<?echo $arResult["FORM_ACTION"]?>">

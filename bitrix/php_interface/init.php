@@ -2196,57 +2196,62 @@ function polimerEnhanceTitleSearchResult(array &$arResult, array $arParams)
     }
 
     $originalQuery = trim((string)$arResult['query']);
-    // Сначала без опечаток — быстрее; typo — только если всё ещё пусто
     $queries = polimerBuildSearchQueries($originalQuery, false);
+    $isMultiWord = count(polimerSplitSearchTokens($originalQuery, 2)) >= 2;
 
-    foreach ($queries as $searchQuery)
+    // Одно слово: CSearchTitle быстрый и полезен для префиксов.
+    // 2+ слов: пропускаем — сразу Bitrix Search (иначе дублируем долгий проход).
+    if (!$isMultiWord)
     {
-        if ($productCount >= $topCount)
-            break;
-
-        if (!isset($arResult['CATEGORIES'][$categoryIndex]))
-            break;
-
-        $beforeCount = $productCount;
-
-        $exFILTER = [
-            0 => CSearchParameters::ConvertParamsToFilter($arParams, 'CATEGORY_' . $categoryIndex),
-        ];
-        $exFILTER[0]['LOGIC'] = 'OR';
-
-        if (($arParams['CHECK_DATES'] ?? '') === 'Y')
-            $exFILTER['CHECK_DATES'] = 'Y';
-
-        $obTitle = new CSearchTitle;
-        $obTitle->setMinWordLength($_REQUEST['l'] ?? 2);
-
-        if (!$obTitle->Search($searchQuery, $topCount, $exFILTER, false, $arParams['ORDER'] ?? 'rank'))
-            continue;
-
-        while ($ar = $obTitle->Fetch())
+        foreach ($queries as $searchQuery)
         {
-            $itemId = (int)$ar['ITEM_ID'];
-            if ($itemId <= 0 || in_array($itemId, $existingIds, true))
+            if ($productCount >= $topCount)
+                break;
+
+            if (!isset($arResult['CATEGORIES'][$categoryIndex]))
+                break;
+
+            $beforeCount = $productCount;
+
+            $exFILTER = [
+                0 => CSearchParameters::ConvertParamsToFilter($arParams, 'CATEGORY_' . $categoryIndex),
+            ];
+            $exFILTER[0]['LOGIC'] = 'OR';
+
+            if (($arParams['CHECK_DATES'] ?? '') === 'Y')
+                $exFILTER['CHECK_DATES'] = 'Y';
+
+            $obTitle = new CSearchTitle;
+            $obTitle->setMinWordLength($_REQUEST['l'] ?? 2);
+
+            if (!$obTitle->Search($searchQuery, $topCount, $exFILTER, false, $arParams['ORDER'] ?? 'rank'))
                 continue;
 
-            $arResult['CATEGORIES'][$categoryIndex]['ITEMS'][] = [
-                'NAME' => $ar['NAME'],
-                'URL' => htmlspecialcharsbx($ar['URL']),
-                'MODULE_ID' => $ar['MODULE_ID'],
-                'PARAM1' => $ar['PARAM1'],
-                'PARAM2' => $ar['PARAM2'],
-                'ITEM_ID' => $ar['ITEM_ID'],
-            ];
+            while ($ar = $obTitle->Fetch())
+            {
+                $itemId = (int)$ar['ITEM_ID'];
+                if ($itemId <= 0 || in_array($itemId, $existingIds, true))
+                    continue;
 
-            $existingIds[] = $itemId;
-            $productCount++;
+                $arResult['CATEGORIES'][$categoryIndex]['ITEMS'][] = [
+                    'NAME' => $ar['NAME'],
+                    'URL' => htmlspecialcharsbx($ar['URL']),
+                    'MODULE_ID' => $ar['MODULE_ID'],
+                    'PARAM1' => $ar['PARAM1'],
+                    'PARAM2' => $ar['PARAM2'],
+                    'ITEM_ID' => $ar['ITEM_ID'],
+                ];
 
-            if ($productCount >= $topCount)
-                break 2;
+                $existingIds[] = $itemId;
+                $productCount++;
+
+                if ($productCount >= $topCount)
+                    break 2;
+            }
+
+            if ($beforeCount === 0 && $productCount > 0 && mb_strtolower($searchQuery) !== mb_strtolower($originalQuery))
+                $arResult['SEARCH_QUERY_CORRECTED'] = $searchQuery;
         }
-
-        if ($beforeCount === 0 && $productCount > 0 && mb_strtolower($searchQuery) !== mb_strtolower($originalQuery))
-            $arResult['SEARCH_QUERY_CORRECTED'] = $searchQuery;
     }
 
     // Один добор через Bitrix(+имя), без повторных fulltext-сканов и без отдельного count

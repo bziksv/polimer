@@ -96,52 +96,62 @@ if(
 
 			$arOthersFilter[] = $exFILTER;
 
+			// Для 2+ слов CSearchTitle почти всегда пустой и только тормозит —
+			// заполнение делает polimerEnhanceTitleSearchResult через Bitrix Search.
+			$searchQueryForTitle = $arResult["alt_query"] ? $arResult["alt_query"] : $arResult["query"];
+			$skipTitleSearch = function_exists('polimerSplitSearchTokens')
+				&& count(polimerSplitSearchTokens($searchQueryForTitle, 2)) >= 2;
+
 			$j = 0;
-			$obTitle = new CSearchTitle;
-			$obTitle->setMinWordLength($_REQUEST["l"]);
-			if($obTitle->Search(
-				$arResult["alt_query"]? $arResult["alt_query"]: $arResult["query"]
-				,$arParams["TOP_COUNT"]
-				,$exFILTER
-				,false
-				,$arParams["ORDER"]
-			))
+			if (!$skipTitleSearch)
 			{
-				while($ar = $obTitle->Fetch())
+				$obTitle = new CSearchTitle;
+				$obTitle->setMinWordLength($_REQUEST["l"]);
+				if($obTitle->Search(
+					$searchQueryForTitle
+					,$arParams["TOP_COUNT"]
+					,$exFILTER
+					,false
+					,$arParams["ORDER"]
+				))
 				{
-					$j++;
-					if($j > $arParams["TOP_COUNT"])
+					while($ar = $obTitle->Fetch())
 					{
-						$params = array("q" => $arResult["alt_query"]? $arResult["alt_query"]: $arResult["query"]);
+						$j++;
+						if($j > $arParams["TOP_COUNT"])
+						{
+							$params = array("q" => $searchQueryForTitle);
 
-						$url = CHTTP::urlAddParams(
-								str_replace("#SITE_DIR#", SITE_DIR, $arParams["PAGE"])
-								,$params
-								,array("encode"=>true)
-							).CSearchTitle::MakeFilterUrl("f", $exFILTER);
+							$url = CHTTP::urlAddParams(
+									str_replace("#SITE_DIR#", SITE_DIR, $arParams["PAGE"])
+									,$params
+									,array("encode"=>true)
+								).CSearchTitle::MakeFilterUrl("f", $exFILTER);
 
-						$arResult["CATEGORIES"][$i]["ITEMS"][] = array(
-							"NAME" => GetMessage("CC_BST_MORE"),
-							"URL" => htmlspecialcharsex($url),
-							"TYPE" => "all"
-						);
-						break;
-					}
-					else
-					{
-						$arResult["CATEGORIES"][$i]["ITEMS"][] = array(
-							"NAME" => $ar["NAME"],
-							"URL" => htmlspecialcharsbx($ar["URL"]),
-							"MODULE_ID" => $ar["MODULE_ID"],
-							"PARAM1" => $ar["PARAM1"],
-							"PARAM2" => $ar["PARAM2"],
-							"ITEM_ID" => $ar["ITEM_ID"],
-						);
+							$arResult["CATEGORIES"][$i]["ITEMS"][] = array(
+								"NAME" => GetMessage("CC_BST_MORE"),
+								"URL" => htmlspecialcharsex($url),
+								"TYPE" => "all"
+							);
+							break;
+						}
+						else
+						{
+							$arResult["CATEGORIES"][$i]["ITEMS"][] = array(
+								"NAME" => $ar["NAME"],
+								"URL" => htmlspecialcharsbx($ar["URL"]),
+								"MODULE_ID" => $ar["MODULE_ID"],
+								"PARAM1" => $ar["PARAM1"],
+								"PARAM2" => $ar["PARAM2"],
+								"ITEM_ID" => $ar["ITEM_ID"],
+							);
+						}
 					}
 				}
 			}
 
-			if(!$j)
+			// Пустую категорию оставляем при skip — её наполнит result_modifier/enhance
+			if(!$j && !$skipTitleSearch)
 			{
 				unset($arResult["CATEGORIES"][$i]);
 			}
