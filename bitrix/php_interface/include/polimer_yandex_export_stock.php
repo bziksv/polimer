@@ -112,3 +112,46 @@ function polimerYandexPassStoreFilter(int $productId, array $amountSums, float $
 
 	return $amount >= $minQuantity;
 }
+
+/**
+ * Остаток для фида: целая сумма по выбранным складам (или null, если склады не заданы).
+ *
+ * @param array<int, float> $amountSums
+ */
+function polimerYandexGetOfferQuantity(int $productId, array $amountSums, bool $hasStoreAmounts): ?int
+{
+	if (!$hasStoreAmounts || $productId <= 0)
+	{
+		return null;
+	}
+
+	$qty = (int)floor((float)($amountSums[$productId] ?? 0.0));
+
+	return $qty < 0 ? 0 : $qty;
+}
+
+/**
+ * Теги остатков для Яндекс Товары: <available> + <quantity>.
+ * quantity — только если в профиле выбраны склады (сумма AMOUNT по ним).
+ *
+ * @param array<int, float> $amountSums
+ */
+function polimerYandexFormatStockXmlTags(int $productId, string $availableFlag, array $amountSums, bool $hasStoreAmounts): string
+{
+	$available = ($availableFlag === 'Y') ? 'true' : 'false';
+	$qty = polimerYandexGetOfferQuantity($productId, $amountSums, $hasStoreAmounts);
+
+	// Если остаток по складам 0 — явно нет в наличии (даже если CATALOG.AVAILABLE = Y).
+	if ($qty !== null && $qty <= 0)
+	{
+		$available = 'false';
+	}
+
+	$xml = '<available>'.$available."</available>\n";
+	if ($qty !== null)
+	{
+		$xml .= '<quantity>'.$qty."</quantity>\n";
+	}
+
+	return $xml;
+}

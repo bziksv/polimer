@@ -1031,7 +1031,10 @@ if ($firstStep)
 		fwrite($fp, 'header("Content-Type: text/xml; charset='.$itemOptions['CHARSET'].'");'."\n");
 		fwrite($fp, 'echo "<"."?xml version=\"1.0\" encoding=\"'.$itemOptions['CHARSET'].'\"?".">"?>');
 		fwrite($fp, "\n".'<!DOCTYPE yml_catalog SYSTEM "shops.dtd">'."\n");
-		fwrite($fp, '<yml_catalog date="'.date("Y-m-d H:i").'">'."\n");
+		// RFC 3339 с часовым поясом — требование Яндекс Товары при передаче остатков/цен
+		$polimerYmlDate = (new \DateTime('now', new \DateTimeZone('Europe/Moscow')))->format('c');
+		fwrite($fp, '<yml_catalog date="'.$polimerYmlDate.'">'."\n");
+		unset($polimerYmlDate);
 		fwrite($fp, '<shop>'."\n");
 
 		fwrite($fp,
@@ -1894,6 +1897,12 @@ if (empty($arRunErrors))
 							}
 						}
 
+						$itemsContent .= polimerYandexFormatStockXmlTags(
+							(int)$offer['ID'],
+							(string)($offer['AVAILABLE'] ?? 'N'),
+							$polimerStoreAmounts,
+							$polimerStoreFilterActive
+						);
 						$itemsContent .= '</offer>'."\n";
 					}
 					unset($offer);
@@ -2052,6 +2061,12 @@ if (empty($arRunErrors))
 						}
 					}
 
+					$itemsContent .= polimerYandexFormatStockXmlTags(
+						(int)$row['ID'],
+						(string)($row['AVAILABLE'] ?? 'N'),
+						$polimerStoreAmounts,
+						$polimerStoreFilterActive
+					);
 					$itemsContent .= "</offer>\n";
 				}
 
