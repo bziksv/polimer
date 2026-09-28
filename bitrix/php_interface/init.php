@@ -1285,8 +1285,49 @@ function polimerSuggestSearchCorrection($query, $iblockId = IBLOCK_CATALOG)
 }
 
 /**
- * Ослабленные варианты запроса, если точное совпадение пустое:
- * «счетчик горячей» → «счетчик», «горячей» и т.п.
+ * Служебные слова поиска — их выкидываем раньше значащих.
+ */
+function polimerIsSearchStopWord($token)
+{
+    static $stops = [
+        'для', 'и', 'с', 'со', 'по', 'из', 'на', 'в', 'во', 'к', 'ко', 'от', 'до',
+        'без', 'или', 'при', 'под', 'над', 'об', 'про', 'через', 'а', 'но',
+        'the', 'a', 'an', 'of', 'and', 'or', 'to', 'for', 'in', 'on',
+    ];
+
+    return in_array(mb_strtolower(trim((string)$token)), $stops, true);
+}
+
+/**
+ * Насколько токен «характерный» (бренд / длинное слово выше обычных).
+ * Больше = важнее сохранить при ослаблении запроса.
+ */
+function polimerSearchTokenDistinctiveness($token)
+{
+    $token = trim((string)$token);
+    if ($token === '')
+        return -100;
+
+    if (polimerIsSearchStopWord($token))
+        return -50;
+
+    $score = mb_strlen($token);
+
+    // латиница / артикулы / бренды (ALTSTREAM, VALTEC, ALT-T)
+    if (preg_match('/[A-Za-z]/u', $token))
+        $score += 20;
+    if (preg_match('/^[A-Z0-9][A-Z0-9\-_\/.]*$/u', $token))
+        $score += 15;
+    if (preg_match('/\d/u', $token))
+        $score += 5;
+
+    return $score;
+}
+
+/**
+ * Ослабленные варианты запроса, если точное совпадение пустое.
+ * Раньше отрезали слова с конца → «Арматура для радиаторов ALTSTREAM» схлопывалось в «Арматура».
+ * Теперь сначала убираем стоп-слова и наименее характерные токены, бренды оставляем дольше.
  */
 function polimerBuildRelaxedSearchQueries($query)
 {
@@ -1301,20 +1342,44 @@ function polimerBuildRelaxedSearchQueries($query)
 
     $queries = [];
 
-    // убираем слова с конца: «а б в» → «а б», «а»
-    for ($len = count($tokens) - 1; $len >= 1; $len--)
-        $queries[] = implode(' ', array_slice($tokens, 0, $len));
+    $withoutStops = array_values(array_filter($tokens, static function ($token) {
+        return !polimerIsSearchStopWord($token);
+    }));
 
-    // убираем слова с начала: «а б в» → «б в», «в»
-    for ($start = 1; $start < count($tokens); $start++)
-        $queries[] = implode(' ', array_slice($tokens, $start));
+    if (count($withoutStops) >= 2 && count($withoutStops) < count($tokens))
+        $queries[] = implode(' ', $withoutStops);
 
-    // отдельные токены — сначала более длинные
-    $byLength = $tokens;
-    usort($byLength, static function ($left, $right) {
+    // Постепенно выкидываем наименее характерные слова, оставляя бренды/длинные
+    $working = count($withoutStops) >= 1 ? $withoutStops : $tokens;
+    while (count($working) >= 2)
+    {
+        $dropIdx = 0;
+        $dropScore = PHP_INT_MAX;
+        foreach ($working as $idx => $token)
+        {
+            $score = polimerSearchTokenDistinctiveness($token);
+            if ($score < $dropScore)
+            {
+                $dropScore = $score;
+                $dropIdx = $idx;
+            }
+        }
+
+        array_splice($working, $dropIdx, 1);
+        if (!empty($working))
+            $queries[] = implode(' ', $working);
+    }
+
+    // Отдельные токены — сначала бренды и длинные, не «первое слово»
+    $singles = count($withoutStops) >= 1 ? $withoutStops : $tokens;
+    usort($singles, static function ($left, $right) {
+        $scoreDiff = polimerSearchTokenDistinctiveness($right) <=> polimerSearchTokenDistinctiveness($left);
+        if ($scoreDiff !== 0)
+            return $scoreDiff;
+
         return mb_strlen($right) <=> mb_strlen($left);
     });
-    foreach ($byLength as $token)
+    foreach ($singles as $token)
         $queries[] = $token;
 
     $unique = [];
@@ -1605,7 +1670,27 @@ function polimerSearchBitrixCatalogIds($query, array $arParams, $iblockId = IBLO
     if ($query === '')
         return [];
 
-    $exFILTER = CSearchParameters::ConvertParamsToFilter($arParams, 'arrFILTER');
+    // search.page → arrFILTER; search.title → CATEGORY_0
+    $filterKey = 'arrFILTER';
+    if (empty($arParams['arrFILTER']) && !empty($arParams['CATEGORY_0']))
+    {
+        $filterKey = 'CATEGORY_0';
+        if (empty($arParams['arrFILTER']))
+        {
+            // ConvertParamsToFilter читает ключ as-is; для title достаточно CATEGORY_0_*
+        }
+    }
+
+    $exFILTER = CSearchParameters::ConvertParamsToFilter($arParams, $filterKey);
+    if (!is_array($exFILTER) || empty($exFILTER))
+    {
+        $exFILTER = [
+            [
+                '=MODULE_ID' => 'iblock',
+                'PARAM2' => [(string)(int)$iblockId],
+            ],
+        ];
+    }
 
     $arFilter = [
         'QUERY' => $query,
@@ -1641,6 +1726,178 @@ function polimerSearchBitrixCatalogIds($query, array $arParams, $iblockId = IBLO
     }
 
     return $ids;
+}
+
+/**
+ * Элементы каталога в формате title-search по списку ID.
+ */
+function polimerCatalogTitleItemsFromIds(array $ids, $limit = 15)
+{
+    if (empty($ids) || !CModule::IncludeModule('iblock'))
+        return [];
+
+    $limit = max(1, (int)$limit);
+    $ids = array_values(array_unique(array_filter(array_map('intval', $ids))));
+    if (empty($ids))
+        return [];
+
+    $ids = array_slice($ids, 0, $limit);
+    $byId = [];
+
+    $res = CIBlockElement::GetList(
+        [],
+        ['ID' => $ids, 'IBLOCK_ID' => IBLOCK_CATALOG, 'ACTIVE' => 'Y'],
+        false,
+        false,
+        ['ID', 'IBLOCK_ID', 'NAME', 'DETAIL_PAGE_URL']
+    );
+
+    while ($row = $res->GetNext())
+    {
+        $id = (int)$row['ID'];
+        $byId[$id] = [
+            'NAME' => $row['NAME'],
+            'URL' => $row['DETAIL_PAGE_URL'],
+            'MODULE_ID' => 'iblock',
+            'PARAM1' => '1c_catalog',
+            'PARAM2' => (int)$row['IBLOCK_ID'],
+            'ITEM_ID' => $id,
+        ];
+    }
+
+    $items = [];
+    foreach ($ids as $id)
+    {
+        if (isset($byId[$id]))
+            $items[] = $byId[$id];
+    }
+
+    return $items;
+}
+
+/**
+ * Быстрый набор ID каталога для title-search.
+ * Сначала Bitrix (морфология, как /search/). Имя/fulltext — только если Bitrix пуст.
+ * Без генерации опечаток в ajax.
+ */
+function polimerCollectTitleSearchCatalogIds($query, array $arParams = [], $maxIds = 300)
+{
+    static $cache = [];
+
+    $query = trim(polimerNormalizeSearchQueryEncoding($query));
+    $maxIds = max(1, (int)$maxIds);
+    if ($query === '')
+        return ['ids' => [], 'total' => 0];
+
+    $cacheKey = mb_strtolower($query) . '|' . $maxIds;
+    if (isset($cache[$cacheKey]))
+        return $cache[$cacheKey];
+
+    $ids = [];
+    foreach (polimerSearchBitrixCatalogIds($query, $arParams, IBLOCK_CATALOG, $maxIds) as $id)
+    {
+        $id = (int)$id;
+        if ($id > 0)
+            $ids[] = $id;
+    }
+    $ids = array_values(array_unique($ids));
+
+    if (!empty($ids))
+    {
+        $result = ['ids' => $ids, 'total' => count($ids)];
+        $cache[$cacheKey] = $result;
+        return $result;
+    }
+
+    // Bitrix пуст — один проход по имени без typo-вариантов
+    $nameItems = polimerSearchCatalogByTokens($query, IBLOCK_CATALOG, $maxIds, [], false);
+    foreach ($nameItems as $item)
+    {
+        $id = (int)($item['ITEM_ID'] ?? 0);
+        if ($id > 0)
+            $ids[] = $id;
+    }
+    $ids = array_values(array_unique($ids));
+
+    if (!empty($ids))
+    {
+        $result = ['ids' => $ids, 'total' => count($ids)];
+        $cache[$cacheKey] = $result;
+        return $result;
+    }
+
+    // И fulltext только как последний шанс
+    $textItems = polimerSearchCatalogByTokens($query, IBLOCK_CATALOG, $maxIds, [], true);
+    foreach ($textItems as $item)
+    {
+        $id = (int)($item['ITEM_ID'] ?? 0);
+        if ($id > 0)
+            $ids[] = $id;
+    }
+    $ids = array_values(array_unique($ids));
+
+    $result = ['ids' => $ids, 'total' => count($ids)];
+    $cache[$cacheKey] = $result;
+    return $result;
+}
+
+/**
+ * Добирает товары в title-search одним проходом и пишет SEARCH_PRODUCTS_TOTAL.
+ */
+function polimerAppendTitleSearchCatalogMatches(
+    array &$arResult,
+    array &$existingIds,
+    &$productCount,
+    $query,
+    array $arParams,
+    $categoryIndex,
+    $topCount
+)
+{
+    $query = trim((string)$query);
+    $topCount = max(1, (int)$topCount);
+    $productCount = (int)$productCount;
+
+    if ($query === '')
+        return;
+
+    // Для бейджа достаточно ~300; полный скан на 5000 в ajax не нужен
+    $collected = polimerCollectTitleSearchCatalogIds($query, $arParams, max($topCount * 4, 300));
+    $allIds = $collected['ids'];
+    $arResult['SEARCH_PRODUCTS_TOTAL'] = max(
+        (int)($arResult['SEARCH_PRODUCTS_TOTAL'] ?? 0),
+        (int)$collected['total'],
+        $productCount
+    );
+
+    if ($productCount >= $topCount || empty($allIds))
+        return;
+
+    // Ранжируем только то, что реально покажем в выпадашке
+    $toRank = array_slice($allIds, 0, max($topCount * 2, 60));
+    $toRank = polimerRankCatalogIdsByQuery($toRank, $query);
+    $toRank = array_values(array_filter($toRank, static function ($id) use ($existingIds) {
+        return !in_array((int)$id, $existingIds, true);
+    }));
+
+    foreach (polimerCatalogTitleItemsFromIds($toRank, $topCount - $productCount) as $item)
+    {
+        $itemId = (int)$item['ITEM_ID'];
+        if ($itemId <= 0 || in_array($itemId, $existingIds, true))
+            continue;
+
+        $arResult['CATEGORIES'][$categoryIndex]['ITEMS'][] = $item;
+        $existingIds[] = $itemId;
+        $productCount++;
+
+        if ($productCount >= $topCount)
+            break;
+    }
+
+    $arResult['SEARCH_PRODUCTS_TOTAL'] = max(
+        (int)$arResult['SEARCH_PRODUCTS_TOTAL'],
+        $productCount
+    );
 }
 
 function polimerEnhanceSearchPageResult(array &$arResult, array $arParams)
@@ -1992,42 +2249,17 @@ function polimerEnhanceTitleSearchResult(array &$arResult, array $arParams)
             $arResult['SEARCH_QUERY_CORRECTED'] = $searchQuery;
     }
 
-    if ($productCount >= $topCount)
-        return;
+    // Один добор через Bitrix(+имя), без повторных fulltext-сканов и без отдельного count
+    polimerAppendTitleSearchCatalogMatches(
+        $arResult,
+        $existingIds,
+        $productCount,
+        $originalQuery,
+        $arParams,
+        $categoryIndex,
+        $topCount
+    );
 
-    foreach ($queries as $searchQuery)
-    {
-        if ($productCount >= $topCount)
-            break;
-
-        $beforeCount = $productCount;
-
-        $fallbackItems = polimerSearchCatalogByTokens(
-            $searchQuery,
-            IBLOCK_CATALOG,
-            $topCount - $productCount,
-            $existingIds
-        );
-
-        foreach ($fallbackItems as $item)
-        {
-            $itemId = (int)$item['ITEM_ID'];
-            if ($itemId <= 0 || in_array($itemId, $existingIds, true))
-                continue;
-
-            $arResult['CATEGORIES'][$categoryIndex]['ITEMS'][] = $item;
-            $existingIds[] = $itemId;
-            $productCount++;
-
-            if ($productCount >= $topCount)
-                break 2;
-        }
-
-        if ($beforeCount === 0 && $productCount > 0 && mb_strtolower($searchQuery) !== mb_strtolower($originalQuery))
-            $arResult['SEARCH_QUERY_CORRECTED'] = $searchQuery;
-    }
-
-    // Если точных совпадений нет — ближайшие по укороченному запросу
     if ($productCount > 0)
         return;
 
@@ -2073,29 +2305,15 @@ function polimerEnhanceTitleSearchResult(array &$arResult, array $arParams)
             }
         }
 
-        if ($productCount < $topCount)
-        {
-            $fallbackItems = polimerSearchCatalogByTokens(
-                $relaxedQuery,
-                IBLOCK_CATALOG,
-                $topCount - $productCount,
-                $existingIds
-            );
-
-            foreach ($fallbackItems as $item)
-            {
-                $itemId = (int)$item['ITEM_ID'];
-                if ($itemId <= 0 || in_array($itemId, $existingIds, true))
-                    continue;
-
-                $arResult['CATEGORIES'][$categoryIndex]['ITEMS'][] = $item;
-                $existingIds[] = $itemId;
-                $productCount++;
-
-                if ($productCount >= $topCount)
-                    break;
-            }
-        }
+        polimerAppendTitleSearchCatalogMatches(
+            $arResult,
+            $existingIds,
+            $productCount,
+            $relaxedQuery,
+            $arParams,
+            $categoryIndex,
+            $topCount
+        );
 
         if ($beforeCount === 0 && $productCount > 0)
         {
@@ -2105,7 +2323,6 @@ function polimerEnhanceTitleSearchResult(array &$arResult, array $arParams)
         }
     }
 
-    // Опечатки — только если ближайшие тоже не нашлись
     if ($productCount > 0)
         return;
 
@@ -2120,26 +2337,15 @@ function polimerEnhanceTitleSearchResult(array &$arResult, array $arParams)
 
         $beforeCount = $productCount;
 
-        $fallbackItems = polimerSearchCatalogByTokens(
+        polimerAppendTitleSearchCatalogMatches(
+            $arResult,
+            $existingIds,
+            $productCount,
             $searchQuery,
-            IBLOCK_CATALOG,
-            $topCount - $productCount,
-            $existingIds
+            $arParams,
+            $categoryIndex,
+            $topCount
         );
-
-        foreach ($fallbackItems as $item)
-        {
-            $itemId = (int)$item['ITEM_ID'];
-            if ($itemId <= 0 || in_array($itemId, $existingIds, true))
-                continue;
-
-            $arResult['CATEGORIES'][$categoryIndex]['ITEMS'][] = $item;
-            $existingIds[] = $itemId;
-            $productCount++;
-
-            if ($productCount >= $topCount)
-                break 2;
-        }
 
         if ($beforeCount === 0 && $productCount > 0)
         {

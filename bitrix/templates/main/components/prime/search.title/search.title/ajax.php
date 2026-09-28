@@ -26,11 +26,12 @@ $polimerSearchSafeSrc = static function ($src) use ($polimerSearchSafeHref) {
 	return $safe === '#' ? '/bitrix/templates/main/img/no_photo.png' : $safe;
 };
 
-/** Имя с подсветкой Bitrix (<b>): экранируем текст, оставляем только <b></b> */
+/** Имя с подсветкой Bitrix (<b>): сначала снимаем уже готовые сущности, потом экранируем */
 $polimerSearchSafeNameHtml = static function ($name) {
-	$parts = preg_split('#(</?b>)#iu', (string)$name, -1, PREG_SPLIT_DELIM_CAPTURE);
+	$name = html_entity_decode((string)$name, ENT_QUOTES | ENT_HTML5, SITE_CHARSET ?: 'UTF-8');
+	$parts = preg_split('#(</?b>)#iu', $name, -1, PREG_SPLIT_DELIM_CAPTURE);
 	if ($parts === false)
-		return htmlspecialcharsbx((string)$name);
+		return htmlspecialcharsbx($name);
 
 	$html = '';
 	foreach ($parts as $part)
@@ -82,6 +83,7 @@ if (($searchAllUrl === '' || $searchAllUrl === '#') && $rawQuery !== '')
 	));
 }
 $shownProducts = count($products);
+$totalProducts = max($shownProducts, (int)($arResult['SEARCH_PRODUCTS_TOTAL'] ?? $shownProducts));
 ?>
 <div class="polimer-search-dropdown" data-query="<?=$query?>"<?if($correctedQuery):?> data-query-corrected="<?=$correctedQuery?>"<?endif?>>
 	<?if($correctedQuery && mb_strtolower($correctedQuery) !== mb_strtolower($query)):?>
@@ -152,8 +154,8 @@ $shownProducts = count($products);
 			<div class="polimer-search-dropdown__products-head">
 				<div class="polimer-search-dropdown__heading polimer-search-dropdown__heading--products">
 					<span class="polimer-search-dropdown__heading-text">Товары</span>
-					<span class="polimer-search-dropdown__products-count" data-total="<?=$shownProducts?>">
-						<?=$shownProducts?>
+					<span class="polimer-search-dropdown__products-count" data-total="<?=$totalProducts?>" data-shown="<?=$shownProducts?>">
+						<?=$totalProducts?>
 					</span>
 				</div>
 				<div class="polimer-search-dropdown__filter-bar" hidden></div>
@@ -167,7 +169,11 @@ $shownProducts = count($products);
 					$productUrl = $polimerSearchSafeHref($arItem['URL'] ?? '');
 					$productPath = $productUrl !== '#' ? (string)(parse_url($productUrl, PHP_URL_PATH) ?: '') : '';
 					$productNameHtml = $polimerSearchSafeNameHtml($arItem['NAME'] ?? '');
-					$productNameAttr = htmlspecialcharsbx(strip_tags((string)($arItem['NAME'] ?? '')));
+					$productNameAttr = htmlspecialcharsbx(strip_tags(html_entity_decode(
+						(string)($arItem['NAME'] ?? ''),
+						ENT_QUOTES | ENT_HTML5,
+						SITE_CHARSET ?: 'UTF-8'
+					)));
 					$productPicture = htmlspecialcharsbx($polimerSearchSafeSrc($arItem['PICTURE'] ?? ''));
 					// CurrencyFormat уже отдаёт безопасный HTML (₽ как &#8381;) — не экранируем повторно
 					$productPrice = (string)($arItem['FORMAT_INT'] ?? '');
@@ -252,8 +258,9 @@ $shownProducts = count($products);
 		<a class="polimer-search-dropdown__all"
 			href="<?=htmlspecialcharsbx($searchAllUrl)?>"
 			data-url-all="<?=htmlspecialcharsbx($searchAllUrl)?>"
-			data-label-all="<?=$searchAllName?>">
-			<span class="polimer-search-dropdown__all-text"><?=$searchAllName?></span>
+			data-label-all="<?=$searchAllName?>"
+			data-total="<?=(int)$totalProducts?>">
+			<span class="polimer-search-dropdown__all-text"><?=$searchAllName?><?if($totalProducts > 0):?> — <?=$totalProducts?><?endif?></span>
 			<?if($correctedQuery):?> по запросу «<?=$correctedQuery?>»<?elseif($query):?> по запросу «<?=$query?>»<?endif?>
 		</a>
 	</div>

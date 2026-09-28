@@ -431,8 +431,11 @@ function PolimerTitleSearch(arParams)
 
 		if (productsCount)
 		{
-			productsCount.textContent = String(visibleCount || productItems.length);
-			productsCount.setAttribute('data-total', String(productItems.length));
+			var totalAttr = parseInt(productsCount.getAttribute('data-total'), 10);
+			var total = (!isNaN(totalAttr) && totalAttr > 0) ? totalAttr : productItems.length;
+			productsCount.textContent = String(sectionIds.length ? visibleCount : total);
+			if (!sectionIds.length)
+				productsCount.setAttribute('data-total', String(Math.max(total, productItems.length)));
 		}
 
 		var footerLink = dropdown.querySelector('.polimer-search-dropdown__all');
@@ -441,6 +444,8 @@ function PolimerTitleSearch(arParams)
 			var allUrl = footerLink.getAttribute('data-url-all') || footerLink.getAttribute('href');
 			var allLabel = footerLink.getAttribute('data-label-all') || 'Все результаты';
 			var query = dropdown.getAttribute('data-query') || _this.INPUT.value || '';
+			var footerTotalAttr = parseInt(footerLink.getAttribute('data-total'), 10);
+			var footerTotal = (!isNaN(footerTotalAttr) && footerTotalAttr > 0) ? footerTotalAttr : productItems.length;
 
 			if (activeButtons.length === 1)
 			{
@@ -460,7 +465,8 @@ function PolimerTitleSearch(arParams)
 			else
 			{
 				footerLink.href = allUrl;
-				footerLink.innerHTML = '<span class="polimer-search-dropdown__all-text">' + _this.escapeHtml(allLabel) + '</span>'
+				var allText = _this.escapeHtml(allLabel) + (footerTotal > 0 ? ' — ' + footerTotal : '');
+				footerLink.innerHTML = '<span class="polimer-search-dropdown__all-text">' + allText + '</span>'
 					+ (query ? ' по запросу «' + _this.escapeHtml(query) + '»' : '');
 			}
 		}

@@ -7,7 +7,9 @@ if (!empty($arResult['SEARCH_QUERY_CORRECTED']))
 	$arResult['QUERY_ORIGINAL'] = $arResult['query'] ?? '';
 	$correctedQuery = $arResult['SEARCH_QUERY_CORRECTED'];
 
-	if (!empty($arResult['SEARCH_ALL']['URL']))
+	// При «ослаблении» до части запроса ссылку «Все результаты» оставляем с исходным q —
+	// страница /search/ сама находит товары по полному запросу лучше, чем по одному слову.
+	if (!empty($arResult['SEARCH_ALL']['URL']) && empty($arResult['SEARCH_QUERY_RELAXED']))
 	{
 		$arResult['SEARCH_ALL']['URL'] = CHTTP::urlAddParams(
 			strtok($arResult['SEARCH_ALL']['URL'], '?'),
@@ -119,8 +121,11 @@ $arResult["SEARCH_PRODUCTS"] = polimerSortSearchProductsByAvailabilityAndPrice(
 	trim((string)($arResult['SEARCH_QUERY_CORRECTED'] ?? $arResult['query'] ?? ''))
 );
 
-// Без тяжёлого подсчёта всех совпадений — только то, что уже в выпадашке
-$arResult['SEARCH_PRODUCTS_TOTAL'] = count($arResult['SEARCH_PRODUCTS']);
+// Полный total с /search/; не меньше числа уже показанных в выпадашке
+$arResult['SEARCH_PRODUCTS_TOTAL'] = max(
+	(int)($arResult['SEARCH_PRODUCTS_TOTAL'] ?? 0),
+	count($arResult['SEARCH_PRODUCTS'])
+);
 if (!empty($arResult['SEARCH_ALL']))
 	$arResult['SEARCH_ALL']['NAME'] = 'Все результаты';
 
