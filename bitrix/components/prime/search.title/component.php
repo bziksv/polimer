@@ -44,6 +44,36 @@ if(
 	if($arParams["TOP_COUNT"] <= 0)
 		$arParams["TOP_COUNT"] = 5;
 
+	// Кеш готового HTML на 24ч (ключ: запрос + user + TOP_COUNT)
+	$polimerTitleSearchCache = null;
+	$polimerTitleSearchCacheId = null;
+	$polimerTitleSearchCacheDir = null;
+	$polimerTitleSearchCacheTtl = 0;
+	if (class_exists('\Bitrix\Main\Data\Cache') && function_exists('polimerBuildTitleSearchAjaxCacheId'))
+	{
+		$polimerTitleSearchCache = \Bitrix\Main\Data\Cache::createInstance();
+		$polimerTitleSearchCacheId = polimerBuildTitleSearchAjaxCacheId($query, $arParams);
+		$polimerTitleSearchCacheDir = polimerGetTitleSearchAjaxCacheDir();
+		$polimerTitleSearchCacheTtl = polimerGetTitleSearchAjaxCacheTtl();
+
+		if ($polimerTitleSearchCache->initCache(
+			$polimerTitleSearchCacheTtl,
+			$polimerTitleSearchCacheId,
+			$polimerTitleSearchCacheDir
+		))
+		{
+			$cacheVars = $polimerTitleSearchCache->getVars();
+			if (!empty($cacheVars['HTML']) && is_string($cacheVars['HTML']))
+			{
+				$APPLICATION->RestartBuffer();
+				header('X-Polimer-Title-Search-Cache: HIT');
+				echo $cacheVars['HTML'];
+				CMain::FinalActions();
+				die();
+			}
+		}
+	}
+
 	$arOthersFilter = array("LOGIC"=>"OR");
 
 	for($i = 0; $i < $arParams["NUM_CATEGORIES"]; $i++)
@@ -290,7 +320,29 @@ if (
 	$APPLICATION->RestartBuffer();
 
 	if(!empty($query))
+	{
+		ob_start();
 		$this->IncludeComponentTemplate('ajax');
+		$html = ob_get_clean();
+
+		if (
+			isset($polimerTitleSearchCache, $polimerTitleSearchCacheId, $polimerTitleSearchCacheDir)
+			&& $polimerTitleSearchCache
+			&& $polimerTitleSearchCacheId
+			&& $polimerTitleSearchCacheTtl > 0
+			&& $polimerTitleSearchCache->startDataCache(
+				$polimerTitleSearchCacheTtl,
+				$polimerTitleSearchCacheId,
+				$polimerTitleSearchCacheDir
+			)
+		)
+		{
+			$polimerTitleSearchCache->endDataCache(['HTML' => $html]);
+			header('X-Polimer-Title-Search-Cache: MISS');
+		}
+
+		echo $html;
+	}
 	CMain::FinalActions();
 	die();
 }

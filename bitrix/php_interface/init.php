@@ -1729,6 +1729,38 @@ function polimerSearchBitrixCatalogIds($query, array $arParams, $iblockId = IBLO
 }
 
 /**
+ * TTL кеша HTML ajax-поиска в шапке (24 часа).
+ */
+function polimerGetTitleSearchAjaxCacheTtl()
+{
+    return 86400;
+}
+
+function polimerGetTitleSearchAjaxCacheDir()
+{
+    return '/polimer/title_search_ajax';
+}
+
+/**
+ * Ключ кеша: нормализованный запрос + пользователь (из-за кнопки «в сравнении») + TOP_COUNT.
+ */
+function polimerBuildTitleSearchAjaxCacheId($query, array $arParams = [])
+{
+    global $USER;
+
+    $norm = trim(polimerNormalizeSearchQueryEncoding($query));
+    $norm = preg_replace('/\s+/u', ' ', $norm);
+    $norm = mb_strtolower((string)$norm);
+
+    $userId = (is_object($USER) && method_exists($USER, 'IsAuthorized') && $USER->IsAuthorized())
+        ? (int)$USER->GetID()
+        : 0;
+    $topCount = (int)($arParams['TOP_COUNT'] ?? 50);
+
+    return 'title_search_ajax_' . md5(SITE_ID . '|' . $norm . '|u' . $userId . '|t' . $topCount);
+}
+
+/**
  * Элементы каталога в формате title-search по списку ID.
  */
 function polimerCatalogTitleItemsFromIds(array $ids, $limit = 15)
