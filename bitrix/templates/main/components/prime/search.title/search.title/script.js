@@ -24,6 +24,8 @@ function PolimerTitleSearch(arParams)
 	this.OVERLAY = null;
 	this.items = [];
 	this.inputTimer = null;
+	this.statTimer = null;
+	this.STAT_PAUSE_MS = 1500;
 	this.layoutTimer = null;
 	this.mouseOverResult = false;
 	this.suppressFocusLostDismiss = false;
@@ -53,6 +55,65 @@ function PolimerTitleSearch(arParams)
 		}
 	};
 
+	this.cancelPhraseStat = function()
+	{
+		clearTimeout(_this.statTimer);
+		_this.statTimer = null;
+	};
+
+	this.readResultCountFromPanel = function()
+	{
+		if (!_this.RESULT)
+			return 0;
+
+		var el = _this.RESULT.querySelector(
+			'.polimer-search-dropdown__products-count[data-total], .polimer-search-dropdown__all[data-total]'
+		);
+		if (!el)
+			return 0;
+
+		var total = parseInt(el.getAttribute('data-total'), 10);
+		return isNaN(total) ? 0 : Math.max(0, total);
+	};
+
+	/**
+	 * Пишем фразу в статистику только после паузы (не на каждый символ).
+	 */
+	this.schedulePhraseStat = function()
+	{
+		_this.cancelPhraseStat();
+
+		if (!_this.INPUT)
+			return;
+
+		var query = _this.INPUT.value;
+		if (query.length < _this.arParams.MIN_QUERY_LEN)
+			return;
+
+		var resultCount = _this.readResultCountFromPanel();
+
+		_this.statTimer = setTimeout(function() {
+			_this.statTimer = null;
+
+			if (!_this.INPUT || _this.INPUT.value !== query)
+				return;
+
+			BX.ajax({
+				method: 'POST',
+				dataType: 'html',
+				url: _this.arParams.AJAX_PAGE,
+				timeout: 10,
+				data: BX.ajax.prepareData({
+					'ajax_call': 'y',
+					'log_phrase': 'y',
+					'INPUT_ID': _this.arParams.INPUT_ID,
+					'q': query,
+					'result_count': resultCount
+				})
+			});
+		}, _this.STAT_PAUSE_MS);
+	};
+
 	this.isResultPanelVisible = function()
 	{
 		return !!(_this.RESULT && !_this.RESULT.classList.contains('is-dismissed'));
@@ -63,6 +124,7 @@ function PolimerTitleSearch(arParams)
 		_this.searchRequestId++;
 		clearTimeout(_this.inputTimer);
 		_this.inputTimer = null;
+		_this.cancelPhraseStat();
 		_this.running = false;
 		_this.runningCall = false;
 		_this.cache_key = null;
@@ -590,6 +652,7 @@ function PolimerTitleSearch(arParams)
 			return;
 		}
 		_this.running = true;
+		_this.cancelPhraseStat();
 
 		if (_this.INPUT.value != _this.oldValue)
 		{
@@ -623,6 +686,7 @@ function PolimerTitleSearch(arParams)
 							_this.cache[_this.cache_key] = result;
 							_this.setSearchLoading(false);
 							_this.ShowResult(result);
+							_this.schedulePhraseStat();
 							if (callback)
 								callback();
 							_this.running = false;
@@ -651,6 +715,7 @@ function PolimerTitleSearch(arParams)
 
 				_this.ShowResult(_this.cache[_this.cache_key]);
 				_this.setSearchLoading(false);
+				_this.schedulePhraseStat();
 			}
 			else
 			{
@@ -699,6 +764,7 @@ function PolimerTitleSearch(arParams)
 	this.onInput = function()
 	{
 		clearTimeout(_this.inputTimer);
+		_this.cancelPhraseStat();
 
 		if (_this.INPUT.value.length >= _this.arParams.MIN_QUERY_LEN
 			&& _this.INPUT.value !== _this.oldValue)

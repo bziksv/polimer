@@ -20,6 +20,40 @@ if (($_REQUEST['ajax_call'] ?? '') !== 'y')
 	die();
 }
 
+// Фиксация фразы после паузы ввода (отдельный лёгкий запрос из JS).
+if (($_REQUEST['log_phrase'] ?? '') === 'y')
+{
+	$query = trim((string)($_POST['q'] ?? $_REQUEST['q'] ?? ''));
+	if ($query !== '' && function_exists('CUtil'))
+		CUtil::decodeURIComponent($query);
+
+	$resultCount = max(0, (int)($_REQUEST['result_count'] ?? 0));
+
+	if (
+		$query !== ''
+		&& function_exists('polimerBuildTitleSearchAjaxCacheId')
+		&& class_exists('\Bitrix\Main\Data\Cache')
+	)
+	{
+		$cache = \Bitrix\Main\Data\Cache::createInstance();
+		$cacheId = polimerBuildTitleSearchAjaxCacheId($query, ['TOP_COUNT' => 50]);
+		if ($cache->initCache(polimerGetTitleSearchAjaxCacheTtl(), $cacheId, polimerGetTitleSearchAjaxCacheDir()))
+		{
+			$vars = $cache->getVars();
+			if (array_key_exists('RESULT_COUNT', $vars))
+				$resultCount = max(0, (int)$vars['RESULT_COUNT']);
+		}
+	}
+
+	if ($query !== '' && function_exists('polimerLogSearchPhrase'))
+		polimerLogSearchPhrase($query, $resultCount);
+
+	header('Content-Type: text/plain; charset=UTF-8');
+	echo '1';
+	require $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/epilog_after.php';
+	die();
+}
+
 $inputId = (string)($_REQUEST['INPUT_ID'] ?? 'title-search-input');
 $allowedInputs = [
 	'title-search-input' => 'title-search',

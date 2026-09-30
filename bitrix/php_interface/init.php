@@ -1761,6 +1761,40 @@ function polimerBuildTitleSearchAjaxCacheId($query, array $arParams = [])
 }
 
 /**
+ * Пишет фразу в b_search_phrase (как search.page через CSearch::NavStart).
+ * Дедуп Bitrix: одна запись на SESSION_ID + PHRASE; RESULT_COUNT поднимаем, если новый больше.
+ */
+function polimerLogSearchPhrase($phrase, $resultCount = 0)
+{
+    $phrase = trim((string)$phrase);
+    if ($phrase === '' || mb_strlen($phrase) < 2)
+        return;
+
+    if (!CModule::IncludeModule('search'))
+        return;
+
+    if (COption::GetOptionString('search', 'stat_phrase') !== 'Y')
+        return;
+
+    if (!class_exists('CSearchStatistic'))
+        return;
+
+    $resultCount = max(0, (int)$resultCount);
+    $stat = new CSearchStatistic($phrase);
+    $stat->PhraseStat($resultCount, 1);
+
+    if ($stat->phrase_id > 0 && $resultCount > 0)
+    {
+        $DB = CDatabase::GetModuleConnection('search');
+        $DB->Query(
+            'UPDATE b_search_phrase SET RESULT_COUNT = ' . $resultCount
+            . ' WHERE ID = ' . (int)$stat->phrase_id
+            . ' AND RESULT_COUNT < ' . $resultCount
+        );
+    }
+}
+
+/**
  * Элементы каталога в формате title-search по списку ID.
  */
 function polimerCatalogTitleItemsFromIds(array $ids, $limit = 15)

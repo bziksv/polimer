@@ -63,7 +63,11 @@ if(
 		))
 		{
 			$cacheVars = $polimerTitleSearchCache->getVars();
-			if (!empty($cacheVars['HTML']) && is_string($cacheVars['HTML']))
+			if (
+				!empty($cacheVars['HTML'])
+				&& is_string($cacheVars['HTML'])
+				&& array_key_exists('RESULT_COUNT', $cacheVars)
+			)
 			{
 				$APPLICATION->RestartBuffer();
 				header('X-Polimer-Title-Search-Cache: HIT');
@@ -325,6 +329,11 @@ if (
 		$this->IncludeComponentTemplate('ajax');
 		$html = ob_get_clean();
 
+		$resultCount = max(
+			(int)($arResult['SEARCH_PRODUCTS_TOTAL'] ?? 0),
+			count($arResult['SEARCH_PRODUCTS'] ?? [])
+		);
+
 		if (
 			isset($polimerTitleSearchCache, $polimerTitleSearchCacheId, $polimerTitleSearchCacheDir)
 			&& $polimerTitleSearchCache
@@ -337,7 +346,10 @@ if (
 			)
 		)
 		{
-			$polimerTitleSearchCache->endDataCache(['HTML' => $html]);
+			$polimerTitleSearchCache->endDataCache([
+				'HTML' => $html,
+				'RESULT_COUNT' => $resultCount,
+			]);
 			header('X-Polimer-Title-Search-Cache: MISS');
 		}
 
