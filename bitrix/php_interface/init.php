@@ -1618,7 +1618,7 @@ function polimerRankCatalogIdsByQuery(array $ids, $query)
     return $ids;
 }
 
-function polimerSearchCatalogAllIds($query, $iblockId = IBLOCK_CATALOG, $maxIds = 50000, $fullText = true)
+function polimerSearchCatalogAllIds($query, $iblockId = IBLOCK_CATALOG, $maxIds = 50000, $fullText = true, $includeTypo = false)
 {
     $query = trim(polimerNormalizeSearchQueryEncoding($query));
     if ($query === '')
@@ -1626,7 +1626,7 @@ function polimerSearchCatalogAllIds($query, $iblockId = IBLOCK_CATALOG, $maxIds 
 
     $seen = [];
     $allIds = [];
-    $queries = polimerBuildSearchQueries($query, true);
+    $queries = polimerBuildSearchQueries($query, (bool)$includeTypo);
 
     foreach ($queries as $searchQuery)
     {
@@ -1973,30 +1973,82 @@ function polimerEnhanceSearchPageResult(array &$arResult, array $arParams)
         return;
 
     $iblockId = IBLOCK_CATALOG;
-    // Сначала совпадения по названию, потом по тексту, потом модуль поиска Bitrix
-    $nameIds = polimerSearchCatalogAllIds($query, $iblockId, 5000, false);
-    $textIds = polimerSearchCatalogAllIds($query, $iblockId, 5000, true);
-    $bitrixIds = polimerSearchBitrixCatalogIds($query, $arParams, $iblockId, 5000);
+    // Достаточно для пагинации; раньше 5000 + 14 typo×fulltext → 7–9с на «отвод 90»
+    $maxIds = 500;
+    $minBeforeText = 40;
 
-    $seen = [];
-    $allIds = [];
-    foreach ([$nameIds, $bitrixIds, $textIds] as $idList)
+    $cache = null;
+    $cacheId = null;
+    $cacheDir = '/polimer/search_page_ids';
+    $cacheTtl = 86400;
+    $normKey = mb_strtolower(trim(polimerNormalizeSearchQueryEncoding($query)));
+    if ($normKey !== '' && class_exists('\Bitrix\Main\Data\Cache'))
     {
+        $cache = \Bitrix\Main\Data\Cache::createInstance();
+        $cacheId = 'search_page_ids_' . md5(SITE_ID . '|' . $normKey . '|' . $maxIds);
+        if ($cache->initCache($cacheTtl, $cacheId, $cacheDir))
+        {
+            $vars = $cache->getVars();
+            if (!empty($vars['IDS']) && is_array($vars['IDS']))
+            {
+                $allIds = array_values(array_filter(array_map('intval', $vars['IDS'])));
+                if (!empty($allIds))
+                {
+                    $arResult['POLIMER_PRODUCT_IDS'] = $allIds;
+                    $arResult['ROWS_COUNT'] = count($allIds);
+                    $arResult['SEARCH'] = array_map(static function ($id) use ($iblockId) {
+                        return [
+                            'ITEM_ID' => $id,
+                            'ID' => $id,
+                            'PARAM2' => $iblockId,
+                        ];
+                    }, $allIds);
+                    return;
+                }
+            }
+        }
+    }
+
+    $mergeIds = static function (array &$allIds, array &$seen, array $idList, $maxIds) {
         foreach ($idList as $id)
         {
             $id = (int)$id;
             if ($id <= 0 || isset($seen[$id]))
                 continue;
-
             $seen[$id] = true;
             $allIds[] = $id;
+            if (count($allIds) >= $maxIds)
+                return true;
         }
+        return false;
+    };
+
+    $seen = [];
+    $allIds = [];
+
+    // Как title-search: имя (без опечаток) → Bitrix → fulltext; typo только если пусто
+    $mergeIds($allIds, $seen, polimerSearchCatalogAllIds($query, $iblockId, $maxIds, false, false), $maxIds);
+
+    if (count($allIds) < $maxIds)
+        $mergeIds($allIds, $seen, polimerSearchBitrixCatalogIds($query, $arParams, $iblockId, $maxIds), $maxIds);
+
+    if (count($allIds) < $minBeforeText)
+        $mergeIds($allIds, $seen, polimerSearchCatalogAllIds($query, $iblockId, $maxIds, true, false), $maxIds);
+
+    if (empty($allIds))
+    {
+        $mergeIds($allIds, $seen, polimerSearchCatalogAllIds($query, $iblockId, $maxIds, false, true), $maxIds);
+        if (empty($allIds))
+            $mergeIds($allIds, $seen, polimerSearchCatalogAllIds($query, $iblockId, $maxIds, true, true), $maxIds);
     }
 
     if (empty($allIds))
         return;
 
     $allIds = polimerRankCatalogIdsByQuery($allIds, $query);
+
+    if ($cache && $cacheId && $cache->startDataCache($cacheTtl, $cacheId, $cacheDir))
+        $cache->endDataCache(['IDS' => $allIds]);
 
     $arResult['POLIMER_PRODUCT_IDS'] = $allIds;
     $arResult['ROWS_COUNT'] = count($allIds);
