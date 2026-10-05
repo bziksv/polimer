@@ -71,6 +71,10 @@ function polimerResetAdd2CartButton($btn)
 
 function addToBasket2(idel, quantity,el) {
     let $href = "/ajax/add.php?id=" + idel;
+    quantity = parseInt(quantity, 10) || 1;
+    if (quantity < 1) {
+        quantity = 1;
+    }
 
     $.ajax({
         url: $href + '&quantity=' + quantity,
@@ -618,7 +622,16 @@ function polimerAdd2CartFromCard($add2cart, triggerEl) {
         return;
     }
 
-    var qty = $item.find('.quantity input[name="quantity"]').val() || 1;
+    var $qtyInput = $item.find('.quantity input[name="quantity"]');
+    var qty = parseInt($qtyInput.val(), 10) || 1;
+    var max = parseInt($qtyInput.attr('max'), 10);
+    if (max > 0 && qty > max) {
+        qty = max;
+        $qtyInput.val(max);
+    }
+    if (qty < 1) {
+        qty = 1;
+    }
     addToBasket2(id, qty, triggerEl || $add2cart[0]);
 }
 
