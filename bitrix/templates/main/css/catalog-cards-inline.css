@@ -4290,6 +4290,21 @@ header .header__bottom.fixed {
     cursor: default;
 }
 
+.basket-stock-warning {
+    margin: 0 0 16px;
+    padding: 12px 14px;
+    border: 1px solid #f0c36d;
+    background: #fff8e8;
+    color: #5c4a1f;
+    font: 400 14px/1.4 'roboto', sans-serif;
+}
+.basket-stock-warning p {
+    margin: 0 0 6px;
+}
+.basket-stock-warning p:last-child {
+    margin-bottom: 0;
+}
+
 /* footer desktop/tablet landscape — 5 колонок (лого + 4 магазина/каталог) в одну строку */
 @media screen and (min-width: 1020px) {
     footer .footer__top {

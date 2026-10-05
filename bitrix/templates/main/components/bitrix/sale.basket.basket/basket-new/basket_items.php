@@ -9,10 +9,18 @@ foreach ($arResult["GRID"]["ROWS"] as $basketRow) {
 }
 ?>
 <?echo ShowError($arResult["ERROR_MESSAGE"]);
+$polimerStockMessages = function_exists('polimerTakeStockClampMessages') ? polimerTakeStockClampMessages() : [];
 if ($normalCount > 0)
 {?>
 
 	<div class="basket">
+		<?php if ($polimerStockMessages): ?>
+		<div class="basket-stock-warning" role="status">
+			<?php foreach ($polimerStockMessages as $polimerStockMessage): ?>
+			<p><?=htmlspecialcharsbx($polimerStockMessage)?></p>
+			<?php endforeach; ?>
+		</div>
+		<?php endif; ?>
 <!--		<a href="#" class="check">Проверка наличия на складе</a>-->
 		<h1>Корзина</h1>
 		<div class="pc__prod-info" style="margin-bottom:20px">

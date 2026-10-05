@@ -67,6 +67,12 @@ foreach ($arResult["GRID"]["ROWS"] as &$row) {
     }
 
     $precent[] = $row['DISCOUNT_PRICE_PERCENT_FORMATED'];
+
+    $productId = (int)($row['PRODUCT_ID'] ?? 0);
+    if ($productId > 0 && function_exists('polimerGetCatalogStock'))
+    {
+        $row['AVAILABLE_QUANTITY'] = polimerGetCatalogStock($productId);
+    }
 }
 unset($row);
 $_SESSION['DISCOUNT_PRICE_PERCENT_FORMATED'] = implode(',', $precent);

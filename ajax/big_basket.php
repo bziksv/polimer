@@ -1,4 +1,6 @@
-<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");?>
+<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
+polimerRememberStockClamp(polimerClampFuserBasketToStock());
+?>
 
 <?$APPLICATION->IncludeComponent("bitrix:sale.basket.basket", "basket-new", Array(
     "COUNT_DISCOUNT_4_ALL_QUANTITY" => "N",	// Рассчитывать скидку для каждой позиции (на все количество товара)
