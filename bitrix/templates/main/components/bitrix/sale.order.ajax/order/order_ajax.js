@@ -362,6 +362,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 
 				this.initOptions();
 				this.editOrder();
+				this.polimerApplyPickupTransferMarks();
 				this.mapsReady && this.initMaps();
 				BX.saleOrderAjax && BX.saleOrderAjax.initDeferredControl();
 			}
@@ -1844,6 +1845,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 
 			this.fade(actionSection, section.next);
 			this.show(section.next);
+			this.polimerApplyPickupTransferMarks();
 
 			return BX.PreventDefault(event);
 		},
@@ -2137,6 +2139,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 			}).animate();
 
 			this.checkBlockErrors(node);
+			this.polimerApplyPickupTransferMarks();
 		},
 
 		/**
@@ -2186,6 +2189,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 			node.setAttribute('data-visited', 'true');
 			BX.addClass(node, 'bx-selected');
 			BX.removeClass(node, 'bx-step-completed');
+			this.polimerApplyPickupTransferMarks();
 		},
 
 		showByClick: function(event)
@@ -3306,6 +3310,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 			this.editFadeBasketBlock(active);
 
 			this.initialized.basket = true;
+			this.polimerApplyPickupTransferMarks();
 		},
 
 		editActiveBasketBlock: function(activeNodeMode)
@@ -6072,33 +6077,37 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 		polimerApplyPickupTransferMarks: function()
 		{
 			var ids = this.polimerPickupTransferIds || [],
-				rows, i, row, productId, note, show;
+				roots = [this.basketBlockNode, this.basketHiddenBlockNode],
+				r, rows, i, row, productId, note, show;
 
-			if (!this.basketBlockNode)
+			for (r = 0; r < roots.length; r++)
 			{
-				return;
-			}
-
-			rows = this.basketBlockNode.querySelectorAll('.bx-soa-item-tr[data-product-id]');
-			for (i = 0; i < rows.length; i++)
-			{
-				row = rows[i];
-				productId = parseInt(row.getAttribute('data-product-id'), 10);
-				note = row.querySelector('.bx-soa-item-store-note');
-				if (!note)
+				if (!roots[r])
 				{
 					continue;
 				}
-				show = ids.indexOf(productId) !== -1 || ids.indexOf(String(productId)) !== -1;
-				note.style.display = show ? '' : 'none';
-				if (show)
+
+				rows = roots[r].querySelectorAll('.bx-soa-item-tr[data-product-id]');
+				for (i = 0; i < rows.length; i++)
 				{
-					note.textContent = this.polimerPickupTransferMessage;
-					BX.addClass(row, 'bx-soa-item-store-transfer');
-				}
-				else
-				{
-					BX.removeClass(row, 'bx-soa-item-store-transfer');
+					row = rows[i];
+					productId = parseInt(row.getAttribute('data-product-id'), 10);
+					note = row.querySelector('.bx-soa-item-store-note');
+					if (!note)
+					{
+						continue;
+					}
+					show = ids.indexOf(productId) !== -1 || ids.indexOf(String(productId)) !== -1;
+					note.style.display = show ? '' : 'none';
+					if (show)
+					{
+						note.textContent = this.polimerPickupTransferMessage;
+						BX.addClass(row, 'bx-soa-item-store-transfer');
+					}
+					else
+					{
+						BX.removeClass(row, 'bx-soa-item-store-transfer');
+					}
 				}
 			}
 		},
