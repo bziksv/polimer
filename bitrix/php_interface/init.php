@@ -47,7 +47,6 @@ function checkProduct($id){
 }
 
 require_once __DIR__ . '/include/polimer_basket_stock.php';
-AddEventHandler('sale', 'OnSaleOrderBeforeSaved', 'polimerOnSaleOrderBeforeSavedStock');
 
 function productMeasureUnit($productId, array $properties = [])
 {

@@ -1,17 +1,6 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Оформление заказа");
-
-$request = \Bitrix\Main\Context::getCurrent()->getRequest();
-$stockChanges = polimerClampFuserBasketToStock();
-$isOrderAjax = $request->isAjaxRequest()
-	|| (string)$request->get('soa-action') !== ''
-	|| (string)$request->getPost('soa-action') !== '';
-if ($stockChanges && !$isOrderAjax)
-{
-	polimerRememberStockClamp($stockChanges);
-	LocalRedirect('/personal/cart/');
-}
 ?>
 <br/>
 <?$APPLICATION->IncludeComponent(
