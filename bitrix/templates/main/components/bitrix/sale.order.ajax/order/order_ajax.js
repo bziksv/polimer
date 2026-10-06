@@ -72,6 +72,10 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 			this.orderSaveAllowed = false;
 			this.socServiceHiddenNode = false;
 			this.deliveryChoiceConfirmed = false;
+			this.polimerPickupTransferNeedConfirm = false;
+			this.polimerPickupTransferAccepted = false;
+			this.polimerPickupTransferIds = [];
+			this.polimerPickupTransferMessage = 'Часть товара приедет с другого склада, о сроке готовности сообщит менеджер';
 		},
 
 		/**
@@ -1786,7 +1790,32 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 		{
 			var target = event.target || event.srcElement,
 				actionSection = BX.findParent(target, {className : "bx-active"}),
-				section = this.getNextSection(actionSection),
+				self = this;
+
+			if (
+				this.pickUpBlockNode
+				&& actionSection
+				&& actionSection.id === this.pickUpBlockNode.id
+				&& !this.polimerPickupTransferAccepted
+			)
+			{
+				this.polimerCheckPickupTransfer(function(needConfirm) {
+					self.polimerApplyPickupTransferMarks();
+					if (needConfirm)
+					{
+						self.polimerShowPickupTransferModal(function() {
+							self.polimerPickupTransferAccepted = true;
+							self.clickNextAction(event);
+						});
+						return;
+					}
+					self.polimerPickupTransferAccepted = true;
+					self.clickNextAction(event);
+				});
+				return BX.PreventDefault(event);
+			}
+
+			var section = this.getNextSection(actionSection),
 				allSections, titleNode, editStep;
 
 			if (actionSection && this.deliveryBlockNode && actionSection.id === this.deliveryBlockNode.id)
@@ -1828,6 +1857,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 				actionSection = BX.findParent(target, {className: "bx-active"}),
 				section = this.getPrevSection(actionSection);
 
+			this.polimerPickupTransferAccepted = false;
 			this.fade(actionSection);
 			this.show(section.next);
 			this.animateScrollTo(section.next, 800);
@@ -3468,7 +3498,8 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 				otherColumns = [],
 				hiddenColumns = [],
 				currentColumn, basketColumnIndex = 0,
-				i, tr, cols;
+				i, tr, cols,
+				productId = parseInt((item && item.data && item.data.PRODUCT_ID) || 0, 10);
 
 			if (this.options.showPreviewPicInBasket || this.options.showDetailPicInBasket)
 				mainColumns.push(this.createBasketItemImg(item.data));
@@ -3523,6 +3554,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 			basketItemsNode.appendChild(
 				BX.create('DIV', {
 					props: {className: 'bx-soa-item-tr bx-soa-basket-info' + (index == 0 ? ' bx-soa-item-tr-first' : '')},
+					attrs: {'data-product-id': productId > 0 ? String(productId) : ''},
 					children: cols
 				})
 			);
@@ -3698,9 +3730,19 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 				props: {className: 'bx-soa-item-content'},
 				children: propsNodes.length ? [
 					BX.create('DIV', {props: {className: 'bx-soa-item-title'}, html: titleHtml}),
+					BX.create('DIV', {
+						props: {className: 'bx-soa-item-store-note'},
+						style: {display: 'none'},
+						text: this.polimerPickupTransferMessage
+					}),
 					BX.create('DIV', {props: {className: 'bx-scu-container'}, children: propsNodes})
 				] : [
-					BX.create('DIV', {props: {className: 'bx-soa-item-title'}, html: titleHtml})
+					BX.create('DIV', {props: {className: 'bx-soa-item-title'}, html: titleHtml}),
+					BX.create('DIV', {
+						props: {className: 'bx-soa-item-store-note'},
+						style: {display: 'none'},
+						text: this.polimerPickupTransferMessage
+					})
 				]
 			});
 		},
@@ -5966,21 +6008,13 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 
 					html += '<img src="' + imgSrc + '" class="bx-soa-pickup-preview-img">';
 				}
-				
-				BX.ajax({
-					url: "/ajax/check_available.php",
-					method: "POST",
-					dataType: "json",
-					async: false,
-					data: {
-						ID: selectedPickUp.ID,
-					},
-					onsuccess: (d) => {
-						if (d.warning) {
-					html += '<div class="alert alert-success"><div>' + d.warning + ' <strong><span style="color: #5d81f7; font-size: 16px;">Наличие уточняйте у менеджера</span></strong></div></div>';
-						}
-					}
-				});
+
+				if (this.polimerPickupTransferNeedConfirm)
+				{
+					html += '<div class="bx-soa-pickup-transfer-warning">'
+						+ BX.util.htmlspecialchars(this.polimerPickupTransferMessage)
+						+ '</div>';
+				}
 
 				html += '<strong>' + BX.util.htmlspecialchars(selectedPickUp.TITLE) + '</strong>';
 				if (selectedPickUp.ADDRESS)
@@ -6003,6 +6037,90 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 						this.popupShow(e, logotype && logotype.src_orig || imgSrc);
 					}, this));
 				}
+			}
+		},
+
+		polimerCheckPickupTransfer: function(callback)
+		{
+			var pickUpInput = BX('BUYER_STORE'),
+				storeId = pickUpInput ? pickUpInput.value : 0,
+				self = this;
+
+			BX.ajax({
+				url: '/ajax/check_available.php',
+				method: 'POST',
+				dataType: 'json',
+				data: {ID: storeId},
+				onsuccess: function(d)
+				{
+					d = d || {};
+					self.polimerPickupTransferNeedConfirm = !!d.needConfirm;
+					self.polimerPickupTransferIds = d.productIds || [];
+					if (d.message)
+					{
+						self.polimerPickupTransferMessage = d.message;
+					}
+					callback(!!d.needConfirm);
+				},
+				onfailure: function()
+				{
+					callback(false);
+				}
+			});
+		},
+
+		polimerApplyPickupTransferMarks: function()
+		{
+			var ids = this.polimerPickupTransferIds || [],
+				rows, i, row, productId, note, show;
+
+			if (!this.basketBlockNode)
+			{
+				return;
+			}
+
+			rows = this.basketBlockNode.querySelectorAll('.bx-soa-item-tr[data-product-id]');
+			for (i = 0; i < rows.length; i++)
+			{
+				row = rows[i];
+				productId = parseInt(row.getAttribute('data-product-id'), 10);
+				note = row.querySelector('.bx-soa-item-store-note');
+				if (!note)
+				{
+					continue;
+				}
+				show = ids.indexOf(productId) !== -1 || ids.indexOf(String(productId)) !== -1;
+				note.style.display = show ? '' : 'none';
+				if (show)
+				{
+					note.textContent = this.polimerPickupTransferMessage;
+					BX.addClass(row, 'bx-soa-item-store-transfer');
+				}
+				else
+				{
+					BX.removeClass(row, 'bx-soa-item-store-transfer');
+				}
+			}
+		},
+
+		polimerShowPickupTransferModal: function(onOk)
+		{
+			var message = this.polimerPickupTransferMessage;
+
+			if (typeof alertify !== 'undefined' && typeof alertify.confirm === 'function')
+			{
+				alertify.confirm(
+					'Самовывоз',
+					message,
+					function() { onOk && onOk(); },
+					function() {}
+				).set('labels', {ok: 'Продолжить', cancel: 'Назад'});
+				return;
+			}
+
+			if (window.confirm(message))
+			{
+				onOk && onOk();
 			}
 		},
 
@@ -6527,6 +6645,7 @@ BX.namespace('BX.Sale.OrderAjaxComponent');
 				}).animate();
 
 				storeInput.setAttribute('value', storeItemId);
+				this.polimerPickupTransferAccepted = false;
 				this.maps && this.maps.selectBalloon(storeItemId);
 			}
 		},

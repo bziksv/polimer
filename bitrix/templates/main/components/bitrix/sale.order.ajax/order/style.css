@@ -1579,3 +1579,17 @@ label[data-bx-user-consent] input{
         padding-right: 10px !important;
     }
 }
+
+.bx-soa-pickup-transfer-warning {
+    margin: 0 0 10px;
+    padding: 10px 12px;
+    border: 1px solid #f0c36d;
+    background: #fff8e8;
+    color: #5c4a1f;
+    font: 400 14px/1.4 'roboto', sans-serif;
+}
+.bx-soa-item-store-note {
+    margin-top: 6px;
+    font: 400 12px/1.35 'roboto', sans-serif;
+    color: #8a6d00;
+}
