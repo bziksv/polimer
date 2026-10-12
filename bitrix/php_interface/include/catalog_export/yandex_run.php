@@ -1031,8 +1031,16 @@ if ($firstStep)
 		fwrite($fp, 'header("Content-Type: text/xml; charset='.$itemOptions['CHARSET'].'");'."\n");
 		fwrite($fp, 'echo "<"."?xml version=\"1.0\" encoding=\"'.$itemOptions['CHARSET'].'\"?".">"?>');
 		fwrite($fp, "\n".'<!DOCTYPE yml_catalog SYSTEM "shops.dtd">'."\n");
-		// RFC 3339 с часовым поясом — требование Яндекс Товары при передаче остатков/цен
-		$polimerYmlDate = (new \DateTime('now', new \DateTimeZone('Europe/Moscow')))->format('c');
+		// RFC 3339 — только для фида с остатками по складам (Яндекс Товары).
+		// Для Директа оставляем классический формат Bitrix, иначе ломается разбор.
+		if ($polimerStoreFilterActive)
+		{
+			$polimerYmlDate = (new \DateTime('now', new \DateTimeZone('Europe/Moscow')))->format('c');
+		}
+		else
+		{
+			$polimerYmlDate = date('Y-m-d H:i');
+		}
 		fwrite($fp, '<yml_catalog date="'.$polimerYmlDate.'">'."\n");
 		unset($polimerYmlDate);
 		fwrite($fp, '<shop>'."\n");
@@ -2111,14 +2119,40 @@ if (empty($arRunErrors))
 	if ($finalExport)
 	{
 		$process = true;
+		$sectionAbs = $_SERVER['DOCUMENT_ROOT'].$sectionFileName;
+		$itemAbs = $_SERVER['DOCUMENT_ROOT'].$itemFileName;
+
+		// Без шапки (_sections) FILE_APPEND создаёт файл с «</categories><offers>…» —
+		// Директ такой фид не принимает. Так бывает при обрыве шага / общем SETUP_FILE_NAME.
+		if (!is_file($sectionAbs) || filesize($sectionAbs) < 64)
+		{
+			$arRunErrors[] = 'Полимер: файл шапки фида пуст или отсутствует ('.$sectionFileName.'). '
+				.'Перезапустите выгрузку с первого шага; проверьте, что у профилей разные SETUP_FILE_NAME.';
+			$process = false;
+		}
+		else
+		{
+			$sectionHead = (string)@file_get_contents($sectionAbs, false, null, 0, 8192);
+			if (
+				strpos($sectionHead, '<shop>') === false
+				|| strpos($sectionHead, '<categories>') === false
+			)
+			{
+				$arRunErrors[] = 'Полимер: в шапке фида нет <shop>/<categories> ('.$sectionFileName.'). '
+					.'Публикация отменена, чтобы не затереть рабочий файл.';
+				$process = false;
+			}
+			unset($sectionHead);
+		}
+
 		$content = '';
 		if ($boolNeedRootSection)
 			$content .= '<category id="'.$intMaxSectionID.'">'.yandex_text2xml(GetMessage('YANDEX_ROOT_DIRECTORY'), $itemOptions).'</category>'."\n";
 		$content .= "</categories>\n";
 		$content .= "<offers>\n";
 
-		$items = file_get_contents($_SERVER["DOCUMENT_ROOT"].$itemFileName);
-		if ($items === false)
+		$items = ($process ? file_get_contents($itemAbs) : false);
+		if ($process && $items === false)
 		{
 			$arRunErrors[] = GetMessage('YANDEX_STEP_ERR_DATA_FILE_NOT_READ');
 			$process = false;
@@ -2130,7 +2164,7 @@ if (empty($arRunErrors))
 			unset($items);
 			$content .= "</offers>\n"."</shop>\n"."</yml_catalog>\n";
 
-			if (file_put_contents($_SERVER["DOCUMENT_ROOT"].$sectionFileName, $content, FILE_APPEND) === false)
+			if (file_put_contents($sectionAbs, $content, FILE_APPEND) === false)
 			{
 				$arRunErrors[] = str_replace('#FILE#', $sectionFileName, GetMessage('YANDEX_ERR_SETUP_FILE_WRITE'));
 				$process = false;
