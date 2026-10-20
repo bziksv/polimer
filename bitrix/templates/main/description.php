@@ -4,5 +4,6 @@ $arTemplate = array (
   'DESCRIPTION' => '',
   'SORT' => 10,
   'TYPE' => '',
+  'EDITOR_STYLES' => '',
 );
 ?>
