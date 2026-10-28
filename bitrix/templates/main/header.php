@@ -797,6 +797,16 @@ $noh1    = $pages[1] == 'personal' || $pages[1] == 'price' || ($pages[1] == 'cat
 
 	         <?}?>
 			<?if($is_main){?>
+	        <style id="cls-mp-banners">
+.mp__banners{height:375px!important;min-height:375px!important;max-height:375px!important;overflow:hidden!important;contain:layout style}
+.mp__banners .mp__slider,#mp__slider{height:375px!important;min-height:375px!important;max-height:375px!important;overflow:hidden!important}
+#mp__slider:not(.slick-initialized)>div:not(:first-child){display:none!important}
+.mp__banners .mp__slider .slick-list,.mp__banners .mp__slider .slick-track,.mp__banners .mp__slider .slick-slide,.mp__banners .mp__slider .item{height:375px!important;min-height:375px!important;max-height:375px!important;overflow:hidden!important}
+.mp__banners .mp__slider .slick-dots{position:absolute!important;left:0;right:0;bottom:25px;height:15px;margin:0!important;padding:0!important}
+@media(max-width:1319px){.mp__banners,.mp__banners .mp__slider,#mp__slider,.mp__banners .mp__slider .slick-list,.mp__banners .mp__slider .slick-track,.mp__banners .mp__slider .item{height:340px!important;min-height:340px!important;max-height:340px!important}}
+@media(max-width:1019px){.mp__banners,.mp__banners .mp__slider,#mp__slider,.mp__banners .mp__slider .slick-list,.mp__banners .mp__slider .slick-track,.mp__banners .mp__slider .item{height:370px!important;min-height:370px!important;max-height:370px!important}}
+@media(max-width:659px){.mp__banners{height:510px!important;max-height:none!important}.mp__banners .mp__slider,#mp__slider,.mp__banners .mp__slider .slick-list,.mp__banners .mp__slider .slick-track,.mp__banners .mp__slider .item{height:450px!important;min-height:450px!important;max-height:450px!important;padding-bottom:0!important}}
+	        </style>
 	        <div class="mp__banners cl">
 
 				<?$APPLICATION->IncludeComponent(
