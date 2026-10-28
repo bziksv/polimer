@@ -1,7 +1,7 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetPageProperty("description", "Инженерная сантехника и строительные материалы в интернет-магазине компании ООО «Полимер»");
-$APPLICATION->SetPageProperty("title", "Интернет-магазин инженерной сантехники и строительных материалов c доставкой — «Полимер»");
+$APPLICATION->SetPageProperty("title", "Сантехника и стройматериалы в Воронеже — «Полимер»");
 $APPLICATION->SetTitle("«Полимер» — главная страница сайта");
 
 // test new branch

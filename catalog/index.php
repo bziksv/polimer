@@ -1,5 +1,6 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
+$APPLICATION->SetPageProperty("title", "Каталог сантехники и стройматериалов в Воронеже");
 $APPLICATION->SetPageProperty("description", "Каталог инженерной сантехники и строительных материалов - большой выбор в интернет-магазине Полимер");
 $APPLICATION->SetTitle("Каталог инженерной сантехники и строительных материалов в интернет-магазине Полимер");
 ?>

@@ -4670,10 +4670,18 @@ header .header__bottom.fixed {
         width: 100% !important;
         float: none !important;
         overflow: hidden !important;
+        min-height: 370px !important;
+    }
+
+    #mp__slider,
+    .mp__banners .mp__slider .slick-list,
+    .mp__banners .mp__slider .slick-track {
+        min-height: 370px !important;
     }
 
     .mp__banners .mp__slider .slick-list {
         overflow: hidden !important;
+        height: 370px !important;
     }
 
     .mp__banners .mp__slider .slick-dots {

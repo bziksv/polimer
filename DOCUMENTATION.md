@@ -3,16 +3,16 @@
 > Интернет-магазин на 1С-Битрикс (polimer-vrn.ru).
 > Документ поддерживается агентом: при изменениях в проекте — **обновлять этот файл**.
 
-Последнее обновление: 2026-10-20 (SEO главной/о компании с прода в git)
+Последнее обновление: 2026-10-28 (CLS главной: резерв высоты слайдера + img size + autoplay после load)
 
 ## 1. Окружения
 
-| Папка | Назначение | Боевой домен | Локальный порт |
+| Папка | Назначение | Боевой домен | Локально |
 |---|---|---|---|
-| `dev.polimer-vrn.ru/` | **Dev** — выкатываем сюда то, что делаем на локале; клиент смотрит и согласует | `dev.polimer-vrn.ru` | **8084** |
+| `dev.polimer-vrn.ru/` | **Dev** — выкатываем сюда то, что делаем на локале; клиент смотрит и согласует | `dev.polimer-vrn.ru` | **http://polimer-vrn.local/** (или `.localhost`) |
 | `polimer-vrn.ru/` | **Prod** — рабочий сайт; выкатываем после согласования на dev | `polimer-vrn.ru` | локально не поднимаем |
 
-**Workflow:** локаль → dev (8084) → согласование клиентом на `dev.polimer-vrn.ru` → деплой на prod (`polimer-vrn.ru`) на сервере.
+**Workflow:** локаль → remote-dev → согласование на `dev.polimer-vrn.ru` → деплой на prod (`polimer-vrn.ru`) на сервере.
 
 На сервере оба сайта лежат в **одной базе** (`polimer_vrn_r_db`); в файловой системе — общие каталоги, симлинки и отдельные файлы.
 
@@ -26,18 +26,19 @@ polimer/
 ├── архивы/                 # бэкапы/архивы
 ├── DOCUMENTATION.md        # этот файл
 ├── scripts/
-│   ├── start-dev.sh        # запуск dev-сайта локально (8084)
-│   └── stop-dev.sh         # остановка
-└── .local/                 # nginx + php-fpm 8.3 (не в git)
+│   ├── start-dev.sh        # php-fpm + reload gateway :80
+│   └── stop-dev.sh         # остановка php-fpm проекта
+└── .local/                 # php-fpm 8.3 (не в git)
 ```
 
-`upload/` лежит в `dev.polimer-vrn.ru/upload/` (реальная папка). Nginx root = `dev.polimer-vrn.ru`, пути `/upload/...` резолвятся туда. На сервере `dev.polimer-vrn.ru/upload` — симлинк на общую `polimer-vrn.ru/upload`.
+Локаль: общий nginx gateway на `:80` (`projects/.dev-gateway/sites/polimer-vrn.conf` + 1-diesel master).  
+`upload/` лежит в `dev.polimer-vrn.ru/upload/`. На сервере `dev.polimer-vrn.ru/upload` — симлинк на `../polimer-vrn.ru/upload`.
 
 ## 3. Платформа
 
 | | |
 |---|---|
-| CMS | 1С-Битрикс, версия **26.250.100** |
+| CMS | 1С-Битрикс (ядро с prod 2026-10-28): catalog **26.300.100**, sale **26.400.0**, iblock **26.0.0** |
 | PHP | **8.3** (`short_open_tag=On` — обязательно) |
 | БД | MySQL, схема `polimer_vrn_r_db` |
 | Конфиг БД | `bitrix/.settings.php`, `bitrix/php_interface/dbconn.php` |
@@ -206,23 +207,21 @@ cd /Users/stanislav/Documents/projects/polimer
 
 | URL | Сайт |
 |---|---|
-| http://localhost:8084/ | dev.polimer-vrn.ru |
-
-Проверка после запуска:
+| http://polimer-vrn.localhost/ | локаль (без `/etc/hosts`) |
+| http://polimer-vrn.local/ | локаль (после записи в hosts) |
 
 ```bash
-curl -sS -o /dev/null -w "dev HTTP %{http_code}\n" http://localhost:8084/
+# один раз для .local:
+sudo sh -c 'echo "127.0.0.1  polimer-vrn.local" >> /etc/hosts'
+
+curl -sS -o /dev/null -w "dev HTTP %{http_code}\n" http://polimer-vrn.localhost/
 ```
+
+Gateway должен быть запущен: `/Users/stanislav/Documents/projects/1-diesel/local/start.sh`
 
 ## 7. Порты других проектов (~/Documents/projects)
 
-| Порт | Проект |
-|---|---|
-| 3002 | cabinet.titlo.ru |
-| 8080 | almamed |
-| 8082 | vilmed |
-| 8083 | kosmamed |
-| **8084** | **polimer dev** |
+Локаль Polimer — **без своего порта**, через shared `:80` (`polimer-vrn.local`). Старый **8084** больше не используется.
 
 ## 8. Git и деплой
 
@@ -379,7 +378,7 @@ rm -rf bitrix/cache/* bitrix/managed_cache/*
 
 | | |
 |---|---|
-| URL (локально) | http://localhost:8084/tools/catalog-image-audit.php |
+| URL (локально) | http://polimer-vrn.localhost/tools/catalog-image-audit.php |
 | CLI-сборка | `php tools/catalog-image-audit-build.php` (на сервере: `/opt/php82/bin/php -d short_open_tag=On tools/catalog-image-audit-build.php`) |
 | Логика | `bitrix/php_interface/polimer_catalog_image_audit.php` |
 | Кэш | `bitrix/cache/polimer/catalog_image_audit.json` (24 ч) |

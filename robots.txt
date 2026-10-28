@@ -135,5 +135,4 @@ Disallow: /ordercheck/
 Disallow: /sale/
 ################################
 Clean-param: utm_source&utm_medium&utm_term&utm_content&utm_campaign&yclid&gclid&_openstat&from /
-Host: https://polimer-vrn.ru/
 Sitemap: https://polimer-vrn.ru/sitemap.xml

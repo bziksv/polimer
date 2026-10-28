@@ -154,19 +154,19 @@ $this->setFrameMode(true);
 							<div class="lvl">Директор</div>
 							<div class="name">Рябцев Сергей Геннадьевич</div>
 							<div class="phone">тел: <a href="tel:+74732075505">(473) 207-55-05</a> <span>добавочный 201</span></div>
-							<div class="mail">e-mail: <a href="mailto: rsg@polimer-vrn.ru">rsg@polimer-vrn.ru</a></div>
+							<div class="mail">e-mail: <a href="mailto:rsg@polimer-vrn.ru">rsg@polimer-vrn.ru</a></div>
 						</div>
 						<div class="rh-col">
 							<div class="lvl">Коммерческий директор</div>
 							<div class="name">Старцев Дмитрий Олегович</div>
 							<div class="phone">тел: <a href="tel:+74732075505">(473) 207-55-05</a> <span>добавочный 231</span></div>
-							<div class="mail">e-mail: <a href="mailto: dmitry@polimer-vrn.ru">polimer-dm@mail.ru</a></div>
+							<div class="mail">e-mail: <a href="mailto:dmitry@polimer-vrn.ru">polimer-dm@mail.ru</a></div>
 						</div>
 						<div class="rh-col">
 							<div class="lvl">Начальник отдела снабжения</div>
 							<div class="name">Паршин Алексей Николаевич</div>
 							<div class="phone">тел: <a href="tel:+74732075505">(473) 207-55-05</a> <span>добавочный 232</span></div>
-							<div class="mail">e-mail: <a href="mailto: popova@polimer-vrn.ru">polimer-al@mail.ru</a></div>
+							<div class="mail">e-mail: <a href="mailto:polimer-al@mail.ru">polimer-al@mail.ru</a></div>
 						</div>
 
 					</div><!--end::co__heads-->
