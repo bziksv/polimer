@@ -1,0 +1,499 @@
+<RequireAll>
+    Require all granted
+
+    Require not ip 49.13.193.0/24
+    Require not ip 5.139.230.0/24
+    Require not ip 5.139.253.0/24
+    Require not ip 31.181.248.0/24
+    Require not ip 37.18.38.0/24
+    Require not ip 37.77.111.0/24
+    Require not ip 45.140.18.0/24
+    Require not ip 62.183.46.0/24
+    Require not ip 77.110.108.0/24
+    Require not ip 83.239.97.0/24
+    Require not ip 85.172.109.0/24
+    Require not ip 85.174.205.0/24
+    Require not ip 85.175.197.0/24
+    Require not ip 85.175.217.0/24
+    Require not ip 91.233.43.0/24
+    Require not ip 95.153.163.0/24
+    Require not ip 95.153.177.0/24
+    Require not ip 95.153.178.0/24
+    Require not ip 95.153.180.0/24
+    Require not ip 95.25.184.0/24
+    Require not ip 178.176.211.0/24
+    Require not ip 185.10.173.0/24
+    Require not ip 188.162.140.0/24
+    Require not ip 188.162.143.0/24
+    Require not ip 188.170.169.0/24
+    Require not ip 217.78.231.0/24
+</RequireAll>
+
+Options -Indexes
+ErrorDocument 404 /404.php
+
+php_value max_execution_time 10800
+
+<IfModule mod_php5.c>
+  php_flag session.use_trans_sid off
+  #php_value display_errors 1
+  #php_value mbstring.internal_encoding UTF-8
+</IfModule>
+
+Redirect 301 /articles/plastic-pipes/ /articles/plastikovye-truby/
+Redirect 301 /articles/polyethylene-pipes/ /articles/polijetilenovye-truby/
+Redirect 301 /articles/pipes-for-heating/ /articles/truby-dlja-otoplenija/
+Redirect 301 /articles/centrifugal-pump/ /articles/centrobezhnyj-nasos/
+Redirect 301 /articles/pump-for-heating/ /articles/nasos-dlja-otoplenija/
+Redirect 301 /articles/klej_plitochnyj/ /articles/plitochnyy-kley/
+Redirect 301 /articles/gidroizolyaciya/ /catalog/gidro_paroizolyatsiya/
+Redirect 301 /articles/gvl/ /catalog/gipsokarton/
+Redirect 301 /articles/list_osb/ /catalog/osp/
+Redirect 301 /articles/list_sml/ /catalog/sml/
+Redirect 301 /articles/list_dvp/ /catalog/dvp/
+Redirect 301 /articles/list_dsp/ /catalog/dsp/
+Redirect 301 /articles/polypropylene-fittings/ /catalog/truby_i_fitingi/
+Redirect 301 /articles/polypropylene-pipes/ /catalog/truby_i_fitingi/
+Redirect 301 /articles/disk-shutter/ /catalog/zatvor_povorotnyy_diskovyy_tecofi_frantsiya/
+
+# от 31.08.2017
+Redirect 301 /catalog/inzhenernaya_santekhnika_otoplenie_vodoprovod_kanalizatsiya/ /catalog/inzhenernaya_santekhnika/
+Redirect 301 /catalog/stroitelnye_materialy/ /catalog/stroitelno_otdelochnye_materialy/
+Redirect 301 /catalog/polipropilenovye_truby_i_fitingi_/ /catalog/polipropelenovye_truby_i_fitingi_fusitek/
+Redirect 301 /articles/centrobezhnyj-nasos/ /articles/tsentrobezhnye-nasosy-dlya-vody/
+Redirect 301 /catalog/vikhrevye_nasosy/ /catalog/tsentrobezhnye_nasosy/
+Redirect 301 /catalog/kotly_nastennye/ /catalog/dvukhkonturnye_nastennye_gazovye_kotly/
+Redirect 301 /catalog/sayding_fasadnyy_alta_profil/ /catalog/sayding_vinilovyy_fasadnyy/
+Redirect 301 /catalog/osp/ /catalog/osb/
+Redirect 301 /catalog/gruntovka_v_d/ /catalog/gruntovka/
+Redirect 301 /catalog/emal_yaroslavskiy_kolorit/ /catalog/emal_pf_115/
+Redirect 301 /catalog/nasosnoe_oborudovanie/ /catalog/nasosy/
+Redirect 301 /catalog/nasosnye_stantsii_/ /catalog/nasosnye_stantsii/
+# Redirect 301 /catalog/protochnye/ /catalog/protochnye_vodonagrevateli/
+Redirect 301 /catalog/teplitsy_pod_sotovyy_polikarbonat/ /catalog/teplitsy_polikarbonat/
+Redirect 301 /catalog/dvukhkonturnye_nastennye_gazovye_kotly/ /catalog/nastennye_gazovye_kotly/
+Redirect 301 /catalog/svarochnye_apparaty_resanta/ /catalog/svarochnye_apparaty/
+
+# от 21.08.2023
+Redirect 301 /brands/bologovskiy_priborostroitelnyy_zavod/ /brands/bologovskiy_armaturnyy_zavod/
+Redirect 301 /brands/santechsystem/ /brands/santechsystems/
+Redirect 301 /brands/akvabrayt/ /brands/akvabrayt_rossiya/
+
+# от 22.09.2023 Смесители
+RewriteRule ^catalog/lemark_1/$ /catalog/smesiteli_dlya_vanny/lemark/ [R=301,L]
+RewriteRule ^catalog/g_lauf_1/$ /catalog/smesiteli_dlya_vanny/g-lauf/ [R=301,L]
+RewriteRule ^catalog/grohe_1/$ /catalog/smesiteli_dlya_vanny/grohe/ [R=301,L]
+RewriteRule ^catalog/iddis_1/$ /catalog/smesiteli_dlya_vanny/iddis/ [R=301,L]
+RewriteRule ^catalog/ledeme/$ /catalog/smesiteli_dlya_vanny/ledeme/ [R=301,L]
+
+RewriteRule ^catalog/onix/$ /catalog/smesiteli_dlya_vanny/onix/ [R=301,L]
+RewriteRule ^catalog/oute/$ /catalog/smesiteli_dlya_vanny/oute/ [R=301,L]
+RewriteRule ^catalog/rossinka/$ /catalog/smesiteli_dlya_vanny/rossinka/ [R=301,L]
+RewriteRule ^catalog/smart/$ /catalog/smesiteli_dlya_vanny/smartsant/ [R=301,L]
+RewriteRule ^catalog/solone_1/$ /catalog/smesiteli_dlya_vanny/solone/ [R=301,L]
+RewriteRule ^catalog/troya/$ /catalog/smesiteli_dlya_vanny/troya/ [R=301,L]
+RewriteRule ^catalog/vidima_1/$ /catalog/smesiteli_dlya_vanny/vidima/ [R=301,L]
+RewriteRule ^catalog/zenta_1/$ /catalog/smesiteli_dlya_vanny/zenta/ [R=301,L]
+RewriteRule ^catalog/g_lauf_2/$ /catalog/smesiteli_dlya_kukhni/g-lauf/ [R=301,L]
+RewriteRule ^catalog/grohe_2/$ /catalog/smesiteli_dlya_kukhni/grohe/ [R=301,L]
+RewriteRule ^catalog/iddis_2/$ /catalog/smesiteli_dlya_kukhni/iddis/ [R=301,L]
+RewriteRule ^catalog/lemark_2/$ /catalog/smesiteli_dlya_kukhni/lemark/ [R=301,L]
+
+RewriteRule ^catalog/solone_2/$ /catalog/smesiteli_dlya_kukhni/solone/ [R=301,L]
+RewriteRule ^catalog/troya_1/$ /catalog/smesiteli_dlya_kukhni/troya/ [R=301,L]
+RewriteRule ^catalog/g_lauf_3/$ /catalog/smesitel_dlya_umyvalnika/g-lauf/ [R=301,L]
+RewriteRule ^catalog/grohe_3/$ /catalog/smesitel_dlya_umyvalnika/grohe/ [R=301,L]
+RewriteRule ^catalog/iddis_3/$ /catalog/smesitel_dlya_umyvalnika/iddis/ [R=301,L]
+RewriteRule ^catalog/lemark_3/$ /catalog/smesitel_dlya_umyvalnika/lemark/ [R=301,L]
+RewriteRule ^catalog/smart_1/$ /catalog/smesitel_dlya_umyvalnika/smartsant/ [R=301,L]
+RewriteRule ^catalog/solone_3/$ /catalog/smesitel_dlya_umyvalnika/solone/ [R=301,L]
+RewriteRule ^catalog/troya_2/$ /catalog/smesitel_dlya_umyvalnika/troya/ [R=301,L]
+RewriteRule ^catalog/zenta_2/$ /catalog/smesitel_dlya_umyvalnika/zenta/ [R=301,L]
+
+# от 04.09.2020 - редиректы папок на фильтры
+# котлы на фильтры
+RewriteRule ^catalog/napolnye_kotly_/$ /catalog/kotly/napolnye/ [R=301,L]
+RewriteRule ^catalog/nastennye_kotly_/$ /catalog/kotly/nastennye/ [R=301,L]
+RewriteRule ^catalog/nastennye_gazovye_kotly_/$ /catalog/kotly/gazovye/nastennye/ [R=301,L]
+RewriteRule ^catalog/nastennye_elektricheskie_kotly_/$ /catalog/kotly/elektricheskie/nastennye/ [R=301,L]
+
+# от 30.01.2025 - редиректы папок на фильтры - котлы
+RewriteRule ^catalog/kotly_elektricheskie_evan_next/$ /catalog/kotly/elektricheskie/evan/ [R=301,L]
+RewriteRule ^catalog/kotly_elektricheskie_electrovel/$ /catalog/kotly/elektricheskie/electrovel/ [R=301,L]
+RewriteRule ^catalog/kotly_elektricheskie_epo/$ /catalog/kotly/elektricheskie/evan/ [R=301,L]
+RewriteRule ^catalog/nastennye_elektricheskie_kotly_stout_plus_/$ /catalog/kotly/elektricheskie/stout/nastennye/ [R=301,L]
+RewriteRule ^catalog/nastennye_elektricheskie_kotly_ferroli/$ /catalog/kotly/elektricheskie/ferroli/nastennye/ [R=301,L]
+RewriteRule ^catalog/nastennye_elektricheskie_kotly_stout/$ /catalog/kotly/elektricheskie/stout/nastennye/ [R=301,L]
+RewriteRule ^catalog/nastennye_gazovye_kotly_wertrus/$ /catalog/kotly/gazovye/wertrus/nastennye/ [R=301,L]
+RewriteRule ^catalog/nastennye_gazovye_kotly_moguchi_/$ /catalog/kotly/gazovye/moguchi/nastennye/ [R=301,L]
+RewriteRule ^catalog/nastennye_gazovye_kotly_daesung/$ /catalog/kotly/gazovye/daesung/nastennye/ [R=301,L]
+RewriteRule ^catalog/nastennye_gazovye_kotly_sime/$ /catalog/kotly/gazovye/sime/nastennye/ [R=301,L]
+RewriteRule ^catalog/nastennye_gazovye_kotly_ariston/$ /catalog/kotly/gazovye/ariston/nastennye/ [R=301,L]
+RewriteRule ^catalog/nastennye_gazovye_kotly_baxi/$ /catalog/kotly/gazovye/baxi/nastennye/ [R=301,L]
+RewriteRule ^catalog/nastennye_gazovye_kotly_ferroli/$ /catalog/kotly/gazovye/ferroli/nastennye/ [R=301,L]
+RewriteRule ^catalog/napolnye_gazovye_kotly_titan_/$ /catalog/kotly/gazovye/titan/napolnye/ [R=301,L]
+RewriteRule ^catalog/napolnye_gazovye_kotly_ferroli_/$ /catalog/kotly/gazovye/ferroli/napolnye/ [R=301,L]
+RewriteRule ^catalog/napolnye_stalnye_gazovye_kotly_ferroli_torino_/$ /catalog/kotly/gazovye/ferroli/napolnye/ [R=301,L]
+RewriteRule ^catalog/napolnye_stalnye_gazovye_kotly_lemaks_/$ /catalog/kotly/gazovye/lemaks/napolnye/ [R=301,L]
+RewriteRule ^catalog/napolnye_gazovye_kotly_baxi/$ /catalog/kotly/gazovye/baxi/napolnye/ [R=301,L]
+RewriteRule ^catalog/napolnye_stalnye_gazovye_kotly_zhitomir_/$ /catalog/kotly/gazovye/atem/napolnye/ [R=301,L]
+# от 28.05.2025
+RewriteRule ^catalog/nastennye_elektricheskie_kotly_baxi/$ /catalog/kotly/elektricheskie/baxi/nastennye/ [R=301,L]
+RewriteRule ^catalog/nastennye_elektricheskie_kotly_midea/$ /catalog/kotly/elektricheskie/midea/nastennye/ [R=301,L]
+
+# от 08.09.2020 - редиректы папок на фильтры
+# насосы на фильтры
+RewriteRule ^catalog/nasosnye_stantsii/$ /catalog/nasosy_/nasosnye-stantsii/ [R=301,L]
+RewriteRule ^catalog/poverkhnostnye_nasosy/$ /catalog/nasosy_/poverkhnostnye/ [R=301,L]
+RewriteRule ^catalog/skvazhinnye_nasosy/$ /catalog/nasosy_/skvazhinnye-nasosy/ [R=301,L]
+RewriteRule ^catalog/tsirkulyatsionnye_nasosy/$ /catalog/nasosy_/tsirkulyatsionnye/ [R=301,L]
+RewriteRule ^catalog/povysitelnye_nasosy_1/$ /catalog/nasosy_/povysitelnye/ [R=301,L]
+RewriteRule ^catalog/drenazhnye_nasosy/$ /catalog/nasosy_/drenazhnye/ [R=301,L]
+RewriteRule ^catalog/poverkhnostnye_nasosy_1/$ /catalog/nasosy_/fontannye/ [R=301,L]
+# от 29.05.2025
+RewriteRule ^catalog/vibratsionnye_nasosy_1/$ /catalog/nasosy_/vibratsionnye-nasosy/ [R=301,L]
+
+# от 21.09.2020 - редиректы папок на фильтры
+# водонагреватели на фильтры
+
+RewriteRule ^catalog/vodonagrevateli_elektricheskie/$ /catalog/vodonagrevateli_1/elektricheskie/ [R=301,L]
+RewriteRule ^catalog/vodonagrevateli_elektricheskie_ploskie/$ /catalog/vodonagrevateli_1/ploskie/ [R=301,L]
+RewriteRule ^catalog/vodonagrevateli_elektricheskie_maloemkostnye/$ /catalog/vodonagrevateli_1/elektricheskie/ [R=301,L]
+RewriteRule ^catalog/vodonagrevateli_elektricheskie_protochnye/$ /catalog/vodonagrevateli_1/elektricheskie/ [R=301,L]
+RewriteRule ^catalog/vodonagrevateli_elektricheskie_protochnye_electrolux/$ /catalog/vodonagrevateli_1/elektricheskie/ [R=301,L]
+RewriteRule ^catalog/vodonagrevateli_elektricheskie_protochnye_thermex/$ /catalog/vodonagrevateli_1/elektricheskie/ [R=301,L]
+RewriteRule ^catalog/vodonagrevateli_elektricheskie_ploskie_zanussi/$ /catalog/vodonagrevateli_1/elektricheskie/ [R=301,L]
+RewriteRule ^catalog/vodonagrevateli_elektricheskie_maloemkostnye_thermex/$ /catalog/vodonagrevateli_1/elektricheskie/ [R=301,L]
+RewriteRule ^catalog/vodonagrevateli_elektricheskie_maloemkostnye_electrolux/$ /catalog/vodonagrevateli_1/elektricheskie/ [R=301,L]
+RewriteRule ^catalog/vodonagrevateli_elektricheskie_maloemkostnye_zanussi/$ /catalog/vodonagrevateli_1/elektricheskie/ [R=301,L]
+RewriteRule ^catalog/vodonagrevateli_elektricheskie_kruglye_ferroli/$ /catalog/vodonagrevateli_1/elektricheskie/ [R=301,L]
+RewriteRule ^catalog/vodonagrevateli_elektricheskie_kruglye_edisson/$ /catalog/vodonagrevateli_1/elektricheskie/ [R=301,L]
+RewriteRule ^catalog/vodonagrevateli_elektricheskie_kruglye_electrolux/$ /catalog/vodonagrevateli_1/elektricheskie/ [R=301,L]
+RewriteRule ^catalog/vodonagrevateli_elektricheskie_kruglye_haier/$ /catalog/vodonagrevateli_1/elektricheskie/ [R=301,L]
+RewriteRule ^catalog/vodonagrevateli_elektricheskie_kruglye_thermex/$ /catalog/vodonagrevateli_1/elektricheskie/ [R=301,L]
+RewriteRule ^catalog/vodonagrevateli/$ /catalog/vodonagrevateli_1/gazovye/ [R=301,L]
+RewriteRule ^catalog/vodonagrevateli-gazovye/$ /catalog/vodonagrevateli_1/gazovye/ [R=301,L]
+RewriteRule ^catalog/vodonagrevateli-elektricheskie/$ /catalog/vodonagrevateli_1/elektricheskie/ [R=301,L]
+RewriteRule ^catalog/boylery-kosvennogo-nagreva/$ /catalog/boylery/ [R=301,L]
+
+# от 08.12.2020 - редиректы папок на фильтры
+# радиаторы на фильтры
+
+RewriteRule ^catalog/radiator_alyuminievyy/$ /catalog/radiatory/alyuminievye/ [R=301,L]
+RewriteRule ^catalog/radiator_bimetallicheskiy/$ /catalog/radiatory/bimetallicheskie/ [R=301,L]
+RewriteRule ^catalog/radiator_chugunnyy/$ /catalog/radiatory/chugunnye/ [R=301,L]
+
+# от 18.02.2020 - редиректы папок на фильтры
+# Ворота
+
+RewriteRule ^catalog/avtomatika/$ /catalog/Vorota-avtomatika-rolstavni/ [R=301,L]
+RewriteRule ^catalog/otkatnye_vorota_iz_proflista/$ /catalog/otkatnye_vorota/ [R=301,L]
+RewriteRule ^catalog/garazhnye_vorota_doorhan/$ /catalog/garazhnye_vorota/ [R=301,L]
+RewriteRule ^catalog/promyshlennye_vorota_alyutekh/$ /catalog/promyshlennye_vorota/ [R=301,L]
+RewriteRule ^catalog/rolletnye_vorota_alyutekh/$ /catalog/rolletnye_vorota/ [R=301,L]
+
+# от 20.02.2020
+# Автоматика для ворот
+RewriteRule ^catalog/avtomatika_alyutekh/$ /catalog/avtomatika_dlya_vorot/alyutekh/ [R=301,L]
+RewriteRule ^catalog/avtomatika_dlya_vorot_an_motors/$ /catalog/avtomatika_dlya_vorot/an-motors/ [R=301,L]
+RewriteRule ^catalog/avtomatika_dlya_vorot_comunello/$ /catalog/avtomatika_dlya_vorot/comunello/ [R=301,L]
+RewriteRule ^catalog/avtomatika_doorhan/$ /catalog/avtomatika_dlya_vorot/doorhan/ [R=301,L]
+
+# от 28.05.2025
+RewriteRule ^catalog/avtomatika_r_tech/$ /catalog/avtomatika_dlya_vorot/r-tech/ [R=301,L]
+RewriteRule ^catalog/avtomatika_home_gate/$ /catalog/avtomatika_dlya_vorot/homegate/ [R=301,L]
+
+# от 15.10.2021
+# Подводка гибкая (вода, газ)
+RewriteRule ^catalog/podvodka_dlya_vody/$ /catalog/podvodka_gibkaya_voda_gaz/dlya-vody/ [R=301,L]
+RewriteRule ^catalog/podvodka_dlya_gaza/$ /catalog/podvodka_gibkaya_voda_gaz/dlya-gaza/ [R=301,L]
+
+# от 22.10.2021
+# Дублирующиеся страницы
+RewriteRule ^catalog/nasosy_/poverkhnostnye-nasosy/$ /catalog/nasosy_/poverkhnostnye/ [R=301,L]
+#Счётчики для воды и газа
+RewriteRule ^catalog/schyetchik_gaza/$ /catalog/schyetchiki_vody_i_gaza/dlya-gaza/ [R=301,L]
+RewriteRule ^catalog/schyetchik_vody/$ /catalog/schyetchiki_vody_i_gaza/dlya-vody/ [R=301,L]
+
+# от 25.10.2021
+# Редирект на свойство с несуществующей
+RewriteRule ^catalog/nasosy_/tsirkulyatsionnye/$ /catalog/nasosy_/tsirkulyatsionnye-nasosy/ [R=301,L]
+RewriteRule ^catalog/nasosy_/drenazhnye/$ /catalog/nasosy_/drenazhnye-nasosy/ [R=301,L]
+
+# от 26.10.2021
+# Редирект на свойство с несуществующей
+RewriteRule ^catalog/skvazhinnye_nasosy/$ /catalog/nasosy_/skvazhinnye-nasosy/ [R=301,L]
+RewriteRule ^catalog/nasosy_/skvazhinnye/$ /catalog/nasosy_/skvazhinnye-nasosy/ [R=301,L]
+RewriteRule ^catalog/nasosy_/povysitelnye/$ /catalog/nasosy_/povysitelnye-nasosy/ [R=301,L]
+RewriteRule ^catalog/nasosy_/fontannye/$ /catalog/nasosy_/fontannye-nasosy/ [R=301,L]
+
+# от 28.01.2022
+# Редирект на свойство с несуществующей
+RewriteRule ^catalog/baki_dlya_dusha/$ /catalog/baki_plastikovye_dlya_vody/dlya-dusha/ [R=301,L]
+RewriteRule ^catalog/baki_serii_atp_/$ /catalog/baki_plastikovye_dlya_vody/ [R=301,L]
+RewriteRule ^catalog/baki_serii_atv/$ /catalog/baki_plastikovye_dlya_vody/ [R=301,L]
+RewriteRule ^catalog/baki_serii_combi_new_w/$ /catalog/baki_plastikovye_dlya_vody/ [R=301,L]
+RewriteRule ^catalog/baki_seriya_ath/$ /catalog/baki_plastikovye_dlya_vody/ [R=301,L]
+RewriteRule ^catalog/bochki_maloy_emkosti/$ /catalog/baki_plastikovye_dlya_vody/bochka/ [R=301,L]
+RewriteRule ^catalog/baki_reflex/$ /catalog/baki_rasshiritelnye_wester_varem_/ [R=301,L]
+RewriteRule ^catalog/bak_dlya_vodosnabzheniya/$ /catalog/baki_rasshiritelnye_wester_varem_/dlya-vodosnabzheniya/ [R=301,L]
+RewriteRule ^catalog/baki_dlya_otopleniya/$ /catalog/baki_rasshiritelnye_wester_varem_/dlya-otopleniya/ [R=301,L]
+
+# от 27.07.2022
+# Редирект на Задвижки и затворы Материал корпуса задвижки и затворы
+# RewriteRule ^catalog/zadvizhki_latunnye_rastelli/$ /catalog/zadvizhki_i_zatvory/brand_latunnye/ [R=301,L]
+# RewriteRule ^catalog/zadvizhki_stalnye_30s41nzh_zkl2_16_t_425_ru_16_voda_par_nefteprodukty/$ /catalog/zadvizhki_i_zatvory/brand_stalnye/ [R=301,L]
+
+# от 12.08.2022 - редиректы папок на фильтры
+# Задвижки и затворы
+RewriteRule ^catalog/zatvor_povorotno_diskovyy_benarmo/$ /catalog/zadvizhki_i_zatvory/ [R=301,L]
+RewriteRule ^catalog/zadvizhki_latunnye_rastelli/$ /catalog/zadvizhki_i_zatvory/brand_latunnye/ [R=301,L]
+RewriteRule ^catalog/zadvizhki_stalnye_30s41nzh_zkl2_16_t_425_ru_16_voda_par_nefteprodukty/$ /catalog/zadvizhki_i_zatvory/brand_stalnye/ [R=301,L]
+RewriteRule ^catalog/zadvizhki_chugunnye_30ch6br_31ch6br_voda_par_t_225_s_ru_10/$ /catalog/zadvizhki_i_zatvory/brand_chugunnye/ [R=301,L]
+RewriteRule ^catalog/zatvor_povorotnyy_diskovyy_kitay/$ /catalog/zadvizhki_i_zatvory/ [R=301,L]
+RewriteRule ^catalog/zatvor_mezhflantsevyy_metapocca/$ /catalog/zadvizhki_i_zatvory/ [R=301,L]
+RewriteRule ^catalog/zatvor_povorotnyy_diskovyy_tecofi_frantsiya/$ /catalog/zadvizhki_i_zatvory/ [R=301,L]
+
+# Краны шаровые, вентили
+RewriteRule ^catalog/krany_sharovye_g_sh_rychag_1/$ /catalog/krany_sharovye_ventili/brand_ruchka-rychag/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_g_g_rychag_1/$ /catalog/krany_sharovye_ventili/brand_ruchka-rychag/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_g_g_rychag_2/$ /catalog/krany_sharovye_ventili/brand_ruchka-rychag/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_g_sh_rychag_2/$ /catalog/krany_sharovye_ventili/brand_ruchka-rychag/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_stout_g_g_rychag/$ /catalog/krany_sharovye_ventili/brand_ruchka-rychag/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_stout_g_sh_rychag/$ /catalog/krany_sharovye_ventili/brand_ruchka-rychag/  [R=301,L]
+RewriteRule ^catalog/kran_sharovyy_baz_g_g_rychag/$ /catalog/krany_sharovye_ventili/brand_ruchka-rychag/  [R=301,L]
+RewriteRule ^catalog/kran_sharovyy_baz_g_sh_rychag/$ /catalog/krany_sharovye_ventili/brand_ruchka-rychag/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_g_g_rychag/$ /catalog/krany_sharovye_ventili/brand_ruchka-rychag/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_g_sh_rychag/$ /catalog/krany_sharovye_ventili/brand_ruchka-rychag/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_itap_g_g_rychag/$ /catalog/krany_sharovye_ventili/brand_ruchka-rychag/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_itap_g_sh_rychag/$ /catalog/krany_sharovye_ventili/brand_ruchka-rychag/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_valtec_g_g_rychag/$ /catalog/krany_sharovye_ventili/brand_ruchka-rychag/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_valtec_g_sh_rychag/$ /catalog/krany_sharovye_ventili/brand_ruchka-rychag/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_gallop_g_g_rychag/$ /catalog/krany_sharovye_ventili/brand_ruchka-rychag/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_gallop_g_sh_rychag/$ /catalog/krany_sharovye_ventili/brand_ruchka-rychag/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_amerikanka_1/$ /catalog/krany_sharovye_ventili/brand_amerikanka/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_amerikanka_2/$ /catalog/krany_sharovye_ventili/brand_amerikanka/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_stout_amerikanka_/$ /catalog/krany_sharovye_ventili/brand_amerikanka/  [R=301,L]
+RewriteRule ^catalog/kran_sharovyy_baz_amerikanka/$ /catalog/krany_sharovye_ventili/brand_amerikanka/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_amerikanka/$ /catalog/krany_sharovye_ventili/brand_amerikanka/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_itap_amerikanka/$ /catalog/krany_sharovye_ventili/brand_amerikanka/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_valtec_amerikanka/$ /catalog/krany_sharovye_ventili/brand_amerikanka/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_gallop_amerikanka/$ /catalog/krany_sharovye_ventili/brand_amerikanka/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_g_g_babochka_1/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_g_sh_babochka_1/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_sh_sh_babochka_1/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_g_g_babochka_2/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_g_sh_babochka_2/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_stout_g_g_babochka/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_stout_g_sh_babochka/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_stout_sh_sh_babochka/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/kran_sharovyy_baz_g_g_babochka/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/kran_sharovyy_baz_g_sh_babochka/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_g_g_babochka/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_g_sh_babochka/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_sh_sh_babochka/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_itap_g_g_babochka/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_itap_g_sh_babochka/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_valtec_g_g_babochka/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_valtec_g_sh_babochka/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_valtec_sh_sh_babochka/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_gallop_g_g_babochka/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_gallop_g_sh_babochka/$ /catalog/krany_sharovye_ventili/brand_ruchka-babochka/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_kitay/$ /catalog/krany_sharovye_ventili/brand_kitay/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_altstream/$ /catalog/krany_sharovye_ventili/brand_altstream/  [R=301,L]
+RewriteRule ^catalog/sharovye_krany_polnoprokhodnye_stout/$ /catalog/krany_sharovye_ventili/brand_stout/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_s_nakidnoy_gaykoy_nr/$ /catalog/krany_sharovye_ventili/brand_kran-filtr/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_bologovskiy_armaturnyy_zavod/$ /catalog/krany_sharovye_ventili/brand_bologovskiy-armaturnyy-zavod/  [R=301,L]
+RewriteRule ^catalog/ventil/$ /catalog/krany_sharovye_ventili/brand_ventil/  [R=301,L]
+RewriteRule ^catalog/kran_bytovoy/$ /catalog/krany_sharovye_ventili/brand_kran-filtr/  [R=301,L]
+RewriteRule ^catalog/kran_probko_salnikovyy/$ /catalog/krany_sharovye_ventili/brand_kran-filtr/  [R=301,L]
+RewriteRule ^catalog/kran_sharovyy_dlya_gaza/$ /catalog/krany_sharovye_ventili/brand_prirodnyy-gaz/  [R=301,L]
+RewriteRule ^catalog/kran_sharovyy_flantsevyy_razbornyy/$ /catalog/krany_sharovye_ventili/brand_flantsevyy/  [R=301,L]
+RewriteRule ^catalog/kran_sharovyy_flantsevyy_tselnosvarnoy/$ /catalog/krany_sharovye_ventili/brand_flantsevyy/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_aqualink/$ /catalog/krany_sharovye_ventili/brand_aquahit/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_itap/$ /catalog/krany_sharovye_ventili/brand_itap/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_itap_mini/$ /catalog/krany_sharovye_ventili/brand_itap/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_valtec/$ /catalog/krany_sharovye_ventili/brand_valtec/  [R=301,L]
+RewriteRule ^catalog/kran_sharovoy_valtec_spetsialnyy/$ /catalog/krany_sharovye_ventili/brand_valtec/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_gallop_1/$ /catalog/krany_sharovye_ventili/brand_bologovskiy-armaturnyy-zavod/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_mini/$ /catalog/krany_sharovye_ventili/brand_kran/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_/$ /catalog/krany_sharovye_ventili/brand_kran/  [R=301,L]
+RewriteRule ^catalog/krany_sharovye_flantsevye_sbornye_s_rukoyatkoy_iz_stali_20_ukorochennye/$ /catalog/krany_sharovye_ventili/brand_flantsevyy/  [R=301,L]
+RewriteRule ^catalog/vibratsionnye_nasosy/$ /catalog/nasosy_/vibratsionnye-nasosy/ [R=301,L]
+RewriteRule ^catalog/kotly_electrovel/$ /catalog/kotly/brand_electrovel/ [R=301,L]
+
+# от 15.05.2024 - редиректы папок на фильтры
+# Радиаторы МатериалБренд
+
+RewriteRule ^catalog/radiator_bimetallicheskiy_evolution_500/$ /catalog/radiatory/alyuminievye/evolution/ [R=301,L]
+RewriteRule ^catalog/radiator_alyuminievyy_global/$ /catalog/radiatory/alyuminievye/global/ [R=301,L]
+RewriteRule ^catalog/radiator_alyuminievyy_radena/$ /catalog/radiatory/alyuminievye/radena/ [R=301,L]
+RewriteRule ^catalog/radiator_alyuminievyy_rommer_optima/$ /catalog/radiatory/alyuminievye/rommer/ [R=301,L]
+RewriteRule ^catalog/solur/$ /catalog/radiatory/alyuminievye/solur/ [R=301,L]
+RewriteRule ^catalog/stout_3/$ /catalog/radiatory/alyuminievye/stout/ [R=301,L]
+RewriteRule ^catalog/evolution/$ /catalog/radiatory/bimetallicheskie/evolution/ [R=301,L]
+RewriteRule ^catalog/radiator_bimetallicheskiy_global/$ /catalog/radiatory/bimetallicheskie/global/ [R=301,L]
+RewriteRule ^catalog/koer_1/$ /catalog/radiatory/bimetallicheskie/koer/ [R=301,L]
+RewriteRule ^catalog/radiator_bimetallicheskiy_radena/$ /catalog/radiatory/bimetallicheskie/radena/ [R=301,L]
+RewriteRule ^catalog/rifar/$ /catalog/radiatory/bimetallicheskie/rifar/ [R=301,L]
+RewriteRule ^catalog/radiator_bimetallicheskiy_rommer_optima_bm/$ /catalog/radiatory/bimetallicheskie/rommer/ [R=301,L]
+RewriteRule ^catalog/radiator_bimetallicheskiy_royal_piano_forte_noir_sable/$ /catalog/radiatory/bimetallicheskie/royal-thermo/ [R=301,L]
+RewriteRule ^catalog/solur_1/$ /catalog/radiatory/bimetallicheskie/solur/ [R=301,L]
+RewriteRule ^catalog/stout_2/$ /catalog/radiatory/bimetallicheskie/stout/ [R=301,L]
+
+# от 08.04.2025
+RewriteRule ^catalog/radiator_bimetallicheskiy_royal_thermo_/$ /catalog/radiatory/bimetallicheskie/royal-thermo/ [R=301,L]
+RewriteRule ^catalog/radiator_trubchatyy_/$ /catalog/radiatory/trubchatye/ [R=301,L]
+
+#от 15.08.2024 Кондиционеры Бренды
+
+RewriteRule ^catalog/hisense/$ /catalog/konditsionery/hisense/ [R=301,L]
+RewriteRule ^catalog/xigma/$ /catalog/konditsionery/xigma/ [R=301,L]
+RewriteRule ^catalog/funai/$ /catalog/konditsionery/funai/ [R=301,L]
+RewriteRule ^catalog/ballu/$ /catalog/konditsionery/ballu/ [R=301,L]
+RewriteRule ^catalog/royal_clima/$ /catalog/konditsionery/royal-clima/ [R=301,L]
+
+#от 28.05.2025
+RewriteRule ^catalog/dantex/$ /catalog/konditsionery/dantex/ [R=301,L]
+
+#от 03.10.2024 Кондиционеры Материалы для монтажа
+RewriteRule ^catalog/raskhodnyy_material_dlya_konditsionerov/$ /catalog/raskhodnyy_material_dlya_konditsionerov/materialy-dlya-montazha-konditsionerov/ [R=301,L]
+
+#11.09.2025 Термостатические и регулирующие клапан
+
+RewriteRule ^catalog/klapany_smesitelnye/$ /catalog/oborudovanie_danfoss_esbe_stout/valtec/ [R=301,L]
+RewriteRule ^catalog/oborudovanie_esbe/$ /catalog/oborudovanie_danfoss_esbe_stout/esbe/ [R=301,L]
+RewriteRule ^catalog/oborudovanie_danfoss_i_drugie_proizvoditeli/$ /catalog/oborudovanie_danfoss_esbe_stout/danfoss/ [R=301,L]
+RewriteRule ^catalog/oborudovanie_stout/$ /catalog/oborudovanie_danfoss_esbe_stout/stout/ [R=301,L]
+RewriteRule ^catalog/oborudovanie_tim/$ /catalog/oborudovanie_danfoss_esbe_stout/tim/ [R=301,L]
+RewriteRule ^catalog/oborudovanie_varmega/$ /catalog/oborudovanie_danfoss_esbe_stout/varmega/ [R=301,L]
+
+#11.09.2025 Сифоны
+RewriteRule ^catalog/sifony_zegor/$ /catalog/santekhnika/zegor/ [R=301,L]
+RewriteRule ^catalog/sifony_orio/$ /catalog/santekhnika/sifon/ [R=301,L]
+
+#11.09.2025 Унитазы 
+RewriteRule ^catalog/unitazy_rosa/$ /catalog/unitazy/rosa/ [R=301,L]
+RewriteRule ^catalog/unitazy_santek/$ /catalog/unitazy/santek/ [R=301,L]
+RewriteRule ^catalog/unitazy_santeri/$ /catalog/unitazy/santeri/ [R=301,L]
+RewriteRule ^catalog/unitazy_oskol/$ /catalog/unitazy/oskolskaya-keramika/ [R=301,L]
+RewriteRule ^catalog/unitazy_podvesnye_napolnye/$ /catalog/unitazy/navesnoy/ [R=301,L]
+
+#11.09.2025 Унитазы 
+RewriteRule ^catalog/unitazy_rosa/$ /catalog/unitazy/rosa/ [R=301,L]
+RewriteRule ^catalog/unitazy_santek/$ /catalog/unitazy/santek/ [R=301,L]
+RewriteRule ^catalog/unitazy_santeri/$ /catalog/unitazy/santeri/ [R=301,L]
+RewriteRule ^catalog/unitazy_oskol/$ /catalog/unitazy/oskolskaya-keramika/ [R=301,L]
+RewriteRule ^catalog/unitazy_podvesnye_napolnye/$ /catalog/unitazy/navesnoy/ [R=301,L]
+
+#Фильтры для воды 02.10.2025
+RewriteRule ^catalog/filtr_kolba_katridzhi/$ /catalog/filtry_dlya_vody/smennye-kartridzhi-dlya-filtrov/ [R=301,L]
+RewriteRule ^catalog/belamos_1/$ /catalog/filtry_dlya_vody/magistralnye-filtry-kolby/ [R=301,L]
+RewriteRule ^catalog/filtry_muftovye/$ /catalog/filtry_dlya_vody/filtry-muftovye/ [R=301,L]
+RewriteRule ^catalog/filtry_gryazeviki_flantsevye/$ /catalog/filtry_dlya_vody/filtry-flantsevye/ [R=301,L]
+RewriteRule ^catalog/filtr_promyvnoy/$ /catalog/filtry_dlya_vody/filtr-promyvnoy-samoochishchayushchiysya-s-manometrom/ [R=301,L]
+
+#Фильтры многоступенчатые 02.10.2025
+RewriteRule ^catalog/akvabrayt/$ /catalog/filtry_mnogostupenchatye/akvabrayt/ [R=301,L]
+RewriteRule ^catalog/barer/$ /catalog/filtry_mnogostupenchatye/barer/ [R=301,L]
+
+#Скрываем подпункты сервиса по обращению клиента 14.10.2025
+RewriteRule ^service/$ /service/manufacturers/ [R=301,L]
+RewriteRule ^service/equipment/$ /service/manufacturers/ [R=301,L]
+
+#Трубы и фитинги 19.12.2025
+RewriteRule ^catalog/fitingi_nikelirovannye/$ /catalog/truby_i_fitingi/nikelirovannye/\#products-list [R=301,NE,L]
+RewriteRule ^catalog/truby_metalloplastikovye/$ /catalog/truby_i_fitingi/metalloplastikovye-truby/\#products-list [R=301,NE,L]
+
+#Баки 19.02.2026
+RewriteRule ^catalog/baki_dlya_topliva/$ /catalog/baki_plastikovye_dlya_vody/dlya-topliva/ [R=301,L]
+
+<IfModule mod_rewrite.c>
+  Options +FollowSymLinks
+  RewriteEngine On
+
+# ===== ИСКЛЮЧЕНИЯ ДЛЯ ФАЙЛОВ ОПИСАНИЙ (НЕ ПРИМЕНЯТЬ РЕДИРЕКТЫ) =====
+RewriteRule ^(opisanie|opisanie-2|opisanie-3|opisanie-4|opisanie-5)\.html$ - [L]
+
+# Убрать www → https; для 1C оставляем http (как в исключении HTTPS ниже)
+RewriteCond %{HTTP_HOST} ^www.polimer-vrn\.ru$ [NC]
+RewriteCond %{REQUEST_URI} !^/bitrix/admin/1c_exchange.php
+RewriteRule ^(.*)$ https://polimer-vrn.ru/$1 [R=301,L]
+RewriteCond %{HTTP_HOST} ^www.polimer-vrn\.ru$ [NC]
+RewriteRule ^(.*)$ http://polimer-vrn.ru/$1 [R=301,L]
+# Убрать /index.php|/index.html|/index.htm → / (только абсолютный URL, иначе Apache подставит DocumentRoot)
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.(php|html|htm)[\s?] [NC]
+RewriteRule ^index\.(php|html|htm)$ / [R=301,L]
+# Убрать .../index.html|/index.htm в подкаталогах
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.+/index\.html?\ HTTP/ [NC]
+RewriteRule ^(.+/)?index\.html?$ /$1 [R=301,L]
+# Убрать .../index.php в подкаталогах
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.+/index\.php[\s?] [NC]
+RewriteRule ^(.+/)?index\.php$ /$1 [R=301,L]
+#убрать //
+RewriteCond %{REQUEST_URI} ^(.*)/{2,}(.*)$
+RewriteRule (.*) %1/%2 [R=301,L]
+# убрать окончание html (ЗАКОММЕНТИРОВАНО, НО ЕСЛИ РАСКОММЕНТИРУЕТЕ - ИСКЛЮЧЕНИЕ УЖЕ РАБОТАЕТ)
+# RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/+([^.]+)\.html [NC]
+# RewriteCond %{REQUEST_URI} !^/(opisanie|opisanie-2|opisanie-3|opisanie-4|opisanie-5)\.html$ [NC]
+# RewriteRule ^ /%1/ [R=301,L]
+# убрать окончание htm (с исключением для описаний)
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/+([^.]+)\.htm [NC]
+RewriteCond %{REQUEST_URI} !^/(opisanie|opisanie-2|opisanie-3|opisanie-4|opisanie-5)\.html$ [NC]
+RewriteRule ^ /%1/ [R=301,L]
+# убрать idc=4&marea=6
+RewriteCond %{QUERY_STRING} ^idc=4&marea=6$ [NC]
+RewriteRule ^index\.php$ /? [R=301,L]
+
+RewriteEngine On
+RewriteCond %{HTTPS} =off
+RewriteCond %{REQUEST_URI} !^/bitrix/admin/1c_exchange.php
+#RewriteCond %{REQUEST_URI} !^/bitrix/services/yandex.market/trading/marketplace/s1
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [QSA,R=301,L]
+
+#убираем двойной слеш
+RewriteCond %{THE_REQUEST} //
+# Проверяем, повторяется ли слеш (//) более двух раз.
+RewriteRule .* /$0 [R=301,L]
+# Исключаем все лишние слеши.
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_FILENAME} [\xC2-\xDF][\x80-\xBF] [OR]
+RewriteCond %{REQUEST_FILENAME} \xE0[\xA0-\xBF][\x80-\xBF] [OR]
+RewriteCond %{REQUEST_FILENAME} [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2} [OR]
+RewriteCond %{REQUEST_FILENAME} \xED[\x80-\x9F][\x80-\xBF] [OR]
+RewriteCond %{REQUEST_FILENAME} \xF0[\x90-\xBF][\x80-\xBF]{2} [OR]
+RewriteCond %{REQUEST_FILENAME} [\xF1-\xF3][\x80-\xBF]{3} [OR]
+RewriteCond %{REQUEST_FILENAME} \xF4[\x80-\x8F][\x80-\xBF]{2}
+RewriteCond %{REQUEST_FILENAME} !/bitrix/virtual_file_system.php$
+RewriteRule ^(.*)$ /bitrix/virtual_file_system.php [L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-l
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI} ^(.*/[^/\.]+)$
+  RewriteCond %{REQUEST_URI} !^/bitrix/services/yandex.market/trading/marketplace/s1
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1/ [R=301,L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-l
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !/bitrix/urlrewrite.php$
+  RewriteRule ^(.*)$ /bitrix/urlrewrite.php [L]
+  RewriteRule .* - [E=REMOTE_USER:%{HTTP:Authorization}]
+</IfModule>
+
+<IfModule mod_dir.c>
+  DirectoryIndex index.php index.html
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive on
+  ExpiresByType image/jpeg "access plus 3 day"
+  ExpiresByType image/gif "access plus 3 day"
+  ExpiresByType image/png "access plus 3 day"
+  ExpiresByType text/css "access plus 3 day"
+  ExpiresByType application/javascript "access plus 3 day"
+</IfModule>

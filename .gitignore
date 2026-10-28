@@ -32,7 +32,7 @@ bitrix/html_pages/*
 bitrix/catalog_export/*
 bitrix/license_key.php
 bitrix/.settings.php
-.htaccess
+# .htaccess — в git (SEO-редиректы); раньше был в ignore
 /yandex_*
 /google*
 /mailru-*
