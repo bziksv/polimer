@@ -525,3 +525,6 @@ div.discount {
 	}
 	.mp__banners .mp__slider .item .slider__product img { max-height: 160px; }
 }
+
+/* sticky-header CLS spacer */
+.header__bottom-spacer{display:block;width:100%;pointer-events:none;visibility:hidden;}
