@@ -435,16 +435,41 @@ div.discount {
 		aspect-ratio: 540 / 430;
 	}
 }
-/* ===== CLS home slider (mp__banners) ===== */
+
+/* ===== CLS home slider (mp__banners) =====
+   До slick все слайды в потоке → блок высокий, потом схлопывается (CLS ~0.1).
+   Фикс: жёсткая высота + скрыть слайды кроме первого до init. */
+.mp__banners {
+	min-height: 375px;
+	contain: layout;
+}
 .mp__banners .mp__slider,
-#mp__slider,
+#mp__slider {
+	position: relative;
+	height: 375px;
+	max-height: 375px;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+#mp__slider:not(.slick-initialized) > div:not(:first-child) {
+	display: none !important;
+}
 .mp__banners .mp__slider .slick-list,
 .mp__banners .mp__slider .slick-track {
+	height: 375px !important;
 	min-height: 375px;
-}
-.mp__banners .mp__slider .slick-list {
-	height: 375px;
+	max-height: 375px;
 	overflow: hidden;
+}
+.mp__banners .mp__slider .slick-dots {
+	position: absolute !important;
+	left: 0;
+	right: 0;
+	bottom: 25px;
+	height: 15px;
+	margin: 0 !important;
+	padding: 0 !important;
+	z-index: 2;
 }
 .mp__banners .mp__slider .item {
 	height: 375px;
@@ -461,52 +486,42 @@ div.discount {
 }
 
 @media screen and (max-width: 1319px) {
+	.mp__banners { min-height: 340px; }
 	.mp__banners .mp__slider,
 	#mp__slider,
 	.mp__banners .mp__slider .slick-list,
 	.mp__banners .mp__slider .slick-track {
+		height: 340px !important;
 		min-height: 340px;
+		max-height: 340px;
 	}
-	.mp__banners .mp__slider .slick-list {
-		height: 340px;
-	}
-	.mp__banners .mp__slider .item {
-		height: 340px;
-	}
-	.mp__banners .mp__slider .item .slider__product img {
-		max-height: 260px;
-	}
+	.mp__banners .mp__slider .item { height: 340px; }
+	.mp__banners .mp__slider .item .slider__product img { max-height: 260px; }
 }
 
 @media screen and (max-width: 1019px) {
+	.mp__banners { min-height: 370px; }
 	.mp__banners .mp__slider,
 	#mp__slider,
 	.mp__banners .mp__slider .slick-list,
 	.mp__banners .mp__slider .slick-track {
+		height: 370px !important;
 		min-height: 370px;
+		max-height: 370px;
 	}
-	.mp__banners .mp__slider .slick-list {
-		height: 370px;
-	}
-	.mp__banners .mp__slider .item {
-		height: 370px;
-	}
-	.mp__banners .mp__slider .item .slider__product img {
-		max-height: 300px;
-	}
+	.mp__banners .mp__slider .item { height: 370px; }
+	.mp__banners .mp__slider .item .slider__product img { max-height: 300px; }
 }
 
 @media screen and (max-width: 659px) {
+	.mp__banners { min-height: 510px; }
 	.mp__banners .mp__slider,
 	#mp__slider,
 	.mp__banners .mp__slider .slick-list,
 	.mp__banners .mp__slider .slick-track {
+		height: 510px !important;
 		min-height: 510px;
+		max-height: 510px;
 	}
-	.mp__banners .mp__slider .slick-list {
-		height: 510px;
-	}
-	.mp__banners .mp__slider .item .slider__product img {
-		max-height: 160px;
-	}
+	.mp__banners .mp__slider .item .slider__product img { max-height: 160px; }
 }
