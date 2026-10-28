@@ -4913,3 +4913,51 @@ header .header__bottom.fixed {
         padding: 16px 0 20px !important;
     }
 }
+
+/* ===== CLS mp__slider lock (late) ===== */
+.mp__banners .mp__slider,
+#mp__slider {
+	overflow: hidden !important;
+	height: 375px !important;
+	max-height: 375px !important;
+}
+#mp__slider:not(.slick-initialized) > div:not(:first-child) {
+	display: none !important;
+}
+.mp__banners .mp__slider .slick-list,
+.mp__banners .mp__slider .slick-track {
+	height: 375px !important;
+	max-height: 375px !important;
+	overflow: hidden !important;
+}
+.mp__banners .mp__slider .item {
+	height: 375px !important;
+	max-height: 375px !important;
+	overflow: hidden !important;
+}
+.mp__banners .mp__slider .slick-dots {
+	position: absolute !important;
+	bottom: 25px !important;
+	margin: 0 !important;
+}
+@media screen and (max-width: 1319px) {
+	.mp__banners .mp__slider, #mp__slider,
+	.mp__banners .mp__slider .slick-list, .mp__banners .mp__slider .slick-track,
+	.mp__banners .mp__slider .item {
+		height: 340px !important; max-height: 340px !important;
+	}
+}
+@media screen and (max-width: 1019px) {
+	.mp__banners .mp__slider, #mp__slider,
+	.mp__banners .mp__slider .slick-list, .mp__banners .mp__slider .slick-track,
+	.mp__banners .mp__slider .item {
+		height: 370px !important; max-height: 370px !important;
+	}
+}
+@media screen and (max-width: 659px) {
+	.mp__banners .mp__slider, #mp__slider,
+	.mp__banners .mp__slider .slick-list, .mp__banners .mp__slider .slick-track,
+	.mp__banners .mp__slider .item {
+		height: 450px !important; max-height: 450px !important; padding-bottom: 0 !important;
+	}
+}
