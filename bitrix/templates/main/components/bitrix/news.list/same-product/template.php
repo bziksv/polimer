@@ -12,9 +12,10 @@
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
 if($arResult["ITEMS"]):
+	$sliderDomId = !empty($arParams['SLIDER_DOM_ID']) ? $arParams['SLIDER_DOM_ID'] : 'mp__product__action';
 ?>
 <div class="h2"><?=$arParams['PAGER_TITLE']?></div>
-<div class="slider_product_show_all slider_product" id="mp__product__action">
+<div class="slider_product_show_all slider_product" id="<?=htmlspecialcharsbx($sliderDomId)?>">
 
 	<?foreach($arResult["ITEMS"] as $arItem): ?>
 	<div>

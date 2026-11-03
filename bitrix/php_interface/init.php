@@ -320,6 +320,98 @@ function polimerGetSimilarSearchSectionId($sectionId)
     return $sectionId;
 }
 
+/**
+ * Разделение «Похожие» / «Для подключения» по UF раздела (с подъёмом по дереву).
+ * UF_SPLIT_RELATED (bool) + UF_ACCESSORIES_SECTION (iblock_section, multiple).
+ *
+ * @return array{ENABLED:bool,ROOT_SECTION_ID:int,ACCESSORIES_SECTION_IDS:int[]}
+ */
+function polimerGetRelatedSplitConfig($iblockId, $sectionId)
+{
+    $empty = [
+        'ENABLED' => false,
+        'ROOT_SECTION_ID' => 0,
+        'ACCESSORIES_SECTION_IDS' => [],
+    ];
+
+    $iblockId = (int)$iblockId;
+    $sectionId = (int)$sectionId;
+    if ($iblockId <= 0 || $sectionId <= 0 || !CModule::IncludeModule('iblock'))
+        return $empty;
+
+    $checked = [];
+    while ($sectionId > 0 && count($checked) < 8)
+    {
+        if (in_array($sectionId, $checked, true))
+            break;
+        $checked[] = $sectionId;
+
+        $res = CIBlockSection::GetList(
+            [],
+            ['IBLOCK_ID' => $iblockId, 'ID' => $sectionId, 'CHECK_PERMISSIONS' => 'N'],
+            false,
+            ['ID', 'IBLOCK_SECTION_ID', 'UF_SPLIT_RELATED', 'UF_ACCESSORIES_SECTION']
+        );
+        $section = $res->Fetch();
+        if (!$section)
+            break;
+
+        $splitOn = !empty($section['UF_SPLIT_RELATED'])
+            && $section['UF_SPLIT_RELATED'] !== '0'
+            && $section['UF_SPLIT_RELATED'] !== 'N';
+
+        if ($splitOn)
+        {
+            $accessories = $section['UF_ACCESSORIES_SECTION'] ?? [];
+            if (!is_array($accessories))
+                $accessories = $accessories !== '' && $accessories !== null ? [$accessories] : [];
+
+            $accessories = array_values(array_unique(array_filter(array_map('intval', $accessories))));
+
+            return [
+                'ENABLED' => true,
+                'ROOT_SECTION_ID' => (int)$section['ID'],
+                'ACCESSORIES_SECTION_IDS' => $accessories,
+            ];
+        }
+
+        $sectionId = (int)$section['IBLOCK_SECTION_ID'];
+    }
+
+    return $empty;
+}
+
+function polimerGetAccessoryProductIds($iblockId, array $sectionIds, $excludeProductId = 0, $limit = 10)
+{
+    $iblockId = (int)$iblockId;
+    $excludeProductId = (int)$excludeProductId;
+    $limit = max(1, (int)$limit);
+    $sectionIds = array_values(array_unique(array_filter(array_map('intval', $sectionIds))));
+
+    if ($iblockId <= 0 || empty($sectionIds) || !CModule::IncludeModule('iblock'))
+        return [];
+
+    $ids = [];
+    $res = CIBlockElement::GetList(
+        ['SORT' => 'ASC', 'NAME' => 'ASC'],
+        [
+            'IBLOCK_ID' => $iblockId,
+            'SECTION_ID' => $sectionIds,
+            'INCLUDE_SUBSECTIONS' => 'Y',
+            'ACTIVE' => 'Y',
+            'ACTIVE_DATE' => 'Y',
+            '!ID' => $excludeProductId > 0 ? $excludeProductId : false,
+        ],
+        false,
+        ['nTopCount' => $limit],
+        ['ID']
+    );
+    while ($row = $res->Fetch())
+        $ids[] = (int)$row['ID'];
+
+    return $ids;
+}
+
 function polimerGetSectionSmartFilterCodes($iblockId, $sectionId, $limit = 3)
 {
     if (!CModule::IncludeModule('iblock'))
@@ -416,7 +508,7 @@ function polimerFetchSectionProductsForSimilar($iblockId, $sectionId, $excludeId
     return $items;
 }
 
-function polimerGetSimilarProductIds(array $product, $limit = 10)
+function polimerGetSimilarProductIds(array $product, $limit = 10, array $options = [])
 {
     $limit = max(1, (int)$limit);
     $productId = (int)($product['ID'] ?? 0);
@@ -429,8 +521,10 @@ function polimerGetSimilarProductIds(array $product, $limit = 10)
     if (!CModule::IncludeModule('iblock'))
         return [];
 
+    $forcedSearchSectionId = (int)($options['SEARCH_SECTION_ID'] ?? 0);
+
     $cache = \Bitrix\Main\Data\Cache::createInstance();
-    $cacheKey = 'similar_v1_' . $productId . '_' . $limit;
+    $cacheKey = 'similar_v2_' . $productId . '_' . $limit . '_' . $forcedSearchSectionId;
     $cacheDir = '/polimer/similar_products';
 
     if ($cache->initCache(3600, $cacheKey, $cacheDir))
@@ -438,7 +532,9 @@ function polimerGetSimilarProductIds(array $product, $limit = 10)
 
     $cacheStarted = $cache->startDataCache();
 
-    $searchSectionId = polimerGetSimilarSearchSectionId($sectionId);
+    $searchSectionId = $forcedSearchSectionId > 0
+        ? $forcedSearchSectionId
+        : polimerGetSimilarSearchSectionId($sectionId);
     $propCodes = polimerGetSectionSmartFilterCodes($iblockId, $sectionId, 3);
 
     $matchProps = [];
