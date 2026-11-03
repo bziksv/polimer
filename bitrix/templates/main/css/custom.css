@@ -436,6 +436,36 @@ div.discount {
 	}
 }
 
+
+
+/* ===== slider__title (был h2, стили только в неподключаемом css/style.css) ===== */
+.mp__banners .mp__slider .item .slider__content .slider__title {
+	display: block;
+	margin: 0 0 16px;
+	font: 500 1.5em/1.25 'Fira Sans', sans-serif;
+	color: #333;
+}
+.mp__banners .mp__slider .item .slider__content {
+	padding: 36px 30px 0 0;
+}
+@media screen and (max-width: 1319px) {
+	.mp__banners .mp__slider .item .slider__content {
+		padding: 24px 20px 0 0;
+	}
+	.mp__banners .mp__slider .item .slider__content .slider__title {
+		font-size: 1.35em;
+	}
+}
+@media screen and (max-width: 659px) {
+	.mp__banners .mp__slider .item .slider__content {
+		padding: 16px 16px 0;
+	}
+	.mp__banners .mp__slider .item .slider__content .slider__title {
+		font-size: 1.2em;
+		margin-bottom: 10px;
+	}
+}
+
 /* ===== CLS home slider — только #mp__slider, не весь .mp__banners ===== */
 .mp__banners .mp__slider,
 #mp__slider {

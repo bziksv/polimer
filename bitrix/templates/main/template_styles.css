@@ -1871,7 +1871,14 @@ header .header__bottom.fixed .header__account span
     float: right;
     width: 52%;
     text-align: left;
-    padding: 0 0 0 20px
+    padding: 36px 30px 0 0
+}
+
+.mp__banners .mp__slider .item .slider__content .slider__title {
+    display: block;
+    margin: 0 0 16px;
+    font: 500 1.5em/1.25 'Fira Sans', sans-serif;
+    color: #333
 }
 
 .mp__banners .mp__slider .item .slider__content img {
