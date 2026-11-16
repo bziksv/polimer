@@ -649,7 +649,7 @@ if ($polimerOffer) {
                     "PAGER_SHOW_ALL" => "N",
                     "PAGER_SHOW_ALWAYS" => "N",
                     "PAGER_TEMPLATE" => ".default",
-                    "PAGER_TITLE" => "Для подключения",
+                    "PAGER_TITLE" => (!empty($relatedSplit['ACCESSORIES_TITLE']) ? $relatedSplit['ACCESSORIES_TITLE'] : "Для подключения"),
                     "PARENT_SECTION" => "",
                     "PARENT_SECTION_CODE" => "",
                     "PREVIEW_TRUNCATE_LEN" => "",

@@ -116,6 +116,39 @@ polimerEnsureSectionUf([
 	],
 ]);
 
+polimerEnsureSectionUf([
+	'ENTITY_ID' => $entityId,
+	'FIELD_NAME' => 'UF_ACCESSORIES_TITLE',
+	'USER_TYPE_ID' => 'string',
+	'XML_ID' => 'UF_ACCESSORIES_TITLE',
+	'SORT' => 520,
+	'MULTIPLE' => 'N',
+	'MANDATORY' => 'N',
+	'SHOW_FILTER' => 'N',
+	'SHOW_IN_LIST' => 'Y',
+	'EDIT_IN_LIST' => 'Y',
+	'IS_SEARCHABLE' => 'N',
+	'SETTINGS' => [
+		'SIZE' => 50,
+		'ROWS' => 1,
+		'REGEXP' => '',
+		'MIN_LENGTH' => 0,
+		'MAX_LENGTH' => 0,
+		'DEFAULT_VALUE' => '',
+	],
+	'EDIT_FORM_LABEL' => [
+		'ru' => 'Заголовок блока комплектующих',
+		'en' => 'Accessories block title',
+	],
+	'LIST_COLUMN_LABEL' => [
+		'ru' => 'Заголовок комплектующих',
+		'en' => 'Accessories title',
+	],
+	'HELP_MESSAGE' => [
+		'ru' => 'Если заполнено — вместо «Для подключения» на карточке товара. Пусто = «Для подключения».',
+	],
+]);
+
 $section = CIBlockSection::GetList(
 	[],
 	['IBLOCK_ID' => $iblockId, 'ID' => $radiatorsSectionId, 'CHECK_PERMISSIONS' => 'N'],

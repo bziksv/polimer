@@ -322,9 +322,10 @@ function polimerGetSimilarSearchSectionId($sectionId)
 
 /**
  * Разделение «Похожие» / «Для подключения» по UF раздела (с подъёмом по дереву).
- * UF_SPLIT_RELATED (bool) + UF_ACCESSORIES_SECTION (iblock_section, multiple).
+ * UF_SPLIT_RELATED (bool) + UF_ACCESSORIES_SECTION (iblock_section, multiple)
+ * + UF_ACCESSORIES_TITLE (string, optional; fallback «Для подключения»).
  *
- * @return array{ENABLED:bool,ROOT_SECTION_ID:int,ACCESSORIES_SECTION_IDS:int[]}
+ * @return array{ENABLED:bool,ROOT_SECTION_ID:int,ACCESSORIES_SECTION_IDS:int[],ACCESSORIES_TITLE:string}
  */
 function polimerGetRelatedSplitConfig($iblockId, $sectionId)
 {
@@ -332,6 +333,7 @@ function polimerGetRelatedSplitConfig($iblockId, $sectionId)
         'ENABLED' => false,
         'ROOT_SECTION_ID' => 0,
         'ACCESSORIES_SECTION_IDS' => [],
+        'ACCESSORIES_TITLE' => 'Для подключения',
     ];
 
     $iblockId = (int)$iblockId;
@@ -350,7 +352,7 @@ function polimerGetRelatedSplitConfig($iblockId, $sectionId)
             [],
             ['IBLOCK_ID' => $iblockId, 'ID' => $sectionId, 'CHECK_PERMISSIONS' => 'N'],
             false,
-            ['ID', 'IBLOCK_SECTION_ID', 'UF_SPLIT_RELATED', 'UF_ACCESSORIES_SECTION']
+            ['ID', 'IBLOCK_SECTION_ID', 'UF_SPLIT_RELATED', 'UF_ACCESSORIES_SECTION', 'UF_ACCESSORIES_TITLE']
         );
         $section = $res->Fetch();
         if (!$section)
@@ -368,10 +370,15 @@ function polimerGetRelatedSplitConfig($iblockId, $sectionId)
 
             $accessories = array_values(array_unique(array_filter(array_map('intval', $accessories))));
 
+            $title = trim((string)($section['UF_ACCESSORIES_TITLE'] ?? ''));
+            if ($title === '')
+                $title = 'Для подключения';
+
             return [
                 'ENABLED' => true,
                 'ROOT_SECTION_ID' => (int)$section['ID'],
                 'ACCESSORIES_SECTION_IDS' => $accessories,
+                'ACCESSORIES_TITLE' => $title,
             ];
         }
 
