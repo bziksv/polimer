@@ -96,7 +96,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] <> '' && (!isset($_P
 			foreach($arPropertyField as $field){
 				if($field['CODE'] == "PRODUCT_CART"){
 					$arFields[$field['CODE']] = $_POST[$field['CODE']];
-					CSaleBasket::DeleteAll(CSaleBasket::GetBasketUserID(), false);
+					$dbCheckedBasket = CSaleBasket::GetList(
+						array(),
+						array("FUSER_ID" => CSaleBasket::GetBasketUserID(), "LID" => SITE_ID, "ORDER_ID" => "NULL", "DELAY" => "N"),
+						false,
+						false,
+						array("ID")
+					);
+					while ($checkedBasketItem = $dbCheckedBasket->Fetch())
+						CSaleBasket::Delete($checkedBasketItem["ID"]);
 				}else{
 					$arFields[$field['CODE']] = trim(strip_tags($_POST[$field['CODE']]));
 				}

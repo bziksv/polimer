@@ -2,18 +2,21 @@
 <?
 $orderableCount = count($arResult["ITEMS"]["AnDelCanBuy"]);
 $orderableQuantity = 0;
+$checkedRows = 0;
 foreach ($arResult["GRID"]["ROWS"] as $basketRow) {
 	if ($basketRow["DELAY"] !== "Y") {
 		$orderableQuantity += (float)$basketRow["QUANTITY"];
+		$checkedRows++;
 	}
 }
+$basketTrashIcon = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 3h6m-11 4h16m-2 0-.8 12.1A2 2 0 0 1 15.2 21H8.8a2 2 0 0 1-2-1.9L6 7m4 4v6m4-6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 ?>
 <?echo ShowError($arResult["ERROR_MESSAGE"]);
 $polimerStockMessages = function_exists('polimerTakeStockClampMessages') ? polimerTakeStockClampMessages() : [];
 if ($normalCount > 0)
 {?>
 
-	<div class="basket">
+	<div class="basket" data-sessid="<?=bitrix_sessid()?>">
 		<?php if ($polimerStockMessages): ?>
 		<div class="basket-stock-warning" role="status">
 			<?php foreach ($polimerStockMessages as $polimerStockMessage): ?>
@@ -29,6 +32,14 @@ if ($normalCount > 0)
            </div>
 		   <div class="clear"></div>
 		</div>
+		<div class="basket-toolbar">
+			<label class="basket-check">
+				<input type="checkbox" class="js-basket-check-all"<?=($checkedRows === $normalCount ? ' checked' : '')?>>
+				<span class="basket-check__box"></span>
+				<span>Выбрать все</span>
+			</label>
+			<button type="button" class="basket-toolbar__delete js-basket-delete-checked"<?=($checkedRows === 0 ? ' disabled' : '')?>><?=$basketTrashIcon?><span>Удалить выбранные</span></button>
+		</div>
 		<div class="list">
 			<div class="l-head">
 				<div class="lh">Наименование</div>
@@ -40,7 +51,13 @@ if ($normalCount > 0)
 			<div class="l-block">
 
 				<? foreach($arResult["GRID"]["ROWS"] as $k => $arItem): ?>
-				<div class="l-row cl<?=($arItem["DELAY"] === "Y" ? " is-removed" : "")?>" data-basket-id="<?=$arItem["ID"]?>">
+				<div class="l-row cl<?=($arItem["DELAY"] === "Y" ? " is-unchecked" : "")?>" data-basket-id="<?=$arItem["ID"]?>">
+					<div class="l-cell check">
+						<label class="basket-check" title="Включить в заказ">
+							<input type="checkbox" class="js-basket-check" value="<?=$arItem["ID"]?>"<?=($arItem["DELAY"] !== "Y" ? ' checked' : '')?>>
+							<span class="basket-check__box"></span>
+						</label>
+					</div>
 					<div class="l-cell img"><span><img src="<?=$arItem['PREVIEW_PICTURE_SRC']?>" alt=""></span></div>
 					<div class="l-cell name">
 						<a href="<?=$arItem['DETAIL_PAGE_URL']?>" class="plink"><?=$arItem['NAME']?></a>
@@ -56,18 +73,7 @@ if ($normalCount > 0)
 						</div>
 					</div>
 					<div class="l-cell cost"><div class="txt ct">Стоимость</div><span><?=$arItem["SUM"]?></span></div>
-					<div class="l-cell del"><div class="txt dl">Удалить</div><a href="javascript:void(0)" onclick="polimerRemoveBasketItem(<?=$arItem["ID"]?>); return false;"></a></div>
-					<div class="basket-item-removed-overlay" aria-hidden="true">
-						<div class="basket-item-removed-overlay__content">
-							<div class="basket-item-removed-overlay__product">
-								<img src="<?=$arItem['PREVIEW_PICTURE_SRC']?>" alt="">
-								<span class="basket-item-removed-overlay__product-name"><?=htmlspecialcharsbx($arItem['NAME'])?></span>
-							</div>
-							<p class="basket-item-removed-overlay__title">Товар удалён</p>
-							<p class="basket-item-removed-overlay__hint">При оформлении дальше не попадёт. Если нужно вернуть обратно, нажмите кнопку ниже</p>
-							<button type="button" class="basket-item-removed-overlay__restore" onclick="polimerRestoreBasketItem(<?=$arItem["ID"]?>); return false;">Вернуть</button>
-						</div>
-					</div>
+					<div class="l-cell del"><button type="button" class="basket-del-btn js-basket-delete" data-id="<?=$arItem["ID"]?>" title="Удалить" aria-label="Удалить товар"><?=$basketTrashIcon?></button></div>
 				</div>
 				<? endforeach; ?>
 
@@ -89,7 +95,7 @@ if ($normalCount > 0)
 			<?if ($orderableCount > 0):?>
 			<a href="<?=$arParams['PATH_TO_ORDER']?>" class="checkout">Оформить заказ</a>
 			<?else:?>
-			<span class="checkout checkout--disabled" title="Добавьте товары в заказ или верните удалённые позиции">Оформить заказ</span>
+			<span class="checkout checkout--disabled" title="Отметьте товары, которые хотите заказать">Оформить заказ</span>
 			<?endif;?>
 			<div class="total">
 				<div class="t-row t-sale cl">

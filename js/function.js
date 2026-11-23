@@ -187,6 +187,7 @@ function UpdateBigBasket(){
             if(msg!="error")
             {
                 $(".page_content").html(msg);
+                polimerBasketSyncView();
                 UpdateHeaderBasket();
             }
             else
@@ -197,52 +198,178 @@ function UpdateBigBasket(){
     });
 }
 
-function polimerGetBasketRow(id) {
-    var $row = $('.basket .l-row[data-basket-id="' + id + '"]');
-    if (!$row.length) {
-        $row = $('.quantity#' + id).closest('.l-row');
+var POLIMER_BASKET_UNDO_MS = 6000;
+var polimerBasketPending = null;
+
+function polimerBasketSessid() {
+    if (window.BX && BX.bitrix_sessid) {
+        return BX.bitrix_sessid();
     }
-    return $row;
+    return $('.basket').data('sessid');
 }
 
-function polimerSetBasketItemDelay(id, delay) {
-    var $row = polimerGetBasketRow(id);
-
+function polimerBasketRequest(action, ids, done) {
     $.ajax({
-        type: 'GET',
-        url: '/ajax/basket_delay.php',
-        data: { id: id, delay: delay },
-        success: function(msg) {
-            if (msg === 'success') {
-                UpdateHeaderBasket();
-                UpdateBigBasket();
-            } else {
-                if ($row.length) {
-                    $row.toggleClass('is-removed', delay !== 'Y');
+        type: 'POST',
+        url: '/ajax/basket_items.php',
+        dataType: 'json',
+        data: { action: action, ids: ids, sessid: polimerBasketSessid() },
+        success: function(res) {
+            if (res && res.status === 'success') {
+                if (done) {
+                    done();
                 }
+            } else {
                 alertify.error('Произошла ошибка. Попробуйте повторить запрос позже');
+                UpdateBigBasket();
             }
         },
         error: function() {
-            if ($row.length) {
-                $row.toggleClass('is-removed', delay !== 'Y');
-            }
             alertify.error('Произошла ошибка. Попробуйте повторить запрос позже');
+            UpdateBigBasket();
         }
     });
 }
 
-function polimerRemoveBasketItem(id) {
-    polimerGetBasketRow(id).addClass('is-removed');
-    polimerSetBasketItemDelay(id, 'Y');
-    return false;
+function polimerBasketVisibleRows() {
+    return $('.basket .l-block .l-row').not('.is-pending-delete');
 }
 
-function polimerRestoreBasketItem(id) {
-    polimerGetBasketRow(id).removeClass('is-removed');
-    polimerSetBasketItemDelay(id, 'N');
-    return false;
+function polimerBasketSyncView() {
+    if (polimerBasketPending) {
+        $.each(polimerBasketPending.ids, function(i, id) {
+            $('.basket .l-row[data-basket-id="' + id + '"]').addClass('is-pending-delete');
+        });
+    }
+
+    var $boxes = polimerBasketVisibleRows().find('.js-basket-check');
+    var checked = $boxes.filter(':checked').length;
+    var $all = $('.js-basket-check-all');
+    $all.prop('checked', $boxes.length > 0 && checked === $boxes.length);
+    $all.prop('indeterminate', checked > 0 && checked < $boxes.length);
+    $('.js-basket-delete-checked').prop('disabled', checked === 0);
 }
+
+function polimerBasketHideToast() {
+    var $toast = $('.basket-undo-toast');
+    $toast.removeClass('is-visible');
+    setTimeout(function() { $toast.remove(); }, 200);
+}
+
+function polimerBasketShowToast(count) {
+    $('.basket-undo-toast').remove();
+    var text = count > 1 ? 'Удалено товаров: ' + count : 'Товар удалён';
+    var $toast = $('<div class="basket-undo-toast" role="status"><span></span><button type="button" class="basket-undo-toast__restore">Вернуть</button></div>');
+    $toast.find('span').text(text);
+    $toast.find('button').on('click', polimerBasketUndo);
+    var $cookieBar = $('.nca-cookiesaccept-line:visible');
+    if ($cookieBar.length) {
+        $toast.css('bottom', $cookieBar.outerHeight() + 16);
+    }
+    $('body').append($toast);
+    setTimeout(function() { $toast.addClass('is-visible'); }, 10);
+}
+
+function polimerBasketCommitPending() {
+    if (!polimerBasketPending) {
+        return;
+    }
+    var pending = polimerBasketPending;
+    polimerBasketPending = null;
+    clearTimeout(pending.timer);
+    polimerBasketHideToast();
+    polimerBasketRequest('delete', pending.ids, UpdateBigBasket);
+}
+
+function polimerBasketDelete(ids) {
+    if (!ids.length) {
+        return;
+    }
+    polimerBasketCommitPending();
+
+    var wasChecked = [];
+    $.each(ids, function(i, id) {
+        var $row = $('.basket .l-row[data-basket-id="' + id + '"]');
+        if ($row.find('.js-basket-check').is(':checked')) {
+            wasChecked.push(id);
+        }
+        $row.addClass('is-pending-delete');
+    });
+
+    polimerBasketPending = {
+        ids: ids,
+        wasChecked: wasChecked,
+        timer: setTimeout(polimerBasketCommitPending, POLIMER_BASKET_UNDO_MS)
+    };
+    polimerBasketSyncView();
+    polimerBasketShowToast(ids.length);
+    polimerBasketRequest('uncheck', ids, UpdateBigBasket);
+}
+
+function polimerBasketUndo() {
+    if (!polimerBasketPending) {
+        return;
+    }
+    var pending = polimerBasketPending;
+    polimerBasketPending = null;
+    clearTimeout(pending.timer);
+    polimerBasketHideToast();
+    $.each(pending.ids, function(i, id) {
+        $('.basket .l-row[data-basket-id="' + id + '"]').removeClass('is-pending-delete');
+    });
+    polimerBasketSyncView();
+    if (pending.wasChecked.length) {
+        polimerBasketRequest('check', pending.wasChecked, UpdateBigBasket);
+    }
+}
+
+$(polimerBasketSyncView);
+
+$(document).on('change', '.basket .js-basket-check', function() {
+    var checked = this.checked;
+    $(this).closest('.l-row').toggleClass('is-unchecked', !checked);
+    polimerBasketSyncView();
+    polimerBasketRequest(checked ? 'check' : 'uncheck', [parseInt(this.value, 10)], UpdateBigBasket);
+});
+
+$(document).on('change', '.basket .js-basket-check-all', function() {
+    var checked = this.checked;
+    var ids = [];
+    polimerBasketVisibleRows().each(function() {
+        $(this).toggleClass('is-unchecked', !checked).find('.js-basket-check').prop('checked', checked);
+        ids.push(parseInt($(this).data('basket-id'), 10));
+    });
+    polimerBasketSyncView();
+    if (ids.length) {
+        polimerBasketRequest(checked ? 'check' : 'uncheck', ids, UpdateBigBasket);
+    }
+});
+
+$(document).on('click', '.basket .js-basket-delete', function() {
+    polimerBasketDelete([parseInt($(this).data('id'), 10)]);
+});
+
+$(document).on('click', '.basket .js-basket-delete-checked', function() {
+    var ids = [];
+    polimerBasketVisibleRows().find('.js-basket-check:checked').each(function() {
+        ids.push(parseInt(this.value, 10));
+    });
+    polimerBasketDelete(ids);
+});
+
+$(window).on('pagehide', function() {
+    if (!polimerBasketPending || !navigator.sendBeacon) {
+        return;
+    }
+    var form = new FormData();
+    form.append('action', 'delete');
+    form.append('sessid', polimerBasketSessid());
+    $.each(polimerBasketPending.ids, function(i, id) {
+        form.append('ids[]', id);
+    });
+    navigator.sendBeacon('/ajax/basket_items.php', form);
+    polimerBasketPending = null;
+});
 
 function deleteBasket() {
     if (typeof alertify === 'undefined') {
