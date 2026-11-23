@@ -24,12 +24,12 @@ $APPLICATION->SetTitle("Получение и оплата");
 
 	<div class="type split">
 		<img src="/upload/medialibrary/7f3/k9k55689rvvuwegvrcapk91rbmgn588w.jpg">
-		<a target="_blank" class="overlay-btn" href="/payment/about-sbp/">Узнать больше</a>
+		<a target="_blank" class="overlay-btn" href="/payment/about-split/">Узнать больше</a>
 	</div>
 
 	<div class="type sbp">
 		<img src="/upload/medialibrary/e0f/2i1zetg9r9drwn4pm9j93539nii6cou9.jpg">
-		<a target="_blank" class="overlay-btn" href="/payment/about-split/">Узнать больше</a>
+		<a target="_blank" class="overlay-btn" href="/payment/about-sbp/">Узнать больше</a>
 	</div>
 </div>
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
