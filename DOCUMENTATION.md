@@ -3,7 +3,7 @@
 > Интернет-магазин на 1С-Битрикс (polimer-vrn.ru).
 > Документ поддерживается агентом: при изменениях в проекте — **обновлять этот файл**.
 
-Последнее обновление: 2026-11-24 (nginx: короткий 404 на отсутствующую статику)
+Последнее обновление: 2026-11-24 (поиск: лимит одинаковой фразы, статистика фраз выключена)
 
 ## 1. Окружения
 
@@ -200,6 +200,12 @@ fail2ban-client set sshd addignoreip 185.117.0.100
 ### Статика: короткий 404
 
 `local/nginx/static-missing-404.conf` подключён в vhost prod и dev (`/etc/nginx/fastpanel2-available/polimer-vrn.ru/`). Отсутствующие `jpg/png/gif/webp/svg/css/js/ico/woff` nginx закрывает сам (`try_files =404`). В Apache и в страницу «не найдено» Битрикса такие запросы не попадают. Файл, который есть на диске, по-прежнему отдаёт nginx. `pdf`, `xml`, `zip` и остальные типы из старого списка по-прежнему идут в `@fallback`.
+
+### Поиск: лимит одинаковой фразы
+
+`local/nginx/search-query-limit-zone.conf` подключён один раз до `server` в prod-vhost (зона общая для nginx). `local/nginx/search-query-limit.conf` подключён в vhost prod и dev. На `/search`, `/search/` и `/search/index.php` одна и та же фраза (`$arg_q`) пропускается примерно 2 раза в секунду, плюс короткий burst 4; дальше nginx отдаёт 503 и не зовёт Apache. Другая фраза считается отдельно. Пустой запрос не лимитируется.
+
+Запись фраз в `b_search_phrase` выключена: опция модуля search `stat_phrase=N` (`local/tools/disable-search-phrase-stat.php`). Сама таблица не очищалась.
 
 ## 6. Запуск локально
 
